@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core\REA.Accounting.Core.csproj" />
+    <ProjectReference Include="..\Infrastructure\REA.Accounting.Infrastructure.csproj" />
+    <ProjectReference Include="..\Shared\REA.Accounting.Shared.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>REA.Accounting.Application</RootNamespace>
+  </PropertyGroup>
+
+</Project>
+
