@@ -13,27 +13,27 @@ namespace REA.Accounting.SharedKernel.CommonValueObjects
         public string? AddressLine1 { get; }
         public string? AddressLine2 { get; }
         public string? City { get; }
-        public string? StateCode { get; }
+        public int StateProvinceID { get; }
         public string? Zipcode { get; }
 
         protected Address() { }
 
-        private Address(string line1, string line2, string city, string stateCode, string zipcode)
+        private Address(string line1, string? line2, string city, int stateCode, string zipcode)
         {
             AddressLine1 = line1;
             AddressLine2 = line2;
             City = city;
-            StateCode = stateCode;
+            StateProvinceID = stateCode;
             Zipcode = zipcode;
         }
 
-        public static Address Create(string line1, string line2, string city, string stateCode, string zipcode)
+        public static Address Create(string line1, string? line2, string city, int stateCode, string zipcode)
         {
             CheckValidity(line1, line2, city, stateCode, zipcode);
             return new Address(line1, line2, city, stateCode, zipcode);
         }
 
-        private static void CheckValidity(string line1, string line2, string city, string stateCode, string zipcode)
+        private static void CheckValidity(string line1, string? line2, string city, int stateCode, string zipcode)
         {
             if (string.IsNullOrEmpty(line1))
             {
@@ -60,27 +60,21 @@ namespace REA.Accounting.SharedKernel.CommonValueObjects
                 throw new ArgumentOutOfRangeException("City name can not be longer than 30 characters.", nameof(city));
             }
 
-            if (string.IsNullOrEmpty(stateCode))
+            //TODO Validate state codes against Person.StateProvince table
+            if (stateCode <= 0)
             {
-                throw new ArgumentNullException("A 2-digit state code is required.", nameof(stateCode));
+                throw new ArgumentNullException("A state/province code is required.", nameof(stateCode));
             }
 
-            if (!Array.Exists(_stateCodes, element => element == stateCode.ToUpper()))
-            {
-                throw new ArgumentException("Invalid state code!", nameof(stateCode));
-            }
-
+            //TODO Validate postal codes against a yet to be built postal code lookup service/table
             if (string.IsNullOrEmpty(zipcode))
             {
                 throw new ArgumentNullException("A zip code is required.", nameof(zipcode));
             }
 
-            var usZipRegEx = @"^\d{5}(?:[-\s]\d{4})?$";
-            // var caZipRegEx = @"^([ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ])\ {0,1}(\d[ABCEGHJKLMNPRSTVWXYZ]\d)$";
-
-            if (!Regex.IsMatch(zipcode, usZipRegEx))
+            if (zipcode.Length > 15)
             {
-                throw new ArgumentException("Invalid zip code!", nameof(zipcode));
+                throw new ArgumentOutOfRangeException("Postal code can not be longer than 15 characters.", nameof(zipcode));
             }
         }
     }
