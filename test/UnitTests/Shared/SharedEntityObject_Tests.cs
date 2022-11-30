@@ -160,6 +160,191 @@ namespace REA.Accounting.UnitTests.Shared
             var caughtException = Assert.Throws<ArgumentException>(action);
         }
 
+        [Fact]
+        public void Person_Create_Valid_ShouldSucceed()
+        {
+            Person person = Person.Create
+            (
+                0,
+                "SC",
+                NameStyleEnum.Western,
+                "Mr.",
+                "Sandy",
+                "S",
+                "Jones",
+                "III",
+                EmailPromotionEnum.None
+            );
+
+            Assert.IsType<Person>(person);
+        }
+
+        [Fact]
+        public void Person_Create_NullTitle_ShouldSucceed()
+        {
+            Person person = Person.Create
+            (
+                0,
+                "SC",
+                NameStyleEnum.Western,
+                null,
+                "Sandy",
+                "S",
+                "Jones",
+                "III",
+                EmailPromotionEnum.None
+            );
+
+            Assert.IsType<Person>(person);
+        }
+
+        [Fact]
+        public void Person_Create_NullSuffix_ShouldSucceed()
+        {
+            Person person = Person.Create
+            (
+                0,
+                "SC",
+                NameStyleEnum.Western,
+                "Mr",
+                "Sandy",
+                "S",
+                "Jones",
+                null,
+                EmailPromotionEnum.None
+            );
+
+            Assert.IsType<Person>(person);
+        }
+
+        [Fact]
+        public void Person_Create_NullMiddleName_ShouldSucceed()
+        {
+            Person person = Person.Create
+            (
+                0,
+                "SC",
+                NameStyleEnum.Western,
+                "Mr",
+                "Sandy",
+                null,
+                "Jones",
+                "III",
+                EmailPromotionEnum.None
+            );
+
+            Assert.IsType<Person>(person);
+        }
+
+        [Fact]
+        public void Person_Create_NullContactType_ShouldFail()
+        {
+            Action action = () => Person.Create
+            (
+                0,
+                null,
+                NameStyleEnum.Western,
+                "Mr",
+                "Sandy",
+                "H",
+                "Jones",
+                "III",
+                EmailPromotionEnum.None
+            );
+
+            var caughtException = Assert.Throws<ArgumentNullException>(action);
+        }
+
+        [Fact]
+        public void Person_Create_InvalidContactType_ShouldFail()
+        {
+            Action action = () => Person.Create
+            (
+                0,
+                "XX",
+                NameStyleEnum.Western,
+                "Mr",
+                "Sandy",
+                "H",
+                "Jones",
+                "III",
+                EmailPromotionEnum.None
+            );
+
+            var caughtException = Assert.Throws<ArgumentException>(action);
+        }
+
+        [Fact]
+        public void Person_Update_ContactType_ShouldSucceed()
+        {
+            Person person = GetPersonForEditing();
+
+            var exception = Record.Exception(() => person.UpdateContactType("IN"));
+            Assert.Null(exception);
+        }
+
+        [Fact]
+        public void Person_Update_ContactType_InvalidContactType_ShouldFail()
+        {
+            Person person = GetPersonForEditing();
+
+            var exception = Record.Exception(() => person.UpdateContactType("1N"));
+            Assert.NotNull(exception);
+        }
+
+        [Fact]
+        public void Person_Update_ContactType_Null_ContactType_ShouldFail()
+        {
+            Person person = GetPersonForEditing();
+
+            var exception = Record.Exception(() => person.UpdateContactType(null));
+            Assert.NotNull(exception);
+        }
+
+        [Fact]
+        public void Person_Update_LastName_ShouldSucceed()
+        {
+            Person person = GetPersonForEditing();
+
+            var exception = Record.Exception(() => person.UpdateLastName("Jonas"));
+            Assert.Null(exception);
+        }
+
+        [Fact]
+        public void Person_Update_FirstName_ShouldSucceed()
+        {
+            Person person = GetPersonForEditing();
+
+            var exception = Record.Exception(() => person.UpdateFirstName("Jonanne"));
+            Assert.Null(exception);
+        }
+
+        [Fact]
+        public void Person_Update_EmptyStr_LastName_ShouldFail()
+        {
+            Person person = GetPersonForEditing();
+
+            Action action = () => person.UpdateLastName("");
+            var caughtException = Assert.Throws<ArgumentNullException>(action);
+        }
+
+        [Fact]
+        public void Person_Update_Null_LastName_ShouldFail()
+        {
+            Person person = GetPersonForEditing();
+
+            Action action = () => person.UpdateLastName(null);
+            var caughtException = Assert.Throws<ArgumentNullException>(action);
+        }
+
+        [Fact]
+        public void Person_Update_NameStyle_WithZero_ShouldSucceed()
+        {
+            Person person = GetPersonForEditing();
+
+            var exception = Record.Exception(() => person.UpdateNameStyle(0));
+            Assert.Null(exception);
+        }
 
 
 
@@ -168,11 +353,8 @@ namespace REA.Accounting.UnitTests.Shared
 
 
 
-
-
-
-
-
+        // var exception = Record.Exception(() => address.UpdateAddressLine1("321 3rd Ave"));
+        // Assert.Null(exception);
 
         private Address GetAddressForEditing()
             => Address.Create
@@ -183,6 +365,20 @@ namespace REA.Accounting.UnitTests.Shared
                 "Somewhereville",
                 1,
                 "12345"
+            );
+
+        private Person GetPersonForEditing()
+            => Person.Create
+            (
+                0,
+                "SC",
+                NameStyleEnum.Western,
+                "Mr.",
+                "Sandy",
+                "S",
+                "Jones",
+                "III",
+                EmailPromotionEnum.None
             );
     }
 }

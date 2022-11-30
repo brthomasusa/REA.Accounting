@@ -9,12 +9,12 @@ namespace REA.Accounting.SharedKernel.CommonValueObjects
         {
             FirstName = first;
             LastName = last;
-            MiddleInitial = mi;
+            MiddleName = mi;
         }
 
         public string? FirstName { get; init; }
         public string? LastName { get; init; }
-        public string? MiddleInitial { get; init; }
+        public string? MiddleName { get; init; }
 
         public static PersonName Create(string last, string first, string mi)
         {
@@ -37,12 +37,12 @@ namespace REA.Accounting.SharedKernel.CommonValueObjects
             first = first.Trim();
             last = last.Trim();
 
-            if (first.Length > 25)
+            if (first.Length > 50)
             {
                 throw new ArgumentOutOfRangeException("Maximum length of the first name is 25 characters.", nameof(first));
             }
 
-            if (last.Length > 25)
+            if (last.Length > 50)
             {
                 throw new ArgumentOutOfRangeException("Maximum length of the last name is 25 characters.", nameof(last));
             }
@@ -50,7 +50,7 @@ namespace REA.Accounting.SharedKernel.CommonValueObjects
             if (!string.IsNullOrEmpty(mi))
             {
                 mi = mi.Trim();
-                if (mi.Length > 1)
+                if (mi.Length > 50)
                 {
                     throw new ArgumentOutOfRangeException("Maximum length of middle initial is 1 character.", nameof(mi));
                 }

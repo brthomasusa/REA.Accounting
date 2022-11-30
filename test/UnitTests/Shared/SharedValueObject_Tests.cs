@@ -1,3 +1,5 @@
+#pragma warning disable CS8600
+
 using Xunit;
 using REA.Accounting.Core.Shared.ValueObjects;
 
@@ -147,6 +149,104 @@ namespace REA.Accounting.UnitTests.Shared
             var caughtException = Assert.Throws<ArgumentException>(action);
 
             Assert.Equal("Postal code can not be null or greater than 15 characters.", caughtException.Message);
+        }
+
+        [Fact]
+        public void ContactType_ValidData_ShouldSucceed()
+        {
+            string contactType = "SC";
+            ContactType result = ContactType.Create(contactType);
+
+            Assert.IsType<ContactType>(result);
+            Assert.Equal(contactType, result);
+        }
+
+        [Fact]
+        public void Contact_Invalid_Null_ShouldFail()
+        {
+            string contactType = null;
+
+            Action action = () => ContactType.Create(contactType!);
+
+            var caughtException = Assert.Throws<ArgumentNullException>(action);
+
+            Assert.Equal("The contact type is required.", caughtException.ParamName);
+        }
+
+        [Fact]
+        public void Contact_Invalid_InvalidType_ShouldFail()
+        {
+            string contactType = "12";
+
+            Action action = () => ContactType.Create(contactType!);
+
+            var caughtException = Assert.Throws<ArgumentNullException>(action);
+
+            Assert.Equal("Invalid contact type!", caughtException.ParamName);
+        }
+
+        [Fact]
+        public void Title_ValidData_ShouldSucceed()
+        {
+            string title = "Miss";
+            Title result = Title.Create(title);
+
+            Assert.IsType<Title>(result);
+            Assert.Equal(title, result);
+        }
+
+        [Fact]
+        public void Title_ValidData_Null_ShouldSucceed()
+        {
+            string title = null;
+            Title result = Title.Create(title!);
+
+            Assert.IsType<Title>(result);
+            Assert.Equal(title, result);
+        }
+
+        [Fact]
+        public void Title_Invalid_TooLong_ShouldFail()
+        {
+            string title = "123456789";
+
+            Action action = () => Title.Create(title);
+
+            var caughtException = Assert.Throws<ArgumentException>(action);
+
+            Assert.Equal("Title can not be greater than 8 characters.", caughtException.Message);
+        }
+
+        [Fact]
+        public void Suffix_ValidData_ShouldSucceed()
+        {
+            string suffix = "Junior";
+            Suffix result = Suffix.Create(suffix!);
+
+            Assert.IsType<Suffix>(result);
+            Assert.Equal(suffix, result);
+        }
+
+        [Fact]
+        public void Suffix_ValidData_Null_ShouldSucceed()
+        {
+            string suffix = null;
+            Suffix result = Suffix.Create(suffix!);
+
+            Assert.IsType<Suffix>(result);
+            Assert.Equal(suffix, result);
+        }
+
+        [Fact]
+        public void Suffix_Invalid_TooLong_ShouldFail()
+        {
+            string suffix = "12345678901";
+
+            Action action = () => Suffix.Create(suffix);
+
+            var caughtException = Assert.Throws<ArgumentException>(action);
+
+            Assert.Equal("The suffix can not be greater than 10 characters.", caughtException.Message);
         }
     }
 }
