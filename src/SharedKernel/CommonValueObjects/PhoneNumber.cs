@@ -1,5 +1,3 @@
-using System.Text.RegularExpressions;
-
 namespace REA.Accounting.SharedKernel.CommonValueObjects
 {
     public class PhoneNumber : ValueObject
@@ -24,16 +22,14 @@ namespace REA.Accounting.SharedKernel.CommonValueObjects
 
         private static void CheckValidity(string value)
         {
-            string rgPhoneNumber = @"^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$";
-
             if (string.IsNullOrEmpty(value))
             {
-                throw new ArgumentNullException("The PhoneNumber number is required.", nameof(value));
+                throw new ArgumentNullException("The PhoneNumber number is required.");
             }
 
-            if (!Regex.IsMatch(value, rgPhoneNumber))
+            if (value.Length > 25)
             {
-                throw new ArgumentException("Invalid PhoneNumber number!", nameof(value));
+                throw new ArgumentException("Invalid PhoneNumber number, maximum length is 25 characters.");
             }
         }
     }

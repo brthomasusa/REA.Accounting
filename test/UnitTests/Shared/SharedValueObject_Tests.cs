@@ -2,6 +2,7 @@
 
 using Xunit;
 using REA.Accounting.Core.Shared.ValueObjects;
+using REA.Accounting.SharedKernel.CommonValueObjects;
 
 namespace REA.Accounting.UnitTests.Shared
 {
@@ -247,6 +248,70 @@ namespace REA.Accounting.UnitTests.Shared
             var caughtException = Assert.Throws<ArgumentException>(action);
 
             Assert.Equal("The suffix can not be greater than 10 characters.", caughtException.Message);
+        }
+
+        [Fact]
+        public void EmailAddress_ValidData_ShouldSucceed()
+        {
+            string email = "some.one@example.com";
+            EmailAddress result = EmailAddress.Create(email);
+
+            Assert.IsType<EmailAddress>(result);
+            Assert.Equal(email, result);
+        }
+
+        [Fact]
+        public void EmailAddress_EmptyString_ShouldFail()
+        {
+            string email = string.Empty;
+
+            var exception = Record.Exception(() => EmailAddress.Create(email));
+            Assert.NotNull(exception);
+        }
+
+        [Fact]
+        public void EmailAddress_Null_ShouldFail()
+        {
+            string email = null;
+
+            var exception = Record.Exception(() => EmailAddress.Create(email!));
+            Assert.NotNull(exception);
+        }
+
+        [Fact]
+        public void EmailAddress_Malformed1_ShouldFail()
+        {
+            string email = "hello@";
+
+            var exception = Record.Exception(() => EmailAddress.Create(email!));
+            Assert.NotNull(exception);
+        }
+
+        [Fact]
+        public void EmailAddress_Malformed2_ShouldFail()
+        {
+            string email = "@test";
+
+            var exception = Record.Exception(() => EmailAddress.Create(email!));
+            Assert.NotNull(exception);
+        }
+
+        [Fact]
+        public void EmailAddress_Malformed3_ShouldFail()
+        {
+            string email = "theproblem@test@gmail.com";
+
+            var exception = Record.Exception(() => EmailAddress.Create(email!));
+            Assert.NotNull(exception);
+        }
+
+        [Fact]
+        public void EmailAddress_Malformed4_ShouldFail()
+        {
+            string email = "mail with@space.com";
+
+            var exception = Record.Exception(() => EmailAddress.Create(email!));
+            Assert.NotNull(exception);
         }
     }
 }

@@ -70,16 +70,8 @@ namespace REA.Accounting.Core.Shared
         public NameStyleEnum NameStyle { get; private set; }
         public void UpdateNameStyle(NameStyleEnum value)
         {
-            if (Enum.IsDefined(typeof(NameStyleEnum), value))
-            {
-                NameStyle = value;
-                UpdateLastModifiedDate();
-            }
-            else
-            {
-                throw new ArgumentException("Invalid names style");
-            }
-
+            NameStyle = Enum.IsDefined(typeof(NameStyleEnum), value) ? value : throw new ArgumentException("Invalid names style");
+            UpdateLastModifiedDate();
         }
 
         public string Title { get; private set; }
