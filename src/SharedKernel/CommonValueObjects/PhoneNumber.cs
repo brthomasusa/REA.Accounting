@@ -22,6 +22,8 @@ namespace REA.Accounting.SharedKernel.CommonValueObjects
 
         private static void CheckValidity(string value)
         {
+            //TODO Add regex that only allows digits, dashes, and prenthesises
+
             if (string.IsNullOrEmpty(value))
             {
                 throw new ArgumentNullException("The PhoneNumber number is required.");
