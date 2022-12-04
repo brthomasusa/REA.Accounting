@@ -104,15 +104,80 @@ namespace REA.Accounting.Core.HumanResources
         }
 
         public string LoginID { get; private set; }
+        public void UpdateLoginID(string value)
+        {
+            LoginID = Login.Create(value).Value;
+            UpdateLastModifiedDate();
+        }
+
         public string OrganizationNode { get; private set; }
+        public void UpdateOrganizationNode(string value)
+        {
+            OrganizationNode = ValueObject.OrganizationNode.Create(value).Value;
+            UpdateLastModifiedDate();
+        }
+
         public string JobTitle { get; private set; }
+        public void UpdateJobTitle(string value)
+        {
+            JobTitle = ValueObject.JobTitle.Create(value).Value;
+            UpdateLastModifiedDate();
+        }
+
         public DateOnly BirthDate { get; private set; }
+        public void UpdateBirthDate(DateOnly value)
+        {
+            BirthDate = ValueObject.DateOfBirth.Create(value).Value;
+            UpdateLastModifiedDate();
+        }
+
         public string MaritalStatus { get; private set; }
+        public void UpdateMaritalStatus(string value)
+        {
+            MaritalStatus = ValueObject.MaritalStatus.Create(value).Value;
+            UpdateLastModifiedDate();
+        }
+
         public string Gender { get; private set; }
+        public void UpdateGender(string value)
+        {
+            Gender = ValueObject.Gender.Create(value).Value;
+            UpdateLastModifiedDate();
+        }
+
         public DateOnly HireDate { get; private set; }
+        public void UpdateHireDate(DateOnly value)
+        {
+            HireDate = ValueObject.DateOfHire.Create(value).Value;
+            UpdateLastModifiedDate();
+        }
+
         public bool IsSalaried { get; private set; }
+        public void UpdateIsSalaried(bool value)
+        {
+            IsSalaried = value;
+            UpdateLastModifiedDate();
+        }
+
         public int VacationHours { get; private set; }
+        public void UpdateVacationHours(int value)
+        {
+            VacationHours = ValueObject.Vacation.Create(value).Value;
+            UpdateLastModifiedDate();
+        }
+
         public int SickLeaveHours { get; private set; }
+        public void UpdateSickLeaveHours(int value)
+        {
+            SickLeaveHours = ValueObject.SickLeave.Create(value).Value;
+            UpdateLastModifiedDate();
+        }
+
         public bool IsActive { get; private set; }
+        public void UpdateIsActive(bool value)
+        {
+            IsActive = value;
+            UpdateLastModifiedDate();
+        }
     }
 }
