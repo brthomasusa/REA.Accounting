@@ -12,10 +12,10 @@ namespace REA.Accounting.Core.Shared
     {
         protected Person() { }
 
-        private Person
+        protected Person
         (
-            int contactID,
-            ContactType contactType,
+            int personID,
+            PersonType personType,
             NameStyleEnum nameStyle,
             Title title,
             PersonName name,
@@ -24,8 +24,8 @@ namespace REA.Accounting.Core.Shared
 
         ) : this()
         {
-            Id = contactID;
-            ContactType = contactType.Value!;
+            Id = personID;
+            PersonType = personType.Value!;
             NameStyle = nameStyle;
             Title = title.Value!;
             FirstName = name.FirstName!;
@@ -37,8 +37,8 @@ namespace REA.Accounting.Core.Shared
 
         public static Person Create
         (
-            int contactID,
-            string contactType,
+            int personID,
+            string personType,
             NameStyleEnum nameStyle,
             string title,
             string firstName,
@@ -50,8 +50,8 @@ namespace REA.Accounting.Core.Shared
         {
             return new Person
             (
-            contactID,
-            ValueObject.ContactType.Create(contactType),
+            personID,
+            ValueObject.PersonType.Create(personType),
             Enum.IsDefined(typeof(NameStyleEnum), nameStyle) ? nameStyle : throw new ArgumentException("Invalid names style"),
             ValueObject.Title.Create(title),
             PersonName.Create(lastName, firstName, middleName!),
@@ -60,10 +60,10 @@ namespace REA.Accounting.Core.Shared
             );
         }
 
-        public string ContactType { get; private set; }
-        public void UpdateContactType(string value)
+        public string PersonType { get; private set; }
+        public void UpdatePersonType(string value)
         {
-            ContactType = ValueObject.ContactType.Create(value).Value!;
+            PersonType = ValueObject.PersonType.Create(value).Value!;
             UpdateLastModifiedDate();
         }
 

@@ -156,9 +156,9 @@ namespace REA.Accounting.UnitTests.Shared
         public void ContactType_ValidData_ShouldSucceed()
         {
             string contactType = "SC";
-            ContactType result = ContactType.Create(contactType);
+            PersonType result = PersonType.Create(contactType);
 
-            Assert.IsType<ContactType>(result);
+            Assert.IsType<PersonType>(result);
             Assert.Equal(contactType, result);
         }
 
@@ -167,7 +167,7 @@ namespace REA.Accounting.UnitTests.Shared
         {
             string contactType = null;
 
-            Action action = () => ContactType.Create(contactType!);
+            Action action = () => PersonType.Create(contactType!);
 
             var caughtException = Assert.Throws<ArgumentNullException>(action);
 
@@ -179,11 +179,8 @@ namespace REA.Accounting.UnitTests.Shared
         {
             string contactType = "12";
 
-            Action action = () => ContactType.Create(contactType!);
-
-            var caughtException = Assert.Throws<ArgumentNullException>(action);
-
-            Assert.Equal("Invalid contact type!", caughtException.ParamName);
+            var exception = Record.Exception(() => PersonType.Create(contactType!));
+            Assert.NotNull(exception);
         }
 
         [Fact]
@@ -312,6 +309,24 @@ namespace REA.Accounting.UnitTests.Shared
 
             var exception = Record.Exception(() => EmailAddress.Create(email!));
             Assert.NotNull(exception);
+        }
+
+        [Fact]
+        public void PhoneNumber_InternationalPhoneNumber_ShouldSucceed()
+        {
+            string phoneNumber = "1 (11) 500 555-0190";
+
+            var exception = Record.Exception(() => PhoneNumber.Create(phoneNumber));
+            Assert.Null(exception);
+        }
+
+        [Fact]
+        public void PhoneNumber_USPhoneNumber_ShouldSucceed()
+        {
+            string phoneNumber = "214-555-5555";
+
+            var exception = Record.Exception(() => PhoneNumber.Create(phoneNumber));
+            Assert.Null(exception);
         }
     }
 }

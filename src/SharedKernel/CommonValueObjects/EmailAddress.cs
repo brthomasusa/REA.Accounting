@@ -1,6 +1,5 @@
 using System.Globalization;
 using System.Text.RegularExpressions;
-using System.Net.Mail;
 
 namespace REA.Accounting.SharedKernel.CommonValueObjects
 {

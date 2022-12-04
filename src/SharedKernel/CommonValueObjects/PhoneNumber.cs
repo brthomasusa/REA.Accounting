@@ -1,3 +1,5 @@
+using System.Text.RegularExpressions;
+
 namespace REA.Accounting.SharedKernel.CommonValueObjects
 {
     public class PhoneNumber : ValueObject
@@ -22,8 +24,6 @@ namespace REA.Accounting.SharedKernel.CommonValueObjects
 
         private static void CheckValidity(string value)
         {
-            //TODO Add regex that only allows digits, dashes, and prenthesises
-
             if (string.IsNullOrEmpty(value))
             {
                 throw new ArgumentNullException("The PhoneNumber number is required.");
@@ -33,6 +33,10 @@ namespace REA.Accounting.SharedKernel.CommonValueObjects
             {
                 throw new ArgumentException("Invalid PhoneNumber number, maximum length is 25 characters.");
             }
+
+            Regex validatePhoneNumberRegex = new Regex("^\\+?\\d{1,4}?[-.\\s]?\\(?\\d{1,3}?\\)?[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,9}$");
+            if (!validatePhoneNumberRegex.IsMatch(value))
+                throw new ArgumentException($"{value} is not a valid phone number.");
         }
     }
 }

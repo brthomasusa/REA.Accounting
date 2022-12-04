@@ -279,7 +279,7 @@ namespace REA.Accounting.UnitTests.Shared
         {
             Person person = GetPersonForEditing();
 
-            var exception = Record.Exception(() => person.UpdateContactType("IN"));
+            var exception = Record.Exception(() => person.UpdatePersonType("IN"));
             Assert.Null(exception);
         }
 
@@ -288,7 +288,7 @@ namespace REA.Accounting.UnitTests.Shared
         {
             Person person = GetPersonForEditing();
 
-            var exception = Record.Exception(() => person.UpdateContactType("1N"));
+            var exception = Record.Exception(() => person.UpdatePersonType("1N"));
             Assert.NotNull(exception);
         }
 
@@ -297,7 +297,7 @@ namespace REA.Accounting.UnitTests.Shared
         {
             Person person = GetPersonForEditing();
 
-            var exception = Record.Exception(() => person.UpdateContactType(null));
+            var exception = Record.Exception(() => person.UpdatePersonType(null));
             Assert.NotNull(exception);
         }
 
