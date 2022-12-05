@@ -1,8 +1,6 @@
 #pragma warning disable CS8625
 
-using Xunit;
 using REA.Accounting.Core.Shared;
-using REA.Accounting.Core.Shared.ValueObjects;
 
 namespace REA.Accounting.UnitTests.Shared
 {
@@ -14,6 +12,8 @@ namespace REA.Accounting.UnitTests.Shared
             Address address = Address.Create
             (
                 0,
+                1,
+                AddressTypeEnum.Home,
                 "123 Main Street",
                 "Ste 1",
                 "Somewhereville",
@@ -30,6 +30,8 @@ namespace REA.Accounting.UnitTests.Shared
             Address address = Address.Create
             (
                 0,
+                1,
+                AddressTypeEnum.Home,
                 "123 Main Street",
                 null,
                 "Somewhereville",
@@ -46,6 +48,8 @@ namespace REA.Accounting.UnitTests.Shared
             Action action = () => Address.Create
             (
                 0,
+                1,
+                AddressTypeEnum.Home,
                 null,
                 "Ste 1",
                 "Somewhereville",
@@ -64,6 +68,8 @@ namespace REA.Accounting.UnitTests.Shared
             Action action = () => Address.Create
             (
                 0,
+                1,
+                AddressTypeEnum.Home,
                 "123 Main Street",
                 "Ste 1",
                 "Somewhereville",
@@ -82,6 +88,8 @@ namespace REA.Accounting.UnitTests.Shared
             Action action = () => Address.Create
             (
                 0,
+                1,
+                AddressTypeEnum.Home,
                 "123 Main Street",
                 "Ste 1",
                 "Somewhereville",
@@ -159,12 +167,15 @@ namespace REA.Accounting.UnitTests.Shared
             Action action = () => address.UpdatePostalCode(null);
             var caughtException = Assert.Throws<ArgumentException>(action);
         }
-
+        // int businessEntityID,
+        // ContactTypeEnum contactType,
         [Fact]
         public void Person_Create_Valid_ShouldSucceed()
         {
-            Person person = Person.Create
+            Person person = Contact.Create
             (
+                1,
+                ContactTypeEnum.AccountingManager,
                 0,
                 "SC",
                 NameStyleEnum.Western,
@@ -176,14 +187,16 @@ namespace REA.Accounting.UnitTests.Shared
                 EmailPromotionEnum.None
             );
 
-            Assert.IsType<Person>(person);
+            Assert.IsType<Contact>(person);
         }
 
         [Fact]
         public void Person_Create_NullTitle_ShouldSucceed()
         {
-            Person person = Person.Create
+            Person person = Contact.Create
             (
+                1,
+                ContactTypeEnum.AccountingManager,
                 0,
                 "SC",
                 NameStyleEnum.Western,
@@ -195,14 +208,16 @@ namespace REA.Accounting.UnitTests.Shared
                 EmailPromotionEnum.None
             );
 
-            Assert.IsType<Person>(person);
+            Assert.IsType<Contact>(person);
         }
 
         [Fact]
         public void Person_Create_NullSuffix_ShouldSucceed()
         {
-            Person person = Person.Create
+            Person person = Contact.Create
             (
+                1,
+                ContactTypeEnum.AccountingManager,
                 0,
                 "SC",
                 NameStyleEnum.Western,
@@ -214,14 +229,16 @@ namespace REA.Accounting.UnitTests.Shared
                 EmailPromotionEnum.None
             );
 
-            Assert.IsType<Person>(person);
+            Assert.IsType<Contact>(person);
         }
 
         [Fact]
         public void Person_Create_NullMiddleName_ShouldSucceed()
         {
-            Person person = Person.Create
+            Person person = Contact.Create
             (
+                1,
+                ContactTypeEnum.AccountingManager,
                 0,
                 "SC",
                 NameStyleEnum.Western,
@@ -233,14 +250,16 @@ namespace REA.Accounting.UnitTests.Shared
                 EmailPromotionEnum.None
             );
 
-            Assert.IsType<Person>(person);
+            Assert.IsType<Contact>(person);
         }
 
         [Fact]
         public void Person_Create_NullContactType_ShouldFail()
         {
-            Action action = () => Person.Create
+            Action action = () => Contact.Create
             (
+                1,
+                ContactTypeEnum.AccountingManager,
                 0,
                 null,
                 NameStyleEnum.Western,
@@ -258,8 +277,10 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void Person_Create_InvalidContactType_ShouldFail()
         {
-            Action action = () => Person.Create
+            Action action = () => Contact.Create
             (
+                1,
+                ContactTypeEnum.AccountingManager,
                 0,
                 "XX",
                 NameStyleEnum.Western,
@@ -277,7 +298,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void Person_Update_ContactType_ShouldSucceed()
         {
-            Person person = GetPersonForEditing();
+            Person person = GetContactForEditing();
 
             var exception = Record.Exception(() => person.UpdatePersonType("IN"));
             Assert.Null(exception);
@@ -286,7 +307,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void Person_Update_ContactType_InvalidContactType_ShouldFail()
         {
-            Person person = GetPersonForEditing();
+            Person person = GetContactForEditing();
 
             var exception = Record.Exception(() => person.UpdatePersonType("1N"));
             Assert.NotNull(exception);
@@ -295,7 +316,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void Person_Update_ContactType_Null_ContactType_ShouldFail()
         {
-            Person person = GetPersonForEditing();
+            Person person = GetContactForEditing();
 
             var exception = Record.Exception(() => person.UpdatePersonType(null));
             Assert.NotNull(exception);
@@ -304,7 +325,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void Person_Update_LastName_ShouldSucceed()
         {
-            Person person = GetPersonForEditing();
+            Person person = GetContactForEditing();
 
             var exception = Record.Exception(() => person.UpdateLastName("Jonas"));
             Assert.Null(exception);
@@ -313,7 +334,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void Person_Update_FirstName_ShouldSucceed()
         {
-            Person person = GetPersonForEditing();
+            Person person = GetContactForEditing();
 
             var exception = Record.Exception(() => person.UpdateFirstName("Jonanne"));
             Assert.Null(exception);
@@ -322,7 +343,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void Person_Update_EmptyStr_LastName_ShouldFail()
         {
-            Person person = GetPersonForEditing();
+            Person person = GetContactForEditing();
 
             Action action = () => person.UpdateLastName("");
             var caughtException = Assert.Throws<ArgumentNullException>(action);
@@ -331,7 +352,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void Person_Update_Null_LastName_ShouldFail()
         {
-            Person person = GetPersonForEditing();
+            Person person = GetContactForEditing();
 
             Action action = () => person.UpdateLastName(null);
             var caughtException = Assert.Throws<ArgumentNullException>(action);
@@ -340,7 +361,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void Person_Update_NameStyle_WithZero_ShouldSucceed()
         {
-            Person person = GetPersonForEditing();
+            Person person = GetContactForEditing();
 
             var exception = Record.Exception(() => person.UpdateNameStyle(0));
             Assert.Null(exception);
@@ -440,6 +461,8 @@ namespace REA.Accounting.UnitTests.Shared
             => Address.Create
             (
                 0,
+                1,
+                AddressTypeEnum.Home,
                 "123 Main Street",
                 "Ste 1",
                 "Somewhereville",
@@ -447,9 +470,11 @@ namespace REA.Accounting.UnitTests.Shared
                 "12345"
             );
 
-        private Person GetPersonForEditing()
-            => Person.Create
+        private Person GetContactForEditing()
+            => Contact.Create
             (
+                1,
+                ContactTypeEnum.AccountingManager,
                 0,
                 "SC",
                 NameStyleEnum.Western,

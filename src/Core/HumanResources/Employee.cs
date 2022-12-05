@@ -3,7 +3,6 @@
 using REA.Accounting.Core.HumanResources.ValueObjects;
 using REA.Accounting.Core.Shared;
 using REA.Accounting.Core.Shared.ValueObjects;
-using REA.Accounting.SharedKernel;
 using REA.Accounting.SharedKernel.CommonValueObjects;
 
 using ValueObject = REA.Accounting.Core.HumanResources.ValueObjects;
@@ -48,16 +47,20 @@ namespace REA.Accounting.Core.HumanResources
             VacationHours = vacation.Value;
             SickLeaveHours = sickLeave.Value;
             IsActive = active;
+
+            CheckValidity();
         }
 
         public static Employee Create
         (
             int employeeID,
-            PersonType personType,
+            string personType,
             NameStyleEnum nameStyle,
-            Title title,
-            PersonName name,
-            Suffix suffix,
+            string title,
+            string firstName,
+            string lastName,
+            string middleName,
+            string suffix,
             string nationalID,
             string login,
             string orgNode,
@@ -75,11 +78,11 @@ namespace REA.Accounting.Core.HumanResources
             return new Employee
             (
                 employeeID,
-                personType.Value!.ToUpper().Equals("EM") ? personType : throw new ArgumentException("Employee must be person type 'EM'."),
+                REA.Accounting.Core.Shared.ValueObjects.PersonType.Create(personType),
                 nameStyle,
-                title,
-                name,
-                suffix,
+                REA.Accounting.Core.Shared.ValueObjects.Title.Create(title),
+                PersonName.Create(lastName, firstName, middleName),
+                REA.Accounting.Core.Shared.ValueObjects.Suffix.Create(suffix),
                 EmailPromotionEnum.None,
                 NationalID.Create(nationalID),
                 Login.Create(login),
@@ -96,10 +99,20 @@ namespace REA.Accounting.Core.HumanResources
             );
         }
 
+        public override void UpdatePersonType(string value)
+        {
+            if (!value.ToUpper().Equals("EM"))
+                throw new ArgumentException("Employee must be person type 'EM'.");
+
+            base.UpdatePersonType(value);
+            UpdateLastModifiedDate();
+        }
+
         public string NationalIDNumber { get; private set; }
         public void UpdateNationalIDNumber(string value)
         {
             NationalIDNumber = NationalID.Create(value).Value!;
+            CheckValidity();
             UpdateLastModifiedDate();
         }
 
@@ -107,6 +120,7 @@ namespace REA.Accounting.Core.HumanResources
         public void UpdateLoginID(string value)
         {
             LoginID = Login.Create(value).Value;
+            CheckValidity();
             UpdateLastModifiedDate();
         }
 
@@ -114,6 +128,7 @@ namespace REA.Accounting.Core.HumanResources
         public void UpdateOrganizationNode(string value)
         {
             OrganizationNode = ValueObject.OrganizationNode.Create(value).Value;
+            CheckValidity();
             UpdateLastModifiedDate();
         }
 
@@ -121,6 +136,7 @@ namespace REA.Accounting.Core.HumanResources
         public void UpdateJobTitle(string value)
         {
             JobTitle = ValueObject.JobTitle.Create(value).Value;
+            CheckValidity();
             UpdateLastModifiedDate();
         }
 
@@ -128,6 +144,7 @@ namespace REA.Accounting.Core.HumanResources
         public void UpdateBirthDate(DateOnly value)
         {
             BirthDate = ValueObject.DateOfBirth.Create(value).Value;
+            CheckValidity();
             UpdateLastModifiedDate();
         }
 
@@ -135,6 +152,7 @@ namespace REA.Accounting.Core.HumanResources
         public void UpdateMaritalStatus(string value)
         {
             MaritalStatus = ValueObject.MaritalStatus.Create(value).Value;
+            CheckValidity();
             UpdateLastModifiedDate();
         }
 
@@ -142,6 +160,7 @@ namespace REA.Accounting.Core.HumanResources
         public void UpdateGender(string value)
         {
             Gender = ValueObject.Gender.Create(value).Value;
+            CheckValidity();
             UpdateLastModifiedDate();
         }
 
@@ -149,6 +168,7 @@ namespace REA.Accounting.Core.HumanResources
         public void UpdateHireDate(DateOnly value)
         {
             HireDate = ValueObject.DateOfHire.Create(value).Value;
+            CheckValidity();
             UpdateLastModifiedDate();
         }
 
@@ -156,6 +176,7 @@ namespace REA.Accounting.Core.HumanResources
         public void UpdateIsSalaried(bool value)
         {
             IsSalaried = value;
+            CheckValidity();
             UpdateLastModifiedDate();
         }
 
@@ -163,6 +184,7 @@ namespace REA.Accounting.Core.HumanResources
         public void UpdateVacationHours(int value)
         {
             VacationHours = ValueObject.Vacation.Create(value).Value;
+            CheckValidity();
             UpdateLastModifiedDate();
         }
 
@@ -178,6 +200,12 @@ namespace REA.Accounting.Core.HumanResources
         {
             IsActive = value;
             UpdateLastModifiedDate();
+        }
+
+        protected override void CheckValidity()
+        {
+            if (!PersonType.ToUpper().Equals("EM"))
+                throw new ArgumentException("Employee must be person type 'EM'.");
         }
     }
 }

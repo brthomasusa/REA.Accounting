@@ -7,8 +7,6 @@ namespace REA.Accounting.Core.Organization
 {
     public class Company : AggregateRoot<int>
     {
-        protected Company() { }
-
         public Company
         (
             int companyID,
@@ -16,7 +14,7 @@ namespace REA.Accounting.Core.Organization
             OrganizationName? legalName,
             EmployerIdentificationNumber ein,
             WebsiteUrl? url
-        ) : this()
+        )
         {
             Id = companyID;
             CompanyName = companyName ?? throw new ArgumentNullException("A company name is required.");

@@ -8,11 +8,9 @@ using ValueObject = REA.Accounting.Core.Shared.ValueObjects;
 
 namespace REA.Accounting.Core.Shared
 {
-    public class Person : Entity<int>
+    public abstract class Person : Entity<int>
     {
-        protected Person() { }
-
-        protected Person
+        public Person
         (
             int personID,
             PersonType personType,
@@ -22,7 +20,7 @@ namespace REA.Accounting.Core.Shared
             Suffix suffix,
             EmailPromotionEnum emailPromotionEnum
 
-        ) : this()
+        )
         {
             Id = personID;
             PersonType = personType.Value!;
@@ -35,33 +33,8 @@ namespace REA.Accounting.Core.Shared
             EmailPromotions = emailPromotionEnum;
         }
 
-        public static Person Create
-        (
-            int personID,
-            string personType,
-            NameStyleEnum nameStyle,
-            string title,
-            string firstName,
-            string? middleName,
-            string lastName,
-            string? suffix,
-            EmailPromotionEnum emailPromotionEnum
-        )
-        {
-            return new Person
-            (
-            personID,
-            ValueObject.PersonType.Create(personType),
-            Enum.IsDefined(typeof(NameStyleEnum), nameStyle) ? nameStyle : throw new ArgumentException("Invalid names style"),
-            ValueObject.Title.Create(title),
-            PersonName.Create(lastName, firstName, middleName!),
-            ValueObject.Suffix.Create(suffix!),
-            Enum.IsDefined(typeof(EmailPromotionEnum), emailPromotionEnum) ? emailPromotionEnum : throw new ArgumentException("Invalid email promotion flag")
-            );
-        }
-
         public string PersonType { get; private set; }
-        public void UpdatePersonType(string value)
+        public virtual void UpdatePersonType(string value)
         {
             PersonType = ValueObject.PersonType.Create(value).Value!;
             UpdateLastModifiedDate();
