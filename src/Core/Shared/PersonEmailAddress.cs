@@ -36,7 +36,7 @@ namespace REA.Accounting.Core.Shared
         public void UpdateEmailAddress(string email)
         {
             EmailAddress = REA.Accounting.SharedKernel.CommonValueObjects.EmailAddress.Create(email).Value!;
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
     }
 }

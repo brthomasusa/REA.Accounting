@@ -11,7 +11,9 @@ namespace REA.Accounting.Core.HumanResources
 {
     public class Employee : Person
     {
-        protected Employee
+        public Employee() { }
+
+        public Employee
         (
             int employeeID,
             PersonType personType,
@@ -105,7 +107,7 @@ namespace REA.Accounting.Core.HumanResources
                 throw new ArgumentException("Employee must be person type 'EM'.");
 
             base.UpdatePersonType(value);
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
 
         public string NationalIDNumber { get; private set; }
@@ -113,7 +115,7 @@ namespace REA.Accounting.Core.HumanResources
         {
             NationalIDNumber = NationalID.Create(value).Value!;
             CheckValidity();
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
 
         public string LoginID { get; private set; }
@@ -121,7 +123,7 @@ namespace REA.Accounting.Core.HumanResources
         {
             LoginID = Login.Create(value).Value;
             CheckValidity();
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
 
         public string OrganizationNode { get; private set; }
@@ -129,7 +131,7 @@ namespace REA.Accounting.Core.HumanResources
         {
             OrganizationNode = ValueObject.OrganizationNode.Create(value).Value;
             CheckValidity();
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
 
         public string JobTitle { get; private set; }
@@ -137,7 +139,7 @@ namespace REA.Accounting.Core.HumanResources
         {
             JobTitle = ValueObject.JobTitle.Create(value).Value;
             CheckValidity();
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
 
         public DateOnly BirthDate { get; private set; }
@@ -145,7 +147,7 @@ namespace REA.Accounting.Core.HumanResources
         {
             BirthDate = ValueObject.DateOfBirth.Create(value).Value;
             CheckValidity();
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
 
         public string MaritalStatus { get; private set; }
@@ -153,7 +155,7 @@ namespace REA.Accounting.Core.HumanResources
         {
             MaritalStatus = ValueObject.MaritalStatus.Create(value).Value;
             CheckValidity();
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
 
         public string Gender { get; private set; }
@@ -161,7 +163,7 @@ namespace REA.Accounting.Core.HumanResources
         {
             Gender = ValueObject.Gender.Create(value).Value;
             CheckValidity();
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
 
         public DateOnly HireDate { get; private set; }
@@ -169,7 +171,7 @@ namespace REA.Accounting.Core.HumanResources
         {
             HireDate = ValueObject.DateOfHire.Create(value).Value;
             CheckValidity();
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
 
         public bool IsSalaried { get; private set; }
@@ -177,7 +179,7 @@ namespace REA.Accounting.Core.HumanResources
         {
             IsSalaried = value;
             CheckValidity();
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
 
         public int VacationHours { get; private set; }
@@ -185,21 +187,21 @@ namespace REA.Accounting.Core.HumanResources
         {
             VacationHours = ValueObject.Vacation.Create(value).Value;
             CheckValidity();
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
 
         public int SickLeaveHours { get; private set; }
         public void UpdateSickLeaveHours(int value)
         {
             SickLeaveHours = ValueObject.SickLeave.Create(value).Value;
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
 
         public bool IsActive { get; private set; }
         public void UpdateIsActive(bool value)
         {
             IsActive = value;
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
 
         protected override void CheckValidity()

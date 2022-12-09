@@ -16,13 +16,11 @@ namespace REA.Accounting.SharedKernel
 
         public T Id { get; protected set; }
 
-        public DateTime CreatedDate { get; } = DateTime.UtcNow;
+        public DateTime? ModifiedDate { get; private set; }
 
-        public DateTime? LastModifiedDate { get; private set; }
-
-        public void UpdateLastModifiedDate()
+        public void UpdateModifiedDate()
         {
-            LastModifiedDate = DateTime.UtcNow;
+            ModifiedDate = DateTime.UtcNow;
         }
 
         protected virtual void CheckValidity()

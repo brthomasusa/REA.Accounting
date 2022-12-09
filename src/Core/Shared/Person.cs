@@ -10,6 +10,8 @@ namespace REA.Accounting.Core.Shared
 {
     public abstract class Person : Entity<int>
     {
+        protected Person() { }
+
         public Person
         (
             int personID,
@@ -20,7 +22,7 @@ namespace REA.Accounting.Core.Shared
             Suffix suffix,
             EmailPromotionEnum emailPromotionEnum
 
-        )
+        ) : this()
         {
             Id = personID;
             PersonType = personType.Value!;
@@ -37,21 +39,21 @@ namespace REA.Accounting.Core.Shared
         public virtual void UpdatePersonType(string value)
         {
             PersonType = ValueObject.PersonType.Create(value).Value!;
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
 
         public NameStyleEnum NameStyle { get; private set; }
         public void UpdateNameStyle(NameStyleEnum value)
         {
             NameStyle = Enum.IsDefined(typeof(NameStyleEnum), value) ? value : throw new ArgumentException("Invalid names style");
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
 
         public string Title { get; private set; }
         public void UpdateTitle(string value)
         {
             Title = ValueObject.Title.Create(value).Value!;
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
 
         public string FirstName { get; private set; }
@@ -59,7 +61,7 @@ namespace REA.Accounting.Core.Shared
         {
             PersonName name = PersonName.Create(LastName, value, MiddleName);
             FirstName = name.FirstName!;
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
 
         public string MiddleName { get; private set; }
@@ -67,7 +69,7 @@ namespace REA.Accounting.Core.Shared
         {
             PersonName name = PersonName.Create(LastName, FirstName, value);
             MiddleName = name.MiddleName!;
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
 
         public string LastName { get; private set; }
@@ -75,14 +77,14 @@ namespace REA.Accounting.Core.Shared
         {
             PersonName name = PersonName.Create(value, FirstName, MiddleName);
             LastName = name.LastName!;
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
 
         public string Suffix { get; private set; }
         public void UpdateSuffix(string value)
         {
             Suffix = ValueObject.Suffix.Create(value).Value!;
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
 
         public EmailPromotionEnum EmailPromotions { get; private set; }
@@ -91,7 +93,7 @@ namespace REA.Accounting.Core.Shared
             if (Enum.IsDefined(typeof(EmailPromotionEnum), value))
             {
                 EmailPromotions = value;
-                UpdateLastModifiedDate();
+                UpdateModifiedDate();
             }
             else
             {

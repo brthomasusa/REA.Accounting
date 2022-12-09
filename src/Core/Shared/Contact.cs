@@ -60,7 +60,7 @@ namespace REA.Accounting.Core.Shared
         public void UpdateContactType(ContactTypeEnum value)
         {
             ContactType = Enum.IsDefined(typeof(ContactTypeEnum), value) ? value : throw new ArgumentException("Invalid contact type.");
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
     }
 

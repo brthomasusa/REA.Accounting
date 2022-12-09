@@ -63,42 +63,42 @@ namespace REA.Accounting.Core.Shared
         public void UpdateAddressType(AddressTypeEnum value)
         {
             AddressType = Enum.IsDefined(typeof(AddressTypeEnum), value) ? value : throw new ArgumentException("Invalid address type.");
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
 
         public string AddressLine1 { get; private set; }
         public void UpdateAddressLine1(string value)
         {
             AddressLine1 = ValueObject.AddressLine1.Create(value).Value!;
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
 
         public string? AddressLine2 { get; private set; }
         public void UpdateAddressLine2(string value)
         {
             AddressLine2 = ValueObject.AddressLine2.Create(value).Value!;
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
 
         public string City { get; private set; }
         public void UpdateCity(string value)
         {
             City = ValueObject.City.Create(value).Value!;
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
 
         public int StateProvinceId { get; private set; }
         public void UpdateStateProvinceId(int value)
         {
             StateProvinceId = (value > 0 ? value : throw new ArgumentNullException("A state/province id is required."));
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
 
         public string PostalCode { get; private set; }
         public void UpdatePostalCode(string value)
         {
             PostalCode = ValueObject.PostalCode.Create(value).Value!;
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
     }
 

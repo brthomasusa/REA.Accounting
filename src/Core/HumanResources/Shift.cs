@@ -27,7 +27,7 @@ namespace REA.Accounting.Core.HumanResources
         public static Shift Create
         (
             int id,
-            ShiftName name,
+            string name,
             int startHour,
             int startMinute,
             int endHour,
@@ -44,21 +44,21 @@ namespace REA.Accounting.Core.HumanResources
         public void UpdateShiftName(string value)
         {
             Name = ShiftName.Create(value).Value!;
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
 
         public TimeOnly StartTime { get; private set; }
         public void UpdateStartTime(int hour, int minute)
         {
             StartTime = ShiftTime.Create(hour, minute).Value;
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
 
         public TimeOnly EndTime { get; private set; }
         public void UpdateEndTime(int hour, int minute)
         {
             EndTime = ShiftTime.Create(hour, minute).Value;
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
     }
 }

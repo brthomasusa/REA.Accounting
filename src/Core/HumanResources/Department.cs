@@ -1,5 +1,6 @@
 #pragma warning disable CS8618
 
+using System.Text.Json.Serialization;
 using REA.Accounting.SharedKernel;
 using REA.Accounting.SharedKernel.CommonValueObjects;
 
@@ -7,14 +8,14 @@ namespace REA.Accounting.Core.HumanResources
 {
     public class Department : Entity<int>
     {
-        protected Department() { }
+        public Department() { }
 
         private Department
         (
             int id,
             OrganizationName name,
             OrganizationName groupName
-        ) : this()
+        )
         {
             Id = id;
             Name = name.Value!;
@@ -34,14 +35,14 @@ namespace REA.Accounting.Core.HumanResources
         public void UpdateName(string value)
         {
             Name = OrganizationName.Create(value).Value!;
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
 
         public string GroupName { get; private set; }
         public void UpdateGroupName(string value)
         {
             GroupName = OrganizationName.Create(value).Value!;
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
     }
 }

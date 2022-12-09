@@ -40,7 +40,7 @@ namespace REA.Accounting.Core.Shared
         public void UpdatePhoneNumberType(PhoneNumberTypeEnum value)
         {
             PhoneNumberType = Enum.IsDefined(typeof(PhoneNumberTypeEnum), value) ? value : throw new ArgumentException("Invalid phone number type.");
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
 
         public string Telephone { get; private set; }
@@ -48,7 +48,7 @@ namespace REA.Accounting.Core.Shared
         {
             PhoneNumber phoneNumber = PhoneNumber.Create(value);
             Telephone = phoneNumber.Value!;
-            UpdateLastModifiedDate();
+            UpdateModifiedDate();
         }
     }
 

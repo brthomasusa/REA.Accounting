@@ -22,10 +22,11 @@ namespace REA.Accounting.Core.Organization
 
         private static void CheckValidity(string value)
         {                           // "^[1-9]\d?-\d{7}$"
-            if (!Regex.IsMatch(value, @"^\\d{2}-?\\d{7}$"))
-            {
-                throw new ArgumentException("Invalid employer identification number!", nameof(value));
-            }
+            if (string.IsNullOrEmpty(value))
+                throw new ArgumentNullException("employer identification number is require.");
+
+            if (!Regex.IsMatch(value, @"^\d{9}|\d{2}-\d{7}$"))
+                throw new ArgumentException($"Invalid employer identification number {value}!");
         }
     }
 }
