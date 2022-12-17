@@ -3,45 +3,12 @@
 using Xunit;
 using REA.Accounting.Core.HumanResources;
 using REA.Accounting.Core.HumanResources.ValueObjects;
-using REA.Accounting.Core.Organization;
 using REA.Accounting.SharedKernel.CommonValueObjects;
-using REA.Accounting.UnitTests.Data;
 
 namespace REA.Accounting.UnitTests.HumanResources
 {
     public class CompanyAggregate_Tests
     {
-        private ICompanyRepository _repository;
-
-        public CompanyAggregate_Tests()
-        {
-            _repository = new CompanyRepository();
-        }
-
-        [Fact]
-        public async Task LoadTestData_LoadEmployeeData_ShouldSucceed()
-        {
-            List<Employee> employees = await LoadTestData.LoadEmployeeData();
-
-            Assert.NotNull(employees);
-        }
-
-        [Fact]
-        public async Task LoadTestData_LoadDepartmentData_ShouldSucceed()
-        {
-            List<Department> departments = await LoadTestData.LoadDepartmentData();
-
-            Assert.NotNull(departments);
-        }
-
-        [Fact]
-        public async Task GetCompanyByIdAsync_CompanyRepository_ShouldSucceed()
-        {
-            Company company = await _repository.GetCompanyByIdAsync(1);
-
-            Assert.NotNull(company);
-        }
-
         [Fact]
         public void Create_Employee_ShouldSucceed()
         {

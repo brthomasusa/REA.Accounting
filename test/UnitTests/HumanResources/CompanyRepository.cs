@@ -1,41 +1,53 @@
-using REA.Accounting.Core.Organization;
-using REA.Accounting.Core.HumanResources;
-using REA.Accounting.Core.HumanResources.ValueObjects;
-using REA.Accounting.SharedKernel.CommonValueObjects;
 using REA.Accounting.UnitTests.Data;
+using REA.Accounting.Infrastructure.Persistence.DataModels.Sales;
+using REA.Accounting.Infrastructure.Persistence.DataModels.Organizations;
+using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
+using REA.Accounting.Infrastructure.Persistence.DataModels.HumanResources;
+using REA.Accounting.Infrastructure.Persistence.Interfaces;
 
 namespace REA.Accounting.UnitTests.HumanResources
 {
     public class CompanyRepository : ICompanyRepository
     {
-        private List<Employee>? _employees;
-        private List<Department>? _departments;
-        private List<Shift>? _shifts;
+        private HashSet<BusinessEntity>? _businessEntities;
+        private HashSet<Employee>? _employees;
+
+
+        // private List<Department>? _departments;
+        // private List<Shift>? _shifts;
 
         public CompanyRepository()
         {
+            BusinessEntitiesAsync();
             EmployeesAsync();
         }
 
         public async Task<Company> GetCompanyByIdAsync(int id)
         {
-            Company company = Company.Create
-            (
-                1,
-                OrganizationName.Create("AdventureWorks Cycles"),
-                OrganizationName.Create("AdventureWorks Cycles, Inc"),
-                EmployerIdentificationNumber.Create("12-3456789"),
-                WebsiteUrl.Create("https://www.AdventureWorksCycles.com"),
-                _employees!
-            );
+            Company company = new Company
+            {
+                BusinessEntityID = 1,
+                CompanyName = "AdventureWorks Cycles",
+                LegalName = "AdventureWorks Cycles, Inc",
+                EIN = "12-3456789",
+                WebsiteUrl = "https://www.AdventureWorksCycles.com",
+                RowGuid = Guid.NewGuid(),
+                ModifiedDate = new DateTime(2022, 1, 1)
+            };
 
             return await Task.FromResult(company);
         }
 
-        public async Task<List<Employee>> GetEmployeesAsync()
+        public async Task<HashSet<Employee>> GetEmployeesAsync()
             => await Task.FromResult(_employees!);
 
+        public async Task<HashSet<BusinessEntity>> GetBusinessEntitiesAsync()
+            => await Task.FromResult(_businessEntities!);
+
         private async void EmployeesAsync()
-            => _employees = await LoadTestData.LoadEmployeeData();
+            => _employees = await LoadTestData.LoadEmployeeDataAsync();
+
+        private async void BusinessEntitiesAsync()
+            => _businessEntities = await LoadTestData.LoadBusinessEntityDataAsync();
     }
 }
