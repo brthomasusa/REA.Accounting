@@ -38,7 +38,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Configurations.Organizations
             entity.Property(e => e.ModifiedDate)
                 .HasColumnName("ModifiedDate")
                 .IsRequired()
-                .HasDefaultValueSql("getdate()");
+                .HasDefaultValue(DateTime.Now);
         }
     }
 }

@@ -40,7 +40,7 @@ namespace REA.Accounting.UnitTests.HumanResources
             HashSet<BusinessEntity> entities = await _repository.GetBusinessEntitiesAsync();
 
             Assert.NotNull(entities);
-            Assert.Equal(99, entities.Count);
+            Assert.Equal(33, entities.Count);
         }
 
         [Fact]

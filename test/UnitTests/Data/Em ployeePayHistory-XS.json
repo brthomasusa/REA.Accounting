@@ -1,0 +1,261 @@
+[
+  {
+    "BusinessEntityID": 2,
+    "RateChangeDate": "2008-01-31T00:00:00",
+    "Rate": 63.4615,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 3,
+    "RateChangeDate": "2007-11-11T00:00:00",
+    "Rate": 43.2692,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 16,
+    "RateChangeDate": "2007-12-20T00:00:00",
+    "Rate": 24.00,
+    "PayFrequency": 2,
+    "ModifiedDate": "2007-12-06T00:00:00"
+  },
+  {
+    "BusinessEntityID": 16,
+    "RateChangeDate": "2009-07-15T00:00:00",
+    "Rate": 28.75,
+    "PayFrequency": 2,
+    "ModifiedDate": "2009-07-01T00:00:00"
+  },
+  {
+    "BusinessEntityID": 16,
+    "RateChangeDate": "2012-04-30T00:00:00",
+    "Rate": 37.50,
+    "PayFrequency": 2,
+    "ModifiedDate": "2012-04-16T00:00:00"
+  },
+  {
+    "BusinessEntityID": 17,
+    "RateChangeDate": "2007-01-26T00:00:00",
+    "Rate": 13.4615,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 18,
+    "RateChangeDate": "2011-02-07T00:00:00",
+    "Rate": 14.4231,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 19,
+    "RateChangeDate": "2011-02-14T00:00:00",
+    "Rate": 13.4615,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 20,
+    "RateChangeDate": "2011-01-07T00:00:00",
+    "Rate": 13.4615,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 21,
+    "RateChangeDate": "2009-03-02T00:00:00",
+    "Rate": 14.4231,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 22,
+    "RateChangeDate": "2008-12-12T00:00:00",
+    "Rate": 14.4231,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 23,
+    "RateChangeDate": "2009-01-12T00:00:00",
+    "Rate": 14.4231,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 24,
+    "RateChangeDate": "2009-01-18T00:00:00",
+    "Rate": 14.4231,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 25,
+    "RateChangeDate": "2009-02-03T00:00:00",
+    "Rate": 84.1346,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 26,
+    "RateChangeDate": "2008-12-01T00:00:00",
+    "Rate": 24.5192,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 211,
+    "RateChangeDate": "2009-02-28T00:00:00",
+    "Rate": 28.8462,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 222,
+    "RateChangeDate": "2008-12-12T00:00:00",
+    "Rate": 23.5577,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 227,
+    "RateChangeDate": "2009-12-02T00:00:00",
+    "Rate": 24.0385,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 234,
+    "RateChangeDate": "2009-01-31T00:00:00",
+    "Rate": 39.06,
+    "PayFrequency": 2,
+    "ModifiedDate": "2009-01-17T00:00:00"
+  },
+  {
+    "BusinessEntityID": 234,
+    "RateChangeDate": "2011-11-14T00:00:00",
+    "Rate": 48.5577,
+    "PayFrequency": 2,
+    "ModifiedDate": "2011-10-31T00:00:00"
+  },
+  {
+    "BusinessEntityID": 234,
+    "RateChangeDate": "2012-01-29T00:00:00",
+    "Rate": 60.0962,
+    "PayFrequency": 2,
+    "ModifiedDate": "2012-01-15T00:00:00"
+  },
+  {
+    "BusinessEntityID": 235,
+    "RateChangeDate": "2008-12-06T00:00:00",
+    "Rate": 27.1394,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 241,
+    "RateChangeDate": "2009-01-30T00:00:00",
+    "Rate": 34.7356,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 249,
+    "RateChangeDate": "2008-12-25T00:00:00",
+    "Rate": 43.2692,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 262,
+    "RateChangeDate": "2009-01-12T00:00:00",
+    "Rate": 13.4615,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 263,
+    "RateChangeDate": "2008-12-11T00:00:00",
+    "Rate": 50.4808,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 264,
+    "RateChangeDate": "2009-02-04T00:00:00",
+    "Rate": 39.6635,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 267,
+    "RateChangeDate": "2009-02-16T00:00:00",
+    "Rate": 27.4038,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 268,
+    "RateChangeDate": "2009-02-03T00:00:00",
+    "Rate": 27.4038,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 269,
+    "RateChangeDate": "2009-01-11T00:00:00",
+    "Rate": 27.4038,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 270,
+    "RateChangeDate": "2009-01-17T00:00:00",
+    "Rate": 38.4615,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 271,
+    "RateChangeDate": "2009-01-22T00:00:00",
+    "Rate": 38.4615,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 272,
+    "RateChangeDate": "2008-12-23T00:00:00",
+    "Rate": 27.4038,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 273,
+    "RateChangeDate": "2011-02-15T00:00:00",
+    "Rate": 72.1154,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 274,
+    "RateChangeDate": "2011-01-04T00:00:00",
+    "Rate": 48.101,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 285,
+    "RateChangeDate": "2013-03-14T00:00:00",
+    "Rate": 48.101,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 287,
+    "RateChangeDate": "2012-04-16T00:00:00",
+    "Rate": 48.101,
+    "PayFrequency": 2,
+    "ModifiedDate": "2014-06-30T00:00:00"
+  }
+]

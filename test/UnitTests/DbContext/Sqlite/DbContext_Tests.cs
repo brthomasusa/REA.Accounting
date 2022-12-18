@@ -17,17 +17,15 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
             //SETUP
             var options = SqliteInMemory.CreateOptions<EfCoreContext>();
 
-            using (var context = new EfCoreContext(options))
-            {
-                context.Database.EnsureCreated();
-                await context.SeedBusinessEntityAndCompany();
+            using var context = new EfCoreContext(options);
+            context.Database.EnsureCreated();
+            await context.SeedBusinessEntities();
 
-                //ATTEMPT
-                BusinessEntity? businessEntity = context.BusinessEntity!.Find(290);
+            //ATTEMPT
+            BusinessEntity? businessEntity = context.BusinessEntity!.Find(287);
 
-                //VERIFY
-                Assert.Equal(new Guid("de909360-485d-4fc5-9935-bef2074e7493"), businessEntity!.RowGuid);
-            }
+            //VERIFY
+            Assert.Equal(new Guid("d7d20616-c4c7-43c8-9fb8-7eba84aad8e1"), businessEntity!.RowGuid);
         }
 
         [Fact]
@@ -36,57 +34,79 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
             //SETUP
             var options = SqliteInMemory.CreateOptions<EfCoreContext>();
 
-            using (var context = new EfCoreContext(options))
-            {
-                context.Database.EnsureCreated();
+            using var context = new EfCoreContext(options);
+            context.Database.EnsureCreated();
 
-                //ATTEMPT
-                DateTime modified = new DateTime(2022, 12, 16);
-                BusinessEntity? businessEntity = new() { BusinessEntityID = 291, RowGuid = Guid.NewGuid(), ModifiedDate = modified };
-                context.BusinessEntity!.Add(businessEntity);
-                await context.SaveChangesAsync();
+            //ATTEMPT
+            BusinessEntity businessEntity = new() { RowGuid = Guid.NewGuid(), ModifiedDate = DateTime.Now };
+            context.BusinessEntity!.Add(businessEntity);
+            await context.SaveChangesAsync();
 
-                BusinessEntity? result = context.BusinessEntity!.FirstOrDefault();
+            BusinessEntity? result = context.BusinessEntity!.FirstOrDefault();
 
-                //VERIFY
-                Assert.NotNull(result);
-                Console.WriteLine($"ID: {result!.BusinessEntityID}");
-            }
+            //VERIFY
+            Assert.NotNull(result);
         }
 
-        // [Fact]
-        // public async Task Create_Company_ShouldSucceed()
-        // {
-        //     //SETUP
-        //     var options = SqliteInMemory.CreateOptions<EfCoreContext>();
+        [Fact]
+        public async Task Create_BusinessEntityWithCompany_ShouldSucceed()
+        {
+            //SETUP
+            var options = SqliteInMemory.CreateOptions<EfCoreContext>();
 
-        //     using (var context = new EfCoreContext(options))
-        //     {
-        //         context.Database.EnsureCreated();
+            using var context = new EfCoreContext(options);
+            context.Database.EnsureCreated();
+            BusinessEntity entity = new()
+            {
+                BusinessEntityID = 1,
+                Company = new()
+                {
+                    CompanyName = "AdventureWorks Cycles",
+                    LegalName = "AdventureWorks Cycles LLC",
+                    EIN = "12-3456789",
+                    WebsiteUrl = "https:\\www.Adventureworkscycles.com"
+                }
+            };
 
-        //         //ATTEMPT
-        //         DateTime modified = new DateTime(2022, 12, 16);
-        //         BusinessEntity? businessEntity = new() { BusinessEntityID = 0, RowGuid = Guid.NewGuid(), ModifiedDate = modified };
-        //         context.BusinessEntity!.Add(businessEntity);
-        //         await context.SaveChangesAsync();
-        //         // Company company = new()
-        //         // {
+            await context.BusinessEntity!.AddAsync(entity);
+            await context.SaveChangesAsync();
 
-        //         // };
+            //ATTEMPT
+            BusinessEntity? result = context.BusinessEntity!.FirstOrDefault();
 
-        //         //VERIFY
-        //         Assert.Equal(new Guid("de909360-485d-4fc5-9935-bef2074e7493"), businessEntity!.RowGuid);
-        //     }
-        // }
+            //VERIFY
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public async Task Create_BusinessEntityAddress_ShouldSucceed()
+        {
+            //SETUP
+            var options = SqliteInMemory.CreateOptions<EfCoreContext>();
+
+            using var context = new EfCoreContext(options);
+            context.Database.EnsureCreated();
+
+            BusinessEntity entity = new()
+            {
+                BusinessEntityID = 1,
+                BusinessEntityAddress = new()
+                {
+                    AddressID = 1,
+                    AddressTypeID = 1
+                }
+            };
+
+            await context.AddAsync(entity);
+            await context.SaveChangesAsync();
+
+            //ATTEMPT
+            BusinessEntityAddress? result = context.BusinessEntityAddress!.FirstOrDefault();
+
+            //VERIFY
+            Assert.NotNull(result);
+        }
+
+
     }
 }
-
-/*
-public int BusinessEntityID { get; set; }
-public string? CompanyName { get; set; }
-public string? LegalName { get; set; }
-public string? EIN { get; set; }
-public string? WebsiteUrl { get; set; }
-public Guid RowGuid { get; set; }
-public DateTime ModifiedDate { get; set; }
-*/

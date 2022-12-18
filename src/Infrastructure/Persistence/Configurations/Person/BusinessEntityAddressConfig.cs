@@ -1,27 +1,23 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using REA.Accounting.Infrastructure.Persistence.DataModels.Organizations;
 using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
 
 namespace REA.Accounting.Infrastructure.Persistence.Configurations.Person
 {
-    internal class BusinessEntityConfig : IEntityTypeConfiguration<BusinessEntity>
+    internal class BusinessEntityAddressConfig : IEntityTypeConfiguration<BusinessEntityAddress>
     {
-        public void Configure(EntityTypeBuilder<BusinessEntity> entity)
+        public void Configure(EntityTypeBuilder<BusinessEntityAddress> entity)
         {
-            entity.ToTable("BusinessEntity", schema: "Person");
-            entity.HasKey(e => e.BusinessEntityID);
-            entity.HasOne(p => p.BusinessEntityAddress)
-                .WithOne()
-                .HasForeignKey<BusinessEntityAddress>(p => p.BusinessEntityID)
-                .IsRequired();
-            entity.HasOne(p => p.Company)
-                .WithOne()
-                .HasForeignKey<Company>(p => p.BusinessEntityID)
-                .IsRequired();
+            entity.ToTable("BusinessEntityAddress", schema: "Person");
+            entity.HasKey(e => new { e.BusinessEntityID, e.AddressID, e.AddressTypeID });
+
             entity.Property(e => e.BusinessEntityID)
                 .HasColumnName("BusinessEntityID")
-                .ValueGeneratedOnAdd();
+                .ValueGeneratedNever();
+            entity.Property(e => e.AddressID)
+                .HasColumnName("AddressID");
+            entity.Property(e => e.AddressTypeID)
+                .HasColumnName("AddressTypeID");
             entity.Property(e => e.RowGuid)
                 .HasColumnName("rowguid")
                 .HasColumnType("UNIQUEIDENTIFIER")

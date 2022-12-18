@@ -9,6 +9,8 @@ namespace REA.Accounting.UnitTests.Data
 {
     public static class LoadTestData
     {
+        static readonly string BaseFilePath = "../../../Data/";
+
         public static async Task LoadAllData()
         {
             Task<List<PersonPhone>> getPhonesTask = Task.Run(() => LoadTestData.LoadTelephoneData())
@@ -120,7 +122,7 @@ namespace REA.Accounting.UnitTests.Data
 
         private static HashSet<BusinessEntity> LoadBusinessEntityData()
         {
-            const string fileName = "/home/bthomas/Projects/NetCore/REA.Accounting/test/UnitTests/Data/BusinessEntity-SM.json";
+            string fileName = $"{BaseFilePath}BusinessEntity-XS.json";
             string jsonString = File.ReadAllText(fileName);
 
             return JsonConvert.DeserializeObject<HashSet<BusinessEntity>>(jsonString)!;

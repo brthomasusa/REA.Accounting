@@ -15,6 +15,9 @@ namespace REA.Accounting.Infrastructure.Persistence
 
         public DbSet<BusinessEntity>? BusinessEntity { get; set; }
         public DbSet<Company>? Company { get; set; }
+        public DbSet<BusinessEntityAddress>? BusinessEntityAddress { get; set; }
+        public DbSet<Address>? Address { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

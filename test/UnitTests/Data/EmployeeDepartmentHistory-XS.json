@@ -1,0 +1,282 @@
+[
+  {
+    "BusinessEntityID": 2,
+    "DepartmentID": 1,
+    "ShiftID": 1,
+    "StartDate": "2008-01-31T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2008-01-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 3,
+    "DepartmentID": 1,
+    "ShiftID": 1,
+    "StartDate": "2007-11-11T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2007-11-10T00:00:00"
+  },
+  {
+    "BusinessEntityID": 16,
+    "DepartmentID": 5,
+    "ShiftID": 1,
+    "StartDate": "2007-12-20T00:00:00",
+    "EndDate": "2009-07-14T00:00:00",
+    "ModifiedDate": "2009-07-12T00:00:00"
+  },
+  {
+    "BusinessEntityID": 16,
+    "DepartmentID": 4,
+    "ShiftID": 1,
+    "StartDate": "2009-07-15T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2009-07-14T00:00:00"
+  },
+  {
+    "BusinessEntityID": 17,
+    "DepartmentID": 4,
+    "ShiftID": 1,
+    "StartDate": "2007-01-26T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2007-01-25T00:00:00"
+  },
+  {
+    "BusinessEntityID": 18,
+    "DepartmentID": 4,
+    "ShiftID": 1,
+    "StartDate": "2011-02-07T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2011-02-06T00:00:00"
+  },
+  {
+    "BusinessEntityID": 19,
+    "DepartmentID": 4,
+    "ShiftID": 1,
+    "StartDate": "2011-02-14T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2011-02-13T00:00:00"
+  },
+  {
+    "BusinessEntityID": 20,
+    "DepartmentID": 4,
+    "ShiftID": 1,
+    "StartDate": "2011-01-07T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2011-01-06T00:00:00"
+  },
+  {
+    "BusinessEntityID": 21,
+    "DepartmentID": 4,
+    "ShiftID": 1,
+    "StartDate": "2009-03-02T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2009-03-01T00:00:00"
+  },
+  {
+    "BusinessEntityID": 22,
+    "DepartmentID": 4,
+    "ShiftID": 1,
+    "StartDate": "2008-12-12T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2008-12-11T00:00:00"
+  },
+  {
+    "BusinessEntityID": 23,
+    "DepartmentID": 4,
+    "ShiftID": 1,
+    "StartDate": "2009-01-12T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2009-01-11T00:00:00"
+  },
+  {
+    "BusinessEntityID": 24,
+    "DepartmentID": 4,
+    "ShiftID": 1,
+    "StartDate": "2009-01-18T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2009-01-17T00:00:00"
+  },
+  {
+    "BusinessEntityID": 25,
+    "DepartmentID": 7,
+    "ShiftID": 1,
+    "StartDate": "2009-02-03T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2009-02-02T00:00:00"
+  },
+  {
+    "BusinessEntityID": 26,
+    "DepartmentID": 8,
+    "ShiftID": 1,
+    "StartDate": "2008-12-01T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2008-11-30T00:00:00"
+  },
+  {
+    "BusinessEntityID": 211,
+    "DepartmentID": 13,
+    "ShiftID": 1,
+    "StartDate": "2009-02-28T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2009-02-27T00:00:00"
+  },
+  {
+    "BusinessEntityID": 222,
+    "DepartmentID": 8,
+    "ShiftID": 1,
+    "StartDate": "2008-12-12T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2008-12-11T00:00:00"
+  },
+  {
+    "BusinessEntityID": 227,
+    "DepartmentID": 14,
+    "ShiftID": 1,
+    "StartDate": "2009-12-02T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2009-12-01T00:00:00"
+  },
+  {
+    "BusinessEntityID": 234,
+    "DepartmentID": 10,
+    "ShiftID": 1,
+    "StartDate": "2009-01-31T00:00:00",
+    "EndDate": "2013-11-13T00:00:00",
+    "ModifiedDate": "2013-11-11T00:00:00"
+  },
+  {
+    "BusinessEntityID": 234,
+    "DepartmentID": 16,
+    "ShiftID": 1,
+    "StartDate": "2013-11-14T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2013-11-13T00:00:00"
+  },
+  {
+    "BusinessEntityID": 235,
+    "DepartmentID": 9,
+    "ShiftID": 1,
+    "StartDate": "2008-12-06T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2008-12-05T00:00:00"
+  },
+  {
+    "BusinessEntityID": 241,
+    "DepartmentID": 10,
+    "ShiftID": 1,
+    "StartDate": "2009-01-30T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2009-01-29T00:00:00"
+  },
+  {
+    "BusinessEntityID": 249,
+    "DepartmentID": 10,
+    "ShiftID": 1,
+    "StartDate": "2008-12-25T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2008-12-24T00:00:00"
+  },
+  {
+    "BusinessEntityID": 262,
+    "DepartmentID": 10,
+    "ShiftID": 1,
+    "StartDate": "2009-01-12T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2009-01-11T00:00:00"
+  },
+  {
+    "BusinessEntityID": 263,
+    "DepartmentID": 11,
+    "ShiftID": 1,
+    "StartDate": "2008-12-11T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2008-12-10T00:00:00"
+  },
+  {
+    "BusinessEntityID": 264,
+    "DepartmentID": 11,
+    "ShiftID": 1,
+    "StartDate": "2009-02-04T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2009-02-03T00:00:00"
+  },
+  {
+    "BusinessEntityID": 267,
+    "DepartmentID": 11,
+    "ShiftID": 1,
+    "StartDate": "2009-02-16T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2009-02-15T00:00:00"
+  },
+  {
+    "BusinessEntityID": 268,
+    "DepartmentID": 11,
+    "ShiftID": 1,
+    "StartDate": "2009-02-03T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2009-02-02T00:00:00"
+  },
+  {
+    "BusinessEntityID": 269,
+    "DepartmentID": 11,
+    "ShiftID": 1,
+    "StartDate": "2009-01-11T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2009-01-10T00:00:00"
+  },
+  {
+    "BusinessEntityID": 270,
+    "DepartmentID": 11,
+    "ShiftID": 1,
+    "StartDate": "2009-01-17T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2009-01-16T00:00:00"
+  },
+  {
+    "BusinessEntityID": 271,
+    "DepartmentID": 11,
+    "ShiftID": 1,
+    "StartDate": "2009-01-22T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2009-01-21T00:00:00"
+  },
+  {
+    "BusinessEntityID": 272,
+    "DepartmentID": 11,
+    "ShiftID": 1,
+    "StartDate": "2008-12-23T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2008-12-22T00:00:00"
+  },
+  {
+    "BusinessEntityID": 273,
+    "DepartmentID": 3,
+    "ShiftID": 1,
+    "StartDate": "2011-02-15T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2011-02-14T00:00:00"
+  },
+  {
+    "BusinessEntityID": 274,
+    "DepartmentID": 3,
+    "ShiftID": 1,
+    "StartDate": "2011-01-04T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2011-01-03T00:00:00"
+  },
+  {
+    "BusinessEntityID": 285,
+    "DepartmentID": 3,
+    "ShiftID": 1,
+    "StartDate": "2013-03-14T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2013-03-13T00:00:00"
+  },
+  {
+    "BusinessEntityID": 287,
+    "DepartmentID": 3,
+    "ShiftID": 1,
+    "StartDate": "2012-04-16T00:00:00",
+    "EndDate": null,
+    "ModifiedDate": "2012-04-15T00:00:00"
+  }
+]

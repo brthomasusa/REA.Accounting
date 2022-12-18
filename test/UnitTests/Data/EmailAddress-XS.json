@@ -1,0 +1,233 @@
+[
+  {
+    "BusinessEntityID": 2,
+    "EmailAddressID": 2,
+    "EmailAddress": "terri0@adventure-works.com",
+    "rowguid": "b5ff9efd-72a2-4f87-830b-f338fdd4d162",
+    "ModifiedDate": "2008-01-24T00:00:00"
+  },
+  {
+    "BusinessEntityID": 3,
+    "EmailAddressID": 3,
+    "EmailAddress": "roberto0@adventure-works.com",
+    "rowguid": "c8a51084-1c03-4c58-a8b3-55854ae7c499",
+    "ModifiedDate": "2007-11-04T00:00:00"
+  },
+  {
+    "BusinessEntityID": 16,
+    "EmailAddressID": 16,
+    "EmailAddress": "david0@adventure-works.com",
+    "rowguid": "80c0d44a-78b6-42ac-ae8d-410a22a6be63",
+    "ModifiedDate": "2007-12-13T00:00:00"
+  },
+  {
+    "BusinessEntityID": 17,
+    "EmailAddressID": 17,
+    "EmailAddress": "kevin0@adventure-works.com",
+    "rowguid": "f4332215-c861-4a54-99f5-b0c4f6406515",
+    "ModifiedDate": "2007-01-19T00:00:00"
+  },
+  {
+    "BusinessEntityID": 18,
+    "EmailAddressID": 18,
+    "EmailAddress": "john5@adventure-works.com",
+    "rowguid": "a944fc67-f16e-4ab8-8940-8ceff186bed3",
+    "ModifiedDate": "2011-01-31T00:00:00"
+  },
+  {
+    "BusinessEntityID": 19,
+    "EmailAddressID": 19,
+    "EmailAddress": "mary2@adventure-works.com",
+    "rowguid": "626cb0e6-d6a9-4a73-8227-acb02dbc5214",
+    "ModifiedDate": "2011-02-07T00:00:00"
+  },
+  {
+    "BusinessEntityID": 20,
+    "EmailAddressID": 20,
+    "EmailAddress": "wanida0@adventure-works.com",
+    "rowguid": "924a0fc3-f9e4-4100-8c82-1c69aae4501f",
+    "ModifiedDate": "2010-12-31T00:00:00"
+  },
+  {
+    "BusinessEntityID": 21,
+    "EmailAddressID": 21,
+    "EmailAddress": "terry0@adventure-works.com",
+    "rowguid": "001ada12-a5d4-44e7-97ef-610888c011c5",
+    "ModifiedDate": "2009-02-23T00:00:00"
+  },
+  {
+    "BusinessEntityID": 22,
+    "EmailAddressID": 22,
+    "EmailAddress": "sariya0@adventure-works.com",
+    "rowguid": "ba309cb3-c089-4bd8-a9ca-aac0ce2b7bbf",
+    "ModifiedDate": "2008-12-05T00:00:00"
+  },
+  {
+    "BusinessEntityID": 23,
+    "EmailAddressID": 23,
+    "EmailAddress": "mary0@adventure-works.com",
+    "rowguid": "4e589721-922b-4a26-a138-b9d5a1813ec7",
+    "ModifiedDate": "2009-01-05T00:00:00"
+  },
+  {
+    "BusinessEntityID": 24,
+    "EmailAddressID": 24,
+    "EmailAddress": "jill0@adventure-works.com",
+    "rowguid": "76c0ad95-1552-4867-a95f-7460ef3f3eee",
+    "ModifiedDate": "2009-01-11T00:00:00"
+  },
+  {
+    "BusinessEntityID": 25,
+    "EmailAddressID": 25,
+    "EmailAddress": "james1@adventure-works.com",
+    "rowguid": "2fb4a156-a73c-4fb6-adee-d36bc1435c87",
+    "ModifiedDate": "2009-01-27T00:00:00"
+  },
+  {
+    "BusinessEntityID": 26,
+    "EmailAddressID": 26,
+    "EmailAddress": "peter0@adventure-works.com",
+    "rowguid": "2153cb40-e8b1-43c3-9791-6bff91e75d77",
+    "ModifiedDate": "2008-11-24T00:00:00"
+  },
+  {
+    "BusinessEntityID": 211,
+    "EmailAddressID": 211,
+    "EmailAddress": "hazem0@adventure-works.com",
+    "rowguid": "0c80d162-0d8a-452e-9ef5-f6c6fee819a3",
+    "ModifiedDate": "2009-02-21T00:00:00"
+  },
+  {
+    "BusinessEntityID": 222,
+    "EmailAddressID": 222,
+    "EmailAddress": "ascott0@adventure-works.com",
+    "rowguid": "96aa826f-2432-48de-a741-bd4139072f12",
+    "ModifiedDate": "2008-12-05T00:00:00"
+  },
+  {
+    "BusinessEntityID": 227,
+    "EmailAddressID": 227,
+    "EmailAddress": "gary1@adventure-works.com",
+    "rowguid": "cd84ec01-4aa3-4b59-a527-20058fba9db4",
+    "ModifiedDate": "2009-11-25T00:00:00"
+  },
+  {
+    "BusinessEntityID": 234,
+    "EmailAddressID": 234,
+    "EmailAddress": "laura1@adventure-works.com",
+    "rowguid": "2a42372e-3908-4003-9428-c05a9199a168",
+    "ModifiedDate": "2009-01-24T00:00:00"
+  },
+  {
+    "BusinessEntityID": 235,
+    "EmailAddressID": 235,
+    "EmailAddress": "paula0@adventure-works.com",
+    "rowguid": "b38ead76-9ec0-42c4-b9a3-b42a284f5373",
+    "ModifiedDate": "2008-11-29T00:00:00"
+  },
+  {
+    "BusinessEntityID": 241,
+    "EmailAddressID": 241,
+    "EmailAddress": "david6@adventure-works.com",
+    "rowguid": "e8f11601-3e46-4156-bbe3-87331ce7a0cc",
+    "ModifiedDate": "2009-01-23T00:00:00"
+  },
+  {
+    "BusinessEntityID": 249,
+    "EmailAddressID": 249,
+    "EmailAddress": "wendy0@adventure-works.com",
+    "rowguid": "53540cfa-a13e-4ee2-9630-2f356d1fbf18",
+    "ModifiedDate": "2008-12-18T00:00:00"
+  },
+  {
+    "BusinessEntityID": 262,
+    "EmailAddressID": 262,
+    "EmailAddress": "david5@adventure-works.com",
+    "rowguid": "f7f2713d-d497-435f-8469-092614d086ff",
+    "ModifiedDate": "2009-01-05T00:00:00"
+  },
+  {
+    "BusinessEntityID": 263,
+    "EmailAddressID": 263,
+    "EmailAddress": "jean0@adventure-works.com",
+    "rowguid": "4c9760a8-c70a-4466-8bf9-4477e9b18783",
+    "ModifiedDate": "2008-12-04T00:00:00"
+  },
+  {
+    "BusinessEntityID": 264,
+    "EmailAddressID": 264,
+    "EmailAddress": "stephanie0@adventure-works.com",
+    "rowguid": "017f05e6-8c30-412b-812b-6db0e986423a",
+    "ModifiedDate": "2009-01-28T00:00:00"
+  },
+  {
+    "BusinessEntityID": 267,
+    "EmailAddressID": 267,
+    "EmailAddress": "karen1@adventure-works.com",
+    "rowguid": "1112c568-5544-45a1-88a5-21ec9283210f",
+    "ModifiedDate": "2009-02-09T00:00:00"
+  },
+  {
+    "BusinessEntityID": 268,
+    "EmailAddressID": 268,
+    "EmailAddress": "ramesh0@adventure-works.com",
+    "rowguid": "6b5acc98-6e4b-488f-8911-312a06c33289",
+    "ModifiedDate": "2009-01-27T00:00:00"
+  },
+  {
+    "BusinessEntityID": 269,
+    "EmailAddressID": 269,
+    "EmailAddress": "dan0@adventure-works.com",
+    "rowguid": "5954318b-2b3a-43cb-9eb3-a0657c73576a",
+    "ModifiedDate": "2009-01-04T00:00:00"
+  },
+  {
+    "BusinessEntityID": 270,
+    "EmailAddressID": 270,
+    "EmailAddress": "françois0@adventure-works.com",
+    "rowguid": "2cacb34f-000e-4cd5-8c6a-cd15524bc7e6",
+    "ModifiedDate": "2009-01-10T00:00:00"
+  },
+  {
+    "BusinessEntityID": 271,
+    "EmailAddressID": 271,
+    "EmailAddress": "dan1@adventure-works.com",
+    "rowguid": "3b1522ce-f49f-4362-a1f3-30fe0c76a544",
+    "ModifiedDate": "2009-01-15T00:00:00"
+  },
+  {
+    "BusinessEntityID": 272,
+    "EmailAddressID": 272,
+    "EmailAddress": "janaina0@adventure-works.com",
+    "rowguid": "447c10d1-04ae-40b8-a53d-17f649495396",
+    "ModifiedDate": "2008-12-16T00:00:00"
+  },
+  {
+    "BusinessEntityID": 273,
+    "EmailAddressID": 273,
+    "EmailAddress": "brian3@adventure-works.com",
+    "rowguid": "9799432a-d34e-4f2c-bb4c-3049584dcebf",
+    "ModifiedDate": "2011-02-08T00:00:00"
+  },
+  {
+    "BusinessEntityID": 274,
+    "EmailAddressID": 274,
+    "EmailAddress": "stephen0@adventure-works.com",
+    "rowguid": "fafced5b-ff48-4397-855a-adee1a5136de",
+    "ModifiedDate": "2010-12-28T00:00:00"
+  },
+  {
+    "BusinessEntityID": 285,
+    "EmailAddressID": 285,
+    "EmailAddress": "syed0@adventure-works.com",
+    "rowguid": "9c7834dd-94ee-4b0d-bceb-0233208abe23",
+    "ModifiedDate": "2013-03-07T00:00:00"
+  },
+  {
+    "BusinessEntityID": 287,
+    "EmailAddressID": 287,
+    "EmailAddress": "amy0@adventure-works.com",
+    "rowguid": "6c06ac65-4dbb-4ab2-9e7c-4d35874ed980",
+    "ModifiedDate": "2012-04-09T00:00:00"
+  }
+]
