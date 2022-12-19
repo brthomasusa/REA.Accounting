@@ -86,6 +86,7 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
 
             using var context = new EfCoreContext(options);
             context.Database.EnsureCreated();
+            // await context.SeedPersonLookupData();
 
             BusinessEntity entity = new()
             {

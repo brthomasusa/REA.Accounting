@@ -55,6 +55,15 @@ namespace REA.Accounting.UnitTests.Data
             return await Task.FromResult(JsonConvert.DeserializeObject<List<Shift>>(jsonString)!);
         }
 
+        public static async Task<HashSet<AddressType>> LoadAddressTypeDataAsync()
+        {
+            Task<HashSet<AddressType>> getAddressTypeTask = Task.Run(() => LoadTestData.LoadAddressTypeData())
+                                                                .ContinueWith(antecedent => antecedent.Result);
+
+            return await Task.FromResult(getAddressTypeTask.Result);
+        }
+
+
         public static async Task<List<Address>> LoadAddressData()
         {
             string fileName = "/home/bthomas/Projects/NetCore/REA.Accounting/test/UnitTests/Data/Address-SM.json";
@@ -128,5 +137,12 @@ namespace REA.Accounting.UnitTests.Data
             return JsonConvert.DeserializeObject<HashSet<BusinessEntity>>(jsonString)!;
         }
 
+        private static HashSet<AddressType> LoadAddressTypeData()
+        {
+            string fileName = $"{BaseFilePath}AddressType.json";
+            string jsonString = File.ReadAllText(fileName);
+
+            return JsonConvert.DeserializeObject<HashSet<AddressType>>(jsonString)!;
+        }
     }
 }

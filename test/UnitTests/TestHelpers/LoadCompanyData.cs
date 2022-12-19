@@ -36,5 +36,12 @@ namespace REA.Accounting.UnitTests.TestHelpers
             await context.BusinessEntity!.AddAsync(entity);
             await context.SaveChangesAsync();
         }
+
+        public static async Task SeedPersonLookupData(this EfCoreContext context)
+        {
+            HashSet<AddressType> addressTypes = await Data.LoadTestData.LoadAddressTypeDataAsync();
+            await context.AddressType!.AddRangeAsync(addressTypes);
+            await context.SaveChangesAsync();
+        }
     }
 }

@@ -9,5 +9,6 @@ namespace REA.Accounting.Infrastructure.Persistence.Interfaces
         Task<Company> GetCompanyByIdAsync(int id);
         Task<HashSet<Employee>> GetEmployeesAsync();
         Task<HashSet<BusinessEntity>> GetBusinessEntitiesAsync();
+        Task<HashSet<AddressType>> GetAddressTypeAsync();
     }
 }

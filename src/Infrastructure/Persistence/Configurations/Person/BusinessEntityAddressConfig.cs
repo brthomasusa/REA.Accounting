@@ -10,7 +10,10 @@ namespace REA.Accounting.Infrastructure.Persistence.Configurations.Person
         {
             entity.ToTable("BusinessEntityAddress", schema: "Person");
             entity.HasKey(e => new { e.BusinessEntityID, e.AddressID, e.AddressTypeID });
-
+            entity.HasOne<AddressType>()
+                .WithMany()
+                .HasPrincipalKey(p => p.AddressTypeID)
+                .IsRequired();
             entity.Property(e => e.BusinessEntityID)
                 .HasColumnName("BusinessEntityID")
                 .ValueGeneratedNever();

@@ -13,6 +13,9 @@ namespace REA.Accounting.Infrastructure.Persistence
             : base(options)
         { }
 
+        public DbSet<AddressType>? AddressType { get; set; }
+        public DbSet<ContactType>? ContactType { get; set; }
+        public DbSet<PhoneNumberType>? PhoneNumberType { get; set; }
         public DbSet<BusinessEntity>? BusinessEntity { get; set; }
         public DbSet<Company>? Company { get; set; }
         public DbSet<BusinessEntityAddress>? BusinessEntityAddress { get; set; }

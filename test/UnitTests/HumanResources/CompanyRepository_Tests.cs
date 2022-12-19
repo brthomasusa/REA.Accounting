@@ -44,6 +44,23 @@ namespace REA.Accounting.UnitTests.HumanResources
         }
 
         [Fact]
+        public async Task GetAddressTypeAsync_CompanyRepository_ShouldSucceed()
+        {
+            HashSet<AddressType> entities = await _repository.GetAddressTypeAsync();
+
+            Assert.NotNull(entities);
+            Assert.Equal(6, entities.Count);
+        }
+
+
+
+
+
+
+
+
+
+        [Fact]
         public async Task LoadTestData_LoadBusinessEntityData_ShouldSucceed()
         {
             HashSet<BusinessEntity> businessEntities = await LoadTestData.LoadBusinessEntityDataAsync();

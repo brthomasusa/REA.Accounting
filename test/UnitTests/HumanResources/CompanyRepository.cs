@@ -10,6 +10,7 @@ namespace REA.Accounting.UnitTests.HumanResources
     public class CompanyRepository : ICompanyRepository
     {
         private HashSet<BusinessEntity>? _businessEntities;
+        private HashSet<AddressType>? _addressTypes;
         private HashSet<Employee>? _employees;
 
 
@@ -20,6 +21,7 @@ namespace REA.Accounting.UnitTests.HumanResources
         {
             BusinessEntitiesAsync();
             EmployeesAsync();
+            AddressTypesAsync();
         }
 
         public async Task<Company> GetCompanyByIdAsync(int id)
@@ -44,10 +46,16 @@ namespace REA.Accounting.UnitTests.HumanResources
         public async Task<HashSet<BusinessEntity>> GetBusinessEntitiesAsync()
             => await Task.FromResult(_businessEntities!);
 
+        public async Task<HashSet<AddressType>> GetAddressTypeAsync()
+            => await Task.FromResult(_addressTypes!);
+
         private async void EmployeesAsync()
             => _employees = await LoadTestData.LoadEmployeeDataAsync();
 
         private async void BusinessEntitiesAsync()
             => _businessEntities = await LoadTestData.LoadBusinessEntityDataAsync();
+
+        private async void AddressTypesAsync()
+            => _addressTypes = await LoadTestData.LoadAddressTypeDataAsync();
     }
 }
