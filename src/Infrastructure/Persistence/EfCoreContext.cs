@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using REA.Accounting.Infrastructure.Persistence.DataModels.HumanResources;
 using REA.Accounting.Infrastructure.Persistence.DataModels.Organizations;
 using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
+using REA.Accounting.Infrastructure.Persistence.DataModels.Sales;
 
 namespace REA.Accounting.Infrastructure.Persistence
 {
@@ -16,10 +17,17 @@ namespace REA.Accounting.Infrastructure.Persistence
         public DbSet<AddressType>? AddressType { get; set; }
         public DbSet<ContactType>? ContactType { get; set; }
         public DbSet<PhoneNumberType>? PhoneNumberType { get; set; }
+        public DbSet<CountryRegion>? CountryRegion { get; set; }
+        public DbSet<SalesTerritory>? SalesTerritory { get; set; }
+        public DbSet<StateProvince>? StateProvince { get; set; }
         public DbSet<BusinessEntity>? BusinessEntity { get; set; }
         public DbSet<Company>? Company { get; set; }
         public DbSet<BusinessEntityAddress>? BusinessEntityAddress { get; set; }
+        public DbSet<BusinessEntityContact>? BusinessEntityContact { get; set; }
         public DbSet<Address>? Address { get; set; }
+        public DbSet<PersonDataModel>? Person { get; set; }
+        public DbSet<EmailAddress>? EmailAddress { get; set; }
+        public DbSet<PersonPhone>? PersonPhone { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

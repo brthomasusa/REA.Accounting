@@ -25,7 +25,7 @@ namespace REA.Accounting.Infrastructure.Persistence.DataModels.HumanResources
         public Guid RowGuid { get; set; }
         public DateTime ModifiedDate { get; set; }
 
-        public virtual Person.Person EmployeeBase { get; set; } = new();
+        public virtual Person.PersonDataModel EmployeeBase { get; set; } = new();
         public virtual Address Address { get; set; } = new();
         public virtual EmailAddress EmailAddress { get; set; } = new();
         public virtual List<PersonPhone> Phones { get; set; } = new();

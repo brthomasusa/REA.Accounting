@@ -15,10 +15,27 @@ namespace REA.Accounting.Infrastructure.Persistence.Configurations.Person
                 .WithOne()
                 .HasForeignKey<BusinessEntityAddress>(p => p.BusinessEntityID)
                 .IsRequired();
+            entity.HasOne(p => p.BusinessEntityContact)
+                .WithOne()
+                .HasForeignKey<BusinessEntityContact>(p => p.BusinessEntityID)
+                .IsRequired();
             entity.HasOne(p => p.Company)
                 .WithOne()
                 .HasForeignKey<Company>(p => p.BusinessEntityID)
                 .IsRequired();
+            entity.HasOne(p => p.PersonDataModel)
+                .WithOne()
+                .HasForeignKey<PersonDataModel>(p => p.BusinessEntityID)
+                .IsRequired();
+            entity.HasMany(p => p.EmailAddresses)
+                .WithOne()
+                .HasForeignKey(p => p.BusinessEntityID)
+                .IsRequired();
+            entity.HasMany(p => p.Telephones)
+                .WithOne()
+                .HasForeignKey(p => p.BusinessEntityID)
+                .IsRequired();
+
             entity.Property(e => e.BusinessEntityID)
                 .HasColumnName("BusinessEntityID")
                 .ValueGeneratedOnAdd();

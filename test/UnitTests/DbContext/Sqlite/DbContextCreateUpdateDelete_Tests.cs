@@ -9,25 +9,8 @@ using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
 
 namespace REA.Accounting.UnitTests.DbContext.Sqlite
 {
-    public class DbContext_Tests
+    public class DbContextCreateUpdateDelete_Tests
     {
-        [Fact]
-        public async Task TestSQLite_Setup_ShouldSucceed()
-        {
-            //SETUP
-            var options = SqliteInMemory.CreateOptions<EfCoreContext>();
-
-            using var context = new EfCoreContext(options);
-            context.Database.EnsureCreated();
-            await context.SeedBusinessEntities();
-
-            //ATTEMPT
-            BusinessEntity? businessEntity = context.BusinessEntity!.Find(287);
-
-            //VERIFY
-            Assert.Equal(new Guid("d7d20616-c4c7-43c8-9fb8-7eba84aad8e1"), businessEntity!.RowGuid);
-        }
-
         [Fact]
         public async Task Create_BusinessEntity_ShouldSucceed()
         {
@@ -86,7 +69,6 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
 
             using var context = new EfCoreContext(options);
             context.Database.EnsureCreated();
-            // await context.SeedPersonLookupData();
 
             BusinessEntity entity = new()
             {
