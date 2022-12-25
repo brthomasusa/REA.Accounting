@@ -22,21 +22,73 @@ namespace REA.Accounting.UnitTests.Data
             BaseFilePath = "../../../Data/";
         }
 
-        public static async Task LoadAllData()
-        {
-            Task<List<PersonPhone>> getPhonesTask = Task.Run(() => LoadTestData.LoadTelephoneData())
-                                                        .ContinueWith(antecedent => antecedent.Result);
-
-            Task<HashSet<Employee>> getEmployeeTask = Task.Run(() => LoadTestData.LoadEmployeeData())
-                                                       .ContinueWith(antecedent => antecedent.Result);
-
-            List<PersonPhone> phoneResult = await Task.FromResult(getPhonesTask.Result);
-            HashSet<Employee> employeeResult = await Task.FromResult(getEmployeeTask.Result);
-        }
-
         public static async Task<HashSet<BusinessEntity>> LoadBusinessEntityDataAsync()
         {
             Task<HashSet<BusinessEntity>> getTask = Task.Run(() => LoadTestData.LoadBusinessEntityData())
+                                                        .ContinueWith(antecedent => antecedent.Result);
+
+            return await Task.FromResult(getTask.Result);
+        }
+
+        public static async Task<HashSet<CountryRegion>> LoadCountryRegionDataAsync()
+        {
+            Task<HashSet<CountryRegion>> getTask = Task.Run(() => LoadTestData.LoadCountryRegionData())
+                                                       .ContinueWith(antecedent => antecedent.Result);
+
+            return await Task.FromResult(getTask.Result);
+        }
+
+        public static async Task<HashSet<SalesTerritory>> LoadSalesTerritoryDataAsync()
+        {
+            Task<HashSet<SalesTerritory>> getTask = Task.Run(() => LoadTestData.LoadSalesTerritoryData())
+                                                                      .ContinueWith(antecedent => antecedent.Result);
+
+            return await Task.FromResult(getTask.Result);
+        }
+
+        public static async Task<HashSet<StateProvince>> LoadStateProvinceDataAsync()
+        {
+            Task<HashSet<StateProvince>> getTask = Task.Run(() => LoadTestData.LoadStateProvinceData())
+                                                                    .ContinueWith(antecedent => antecedent.Result);
+
+            return await Task.FromResult(getTask.Result);
+        }
+
+        public static async Task<HashSet<Address>> LoadAddressDataAsync()
+        {
+            Task<HashSet<Address>> getTask = Task.Run(() => LoadTestData.LoadAddressData())
+                                                 .ContinueWith(antecedent => antecedent.Result);
+
+            return await Task.FromResult(getTask.Result);
+        }
+
+        public static async Task<HashSet<PersonDataModel>> LoadPersonDataAsync()
+        {
+            Task<HashSet<PersonDataModel>> getTask = Task.Run(() => LoadTestData.LoadPersonData())
+                                                         .ContinueWith(antecedent => antecedent.Result);
+
+            return await Task.FromResult(getTask.Result);
+        }
+
+        public static async Task<HashSet<BusinessEntityAddress>> LoadBusinessEntityAddressDataAsync()
+        {
+            Task<HashSet<BusinessEntityAddress>> getTask = Task.Run(() => LoadTestData.LoadBusinessEntityAddressData())
+                                                               .ContinueWith(antecedent => antecedent.Result);
+
+            return await Task.FromResult(getTask.Result);
+        }
+
+        public static async Task<HashSet<EmailAddress>> LoadEmailAddressDataAsync()
+        {
+            Task<HashSet<EmailAddress>> getTask = Task.Run(() => LoadTestData.LoadEmailAddressData())
+                                                      .ContinueWith(antecedent => antecedent.Result);
+
+            return await Task.FromResult(getTask.Result);
+        }
+
+        public static async Task<HashSet<PersonPhone>> LoadPhoneDataAsync()
+        {
+            Task<HashSet<PersonPhone>> getTask = Task.Run(() => LoadTestData.LoadPhoneData())
                                                      .ContinueWith(antecedent => antecedent.Result);
 
             return await Task.FromResult(getTask.Result);
@@ -44,81 +96,33 @@ namespace REA.Accounting.UnitTests.Data
 
         public static async Task<HashSet<Employee>> LoadEmployeeDataAsync()
         {
-            Task<HashSet<Employee>> getEmployeeTask = Task.Run(() => LoadTestData.LoadEmployeeData())
-                                                       .ContinueWith(antecedent => antecedent.Result);
+            Task<HashSet<Employee>> getTask = Task.Run(() => LoadTestData.LoadEmployeeData())
+                                                  .ContinueWith(antecedent => antecedent.Result);
 
-            return await Task.FromResult(getEmployeeTask.Result);
+            return await Task.FromResult(getTask.Result);
         }
 
-        public static async Task<HashSet<AddressType>> LoadAddressTypeDataAsync()
+        public static async Task<HashSet<EmployeeDepartmentHistory>> LoadEmployeeDepartmentHistoryDataAsync()
         {
-            Task<HashSet<AddressType>> getAddressTypeTask = Task.Run(() => LoadTestData.LoadAddressTypeData())
-                                                                .ContinueWith(antecedent => antecedent.Result);
+            Task<HashSet<EmployeeDepartmentHistory>> getTask = Task.Run(() => LoadTestData.LoadDepartmentHistoryData())
+                                                                   .ContinueWith(antecedent => antecedent.Result);
 
-            return await Task.FromResult(getAddressTypeTask.Result);
+            return await Task.FromResult(getTask.Result);
         }
 
-        public static async Task<HashSet<CountryRegion>> LoadCountryRegionDataAsync()
+        public static async Task<HashSet<EmployeePayHistory>> LoadEmployeePayHistoryDataAsync()
         {
-            Task<HashSet<CountryRegion>> getCountryRegionTask = Task.Run(() => LoadTestData.LoadCountryRegionData())
-                                                                    .ContinueWith(antecedent => antecedent.Result);
+            Task<HashSet<EmployeePayHistory>> getTask = Task.Run(() => LoadTestData.LoadPayHistoryData())
+                                                            .ContinueWith(antecedent => antecedent.Result);
 
-            return await Task.FromResult(getCountryRegionTask.Result);
-        }
-
-        public static async Task<HashSet<SalesTerritory>> LoadSalesTerritoryDataAsync()
-        {
-            Task<HashSet<SalesTerritory>> getSalesTerritoryTask = Task.Run(() => LoadTestData.LoadSalesTerritoryData())
-                                                                      .ContinueWith(antecedent => antecedent.Result);
-
-            return await Task.FromResult(getSalesTerritoryTask.Result);
-        }
-
-        public static async Task<HashSet<StateProvince>> LoadStateProvinceDataAsync()
-        {
-            Task<HashSet<StateProvince>> getStateProvinceTask = Task.Run(() => LoadTestData.LoadStateProvinceData())
-                                                                    .ContinueWith(antecedent => antecedent.Result);
-
-            return await Task.FromResult(getStateProvinceTask.Result);
-        }
-
-        public static async Task<HashSet<Address>> LoadAddressDataAsync()
-        {
-            Task<HashSet<Address>> getAddressTask = Task.Run(() => LoadTestData.LoadAddressData())
-                                                        .ContinueWith(antecedent => antecedent.Result);
-
-            return await Task.FromResult(getAddressTask.Result);
-        }
-
-        public static async Task<HashSet<PersonDataModel>> LoadPersonDataAsync()
-        {
-            Task<HashSet<PersonDataModel>> getPersonTask = Task.Run(() => LoadTestData.LoadPersonData())
-                                                               .ContinueWith(antecedent => antecedent.Result);
-
-            return await Task.FromResult(getPersonTask.Result);
-        }
-
-        public static async Task<HashSet<BusinessEntityAddress>> LoadBusinessEntityAddressDataAsync()
-        {
-            Task<HashSet<BusinessEntityAddress>> getBusinessEntityAddressTask = Task.Run(() => LoadTestData.LoadBusinessEntityAddressData())
-                                                                                    .ContinueWith(antecedent => antecedent.Result);
-
-            return await Task.FromResult(getBusinessEntityAddressTask.Result);
-        }
-
-        public static async Task<HashSet<EmailAddress>> LoadEmailAddressDataAsync()
-        {
-            Task<HashSet<EmailAddress>> getEmailAddressTask = Task.Run(() => LoadTestData.LoadEmailAddressData())
-                                                                  .ContinueWith(antecedent => antecedent.Result);
-
-            return await Task.FromResult(getEmailAddressTask.Result);
+            return await Task.FromResult(getTask.Result);
         }
 
         /* --------------------------------------------------------------------------------------------- */
 
         private static HashSet<Employee> LoadEmployeeData()
         {
-            const string fileName = "/home/bthomas/Projects/NetCore/REA.Accounting/test/UnitTests/Data/Employees-SM.json";
+            string fileName = $"{BaseFilePath}Employee-XS.json";
             string jsonString = File.ReadAllText(fileName);
 
             return JsonConvert.DeserializeObject<HashSet<Employee>>(jsonString)!;
@@ -188,48 +192,40 @@ namespace REA.Accounting.UnitTests.Data
             return JsonConvert.DeserializeObject<HashSet<BusinessEntityAddress>>(jsonString)!;
         }
 
-        private static async Task<HashSet<EmailAddress>> LoadEmailAddressData()
+        private static HashSet<EmailAddress> LoadEmailAddressData()
         {
             string fileName = $"{BaseFilePath}EmailAddress-XS.json";
             string jsonString = File.ReadAllText(fileName);
 
-            return await Task.FromResult(JsonConvert.DeserializeObject<HashSet<EmailAddress>>(jsonString, new EmailAddressConverter())!);
+            return JsonConvert.DeserializeObject<HashSet<EmailAddress>>(jsonString, new EmailAddressConverter())!;
         }
 
+        private static HashSet<PersonPhone> LoadPhoneData()
+        {
+            string fileName = $"{BaseFilePath}Telephone-XS.json";
+            string jsonString = File.ReadAllText(fileName);
+
+            return JsonConvert.DeserializeObject<HashSet<PersonPhone>>(jsonString)!;
+        }
+
+        private static async Task<HashSet<EmployeeDepartmentHistory>> LoadDepartmentHistoryData()
+        {
+            string fileName = $"{BaseFilePath}EmployeeDepartmentHistory-XS.json";
+            string jsonString = File.ReadAllText(fileName);
+
+            return await Task.FromResult(JsonConvert.DeserializeObject<HashSet<EmployeeDepartmentHistory>>(jsonString)!);
+        }
+
+        private static async Task<HashSet<EmployeePayHistory>> LoadPayHistoryData()
+        {
+            string fileName = $"{BaseFilePath}EmployeePayHistory-XS.json";
+            string jsonString = File.ReadAllText(fileName);
+
+            return await Task.FromResult(JsonConvert.DeserializeObject<HashSet<EmployeePayHistory>>(jsonString)!);
+        }
 
         /*  ================================================================================================  */
 
-        public static async Task<List<Department>> LoadDepartmentDataAsync()
-        {
-            string fileName = "/home/bthomas/Projects/NetCore/REA.Accounting/test/UnitTests/Data/Departments.json";
-            string jsonString = File.ReadAllText(fileName);
-
-            return await Task.FromResult(JsonConvert.DeserializeObject<List<Department>>(jsonString)!);
-        }
-
-        public static async Task<List<Shift>> LoadShiftDataAsync()
-        {
-            string fileName = "/home/bthomas/Projects/NetCore/REA.Accounting/test/UnitTests/Data/Shifts.json";
-            string jsonString = File.ReadAllText(fileName);
-
-            return await Task.FromResult(JsonConvert.DeserializeObject<List<Shift>>(jsonString)!);
-        }
-
-        public static async Task<List<EmployeeDepartmentHistory>> LoadDepartmentHistoryData()
-        {
-            string fileName = "/home/bthomas/Projects/NetCore/REA.Accounting/test/UnitTests/Data/EmployeeDepartmentHistory-SM.json";
-            string jsonString = File.ReadAllText(fileName);
-
-            return await Task.FromResult(JsonConvert.DeserializeObject<List<EmployeeDepartmentHistory>>(jsonString)!);
-        }
-
-        public static async Task<List<EmployeePayHistory>> LoadPayHistoryData()
-        {
-            string fileName = "/home/bthomas/Projects/NetCore/REA.Accounting/test/UnitTests/Data/EmployeePayHistory-SM.json";
-            string jsonString = File.ReadAllText(fileName);
-
-            return await Task.FromResult(JsonConvert.DeserializeObject<List<EmployeePayHistory>>(jsonString)!);
-        }
 
         public static async Task<List<PersonPhone>> LoadTelephoneDataAsync()
         {
@@ -239,13 +235,14 @@ namespace REA.Accounting.UnitTests.Data
             return await Task.FromResult(JsonConvert.DeserializeObject<List<PersonPhone>>(jsonString)!);
         }
 
-        public static List<PersonPhone> LoadTelephoneData()
+        public static async Task<HashSet<AddressType>> LoadAddressTypeDataAsync()
         {
-            const string fileName = "/home/bthomas/Projects/NetCore/REA.Accounting/test/UnitTests/Data/Telephone-SM.json";
-            string jsonString = File.ReadAllText(fileName);
+            Task<HashSet<AddressType>> getAddressTypeTask = Task.Run(() => LoadTestData.LoadAddressTypeData())
+                                                                .ContinueWith(antecedent => antecedent.Result);
 
-            return JsonConvert.DeserializeObject<List<PersonPhone>>(jsonString)!;
+            return await Task.FromResult(getAddressTypeTask.Result);
         }
+
 
         public static HashSet<EmailAddress> GetEmailAddressData()
         {

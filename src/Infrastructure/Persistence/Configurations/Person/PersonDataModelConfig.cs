@@ -13,7 +13,6 @@ namespace REA.Accounting.Infrastructure.Persistence.Configurations.Person
             entity.HasCheckConstraint("CK_Person_PersonType", "([PersonType] IS NULL) OR ([PersonType] IN ('GC','SP','EM','IN','VC','SC'))");
             entity.HasCheckConstraint("CK_Person_EmailPromotion", "([EmailPromotion] >= 0 AND [EmailPromotion] <= 2)");
 
-            // (([EmailPromotion]>=(0) AND [EmailPromotion]<=(2)))
             entity.Property(e => e.BusinessEntityID)
                 .HasColumnName("BusinessEntityID")
                 .ValueGeneratedNever();

@@ -9,13 +9,6 @@ namespace REA.Accounting.UnitTests.TestHelpers
 {
     public static class LoadSqliteTestData
     {
-        public static async Task SeedBusinessEntities(this EfCoreContext context)
-        {
-            HashSet<BusinessEntity> businessEntities = await Data.LoadTestData.LoadBusinessEntityDataAsync();
-            await context.BusinessEntity!.AddRangeAsync(businessEntities);
-            await context.SaveChangesAsync();
-        }
-
         public static async Task SeedBusinessEntityAndCompany(this EfCoreContext context)
         {
             BusinessEntity entity = new()
@@ -58,23 +51,20 @@ namespace REA.Accounting.UnitTests.TestHelpers
             HashSet<Address> addresses = await Data.LoadTestData.LoadAddressDataAsync();
             HashSet<BusinessEntityAddress> businessEntityAddresses = await Data.LoadTestData.LoadBusinessEntityAddressDataAsync();
             HashSet<EmailAddress> emailAddresses = await Data.LoadTestData.LoadEmailAddressDataAsync();
+            HashSet<PersonPhone> telephones = await Data.LoadTestData.LoadPhoneDataAsync();
+            HashSet<Employee> employees = await Data.LoadTestData.LoadEmployeeDataAsync();
+            HashSet<EmployeeDepartmentHistory> departmentHistories = await Data.LoadTestData.LoadEmployeeDepartmentHistoryDataAsync();
+            HashSet<EmployeePayHistory> payHistories = await Data.LoadTestData.LoadEmployeePayHistoryDataAsync();
 
             await context.BusinessEntity!.AddRangeAsync(businessEntities);
             await context.Person!.AddRangeAsync(people);
             await context.Address!.AddRangeAsync(addresses);
             await context.BusinessEntityAddress!.AddRangeAsync(businessEntityAddresses);
             await context.EmailAddress!.AddRangeAsync(emailAddresses);
-
-            await context.SaveChangesAsync();
-        }
-
-        public static async Task SeedEmailAddressData(this EfCoreContext context)
-        {
-            HashSet<BusinessEntity> businessEntities = await Data.LoadTestData.LoadBusinessEntityDataAsync();
-            HashSet<EmailAddress> emailAddresses = await Data.LoadTestData.LoadEmailAddressDataAsync();
-
-            await context.BusinessEntity!.AddRangeAsync(businessEntities);
-            await context.EmailAddress!.AddRangeAsync(emailAddresses);
+            await context.PersonPhone!.AddRangeAsync(telephones);
+            await context.Employee!.AddRangeAsync(employees);
+            await context.EmployeeDepartmentHistory!.AddRangeAsync(departmentHistories);
+            await context.EmployeePayHistory!.AddRangeAsync(payHistories);
 
             await context.SaveChangesAsync();
         }

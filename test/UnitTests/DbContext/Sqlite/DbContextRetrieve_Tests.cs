@@ -12,23 +12,6 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
     public class DbContextRetrieve_Tests
     {
         [Fact]
-        public async Task TestSQLite_Setup_ShouldSucceed()
-        {
-            //SETUP
-            var options = SqliteInMemory.CreateOptions<EfCoreContext>();
-
-            using var context = new EfCoreContext(options);
-            context.Database.EnsureCreated();
-            await context.SeedBusinessEntities();
-
-            //ATTEMPT
-            BusinessEntity? businessEntity = context.BusinessEntity!.Find(287);
-
-            //VERIFY
-            Assert.Equal(new Guid("d7d20616-c4c7-43c8-9fb8-7eba84aad8e1"), businessEntity!.RowGuid);
-        }
-
-        [Fact]
         public void Get_ContactTypes_ShouldSucceed()
         {
             //SETUP
@@ -134,70 +117,6 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
         }
 
         [Fact]
-        public async Task Get_Addresses_ShouldSucceed()
-        {
-            //SETUP
-            var options = SqliteInMemory.CreateOptions<EfCoreContext>();
-
-            using var context = new EfCoreContext(options);
-            context.Database.EnsureCreated();
-            await context.SeedLookupData();
-            await context.SeedPersonData();
-
-            //ATTEMPT
-            var addresses = context.Address!.ToList();
-            int count = addresses.Count;
-
-            //VERIFY
-            Assert.Equal(33, count);
-        }
-
-        [Fact]
-        public async Task Get_BusinessEntityAddresses_ShouldSucceed()
-        {
-            //SETUP
-            var options = SqliteInMemory.CreateOptions<EfCoreContext>();
-
-            using var context = new EfCoreContext(options);
-            context.Database.EnsureCreated();
-            await context.SeedLookupData();
-            await context.SeedPersonData();
-
-            //ATTEMPT
-            var businessEntityaddresses = context.BusinessEntityAddress!.ToList();
-            int count = businessEntityaddresses.Count;
-
-            //VERIFY
-            Assert.Equal(33, count);
-        }
-
-        [Fact]
-        public async Task Get_EmailAddresses_ShouldSucceed()
-        {
-            //SETUP
-            var options = SqliteInMemory.CreateOptions<EfCoreContext>();
-
-            using var context = new EfCoreContext(options);
-            context.Database.EnsureCreated();
-            await context.SeedEmailAddressData();
-
-            //ATTEMPT
-            var emailAddresses = context.EmailAddress!.ToList();
-            int count = emailAddresses.Count;
-
-            //VERIFY
-            Assert.Equal(33, count);
-        }
-
-        [Fact]
-        public void Test_EmailRetrieval()
-        {
-            var emailAddresses = REA.Accounting.UnitTests.Data.LoadTestData.GetEmailAddressData();
-
-            Assert.NotNull(emailAddresses);
-        }
-
-        [Fact]
         public async Task Get_EmployeeAggregate_ShouldSucceed()
         {
             //SETUP
@@ -209,11 +128,42 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
             await context.SeedPersonData();
 
             //ATTEMPT
+            var businessEntities = context.BusinessEntity!.ToList();
+            var people = context.Person!.ToList();
+            var addresses = context.Address!.ToList();
+            var businessEntityAddresses = context.BusinessEntityAddress!.ToList();
             var emailAddresses = context.EmailAddress!.ToList();
-            int count = emailAddresses.Count;
+            var telephones = context.PersonPhone!.ToList();
+            var departments = context.Department!.ToList();
+            var shifts = context.Shift!.ToList();
+            var employees = context.Employee!.ToList();
+            var departmentHistories = context.EmployeeDepartmentHistory!.ToList();
+            var payHistories = context.EmployeePayHistory!.ToList();
+
+            int businessEntityCount = businessEntities.Count;
+            int peopleCount = people.Count;
+            int addressCount = addresses.Count;
+            int businessEntityAddressCount = businessEntityAddresses.Count;
+            int emailAddressCount = emailAddresses.Count;
+            int telephoneCount = telephones.Count;
+            int departmentCount = departments.Count;
+            int shiftCount = shifts.Count;
+            int employeeCount = employees.Count;
+            int departmentHistoryCount = departmentHistories.Count;
+            int payHistoryCount = payHistories.Count;
 
             //VERIFY
-            Assert.Equal(33, count);
+            Assert.Equal(33, businessEntityCount);
+            Assert.Equal(33, peopleCount);
+            Assert.Equal(33, addressCount);
+            Assert.Equal(33, businessEntityAddressCount);
+            Assert.Equal(33, emailAddressCount);
+            Assert.Equal(33, telephoneCount);
+            Assert.Equal(16, departmentCount);
+            Assert.Equal(3, shiftCount);
+            Assert.Equal(33, employeeCount);
+            Assert.Equal(35, departmentHistoryCount);
+            Assert.Equal(37, payHistoryCount);
         }
     }
 }
