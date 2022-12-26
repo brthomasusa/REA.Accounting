@@ -31,7 +31,7 @@ namespace REA.Accounting.UnitTests.HumanResources
             HashSet<Employee> employees = await _repository.GetEmployeesAsync();
 
             Assert.NotNull(employees);
-            Assert.Equal(99, employees.Count);
+            Assert.Equal(33, employees.Count);
         }
 
         [Fact]

@@ -9,7 +9,7 @@ using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
 
 namespace REA.Accounting.UnitTests.DbContext.Sqlite
 {
-    public class DbContextCreateUpdateDelete_Tests
+    public class PersonHrCreate_Tests
     {
         [Fact]
         public async Task Create_BusinessEntity_ShouldSucceed()
@@ -69,6 +69,7 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
 
             using var context = new EfCoreContext(options);
             context.Database.EnsureCreated();
+            await context.SeedLookupData();
 
             BusinessEntity entity = new()
             {

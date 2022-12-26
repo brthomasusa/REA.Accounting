@@ -117,7 +117,7 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
         }
 
         [Fact]
-        public async Task Get_EmployeeAggregate_ShouldSucceed()
+        public async Task DbContext_Person_HR_ShouldSucceed()
         {
             //SETUP
             var options = SqliteInMemory.CreateOptions<EfCoreContext>();
