@@ -20,7 +20,7 @@ namespace REA.Accounting.Infrastructure.Persistence.DataModels.Organizations
             return new Company();
         }
 
-        public int BusinessEntityID { get; set; }
+        public int CompanyID { get; set; }
         public string? CompanyName { get; set; }
         public string? LegalName { get; set; }
         public string? EIN { get; set; }

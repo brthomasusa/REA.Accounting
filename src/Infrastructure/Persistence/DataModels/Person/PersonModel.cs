@@ -1,6 +1,6 @@
 namespace REA.Accounting.Infrastructure.Persistence.DataModels.Person
 {
-    public class PersonDataModel
+    public class PersonModel
     {
         public int BusinessEntityID { get; set; }
         public string? PersonType { get; set; }

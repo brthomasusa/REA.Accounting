@@ -10,11 +10,11 @@ namespace REA.Accounting.Infrastructure.Persistence.Configurations.Organizations
         public void Configure(EntityTypeBuilder<Company> entity)
         {
             entity.ToTable("Company", schema: "Person");
-            entity.HasKey(e => e.BusinessEntityID);
+            entity.HasKey(e => e.CompanyID);
 
-            entity.Property(e => e.BusinessEntityID)
-                .HasColumnName("BusinessEntityID")
-                .ValueGeneratedNever();
+            entity.Property(e => e.CompanyID)
+                .HasColumnName("CompanyID")
+                .ValueGeneratedOnAdd();
             entity.Property(e => e.CompanyName)
                 .IsRequired()
                 .HasColumnName("CompanyName")
@@ -39,6 +39,20 @@ namespace REA.Accounting.Infrastructure.Persistence.Configurations.Organizations
                 .HasColumnName("ModifiedDate")
                 .IsRequired()
                 .HasDefaultValue(DateTime.Now);
+
+            entity.HasData
+            (
+                new Company()
+                {
+                    CompanyID = 1,
+                    CompanyName = "AdventureWorks Cycles",
+                    LegalName = "AdventureWorks Cycles LLC",
+                    EIN = "12-3456789",
+                    WebsiteUrl = "https:\\www.Adventureworkscycles.com",
+                    RowGuid = new Guid("734a8aa4-0686-429c-8192-8bbd214132b7"),
+                    ModifiedDate = DateTime.Now
+                }
+            );
         }
     }
 }

@@ -28,7 +28,6 @@ namespace REA.Accounting.UnitTests.HumanResources
         {
             Company company = new Company
             {
-                BusinessEntityID = 1,
                 CompanyName = "AdventureWorks Cycles",
                 LegalName = "AdventureWorks Cycles, Inc",
                 EIN = "12-3456789",

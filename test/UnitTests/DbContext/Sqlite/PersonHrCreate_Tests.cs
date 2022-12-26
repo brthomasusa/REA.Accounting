@@ -32,52 +32,27 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
         }
 
         [Fact]
-        public async Task Create_BusinessEntityWithCompany_ShouldSucceed()
+        public async Task Create_Person_ShouldSucceed()
         {
             //SETUP
             var options = SqliteInMemory.CreateOptions<EfCoreContext>();
 
             using var context = new EfCoreContext(options);
             context.Database.EnsureCreated();
-            BusinessEntity entity = new()
-            {
-                BusinessEntityID = 1,
-                Company = new()
-                {
-                    CompanyName = "AdventureWorks Cycles",
-                    LegalName = "AdventureWorks Cycles LLC",
-                    EIN = "12-3456789",
-                    WebsiteUrl = "https:\\www.Adventureworkscycles.com"
-                }
-            };
-
-            await context.BusinessEntity!.AddAsync(entity);
-            await context.SaveChangesAsync();
-
-            //ATTEMPT
-            BusinessEntity? result = context.BusinessEntity!.FirstOrDefault();
-
-            //VERIFY
-            Assert.NotNull(result);
-        }
-
-        [Fact]
-        public async Task Create_BusinessEntityAddress_ShouldSucceed()
-        {
-            //SETUP
-            var options = SqliteInMemory.CreateOptions<EfCoreContext>();
-
-            using var context = new EfCoreContext(options);
-            context.Database.EnsureCreated();
-            await context.SeedLookupData();
 
             BusinessEntity entity = new()
             {
                 BusinessEntityID = 1,
-                BusinessEntityAddress = new()
+                PersonDataModel = new()
                 {
-                    AddressID = 1,
-                    AddressTypeID = 1
+                    PersonType = "EM",
+                    NameStyle = 0,
+                    Title = "Mr.",
+                    FirstName = "Johnny",
+                    MiddleName = "D",
+                    LastName = "Doe",
+                    Suffix = "Jr.",
+                    EmailPromotion = 2
                 }
             };
 
@@ -85,12 +60,62 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
             await context.SaveChangesAsync();
 
             //ATTEMPT
-            BusinessEntityAddress? result = context.BusinessEntityAddress!.FirstOrDefault();
+            PersonModel? result = context.Person!.FirstOrDefault();
 
             //VERIFY
             Assert.NotNull(result);
         }
 
+        [Fact]
+        public async Task Create_Employee_ShouldSucceed()
+        {
+            //SETUP
+            var options = SqliteInMemory.CreateOptions<EfCoreContext>();
 
+            using var context = new EfCoreContext(options);
+            context.Database.EnsureCreated();
+
+            BusinessEntity entity = new()
+            {
+                BusinessEntityID = 1,
+                PersonDataModel = new()
+                {
+                    PersonType = "EM",
+                    NameStyle = 0,
+                    Title = "Mr.",
+                    FirstName = "Johnny",
+                    MiddleName = "D",
+                    LastName = "Doe",
+                    Suffix = "Jr.",
+                    EmailPromotion = 2
+                }
+            };
+
+            Employee employee = new()
+            {
+                BusinessEntityID = entity.BusinessEntityID,
+                NationalIDNumber = "245797967",
+                LoginID = "adventure-works\terri0",
+                JobTitle = "Vice President of Engineering",
+                BirthDate = new DateTime(1971, 8, 1),
+                MaritalStatus = "M",
+                Gender = "M",
+                HireDate = new DateTime(2008, 1, 31),
+                SalariedFlag = true,
+                VacationHours = 1,
+                SickLeaveHours = 20,
+                CurrentFlag = true
+            };
+
+            await context.BusinessEntity!.AddAsync(entity);
+            await context.Employee!.AddAsync(employee);
+            await context.SaveChangesAsync();
+
+            //ATTEMPT
+            Employee? result = context.Employee!.FirstOrDefault();
+
+            //VERIFY
+            Assert.NotNull(result);
+        }
     }
 }

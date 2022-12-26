@@ -9,28 +9,6 @@ namespace REA.Accounting.UnitTests.TestHelpers
 {
     public static class LoadSqliteTestData
     {
-        public static async Task SeedBusinessEntityAndCompany(this EfCoreContext context)
-        {
-            BusinessEntity entity = new()
-            {
-                BusinessEntityID = 1,
-                Company = new()
-                {
-                    CompanyName = "AdventureWorks Cycles",
-                    LegalName = "AdventureWorks Cycles LLC",
-                    EIN = "12-3456789",
-                    WebsiteUrl = "https:\\www.Adventureworkscycles.com",
-                    RowGuid = new Guid("734a8aa4-0686-429c-8192-8bbd214132b7"),
-                    ModifiedDate = DateTime.Now
-                },
-                RowGuid = new Guid("e57b0258-87b9-4daf-8e03-ad070178140a"),
-                ModifiedDate = DateTime.Now
-            };
-
-            await context.BusinessEntity!.AddAsync(entity);
-            await context.SaveChangesAsync();
-        }
-
         public static async Task SeedLookupData(this EfCoreContext context)
         {
             HashSet<CountryRegion> countryRegions = await Data.LoadTestData.LoadCountryRegionDataAsync();
@@ -44,10 +22,10 @@ namespace REA.Accounting.UnitTests.TestHelpers
             await context.SaveChangesAsync();
         }
 
-        public static async Task SeedPersonData(this EfCoreContext context)
+        public static async Task SeedPersonAndHrData(this EfCoreContext context)
         {
             HashSet<BusinessEntity> businessEntities = await Data.LoadTestData.LoadBusinessEntityDataAsync();
-            HashSet<PersonDataModel> people = await Data.LoadTestData.LoadPersonDataAsync();
+            HashSet<PersonModel> people = await Data.LoadTestData.LoadPersonDataAsync();
             HashSet<Address> addresses = await Data.LoadTestData.LoadAddressDataAsync();
             HashSet<BusinessEntityAddress> businessEntityAddresses = await Data.LoadTestData.LoadBusinessEntityAddressDataAsync();
             HashSet<EmailAddress> emailAddresses = await Data.LoadTestData.LoadEmailAddressDataAsync();

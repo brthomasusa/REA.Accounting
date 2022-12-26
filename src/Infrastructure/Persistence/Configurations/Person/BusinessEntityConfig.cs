@@ -19,13 +19,9 @@ namespace REA.Accounting.Infrastructure.Persistence.Configurations.Person
                 .WithOne()
                 .HasForeignKey<BusinessEntityContact>(p => p.BusinessEntityID)
                 .IsRequired();
-            entity.HasOne(p => p.Company)
-                .WithOne()
-                .HasForeignKey<Company>(p => p.BusinessEntityID)
-                .IsRequired();
             entity.HasOne(p => p.PersonDataModel)
                 .WithOne()
-                .HasForeignKey<PersonDataModel>(p => p.BusinessEntityID)
+                .HasForeignKey<PersonModel>(p => p.BusinessEntityID)
                 .IsRequired();
             entity.HasMany(p => p.EmailAddresses)
                 .WithOne()

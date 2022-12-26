@@ -25,7 +25,7 @@ namespace REA.Accounting.Infrastructure.Persistence
         public DbSet<BusinessEntityAddress>? BusinessEntityAddress { get; set; }
         public DbSet<BusinessEntityContact>? BusinessEntityContact { get; set; }
         public DbSet<Address>? Address { get; set; }
-        public DbSet<PersonDataModel>? Person { get; set; }
+        public DbSet<PersonModel>? Person { get; set; }
         public DbSet<EmailAddress>? EmailAddress { get; set; }
         public DbSet<PersonPhone>? PersonPhone { get; set; }
         public DbSet<Department>? Department { get; set; }

@@ -10,7 +10,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Configurations.Person
         {
             entity.ToTable("BusinessEntityContact", schema: "Person");
             entity.HasKey(e => new { e.BusinessEntityID, e.PersonID, e.ContactTypeID });
-            entity.HasOne<PersonDataModel>()
+            entity.HasOne<PersonModel>()
                 .WithMany()
                 .HasForeignKey(p => p.PersonID)
                 .IsRequired();
