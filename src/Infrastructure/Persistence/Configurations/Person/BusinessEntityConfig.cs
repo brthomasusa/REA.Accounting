@@ -11,25 +11,9 @@ namespace REA.Accounting.Infrastructure.Persistence.Configurations.Person
         {
             entity.ToTable("BusinessEntity", schema: "Person");
             entity.HasKey(e => e.BusinessEntityID);
-            entity.HasOne(p => p.BusinessEntityAddress)
-                .WithOne()
-                .HasForeignKey<BusinessEntityAddress>(p => p.BusinessEntityID)
-                .IsRequired();
-            entity.HasOne(p => p.BusinessEntityContact)
-                .WithOne()
-                .HasForeignKey<BusinessEntityContact>(p => p.BusinessEntityID)
-                .IsRequired();
-            entity.HasOne(p => p.PersonDataModel)
+            entity.HasOne(p => p.PersonModel)
                 .WithOne()
                 .HasForeignKey<PersonModel>(p => p.BusinessEntityID)
-                .IsRequired();
-            entity.HasMany(p => p.EmailAddresses)
-                .WithOne()
-                .HasForeignKey(p => p.BusinessEntityID)
-                .IsRequired();
-            entity.HasMany(p => p.Telephones)
-                .WithOne()
-                .HasForeignKey(p => p.BusinessEntityID)
                 .IsRequired();
 
             entity.Property(e => e.BusinessEntityID)

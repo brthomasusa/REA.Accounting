@@ -4,7 +4,7 @@ using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
 
 namespace REA.Accounting.Infrastructure.Persistence.Configurations.Person
 {
-    internal class PersonDataModelConfig : IEntityTypeConfiguration<PersonModel>
+    internal class PersonModelConfig : IEntityTypeConfiguration<PersonModel>
     {
         public void Configure(EntityTypeBuilder<PersonModel> entity)
         {
@@ -12,6 +12,16 @@ namespace REA.Accounting.Infrastructure.Persistence.Configurations.Person
             entity.HasKey(e => e.BusinessEntityID);
             entity.HasCheckConstraint("CK_Person_PersonType", "([PersonType] IS NULL) OR ([PersonType] IN ('GC','SP','EM','IN','VC','SC'))");
             entity.HasCheckConstraint("CK_Person_EmailPromotion", "([EmailPromotion] >= 0 AND [EmailPromotion] <= 2)");
+
+            entity.HasMany(p => p.EmailAddresses)
+                .WithOne()
+                .HasForeignKey(p => p.BusinessEntityID);
+            entity.HasMany(p => p.Telephones)
+                .WithOne()
+                .HasForeignKey(p => p.BusinessEntityID);
+            entity.HasMany(p => p.Addresses)
+                .WithOne()
+                .HasForeignKey(p => p.BusinessEntityID);
 
             entity.Property(e => e.BusinessEntityID)
                 .HasColumnName("BusinessEntityID")

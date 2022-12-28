@@ -6,6 +6,8 @@ using REA.Accounting.Infrastructure.Persistence;
 using REA.Accounting.Infrastructure.Persistence.DataModels.HumanResources;
 using REA.Accounting.Infrastructure.Persistence.DataModels.Organizations;
 using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
+using REA.Accounting.Infrastructure.Persistence.Extensions;
+using REA.Accounting.Infrastructure.Persistence.Interfaces;
 
 namespace REA.Accounting.UnitTests.DbContext.Sqlite
 {
@@ -164,6 +166,109 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
             Assert.Equal(33, employeeCount);
             Assert.Equal(35, departmentHistoryCount);
             Assert.Equal(37, payHistoryCount);
+        }
+
+        [Fact]
+        public async Task PersonHasLastNameSpecification_ReturnList_ShouldSucceed()
+        {
+            //SETUP
+            var options = SqliteInMemory.CreateOptions<EfCoreContext>();
+
+            using var context = new EfCoreContext(options);
+            context.Database.EnsureCreated();
+            await context.SeedLookupData();
+            await context.SeedPersonAndHrData();
+
+            var filters = new List<Specification<PersonModel>>()
+            {
+                new PersonHasLastNameSpecification("Hamilton")
+            };
+
+            List<PersonModel>? people = null;
+
+            //ATTEMPT
+            filters.ForEach(item => people = context.Person!.Where(item.ToExpression()).ToList());
+
+            //VERIFY
+            Assert.True(people!.Any());
+            Assert.Equal("Hamilton", people![0].LastName);
+        }
+
+        [Fact]
+        public async Task PersonHasLastNameSpecification_ReturnSinglePersonModel_ShouldSucceed()
+        {
+            //SETUP
+            var options = SqliteInMemory.CreateOptions<EfCoreContext>();
+
+            using var context = new EfCoreContext(options);
+            context.Database.EnsureCreated();
+            await context.SeedLookupData();
+            await context.SeedPersonAndHrData();
+
+            var specification = new PersonHasLastNameSpecification("Hamilton");
+
+            //ATTEMPT
+            PersonModel? person = context.Person!.Where(specification.ToExpression()).SingleOrDefault();
+
+            //VERIFY
+            Assert.Equal("Hamilton", person!.LastName);
+        }
+
+        [Fact]
+        public async Task DbContextExtension_ValidateWithSingleSpecifications_ShouldSucceed()
+        {
+            //SETUP
+            var options = SqliteInMemory.CreateOptions<EfCoreContext>();
+
+            using var context = new EfCoreContext(options);
+            context.Database.EnsureCreated();
+            await context.SeedLookupData();
+            await context.SeedPersonAndHrData();
+
+            var filters = new List<Specification<PersonModel>>()
+            {
+                new PersonHasLastNameSpecification("Hamilton")
+            };
+
+            // IQueryable<PersonModel>? people = null;
+
+            //ATTEMPT
+            // Use Specification for query
+            var people = context.Person!.ApplyFilters<PersonModel>(filters);
+
+            //VERIFY
+            Assert.Equal("Hamilton", people!.ToList()[0].LastName);
+
+            // Use Specification for validation
+            Assert.True(new PersonHasLastNameSpecification("Hamilton").IsSatisfiedBy(people!.ToList()[0]));
+        }
+
+        [Fact]
+        public async Task DbContextExtension_ValidateWithMultipleSpecifications_ShouldSucceed()
+        {
+            //SETUP
+            var options = SqliteInMemory.CreateOptions<EfCoreContext>();
+
+            using var context = new EfCoreContext(options);
+            context.Database.EnsureCreated();
+            await context.SeedLookupData();
+            await context.SeedPersonAndHrData();
+
+            PersonModel? person = await context.Person!.FindAsync(2);
+
+            var filters = new List<Specification<PersonModel>>()
+            {
+                new PersonHasLastNameSpecification("Duffy"),
+                new PersonHasEmployeePersonTypeSpecification("EM")
+            };
+
+            //ATTEMPT
+            // Use multiple specifications for validation
+            var people = context.Person!.ApplyFilters<PersonModel>(filters);
+            bool isValid = person!.SatisfiesFilters<PersonModel>(filters);
+
+            //VERIFY
+            Assert.True(isValid);
         }
     }
 }

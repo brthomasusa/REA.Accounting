@@ -5,12 +5,7 @@ namespace REA.Accounting.Infrastructure.Persistence.DataModels.Person
     public class BusinessEntity
     {
         public int BusinessEntityID { get; set; }
-        public virtual PersonModel? PersonDataModel { get; set; }
-        public virtual BusinessEntityAddress? BusinessEntityAddress { get; set; }
-        public virtual BusinessEntityContact? BusinessEntityContact { get; set; }
-        public virtual HashSet<EmailAddress>? EmailAddresses { get; set; }
-        public virtual HashSet<PersonPhone>? Telephones { get; set; }
-
+        public virtual PersonModel? PersonModel { get; set; }
         public Guid RowGuid { get; set; }
         public DateTime ModifiedDate { get; set; }
     }

@@ -13,5 +13,9 @@ namespace REA.Accounting.Infrastructure.Persistence.DataModels.Person
         public int EmailPromotion { get; set; }
         public Guid RowGuid { get; set; }
         public DateTime ModifiedDate { get; set; }
+
+        public virtual HashSet<EmailAddress> EmailAddresses { get; set; } = new();
+        public virtual HashSet<PersonPhone> Telephones { get; set; } = new();
+        public virtual HashSet<BusinessEntityAddress> Addresses { get; set; } = new();
     }
 }
