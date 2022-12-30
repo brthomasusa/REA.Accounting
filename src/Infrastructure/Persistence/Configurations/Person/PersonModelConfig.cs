@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using REA.Accounting.Infrastructure.Persistence.DataModels.HumanResources;
 using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
 
 namespace REA.Accounting.Infrastructure.Persistence.Configurations.Person
@@ -13,6 +14,10 @@ namespace REA.Accounting.Infrastructure.Persistence.Configurations.Person
             entity.HasCheckConstraint("CK_Person_PersonType", "([PersonType] IS NULL) OR ([PersonType] IN ('GC','SP','EM','IN','VC','SC'))");
             entity.HasCheckConstraint("CK_Person_EmailPromotion", "([EmailPromotion] >= 0 AND [EmailPromotion] <= 2)");
 
+            entity.HasOne(p => p.Employee)
+                .WithOne()
+                .HasForeignKey<Employee>(p => p.BusinessEntityID)
+                .IsRequired();
             entity.HasMany(p => p.EmailAddresses)
                 .WithOne()
                 .HasForeignKey(p => p.BusinessEntityID);

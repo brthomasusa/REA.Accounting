@@ -1,3 +1,5 @@
+using REA.Accounting.Infrastructure.Persistence.DataModels.HumanResources;
+
 namespace REA.Accounting.Infrastructure.Persistence.DataModels.Person
 {
     public class PersonModel
@@ -14,6 +16,7 @@ namespace REA.Accounting.Infrastructure.Persistence.DataModels.Person
         public Guid RowGuid { get; set; }
         public DateTime ModifiedDate { get; set; }
 
+        public virtual Employee? Employee { get; set; }
         public virtual HashSet<EmailAddress> EmailAddresses { get; set; } = new();
         public virtual HashSet<PersonPhone> Telephones { get; set; } = new();
         public virtual HashSet<BusinessEntityAddress> Addresses { get; set; } = new();

@@ -7,7 +7,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Extensions
         public static IQueryable<T> ApplyFilters<T>
         (
             this IQueryable<T> entityCollection,
-            IEnumerable<Specification<T>>? filters = null
+            IEnumerable<SpecificationBase<T>>? filters = null
         )
         {
             if (filters is not null)
@@ -16,7 +16,11 @@ namespace REA.Accounting.Infrastructure.Persistence.Extensions
             return entityCollection;
         }
 
-        public static bool SatisfiesFilters<T>(this T entity, IEnumerable<Specification<T>>? filters = null)
+        public static bool SatisfiesFilters<T>
+        (
+            this T entity,
+            IEnumerable<SpecificationBase<T>>? filters = null
+        )
         {
             if (filters is not null)
             {

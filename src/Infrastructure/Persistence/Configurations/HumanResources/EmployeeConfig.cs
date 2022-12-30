@@ -11,10 +11,6 @@ namespace REA.Accounting.Infrastructure.Persistence.Configurations.HumanResource
         {
             entity.ToTable("Employee", schema: "HumanResources");
             entity.HasKey(e => e.BusinessEntityID);
-            entity.HasOne<PersonModel>()
-                .WithOne()
-                .HasForeignKey<Employee>(p => p.BusinessEntityID)
-                .IsRequired();
             entity.Ignore(e => e.OrganizationNode);
             entity.Ignore(e => e.OrganizationLevel);
 

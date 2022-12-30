@@ -1,4 +1,4 @@
-using REA.Accounting.UnitTests.TestHelpers;
+using Microsoft.EntityFrameworkCore;
 using TestSupport.EfHelpers;
 using TestSupport.Helpers;
 using System.Linq;
@@ -8,6 +8,9 @@ using REA.Accounting.Infrastructure.Persistence.DataModels.Organizations;
 using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
 using REA.Accounting.Infrastructure.Persistence.Extensions;
 using REA.Accounting.Infrastructure.Persistence.Interfaces;
+using REA.Accounting.Infrastructure.Persistence.Specifications;
+using REA.Accounting.Infrastructure.Persistence.Specifications.Person;
+using REA.Accounting.UnitTests.TestHelpers;
 
 namespace REA.Accounting.UnitTests.DbContext.Sqlite
 {
@@ -169,7 +172,7 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
         }
 
         [Fact]
-        public async Task PersonHasLastNameSpecification_ReturnList_ShouldSucceed()
+        public async Task PersonByIDWithEmployeeSpecification_ReturnOnePersonWithEmployee_ShouldSucceed()
         {
             //SETUP
             var options = SqliteInMemory.CreateOptions<EfCoreContext>();
@@ -179,23 +182,25 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
             await context.SeedLookupData();
             await context.SeedPersonAndHrData();
 
-            var filters = new List<Specification<PersonModel>>()
-            {
-                new PersonHasLastNameSpecification("Hamilton")
-            };
-
-            List<PersonModel>? people = null;
+            int businessEntityID = 2;
+            CancellationToken cancellationToken = default;
 
             //ATTEMPT
-            filters.ForEach(item => people = context.Person!.Where(item.ToExpression()).ToList());
+            var person = await
+                SpecificationEvaluator.GetQuery
+                (
+                    context.Set<PersonModel>(),
+                    new PersonByIDWithEmployeeSpecification(businessEntityID)
+                ).FirstOrDefaultAsync(cancellationToken);
 
             //VERIFY
-            Assert.True(people!.Any());
-            Assert.Equal("Hamilton", people![0].LastName);
+            Assert.Equal("Duffy", person!.LastName);
+            Assert.Equal("245797967", person.Employee!.NationalIDNumber);
         }
+
 
         [Fact]
-        public async Task PersonHasLastNameSpecification_ReturnSinglePersonModel_ShouldSucceed()
+        public async Task PersonByLastNameWithEmployeeSpecification_OneLetterCriteria_ShouldSucceed()
         {
             //SETUP
             var options = SqliteInMemory.CreateOptions<EfCoreContext>();
@@ -205,15 +210,20 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
             await context.SeedLookupData();
             await context.SeedPersonAndHrData();
 
-            var specification = new PersonHasLastNameSpecification("Hamilton");
+            string lastNameFragment = "a";
+            CancellationToken cancellationToken = default;
 
             //ATTEMPT
-            PersonModel? person = context.Person!.Where(specification.ToExpression()).SingleOrDefault();
+            var people = await
+                SpecificationEvaluator.GetQuery
+                (
+                    context.Set<PersonModel>(),
+                    new PersonByLastNameWithEmployeeSpecification(lastNameFragment)
+                ).ToListAsync(cancellationToken);
 
             //VERIFY
-            Assert.Equal("Hamilton", person!.LastName);
+            Assert.True(people.Any());
         }
-
         [Fact]
         public async Task DbContextExtension_ValidateWithSingleSpecifications_ShouldSucceed()
         {
@@ -225,7 +235,7 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
             await context.SeedLookupData();
             await context.SeedPersonAndHrData();
 
-            var filters = new List<Specification<PersonModel>>()
+            var filters = new List<SpecificationBase<PersonModel>>()
             {
                 new PersonHasLastNameSpecification("Hamilton")
             };
@@ -256,7 +266,7 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
 
             PersonModel? person = await context.Person!.FindAsync(2);
 
-            var filters = new List<Specification<PersonModel>>()
+            var filters = new List<SpecificationBase<PersonModel>>()
             {
                 new PersonHasLastNameSpecification("Duffy"),
                 new PersonHasEmployeePersonTypeSpecification("EM")
