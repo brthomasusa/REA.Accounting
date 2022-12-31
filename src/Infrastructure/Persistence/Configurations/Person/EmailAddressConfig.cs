@@ -9,8 +9,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Configurations.Person
         public void Configure(EntityTypeBuilder<EmailAddress> entity)
         {
             entity.ToTable("EmailAddress", schema: "Person");
-            entity.HasKey(e => new { e.BusinessEntityID, e.EmailAddressID });
-            // entity.HasIndex(p => p.Email_Address).IsUnique();
+            entity.HasKey(e => e.EmailAddressID);
 
             entity.Property(e => e.BusinessEntityID)
                 .HasColumnName("BusinessEntityID")

@@ -25,7 +25,7 @@ namespace REA.Accounting.Infrastructure.Persistence.DataModels.HumanResources
         public Guid RowGuid { get; set; }
         public DateTime ModifiedDate { get; set; }
 
-        public virtual List<EmployeeDepartmentHistory> DepartmentHistory { get; set; } = new();
-        public virtual List<EmployeePayHistory> PayHistory { get; set; } = new();
+        public virtual List<EmployeeDepartmentHistory> DepartmentHistories { get; set; } = new();
+        public virtual List<EmployeePayHistory> PayHistories { get; set; } = new();
     }
 }

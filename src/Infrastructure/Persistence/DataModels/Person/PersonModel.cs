@@ -17,8 +17,8 @@ namespace REA.Accounting.Infrastructure.Persistence.DataModels.Person
         public DateTime ModifiedDate { get; set; }
 
         public virtual Employee? Employee { get; set; }
-        public virtual HashSet<EmailAddress> EmailAddresses { get; set; } = new();
-        public virtual HashSet<PersonPhone> Telephones { get; set; } = new();
-        public virtual HashSet<BusinessEntityAddress> Addresses { get; set; } = new();
+        public virtual List<EmailAddress> EmailAddresses { get; set; } = new();
+        public virtual List<PersonPhone> Telephones { get; set; } = new();
+        public virtual List<BusinessEntityAddress> Addresses { get; set; } = new();
     }
 }

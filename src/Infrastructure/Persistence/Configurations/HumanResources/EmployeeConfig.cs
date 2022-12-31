@@ -13,6 +13,14 @@ namespace REA.Accounting.Infrastructure.Persistence.Configurations.HumanResource
             entity.HasKey(e => e.BusinessEntityID);
             entity.Ignore(e => e.OrganizationNode);
             entity.Ignore(e => e.OrganizationLevel);
+            entity.HasMany(employee => employee.DepartmentHistories)
+                  .WithOne()
+                  .HasForeignKey(employee => employee.BusinessEntityID)
+                  .IsRequired();
+            entity.HasMany(employee => employee.PayHistories)
+                  .WithOne()
+                  .HasForeignKey(employee => employee.BusinessEntityID)
+                  .IsRequired();
 
             entity.Property(e => e.BusinessEntityID)
                 .HasColumnName("BusinessEntityID")

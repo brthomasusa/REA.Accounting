@@ -12,6 +12,9 @@ namespace REA.Accounting.Infrastructure.Persistence.Specifications.Person
             AddInclude(person => person.Telephones!);
             AddInclude(person => person.Addresses!);
 
+            AddInclude(person => person.Employee!.DepartmentHistories);
+            AddInclude(person => person.Employee!.PayHistories);
+
             AddOrderBy(person => person.LastName!);
         }
     }

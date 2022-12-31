@@ -1,3 +1,6 @@
+#pragma warning disable CS8600
+
+using REA.Accounting.UnitTests.Data;
 using REA.Accounting.UnitTests.TestHelpers;
 using TestSupport.EfHelpers;
 using TestSupport.Helpers;
@@ -11,26 +14,6 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
 {
     public class PersonHrCreate_Tests
     {
-        [Fact]
-        public async Task Create_BusinessEntity_ShouldSucceed()
-        {
-            //SETUP
-            var options = SqliteInMemory.CreateOptions<EfCoreContext>();
-
-            using var context = new EfCoreContext(options);
-            context.Database.EnsureCreated();
-
-            //ATTEMPT
-            BusinessEntity businessEntity = new() { RowGuid = Guid.NewGuid(), ModifiedDate = DateTime.Now };
-            context.BusinessEntity!.Add(businessEntity);
-            await context.SaveChangesAsync();
-
-            BusinessEntity? result = context.BusinessEntity!.FirstOrDefault();
-
-            //VERIFY
-            Assert.NotNull(result);
-        }
-
         [Fact]
         public async Task Create_Person_ShouldSucceed()
         {
@@ -67,13 +50,14 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
         }
 
         [Fact]
-        public async Task Create_Employee_ShouldSucceed()
+        public async Task Create_EmployeeAggregate_With_UOW_ShouldSucceed()
         {
             //SETUP
             var options = SqliteInMemory.CreateOptions<EfCoreContext>();
 
             using var context = new EfCoreContext(options);
             context.Database.EnsureCreated();
+            await context.SeedLookupData();
 
             BusinessEntity entity = new()
             {
@@ -87,39 +71,50 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
                     MiddleName = "D",
                     LastName = "Doe",
                     Suffix = "Jr.",
-                    EmailPromotion = 2
+                    EmailPromotion = 2,
+                    Employee = new Employee()
+                    {
+                        NationalIDNumber = "245797967",
+                        LoginID = "adventure-works\terri0",
+                        JobTitle = "Vice President of Engineering",
+                        BirthDate = new DateTime(1971, 8, 1),
+                        MaritalStatus = "M",
+                        Gender = "M",
+                        HireDate = new DateTime(2008, 1, 31),
+                        SalariedFlag = true,
+                        VacationHours = 1,
+                        SickLeaveHours = 20,
+                        CurrentFlag = true
+                    },
+                    EmailAddresses = new List<EmailAddress>()
+                    {
+                        new EmailAddress
+                        {
+                            MailAddress = "johnnydoe@adventureworks.com"
+                        }
+                    },
+                    Telephones = new List<PersonPhone>()
+                    {
+                        new PersonPhone { PhoneNumber = "214-555-4567", PhoneNumberTypeID = 1},
+                        new PersonPhone { PhoneNumber = "972-555-1234", PhoneNumberTypeID = 2},
+                        new PersonPhone { PhoneNumber = "469-555-4567", PhoneNumberTypeID = 3}
+                    }
                 }
             };
 
-            Employee employee = new()
-            {
-                BusinessEntityID = entity.BusinessEntityID,
-                NationalIDNumber = "245797967",
-                LoginID = "adventure-works\terri0",
-                JobTitle = "Vice President of Engineering",
-                BirthDate = new DateTime(1971, 8, 1),
-                MaritalStatus = "M",
-                Gender = "M",
-                HireDate = new DateTime(2008, 1, 31),
-                SalariedFlag = true,
-                VacationHours = 1,
-                SickLeaveHours = 20,
-                CurrentFlag = true
-            };
+            await context.AddAsync(entity);
 
-            await context.BusinessEntity!.AddAsync(entity);
-            await context.Employee!.AddAsync(employee);
             await context.SaveChangesAsync();
 
             //ATTEMPT
-            Employee? result = context.Employee!.FirstOrDefault();
+            PersonModel? result = context.Person!.FirstOrDefault();
 
             //VERIFY
             Assert.NotNull(result);
         }
 
         [Fact]
-        public async Task Create_AddressForNewEmployee_ShouldSucceed()
+        public async Task Create_AddressForExistingPerson_ShouldSucceed()
         {
             //SETUP
             var options = SqliteInMemory.CreateOptions<EfCoreContext>();
@@ -128,21 +123,8 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
             context.Database.EnsureCreated();
             await context.SeedLookupData();
 
-            // Create BusinessEntity and PersonModel
-            BusinessEntity entity = new()
-            {
-                PersonModel = new()
-                {
-                    PersonType = "EM",
-                    NameStyle = 0,
-                    Title = "Mr.",
-                    FirstName = "Johnny",
-                    MiddleName = "D",
-                    LastName = "Doe",
-                    Suffix = "Jr.",
-                    EmailPromotion = 2
-                }
-            };
+            // Get PersonModel
+            PersonModel person = await CreateTestData.CreateEmployeeAggregateForEditing(context);
 
             // Create Address
             Address address = new()
@@ -154,91 +136,33 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
                 PostalCode = "75000"
             };
 
-            await context.BusinessEntity!.AddAsync(entity);
+            //ATTEMPT
             await context.Address!.AddAsync(address);
-            await context.SaveChangesAsync();
+
+            // Start transaction
+            await context.Database.BeginTransactionAsync();
+
+            await context.SaveChangesAsync();  // Causes database to assign AddressID to Address
 
             // Create BusinessEntityAddress that links Address to PersonModel
             BusinessEntityAddress businessEntityAddress = new()
             {
-                BusinessEntityID = entity!.BusinessEntityID,
+                BusinessEntityID = person!.BusinessEntityID,
                 AddressID = address.AddressID,
                 AddressTypeID = 2
             };
 
             // Link the Address to the PersonModel
-            entity.PersonModel.Addresses.Add(businessEntityAddress);
-
-            Employee employee = new()
-            {
-                BusinessEntityID = entity.BusinessEntityID,
-                NationalIDNumber = "245797967",
-                LoginID = "adventure-works\terri0",
-                JobTitle = "Vice President of Engineering",
-                BirthDate = new DateTime(1971, 8, 1),
-                MaritalStatus = "M",
-                Gender = "M",
-                HireDate = new DateTime(2008, 1, 31),
-                SalariedFlag = true,
-                VacationHours = 1,
-                SickLeaveHours = 20,
-                CurrentFlag = true
-            };
-
-            await context.Employee!.AddAsync(employee);
+            person.Addresses.Add(businessEntityAddress);
             await context.SaveChangesAsync();
 
-            Employee? result = context.Employee!.FirstOrDefault();
-            Assert.NotNull(result);
+            // Commit transaction
+            await context.Database.CommitTransactionAsync();
 
-            //ATTEMPT
-            await context.BusinessEntityAddress!.AddAsync(businessEntityAddress);
-            var task = Record.ExceptionAsync(async () => await context.SaveChangesAsync());
+            person = await context.Person!.FindAsync(person.BusinessEntityID);
 
             //VERIFY
-            Assert.Null(task.Exception);
+            Assert.Equal(address.AddressLine1, person!.Addresses[0].Address!.AddressLine1);
         }
-
-        // [Fact]
-        // public async Task Create_AddressForExistingEmployee_ShouldSucceed()
-        // {
-        //     //SETUP
-        //     var options = SqliteInMemory.CreateOptions<EfCoreContext>();
-
-        //     using var context = new EfCoreContext(options);
-        //     context.Database.EnsureCreated();
-        //     await context.SeedLookupData();
-        //     await context.SeedPersonAndHrData();
-
-        //     Employee? employee = await context.Employee!.FindAsync(2);
-        //     Assert.NotNull(employee);
-
-        //     Address address = new()
-        //     {
-        //         AddressID = 0,
-        //         AddressLine1 = "123 Main Street",
-        //         AddressLine2 = "Suite 123",
-        //         City = "Desoto",
-        //         StateProvinceID = 73,
-        //         PostalCode = "75000"
-        //     };
-
-        //     await context.Address!.AddAsync(address);
-        //     await context.SaveChangesAsync();
-
-        //     BusinessEntityAddress businessEntityAddress = new()
-        //     {
-        //         BusinessEntityID = employee!.BusinessEntityID,
-        //         AddressID = address.AddressID,
-        //         AddressTypeID = 2
-        //     };
-
-        //     //ATTEMPT
-        //     await context.BusinessEntityAddress!.AddAsync(businessEntityAddress);
-        //     var task = Record.ExceptionAsync(async () => await context.SaveChangesAsync());
-
-        //     //VERIFY
-        //     Assert.Null(task.Exception);
-        // }
     }
 }

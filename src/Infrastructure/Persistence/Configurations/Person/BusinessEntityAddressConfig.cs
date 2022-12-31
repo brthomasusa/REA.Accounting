@@ -14,9 +14,9 @@ namespace REA.Accounting.Infrastructure.Persistence.Configurations.Person
                 .WithMany()
                 .HasForeignKey(p => p.BusinessEntityID)
                 .IsRequired();
-            entity.HasOne<Address>()
+            entity.HasOne(businessEntityAddress => businessEntityAddress.Address)
                 .WithMany()
-                .HasForeignKey(p => p.AddressID)
+                .HasForeignKey(businessEntityAddress => businessEntityAddress.AddressID)
                 .IsRequired();
             entity.HasOne<AddressType>()
                 .WithMany()
