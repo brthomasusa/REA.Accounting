@@ -36,7 +36,7 @@ namespace REA.Accounting.UnitTests.Repositories
         public async Task GetById_EmployeeAggregateRepo_ShouldSucceed()
         {
             IEmployeeAggregateRepository repo = new EmployeeAggregateRepo(_context!);
-            OperationResult<DomainModelEmployee> result = await repo.GetById(2);
+            OperationResult<DomainModelEmployee> result = await repo.GetByIdAsync(2);
 
             Assert.True(result.Success);
         }

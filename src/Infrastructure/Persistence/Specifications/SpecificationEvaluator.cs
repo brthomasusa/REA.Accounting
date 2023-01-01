@@ -4,6 +4,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Specifications
 {
     public static class SpecificationEvaluator
     {
+        //TODO How to add AsNoTracking to this.
         public static IQueryable<TEntity> GetQuery<TEntity>
         (
             IQueryable<TEntity> inputQueryable,

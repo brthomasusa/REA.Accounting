@@ -3,7 +3,7 @@ namespace REA.Accounting.SharedKernel.Guards
 {
     public static partial class GuardClauseExtensions
     {
-        public static string InvalidUrl(this IGuardClause guardClause, string url, string parameterName = "URL", string message = null)
+        public static string InvalidUrl(this IGuardClause guardClause, string url, string parameterName = "URL", string message = null!)
         {
             try
             {

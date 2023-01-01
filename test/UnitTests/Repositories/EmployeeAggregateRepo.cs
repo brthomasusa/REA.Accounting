@@ -6,12 +6,15 @@ using REA.Accounting.Core.Shared;
 using REA.Accounting.Infrastructure.Persistence;
 using REA.Accounting.Infrastructure.Persistence.DataModels.HumanResources;
 using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
+using REA.Accounting.Infrastructure.Persistence.Repositories;
 using REA.Accounting.Infrastructure.Persistence.Specifications;
 using REA.Accounting.Infrastructure.Persistence.Specifications.Person;
+using REA.Accounting.SharedKernel;
 using REA.Accounting.SharedKernel.CommonValueObjects;
 using REA.Accounting.SharedKernel.Utilities;
 using DataModelEmployee = REA.Accounting.Infrastructure.Persistence.DataModels.HumanResources.Employee;
 using DomainModelEmployee = REA.Accounting.Core.HumanResources.Employee;
+
 
 namespace REA.Accounting.UnitTests.Repositories
 {
@@ -21,7 +24,13 @@ namespace REA.Accounting.UnitTests.Repositories
 
         public EmployeeAggregateRepo(EfCoreContext ctx) => _context = ctx;
 
-        public async Task<OperationResult<DomainModelEmployee>> GetById(int empployeeID)
+        public IUnitOfWork UnitOfWork => new UnitOfWork(_context);
+
+        public Task<OperationResult<IQueryable<DomainModelEmployee>>> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+        public async Task<OperationResult<DomainModelEmployee>> GetByIdAsync(int empployeeID)
         {
             try
             {
@@ -65,7 +74,17 @@ namespace REA.Accounting.UnitTests.Repositories
             }
         }
 
-        public Task<OperationResult<bool>> Create(DomainModelEmployee employee)
+        public Task<OperationResult<bool>> InsertAsync(DomainModelEmployee employee)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<OperationResult<bool>> Delete(DomainModelEmployee entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<OperationResult<bool>> Remove(IEnumerable<DomainModelEmployee> entitiesToRemove)
         {
             throw new NotImplementedException();
         }

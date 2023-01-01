@@ -1,12 +1,11 @@
 using REA.Accounting.Core.HumanResources;
+using REA.Accounting.SharedKernel;
 using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Core.Interfaces
 {
-    public interface IEmployeeAggregateRepository
+    public interface IEmployeeAggregateRepository : IRepository<Employee>
     {
-        Task<OperationResult<Employee>> GetById(int empployeeID);
 
-        Task<OperationResult<bool>> Create(Employee employee);
     }
 }
