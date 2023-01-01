@@ -11,6 +11,9 @@ namespace REA.Accounting.Core.HumanResources
 {
     public class Employee : Person
     {
+        private List<DepartmentHistory> _deptHistories;
+        private List<PayHistory> _payHistories;
+
         public Employee() { }
 
         public Employee
@@ -24,7 +27,6 @@ namespace REA.Accounting.Core.HumanResources
             EmailPromotionEnum emailPromotionEnum,
             NationalID nationalID,
             Login login,
-            OrganizationNode orgNode,
             JobTitle jobTitle,
             DateOfBirth birthDate,
             MaritalStatus maritalStatus,
@@ -39,7 +41,6 @@ namespace REA.Accounting.Core.HumanResources
         {
             NationalIDNumber = nationalID.Value!;
             LoginID = login.Value;
-            OrganizationNode = orgNode.Value;
             JobTitle = jobTitle.Value;
             BirthDate = birthDate.Value;
             MaritalStatus = maritalStatus.Value;
@@ -65,7 +66,6 @@ namespace REA.Accounting.Core.HumanResources
             string suffix,
             string nationalID,
             string login,
-            string orgNode,
             string jobTitle,
             DateOnly birthDate,
             string maritalStatus,
@@ -88,7 +88,6 @@ namespace REA.Accounting.Core.HumanResources
                 EmailPromotionEnum.None,
                 NationalID.Create(nationalID),
                 Login.Create(login),
-                ValueObject.OrganizationNode.Create(orgNode),
                 ValueObject.JobTitle.Create(jobTitle),
                 ValueObject.DateOfBirth.Create(birthDate),
                 ValueObject.MaritalStatus.Create(maritalStatus),
@@ -203,6 +202,9 @@ namespace REA.Accounting.Core.HumanResources
             IsActive = value;
             UpdateModifiedDate();
         }
+
+        public virtual IReadOnlyCollection<DepartmentHistory> DepartmentHistories => _deptHistories.ToList();
+        public virtual IReadOnlyCollection<PayHistory> PayHistories => _payHistories.ToList();
 
         protected override void CheckValidity()
         {

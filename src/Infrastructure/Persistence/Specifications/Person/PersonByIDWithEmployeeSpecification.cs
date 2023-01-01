@@ -8,6 +8,12 @@ namespace REA.Accounting.Infrastructure.Persistence.Specifications.Person
             : base(person => person.BusinessEntityID == businessEntityID)
         {
             AddInclude(person => person.Employee!);
+            AddInclude(person => person.EmailAddresses!);
+            AddInclude(person => person.Telephones!);
+            AddInclude(person => person.Addresses!);
+
+            AddInclude(person => person.Employee!.DepartmentHistories);
+            AddInclude(person => person.Employee!.PayHistories);
         }
     }
 }

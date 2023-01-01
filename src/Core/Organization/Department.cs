@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 using REA.Accounting.SharedKernel;
 using REA.Accounting.SharedKernel.CommonValueObjects;
 
-namespace REA.Accounting.Core.HumanResources
+namespace REA.Accounting.Core.Organization
 {
     public class Department : Entity<int>
     {

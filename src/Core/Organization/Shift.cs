@@ -3,7 +3,7 @@
 using REA.Accounting.SharedKernel;
 using REA.Accounting.Core.HumanResources.ValueObjects;
 
-namespace REA.Accounting.Core.HumanResources
+namespace REA.Accounting.Core.Organization
 {
     public class Shift : Entity<int>
     {

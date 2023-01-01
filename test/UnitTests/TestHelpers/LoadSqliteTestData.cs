@@ -1,9 +1,7 @@
 using REA.Accounting.Infrastructure.Persistence;
 using REA.Accounting.Infrastructure.Persistence.DataModels.HumanResources;
-using REA.Accounting.Infrastructure.Persistence.DataModels.Organizations;
 using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
 using REA.Accounting.Infrastructure.Persistence.DataModels.Sales;
-using REA.Accounting.UnitTests.Data;
 
 namespace REA.Accounting.UnitTests.TestHelpers
 {

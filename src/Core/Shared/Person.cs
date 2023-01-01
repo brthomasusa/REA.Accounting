@@ -10,6 +10,10 @@ namespace REA.Accounting.Core.Shared
 {
     public abstract class Person : Entity<int>
     {
+        private List<Address> _addresses;
+        private List<EmailAddress> _emailAddresses;
+        private List<PersonPhone> _telephones;
+
         protected Person() { }
 
         public Person
@@ -100,6 +104,10 @@ namespace REA.Accounting.Core.Shared
                 throw new ArgumentException("Invalid email promotion flag");
             }
         }
+
+        public virtual IReadOnlyCollection<Address> Addresses => _addresses.ToList();
+        public virtual IReadOnlyCollection<EmailAddress> EmailAddresses => _emailAddresses.ToList();
+        public virtual IReadOnlyCollection<PersonPhone> Telephones => _telephones.ToList();
     }
 
     public enum NameStyleEnum : int

@@ -124,7 +124,6 @@ namespace REA.Accounting.Core.Organization
             suffix,
             nationalID,
             login,
-            orgNode,
             jobTitle,
             birthDate,
             maritalStatus,

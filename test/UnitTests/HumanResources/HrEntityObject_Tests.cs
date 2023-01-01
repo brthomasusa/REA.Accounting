@@ -1,7 +1,7 @@
 #pragma warning disable CS8600, CS8625
 
 using Xunit;
-using REA.Accounting.Core.HumanResources;
+using REA.Accounting.Core.Organization;
 using REA.Accounting.Core.HumanResources.ValueObjects;
 using REA.Accounting.SharedKernel.CommonValueObjects;
 
