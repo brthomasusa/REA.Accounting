@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
-using REA.Accounting.Core.Interfaces;
 using REA.Accounting.Core.HumanResources;
+using REA.Accounting.Core.Interfaces;
 using REA.Accounting.Core.Shared;
 using REA.Accounting.Infrastructure.Persistence;
 using REA.Accounting.Infrastructure.Persistence.DataModels.HumanResources;
@@ -30,6 +30,7 @@ namespace REA.Accounting.UnitTests.Repositories
         {
             throw new NotImplementedException();
         }
+
         public async Task<OperationResult<DomainModelEmployee>> GetByIdAsync(int empployeeID)
         {
             try
@@ -43,6 +44,7 @@ namespace REA.Accounting.UnitTests.Repositories
                         new PersonByIDWithEmployeeSpecification(empployeeID)
                     ).FirstOrDefaultAsync(cancellationToken);
 
+                // Create employee domain object from person data model
                 DomainModelEmployee employee = DomainModelEmployee.Create
                 (
                     person!.BusinessEntityID,
@@ -65,6 +67,33 @@ namespace REA.Accounting.UnitTests.Repositories
                     person!.Employee!.SickLeaveHours,
                     person!.Employee!.CurrentFlag
                 );
+
+                // Add addresses to employee from person data model
+                person!.Addresses.ToList().ForEach(addr =>
+                    employee.AddAddress(addr.AddressID,
+                                        addr.BusinessEntityID,
+                                        (AddressTypeEnum)addr.AddressTypeID,
+                                        addr.Address!.AddressLine1!,
+                                        addr.Address.AddressLine2,
+                                        addr.Address!.City!,
+                                        addr.Address.StateProvinceID,
+                                        addr.Address!.PostalCode!));
+
+                // Add email addresses to employee from person data model
+                person.EmailAddresses.ToList().ForEach(email =>
+                    employee.AddEmailAddress(
+                        email.BusinessEntityID,
+                        email.EmailAddressID,
+                        email.MailAddress!
+                    ));
+
+                // Add email addresses to employee from person data model
+                person!.Telephones.ToList().ForEach(tel =>
+                    employee.AddPhoneNumbers(
+                        tel.BusinessEntityID,
+                        (PhoneNumberTypeEnum)tel.PhoneNumberTypeID,
+                        tel.PhoneNumber!
+                    ));
 
                 return OperationResult<DomainModelEmployee>.CreateSuccessResult(employee);
             }

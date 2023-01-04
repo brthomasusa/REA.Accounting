@@ -103,26 +103,6 @@ namespace REA.Accounting.UnitTests.HumanResources
             Assert.NotNull(exception);
         }
 
-        [Fact]
-        public void Update_Employee_ShouldSucceed()
-        {
-            Employee employee = GetEmployeeForEditing();
-
-            var exception = Record.Exception(() => employee.UpdateFirstName("Jonny"));
-
-            Assert.Null(exception);
-        }
-
-        [Fact]
-        public void Update_Employee_Invalid_PersonType_ShouldSucceed()
-        {
-            Employee employee = GetEmployeeForEditing();
-
-            var exception = Record.Exception(() => employee.UpdatePersonType("IN"));
-
-            Assert.NotNull(exception);
-        }
-
         private Employee GetEmployeeForEditing()
             => Employee.Create
                 (

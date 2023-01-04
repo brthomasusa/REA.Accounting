@@ -7,30 +7,24 @@ namespace REA.Accounting.Core.Shared
 {
     public class PersonEmailAddress : Entity<int>
     {
-        // PersonID = BusinessEntityID
-        // Id = EmailAddressID
-
-        protected PersonEmailAddress() { }
-
-        private PersonEmailAddress(int id, int personId, EmailAddress emailAddress)
-            : this()
+        private PersonEmailAddress(int id, int emailAddressID, EmailAddress emailAddress)
         {
             Id = id;
-            PersonID = personId;
+            EmailAddressID = emailAddressID;
             EmailAddress = emailAddress.Value!;
         }
 
-        public static PersonEmailAddress Create(int id, int personId, string email)
+        internal static PersonEmailAddress Create(int id, int emailAddressID, string email)
         {
             return new PersonEmailAddress
             (
                 id,
-                personId,
+                emailAddressID,
                 REA.Accounting.SharedKernel.CommonValueObjects.EmailAddress.Create(email)
             );
         }
 
-        public int PersonID { get; private set; }
+        public int EmailAddressID { get; private set; }
 
         public string EmailAddress { get; private set; }
         public void UpdateEmailAddress(string email)

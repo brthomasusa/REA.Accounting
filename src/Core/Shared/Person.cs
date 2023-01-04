@@ -3,6 +3,7 @@
 using REA.Accounting.Core.Shared.ValueObjects;
 using REA.Accounting.SharedKernel;
 using REA.Accounting.SharedKernel.CommonValueObjects;
+using REA.Accounting.SharedKernel.Utilities;
 
 using ValueObject = REA.Accounting.Core.Shared.ValueObjects;
 
@@ -10,9 +11,9 @@ namespace REA.Accounting.Core.Shared
 {
     public abstract class Person : Entity<int>
     {
-        private List<Address> _addresses;
-        private List<EmailAddress> _emailAddresses;
-        private List<PersonPhone> _telephones;
+        private List<Address> _addresses = new();
+        private List<PersonEmailAddress> _emailAddresses = new();
+        private List<PersonPhone> _telephones = new();
 
         protected Person() { }
 
@@ -39,75 +40,184 @@ namespace REA.Accounting.Core.Shared
             EmailPromotions = emailPromotionEnum;
         }
 
-        public string PersonType { get; private set; }
-        public virtual void UpdatePersonType(string value)
+        protected OperationResult<Person> UpdatePerson
+        (
+            string personType,
+            NameStyleEnum nameStyle,
+            string title,
+            string firstName,
+            string lastName,
+            string middleName,
+            string suffix,
+            EmailPromotionEnum emailPromotionEnum
+        )
         {
-            PersonType = ValueObject.PersonType.Create(value).Value!;
-            UpdateModifiedDate();
+            try
+            {
+                PersonType = ValueObject.PersonType.Create(personType).Value!;
+                NameStyle = Enum.IsDefined(typeof(NameStyleEnum), nameStyle) ? nameStyle : throw new ArgumentException("Invalid names style");
+                Title = ValueObject.Title.Create(title).Value!;
+                PersonName name = PersonName.Create(LastName, firstName, MiddleName);
+                FirstName = name.FirstName!;
+                LastName = name.LastName!;
+                MiddleName = name.MiddleName!;
+                Suffix = ValueObject.Suffix.Create(suffix).Value!;
+                if (Enum.IsDefined(typeof(EmailPromotionEnum), emailPromotionEnum))
+                {
+                    EmailPromotions = emailPromotionEnum;
+                    UpdateModifiedDate();
+                }
+                else
+                {
+                    throw new ArgumentException("Invalid email promotion flag");
+                }
+
+                UpdateModifiedDate();
+                return OperationResult<Person>.CreateSuccessResult(this);
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<Person>.CreateFailure(Helpers.GetExceptionMessage(ex));
+            }
         }
+
+        public string PersonType { get; private set; }
 
         public NameStyleEnum NameStyle { get; private set; }
-        public void UpdateNameStyle(NameStyleEnum value)
-        {
-            NameStyle = Enum.IsDefined(typeof(NameStyleEnum), value) ? value : throw new ArgumentException("Invalid names style");
-            UpdateModifiedDate();
-        }
 
         public string Title { get; private set; }
-        public void UpdateTitle(string value)
-        {
-            Title = ValueObject.Title.Create(value).Value!;
-            UpdateModifiedDate();
-        }
 
         public string FirstName { get; private set; }
-        public void UpdateFirstName(string value)
-        {
-            PersonName name = PersonName.Create(LastName, value, MiddleName);
-            FirstName = name.FirstName!;
-            UpdateModifiedDate();
-        }
 
         public string MiddleName { get; private set; }
-        public void UpdateMiddleName(string value)
-        {
-            PersonName name = PersonName.Create(LastName, FirstName, value);
-            MiddleName = name.MiddleName!;
-            UpdateModifiedDate();
-        }
 
         public string LastName { get; private set; }
-        public void UpdateLastName(string value)
-        {
-            PersonName name = PersonName.Create(value, FirstName, MiddleName);
-            LastName = name.LastName!;
-            UpdateModifiedDate();
-        }
 
         public string Suffix { get; private set; }
-        public void UpdateSuffix(string value)
-        {
-            Suffix = ValueObject.Suffix.Create(value).Value!;
-            UpdateModifiedDate();
-        }
 
         public EmailPromotionEnum EmailPromotions { get; private set; }
-        public void UpdateEmailPromotions(EmailPromotionEnum value)
+
+        public virtual IReadOnlyCollection<Address> Addresses => _addresses.ToList();
+
+        public OperationResult<Address> AddAddress
+        (
+            int addressID,
+            int businessEntityID,
+            AddressTypeEnum addressType,
+            string line1,
+            string? line2,
+            string city,
+            int stateProvinceID,
+            string postalCode
+        )
         {
-            if (Enum.IsDefined(typeof(EmailPromotionEnum), value))
+            try
             {
-                EmailPromotions = value;
-                UpdateModifiedDate();
+                if (_addresses.Find(addr => addr.Id == addressID) is not null)
+                {
+                    return OperationResult<Address>.CreateFailure("There is already an address with this Id.");
+                }
+
+                Address address = Address.Create
+                (
+                    addressID, businessEntityID, addressType, line1, line2, city, stateProvinceID, postalCode
+                );
+
+                _addresses.Add(address);
+                return OperationResult<Address>.CreateSuccessResult(address);
             }
-            else
+            catch (Exception ex)
             {
-                throw new ArgumentException("Invalid email promotion flag");
+                return OperationResult<Address>.CreateFailure(Helpers.GetExceptionMessage(ex));
             }
         }
 
-        public virtual IReadOnlyCollection<Address> Addresses => _addresses.ToList();
-        public virtual IReadOnlyCollection<EmailAddress> EmailAddresses => _emailAddresses.ToList();
+        public OperationResult<Address> UpdateAddress
+        (
+            int addressID,
+            int businessEntityID,
+            AddressTypeEnum addressType,
+            string line1,
+            string? line2,
+            string city,
+            int stateProvinceID,
+            string postalCode
+        )
+        {
+            try
+            {
+                if (_addresses.Find(addr => addr.Id == addressID && addr.BusinessEntityID == businessEntityID) is null)
+                {
+                    return OperationResult<Address>.CreateFailure($"Unable to locate an address with this Id {addressID}-{businessEntityID}.");
+                }
+
+                var address = _addresses.Find(addr => addr.Id == addressID && addr.BusinessEntityID == businessEntityID);
+                OperationResult<Address> result = address!.Update
+                (
+                    addressType, line1, line2, city, stateProvinceID, postalCode
+                );
+
+                if (result.Success)
+                {
+                    return OperationResult<Address>.CreateSuccessResult(address);
+                }
+                else
+                {
+                    return OperationResult<Address>.CreateFailure(result.NonSuccessMessage!);
+                }
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<Address>.CreateFailure(Helpers.GetExceptionMessage(ex));
+            }
+        }
+
+        public virtual IReadOnlyCollection<PersonEmailAddress> EmailAddresses => _emailAddresses.ToList();
+
+        public OperationResult<PersonEmailAddress> AddEmailAddress(int id, int emailAddressId, string emailAddress)
+        {
+            try
+            {
+                var searchResult = _emailAddresses.Find(mail => mail.Id == id && mail.EmailAddressID == emailAddressId);
+                if (searchResult is not null)
+                    return OperationResult<PersonEmailAddress>.CreateFailure("This is a duplicate email address.");
+
+                var email = PersonEmailAddress.Create(id, emailAddressId, emailAddress);
+                _emailAddresses.Add(email);
+
+                return OperationResult<PersonEmailAddress>.CreateSuccessResult(email);
+
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<PersonEmailAddress>.CreateFailure(Helpers.GetExceptionMessage(ex));
+            }
+        }
+
         public virtual IReadOnlyCollection<PersonPhone> Telephones => _telephones.ToList();
+
+        public OperationResult<PersonPhone> AddPhoneNumbers(int id, PhoneNumberTypeEnum phoneType, string phoneNumber)
+        {
+            try
+            {
+                var searchResult = _telephones.Find(tel => tel.Id == id &&
+                                                           tel.PhoneNumberType == phoneType &&
+                                                           tel.Telephone == phoneNumber);
+
+                if (searchResult is not null)
+                    return OperationResult<PersonPhone>.CreateFailure("This is a duplicate phone number.");
+
+                var phone = PersonPhone.Create(id, phoneType, phoneNumber);
+                _telephones.Add(phone);
+
+                return OperationResult<PersonPhone>.CreateSuccessResult(phone);
+
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<PersonPhone>.CreateFailure(Helpers.GetExceptionMessage(ex));
+            }
+        }
     }
 
     public enum NameStyleEnum : int

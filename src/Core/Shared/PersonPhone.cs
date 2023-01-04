@@ -21,7 +21,7 @@ namespace REA.Accounting.Core.Shared
             Telephone = phoneNumber.Value!;
         }
 
-        public static PersonPhone Create
+        internal static PersonPhone Create
         (
             int id,
             PhoneNumberTypeEnum phoneNumberType,
