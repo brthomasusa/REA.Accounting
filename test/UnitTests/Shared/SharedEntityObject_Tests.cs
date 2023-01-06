@@ -11,7 +11,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void Person_AddAddress_ShouldSucceed()
         {
-            Person person = GetPersonForEditing();
+            Person person = GetContactForEditing();
             OperationResult<Address> result = person.AddAddress
             (
                 0,
@@ -30,7 +30,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void Address_Create_Invalid_NullLine1_ShouldFail()
         {
-            Person person = GetPersonForEditing();
+            Person person = GetContactForEditing();
             OperationResult<Address> result = person.AddAddress
             (
                 0,
@@ -49,7 +49,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void Address_Create_Invalid_BadStateProvinceID_ShouldFail()
         {
-            Person person = GetPersonForEditing();
+            Person person = GetContactForEditing();
             OperationResult<Address> result = person.AddAddress
             (
                 0,
@@ -68,7 +68,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void Address_Create_Invalid_NullPostalCode_ShouldFail()
         {
-            Person person = GetPersonForEditing();
+            Person person = GetContactForEditing();
             OperationResult<Address> result = person.AddAddress
             (
                 0,
@@ -87,7 +87,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void Address_Update_ShouldSucceed()
         {
-            Person person = GetPersonForEditing();
+            Person person = GetContactForEditing();
             OperationResult<Address> result = person.UpdateAddress
             (
                 1,
@@ -262,7 +262,7 @@ namespace REA.Accounting.UnitTests.Shared
             Assert.False(result.Success);
         }
 
-        private Person GetPersonForEditing()
+        private Person GetContactForEditing()
             => Contact.Create
             (
                 1,

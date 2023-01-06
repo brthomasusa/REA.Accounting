@@ -68,6 +68,22 @@ namespace REA.Accounting.UnitTests.Repositories
                     person!.Employee!.CurrentFlag
                 );
 
+                // Add dept histories to employee from person data model
+                person!.Employee!.DepartmentHistories.ToList().ForEach(dept =>
+                    employee.AddDepartmentHistory(dept.BusinessEntityID,
+                                                  dept.ShiftID,
+                                                  DateOnly.FromDateTime(dept.StartDate),
+                                                  dept.EndDate));
+
+                // Add pay histories to employee from person data model
+                person!.Employee!.PayHistories.ToList().ForEach(pay =>
+                    employee.AddPayHistory(
+                        pay.BusinessEntityID,
+                        pay.RateChangeDate,
+                        pay.Rate,
+                        (PayFrequencyEnum)pay.PayFrequency
+                    ));
+
                 // Add addresses to employee from person data model
                 person!.Addresses.ToList().ForEach(addr =>
                     employee.AddAddress(addr.AddressID,

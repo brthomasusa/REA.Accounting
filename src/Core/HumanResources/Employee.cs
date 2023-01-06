@@ -141,6 +141,7 @@ namespace REA.Accounting.Core.HumanResources
                 SickLeaveHours = ValueObject.SickLeave.Create(sickLeave).Value;
                 IsActive = active;
 
+                CheckValidity();
                 UpdateModifiedDate();
                 return OperationResult<Employee>.CreateSuccessResult(this);
             }
@@ -175,7 +176,68 @@ namespace REA.Accounting.Core.HumanResources
         public bool IsActive { get; private set; }
 
         public virtual IReadOnlyCollection<DepartmentHistory> DepartmentHistories => _deptHistories.ToList();
+
+        public OperationResult<DepartmentHistory> AddDepartmentHistory
+        (
+            int id,
+            int shiftId,
+            DateOnly startDate,
+            DateTime? endDate
+        )
+        {
+            try
+            {
+                DepartmentHistory? search = _deptHistories.Find(hist => hist.Id == id && hist.ShiftID == shiftId);
+
+                if (search is null)
+                {
+                    DepartmentHistory history = DepartmentHistory.Create(id, shiftId, startDate, endDate);
+                    _deptHistories.Add(history);
+
+                    return OperationResult<DepartmentHistory>.CreateSuccessResult(history);
+                }
+                else
+                {
+                    return OperationResult<DepartmentHistory>.CreateFailure("This is a duplicate department history.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<DepartmentHistory>.CreateFailure(Helpers.GetExceptionMessage(ex));
+            }
+        }
+
         public virtual IReadOnlyCollection<PayHistory> PayHistories => _payHistories.ToList();
+
+        public OperationResult<PayHistory> AddPayHistory
+        (
+            int id,
+            DateTime rateChangeDate,
+            decimal rate,
+            PayFrequencyEnum payFrequency
+        )
+        {
+            try
+            {
+                PayHistory? search = _payHistories.Find(hist => hist.Id == id && hist.RateChangeDate == rateChangeDate);
+
+                if (search is null)
+                {
+                    PayHistory history = PayHistory.Create(id, rateChangeDate, rate, payFrequency);
+                    _payHistories.Add(history);
+
+                    return OperationResult<PayHistory>.CreateSuccessResult(history);
+                }
+                else
+                {
+                    return OperationResult<PayHistory>.CreateFailure("This is a duplicate pay history.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<PayHistory>.CreateFailure(Helpers.GetExceptionMessage(ex));
+            }
+        }
 
         protected override void CheckValidity()
         {

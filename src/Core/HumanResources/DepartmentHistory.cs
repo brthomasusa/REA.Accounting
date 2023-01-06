@@ -1,4 +1,5 @@
 using REA.Accounting.SharedKernel;
+using REA.Accounting.Core.HumanResources.ValueObjects;
 
 namespace REA.Accounting.Core.HumanResources
 {
@@ -8,30 +9,38 @@ namespace REA.Accounting.Core.HumanResources
         (
             int id,
             int shiftId,
-            DateOnly startDate,
+            DepartmentStartDate startDate,
             DateOnly? endDate
         )
         {
             Id = id;
             ShiftID = shiftId;
-            StartDate = startDate;
+            StartDate = startDate.Value;
             EndDate = endDate;
+
+            CheckValidity();
         }
 
-        public static DepartmentHistory Create
+        internal static DepartmentHistory Create
         (
             int id,
             int shiftId,
             DateOnly startDate,
-            DateOnly? endDate
+            DateTime? endDate
         )
         {
-            return new DepartmentHistory(id, shiftId, startDate, endDate);
+            return new DepartmentHistory(id, shiftId, DepartmentStartDate.Create(startDate), DateOnly.FromDateTime(endDate is null ? default : (DateTime)endDate));
         }
 
         public int DepartmentID { get; private set; }
         public int ShiftID { get; private set; }
         public DateOnly StartDate { get; private set; }
         public DateOnly? EndDate { get; private set; }
+
+        protected override void CheckValidity()
+        {
+            if (EndDate is not null && StartDate > EndDate)
+                throw new ArgumentException("Start date can not be after end date.");
+        }
     }
 }

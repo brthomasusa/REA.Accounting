@@ -183,5 +183,61 @@ namespace REA.Accounting.UnitTests.HumanResources
             var exception = Record.Exception(() => Vacation.Create(241));
             Assert.NotNull(exception);
         }
+
+        [Fact]
+        public void RateChangeDate_Create_ValidDate_ShouldSucceed()
+        {
+            var exception = Record.Exception(() => DateOfRateChange.Create(new DateTime(2023, 1, 5)));
+            Assert.Null(exception);
+        }
+
+        [Fact]
+        public void RateChangeDate_Create_DefaultDate_ShouldFail()
+        {
+            var exception = Record.Exception(() => DateOfRateChange.Create(new DateTime()));
+            Assert.NotNull(exception);
+        }
+
+        [Fact]
+        public void RateOfPay_Create_ValidPayAmt_ShouldSucceed()
+        {
+            var exception = Record.Exception(() => RateOfPay.Create(10.00M));
+            Assert.Null(exception);
+        }
+
+        [Fact]
+        public void RateOfPay_Create_PayAmtTooLow_ShouldFail()
+        {
+            var exception = Record.Exception(() => RateOfPay.Create(6.49M));
+            Assert.NotNull(exception);
+        }
+
+        [Fact]
+        public void RateOfPay_Create_PayAmtTooHigh_ShouldFail()
+        {
+            var exception = Record.Exception(() => RateOfPay.Create(200.01M));
+            Assert.NotNull(exception);
+        }
+
+        [Fact]
+        public void DepartmentStartDate_Create_ValidDate_ShouldSucceed()
+        {
+            var exception = Record.Exception(() => DepartmentStartDate.Create(new DateOnly(2023, 1, 5)));
+            Assert.Null(exception);
+        }
+
+        [Fact]
+        public void DepartmentStartDate_Create_DefaultDate_ShouldSucceed()
+        {
+            var exception = Record.Exception(() => DepartmentStartDate.Create(new DateOnly()));
+            Assert.NotNull(exception);
+        }
+
+        [Fact]
+        public void DepartmentStartDate_Create_EmptyDate_ShouldSucceed()
+        {
+            var exception = Record.Exception(() => DepartmentStartDate.Create(new DateOnly(0, 0, 0)));
+            Assert.NotNull(exception);
+        }
     }
 }

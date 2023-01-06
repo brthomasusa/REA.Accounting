@@ -1,3 +1,4 @@
+using REA.Accounting.Core.HumanResources.ValueObjects;
 using REA.Accounting.SharedKernel;
 
 namespace REA.Accounting.Core.HumanResources
@@ -7,18 +8,18 @@ namespace REA.Accounting.Core.HumanResources
         private PayHistory
         (
             int id,
-            DateTime rateChangeDate,
-            decimal rate,
+            DateOfRateChange rateChangeDate,
+            RateOfPay rate,
             PayFrequencyEnum payFrequency
         )
         {
             Id = id;
-            RateChangeDate = rateChangeDate;
-            Rate = rate;
+            RateChangeDate = rateChangeDate.Value;
+            Rate = rate.Value;
             PayFrequency = payFrequency;
         }
 
-        public static PayHistory Create
+        internal static PayHistory Create
         (
             int id,
             DateTime rateChangeDate,
@@ -26,7 +27,12 @@ namespace REA.Accounting.Core.HumanResources
             PayFrequencyEnum payFrequency
         )
         {
-            return new PayHistory(id, rateChangeDate, rate, payFrequency);
+            if (!Enum.IsDefined(typeof(PayFrequencyEnum), payFrequency))
+            {
+                throw new ArgumentException("Invalid pay frequency.");
+            }
+
+            return new PayHistory(id, DateOfRateChange.Create(rateChangeDate), RateOfPay.Create(rate), payFrequency);
         }
 
         public DateTime RateChangeDate { get; private set; }

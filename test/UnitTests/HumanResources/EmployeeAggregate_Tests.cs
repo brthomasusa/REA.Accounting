@@ -7,7 +7,7 @@ using REA.Accounting.SharedKernel.CommonValueObjects;
 
 namespace REA.Accounting.UnitTests.HumanResources
 {
-    public class CompanyAggregate_Tests
+    public class EmployeeAggregate_Tests
     {
         [Fact]
         public void Create_Employee_ShouldSucceed()
