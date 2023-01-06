@@ -1,3 +1,4 @@
+using Ardalis.Specification.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TestSupport.EfHelpers;
 using TestSupport.Helpers;
@@ -187,10 +188,10 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
 
             //ATTEMPT
             var person = await
-                SpecificationEvaluator.GetQuery
+                SpecificationEvaluator.Default.GetQuery
                 (
-                    context.Set<PersonModel>(),
-                    new PersonByIDWithEmployeeSpecification(businessEntityID)
+                    context.Set<PersonModel>().AsNoTracking(),
+                    new PersonByIDWithEmployeeSpec(businessEntityID)
                 ).FirstOrDefaultAsync(cancellationToken);
 
             //VERIFY
@@ -215,15 +216,16 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
 
             //ATTEMPT
             var people = await
-                SpecificationEvaluator.GetQuery
+                SpecificationEvaluator.Default.GetQuery
                 (
                     context.Set<PersonModel>(),
-                    new PersonByLastNameWithEmployeeSpecification(lastNameFragment)
+                    new PersonByLastNameWithEmployeeSpec(lastNameFragment)
                 ).ToListAsync(cancellationToken);
 
             //VERIFY
             Assert.True(people.Any());
         }
+
         [Fact]
         public async Task DbContextExtension_ValidateWithSingleSpecifications_ShouldSucceed()
         {

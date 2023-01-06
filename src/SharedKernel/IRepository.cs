@@ -6,7 +6,7 @@ namespace REA.Accounting.SharedKernel
     {
         IUnitOfWork UnitOfWork { get; }
         Task<OperationResult<IQueryable<T>>> GetAll();
-        Task<OperationResult<T>> GetByIdAsync(int id);
+        Task<OperationResult<T>> GetByIdAsync(int id, bool asNoTracking = false);
         Task<OperationResult<bool>> InsertAsync(T entity);
         Task<OperationResult<bool>> Delete(T entity);
     }

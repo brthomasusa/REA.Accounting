@@ -1,3 +1,4 @@
+using Ardalis.Specification.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 using REA.Accounting.Core.HumanResources;
@@ -31,17 +32,17 @@ namespace REA.Accounting.UnitTests.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<OperationResult<DomainModelEmployee>> GetByIdAsync(int empployeeID)
+        public async Task<OperationResult<DomainModelEmployee>> GetByIdAsync(int empployeeID, bool asNoTracking = false)
         {
             try
             {
                 CancellationToken cancellationToken = default;
 
                 var person = await
-                    SpecificationEvaluator.GetQuery
+                    SpecificationEvaluator.Default.GetQuery
                     (
-                        _context.Set<PersonModel>(),
-                        new PersonByIDWithEmployeeSpecification(empployeeID)
+                        asNoTracking ? _context.Set<PersonModel>().AsNoTracking() : _context.Set<PersonModel>(),
+                        new PersonByIDWithEmployeeSpec(empployeeID)
                     ).FirstOrDefaultAsync(cancellationToken);
 
                 // Create employee domain object from person data model
