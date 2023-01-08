@@ -328,19 +328,42 @@ namespace REA.Accounting.UnitTests.HumanResources
             Assert.False(result.Success);
         }
 
-        // [Fact]
-        // public void Create_PersonPhone_InvalidPhoneNumber_ShouldFail()
-        // {
-        //     Employee employee = GetEmployeeForEditing();
+        [Fact]
+        public void Create_PersonPhone_InvalidPhoneNumber_ShouldFail()
+        {
+            Employee employee = GetEmployeeForEditing();
 
-        //     OperationResult<REA.Accounting.Core.Shared.PersonPhone> result =
-        //         employee.AddPhoneNumbers(
-        //             1, PhoneNumberTypeEnum.Home, "789-555-555-5555"
-        //         );
+            OperationResult<REA.Accounting.Core.Shared.PersonPhone> result =
+                employee.AddPhoneNumbers(
+                    1, PhoneNumberTypeEnum.Home, "(789)-555-555-5555"
+                );
 
-        //     Assert.False(result.Success);
-        // }
+            Assert.False(result.Success);
+        }
 
+        private Employee GetEmployeeForCreate()
+            => Employee.Create
+                (
+                    0,
+                    "EM",
+                    Core.Shared.NameStyleEnum.Western,
+                    "Mr",
+                    "John",
+                    "Doe",
+                    "D",
+                    "Senior",
+                    "358987145",
+                    "adventure-works\\john10",
+                    "Tool Designer",
+                    new DateOnly(1990, 2, 21),
+                    "M",
+                    "M",
+                    new DateOnly(2023, 1, 5),
+                    true,
+                    0,
+                    0,
+                    true
+                );
 
 
         private Employee GetEmployeeForEditing()

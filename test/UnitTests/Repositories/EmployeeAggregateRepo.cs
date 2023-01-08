@@ -22,15 +22,15 @@ namespace REA.Accounting.UnitTests.Repositories
     public class EmployeeAggregateRepo : IEmployeeAggregateRepository
     {
         private EfCoreContext _context;
+        private IUnitOfWork _unitOfWork;
 
-        public EmployeeAggregateRepo(EfCoreContext ctx) => _context = ctx;
+        public EmployeeAggregateRepo(EfCoreContext ctx)
+        {
+            _context = ctx;
+            _unitOfWork = new UnitOfWork(_context);
+        }
 
         public IUnitOfWork UnitOfWork => new UnitOfWork(_context);
-
-        public Task<OperationResult<IQueryable<DomainModelEmployee>>> GetAll()
-        {
-            throw new NotImplementedException();
-        }
 
         public async Task<OperationResult<DomainModelEmployee>> GetByIdAsync(int empployeeID, bool asNoTracking = false)
         {
@@ -93,8 +93,51 @@ namespace REA.Accounting.UnitTests.Repositories
             }
         }
 
-        public Task<OperationResult<bool>> InsertAsync(DomainModelEmployee employee)
+        public async Task<OperationResult<int>> InsertAsync(DomainModelEmployee employee)
         {
+            try
+            {
+                BusinessEntity entity = new()
+                {
+                    BusinessEntityID = 0,
+                    PersonModel = new()
+                    {
+                        PersonType = employee.PersonType,
+                        NameStyle = (int)employee.NameStyle,
+                        Title = employee.Title,
+                        FirstName = employee.FirstName,
+                        MiddleName = employee.MiddleName,
+                        LastName = employee.LastName,
+                        Suffix = employee.Suffix,
+                        EmailPromotion = (int)employee.EmailPromotions,
+                        Employee = new DataModelEmployee()
+                        {
+                            NationalIDNumber = employee.NationalIDNumber,
+                            LoginID = employee.LoginID,
+                            JobTitle = employee.JobTitle,
+                            BirthDate = employee.BirthDate.ToDateTime(new TimeOnly()),
+                            MaritalStatus = employee.MaritalStatus,
+                            Gender = employee.Gender,
+                            HireDate = employee.HireDate.ToDateTime(new TimeOnly()),
+                            SalariedFlag = employee.IsSalaried,
+                            VacationHours = employee.VacationHours,
+                            SickLeaveHours = employee.SickLeaveHours,
+                            CurrentFlag = employee.IsActive
+                        }
+                    }
+                };
+
+                await _context.AddAsync(entity);
+                await _unitOfWork.CommitAsync();
+
+                return OperationResult<int>.CreateSuccessResult(entity.BusinessEntityID);
+
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<int>.CreateFailure(Helpers.GetExceptionMessage(ex));
+            }
+
             throw new NotImplementedException();
         }
 

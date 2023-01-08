@@ -13,8 +13,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories
 
         ~UnitOfWork() => Dispose(false);
 
-        public async Task Commit() => await _dbContext.SaveChangesAsync();
-        public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<int> CommitAsync(CancellationToken cancellationToken = default(CancellationToken))
             => await _dbContext.SaveChangesAsync(cancellationToken);
 
         public void Dispose()
