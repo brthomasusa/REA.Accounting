@@ -1,4 +1,5 @@
 using REA.Accounting.SharedKernel;
+using REA.Accounting.SharedKernel.Guards;
 
 namespace REA.Accounting.Core.Shared.ValueObjects
 {
@@ -6,10 +7,8 @@ namespace REA.Accounting.Core.Shared.ValueObjects
     {
         public string? Value { get; }
 
-        protected AddressLine2() { }
-
         private AddressLine2(string line)
-            : this() => Value = line;
+            => Value = line;
 
         public static implicit operator string(AddressLine2 self) => self.Value!;
 
@@ -21,9 +20,9 @@ namespace REA.Accounting.Core.Shared.ValueObjects
 
         private static void CheckValidity(string value)
         {
-            if (!string.IsNullOrEmpty(value) && value.Length > 60)
+            if (!string.IsNullOrEmpty(value))
             {
-                throw new ArgumentException("Address line 2 can not be greater than 60 characters.");
+                Guard.Against.LengthGreaterThan(value, 60, "Address Line 2", "The maximum length of an address line is 60 characters.");
             }
         }
     }

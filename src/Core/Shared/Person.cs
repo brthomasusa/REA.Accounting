@@ -97,7 +97,7 @@ namespace REA.Accounting.Core.Shared
 
         public EmailPromotionEnum EmailPromotions { get; private set; }
 
-        public virtual IReadOnlyCollection<Address> Addresses => _addresses.ToList();
+        public virtual IReadOnlyCollection<Address> Addresses => _addresses.AsReadOnly();
 
         public OperationResult<Address> AddAddress
         (
@@ -118,13 +118,20 @@ namespace REA.Accounting.Core.Shared
                     return OperationResult<Address>.CreateFailure("There is already an address with this Id.");
                 }
 
-                Address address = Address.Create
+                OperationResult<Address> result = Address.Create
                 (
                     addressID, businessEntityID, addressType, line1, line2, city, stateProvinceID, postalCode
                 );
 
-                _addresses.Add(address);
-                return OperationResult<Address>.CreateSuccessResult(address);
+                if (result.Success)
+                {
+                    _addresses.Add(result.Result);
+                    return OperationResult<Address>.CreateSuccessResult(result.Result);
+                }
+                else
+                {
+                    return OperationResult<Address>.CreateFailure(result.NonSuccessMessage!);
+                }
             }
             catch (Exception ex)
             {
@@ -172,7 +179,7 @@ namespace REA.Accounting.Core.Shared
             }
         }
 
-        public virtual IReadOnlyCollection<PersonEmailAddress> EmailAddresses => _emailAddresses.ToList();
+        public virtual IReadOnlyCollection<PersonEmailAddress> EmailAddresses => _emailAddresses.AsReadOnly();
 
         public OperationResult<PersonEmailAddress> AddEmailAddress(int id, int emailAddressId, string emailAddress)
         {
@@ -182,11 +189,16 @@ namespace REA.Accounting.Core.Shared
                 if (searchResult is not null)
                     return OperationResult<PersonEmailAddress>.CreateFailure("This is a duplicate email address.");
 
-                var email = PersonEmailAddress.Create(id, emailAddressId, emailAddress);
-                _emailAddresses.Add(email);
-
-                return OperationResult<PersonEmailAddress>.CreateSuccessResult(email);
-
+                OperationResult<PersonEmailAddress> result = PersonEmailAddress.Create(id, emailAddressId, emailAddress);
+                if (result.Success)
+                {
+                    _emailAddresses.Add(result.Result);
+                    return OperationResult<PersonEmailAddress>.CreateSuccessResult(result.Result);
+                }
+                else
+                {
+                    return OperationResult<PersonEmailAddress>.CreateFailure(result.NonSuccessMessage!);
+                }
             }
             catch (Exception ex)
             {
@@ -194,7 +206,7 @@ namespace REA.Accounting.Core.Shared
             }
         }
 
-        public virtual IReadOnlyCollection<PersonPhone> Telephones => _telephones.ToList();
+        public virtual IReadOnlyCollection<PersonPhone> Telephones => _telephones.AsReadOnly();
 
         public OperationResult<PersonPhone> AddPhoneNumbers(int id, PhoneNumberTypeEnum phoneType, string phoneNumber)
         {
@@ -207,11 +219,17 @@ namespace REA.Accounting.Core.Shared
                 if (searchResult is not null)
                     return OperationResult<PersonPhone>.CreateFailure("This is a duplicate phone number.");
 
-                var phone = PersonPhone.Create(id, phoneType, phoneNumber);
-                _telephones.Add(phone);
 
-                return OperationResult<PersonPhone>.CreateSuccessResult(phone);
-
+                OperationResult<PersonPhone> result = PersonPhone.Create(id, phoneType, phoneNumber);
+                if (result.Success)
+                {
+                    _telephones.Add(result.Result);
+                    return OperationResult<PersonPhone>.CreateSuccessResult(result.Result);
+                }
+                else
+                {
+                    return OperationResult<PersonPhone>.CreateFailure(result.NonSuccessMessage!);
+                }
             }
             catch (Exception ex)
             {

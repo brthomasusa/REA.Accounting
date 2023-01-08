@@ -1,15 +1,14 @@
 using REA.Accounting.SharedKernel;
+using REA.Accounting.SharedKernel.Guards;
 
 namespace REA.Accounting.Core.Shared.ValueObjects
 {
-    public class City
+    public class City : ValueObject
     {
         public string? Value { get; }
 
-        protected City() { }
-
         private City(string line)
-            : this() => Value = line;
+            => Value = line;
 
         public static implicit operator string(City self) => self.Value!;
 
@@ -21,10 +20,8 @@ namespace REA.Accounting.Core.Shared.ValueObjects
 
         private static void CheckValidity(string value)
         {
-            if (string.IsNullOrEmpty(value) || value.Length > 30)
-            {
-                throw new ArgumentException("City name can not be null or greater than 30 characters.");
-            }
+            Guard.Against.NullOrEmpty(value, "City", "The city is required.");
+            Guard.Against.LengthGreaterThan(value, 30, "Address Line 1", "The maximum length of the city name is 30 characters.");
         }
     }
 }

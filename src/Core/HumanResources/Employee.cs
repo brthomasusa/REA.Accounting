@@ -7,6 +7,7 @@ using REA.Accounting.SharedKernel.Utilities;
 using REA.Accounting.SharedKernel.CommonValueObjects;
 
 using ValueObject = REA.Accounting.Core.HumanResources.ValueObjects;
+using SharedValueObject = REA.Accounting.Core.Shared.ValueObjects;
 
 namespace REA.Accounting.Core.HumanResources
 {
@@ -15,9 +16,7 @@ namespace REA.Accounting.Core.HumanResources
         private List<DepartmentHistory> _deptHistories = new();
         private List<PayHistory> _payHistories = new();
 
-        public Employee() { }
-
-        public Employee
+        protected Employee
         (
             int employeeID,
             PersonType personType,
@@ -81,11 +80,11 @@ namespace REA.Accounting.Core.HumanResources
             return new Employee
             (
                 employeeID,
-                REA.Accounting.Core.Shared.ValueObjects.PersonType.Create(personType),
+                SharedValueObject.PersonType.Create(personType),
                 nameStyle,
-                REA.Accounting.Core.Shared.ValueObjects.Title.Create(title),
+                SharedValueObject.Title.Create(title),
                 PersonName.Create(lastName, firstName, middleName),
-                REA.Accounting.Core.Shared.ValueObjects.Suffix.Create(suffix),
+                SharedValueObject.Suffix.Create(suffix),
                 EmailPromotionEnum.None,
                 NationalID.Create(nationalID),
                 Login.Create(login),
@@ -175,7 +174,7 @@ namespace REA.Accounting.Core.HumanResources
 
         public bool IsActive { get; private set; }
 
-        public virtual IReadOnlyCollection<DepartmentHistory> DepartmentHistories => _deptHistories.ToList();
+        public virtual IReadOnlyCollection<DepartmentHistory> DepartmentHistories => _deptHistories.AsReadOnly();
 
         public OperationResult<DepartmentHistory> AddDepartmentHistory
         (
@@ -191,10 +190,16 @@ namespace REA.Accounting.Core.HumanResources
 
                 if (search is null)
                 {
-                    DepartmentHistory history = DepartmentHistory.Create(id, shiftId, startDate, endDate);
-                    _deptHistories.Add(history);
-
-                    return OperationResult<DepartmentHistory>.CreateSuccessResult(history);
+                    OperationResult<DepartmentHistory> result = DepartmentHistory.Create(id, shiftId, startDate, endDate);
+                    if (result.Success)
+                    {
+                        _deptHistories.Add(result.Result);
+                        return OperationResult<DepartmentHistory>.CreateSuccessResult(result.Result);
+                    }
+                    else
+                    {
+                        return OperationResult<DepartmentHistory>.CreateFailure(result.NonSuccessMessage!);
+                    }
                 }
                 else
                 {
@@ -207,7 +212,7 @@ namespace REA.Accounting.Core.HumanResources
             }
         }
 
-        public virtual IReadOnlyCollection<PayHistory> PayHistories => _payHistories.ToList();
+        public virtual IReadOnlyCollection<PayHistory> PayHistories => _payHistories.AsReadOnly();
 
         public OperationResult<PayHistory> AddPayHistory
         (
@@ -223,10 +228,16 @@ namespace REA.Accounting.Core.HumanResources
 
                 if (search is null)
                 {
-                    PayHistory history = PayHistory.Create(id, rateChangeDate, rate, payFrequency);
-                    _payHistories.Add(history);
-
-                    return OperationResult<PayHistory>.CreateSuccessResult(history);
+                    OperationResult<PayHistory> result = PayHistory.Create(id, rateChangeDate, rate, payFrequency);
+                    if (result.Success)
+                    {
+                        _payHistories.Add(result.Result);
+                        return OperationResult<PayHistory>.CreateSuccessResult(result.Result);
+                    }
+                    else
+                    {
+                        return OperationResult<PayHistory>.CreateFailure(result.NonSuccessMessage!);
+                    }
                 }
                 else
                 {

@@ -1,4 +1,5 @@
 using REA.Accounting.SharedKernel;
+using REA.Accounting.SharedKernel.Guards;
 
 namespace REA.Accounting.Core.Shared.ValueObjects
 {
@@ -7,10 +8,8 @@ namespace REA.Accounting.Core.Shared.ValueObjects
         private static readonly string[] _contactTypes = { "SC", "IN", "SP", "EM", "VC", "GC" };
         public string? Value { get; }
 
-        protected PersonType() { }
-
         private PersonType(string contactType)
-            : this() => Value = contactType;
+            => Value = contactType;
 
         public static implicit operator string(PersonType self) => self.Value!;
 
@@ -22,10 +21,7 @@ namespace REA.Accounting.Core.Shared.ValueObjects
 
         private static void CheckValidity(string value)
         {
-            if (string.IsNullOrEmpty(value))
-            {
-                throw new ArgumentNullException("The contact type is required.");
-            }
+            Guard.Against.NullOrEmpty(value, "PersonType", "The person type is required.");
 
             if (!Array.Exists(_contactTypes, element => element == value.ToUpper()))
             {

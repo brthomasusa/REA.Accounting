@@ -46,71 +46,44 @@ namespace REA.Accounting.UnitTests.Repositories
                     ).FirstOrDefaultAsync(cancellationToken);
 
                 // Create employee domain object from person data model
-                DomainModelEmployee employee = DomainModelEmployee.Create
-                (
-                    person!.BusinessEntityID,
-                    person!.PersonType!,
-                    (NameStyleEnum)person!.NameStyle,
-                    person!.Title!,
-                    person!.FirstName!,
-                    person!.LastName!,
-                    person!.MiddleName!,
-                    person!.Suffix!,
-                    person!.Employee!.NationalIDNumber!,
-                    person!.Employee!.LoginID!,
-                    person!.Employee!.JobTitle!,
-                    DateOnly.FromDateTime(person!.Employee!.BirthDate),
-                    person!.Employee!.MaritalStatus!,
-                    person!.Employee!.Gender!,
-                    DateOnly.FromDateTime(person!.Employee!.HireDate),
-                    person!.Employee!.SalariedFlag,
-                    person!.Employee!.VacationHours,
-                    person!.Employee!.SickLeaveHours,
-                    person!.Employee!.CurrentFlag
-                );
-
-                // Add dept histories to employee from person data model
-                person!.Employee!.DepartmentHistories.ToList().ForEach(dept =>
-                    employee.AddDepartmentHistory(dept.BusinessEntityID,
-                                                  dept.ShiftID,
-                                                  DateOnly.FromDateTime(dept.StartDate),
-                                                  dept.EndDate));
-
-                // Add pay histories to employee from person data model
-                person!.Employee!.PayHistories.ToList().ForEach(pay =>
-                    employee.AddPayHistory(
-                        pay.BusinessEntityID,
-                        pay.RateChangeDate,
-                        pay.Rate,
-                        (PayFrequencyEnum)pay.PayFrequency
-                    ));
+                DomainModelEmployee employee = CreateDomainEmployee(ref person!);
 
                 // Add addresses to employee from person data model
-                person!.Addresses.ToList().ForEach(addr =>
-                    employee.AddAddress(addr.AddressID,
-                                        addr.BusinessEntityID,
-                                        (AddressTypeEnum)addr.AddressTypeID,
-                                        addr.Address!.AddressLine1!,
-                                        addr.Address.AddressLine2,
-                                        addr.Address!.City!,
-                                        addr.Address.StateProvinceID,
-                                        addr.Address!.PostalCode!));
+                if (person!.Addresses.ToList().Any())
+                {
+                    person!.Addresses.ToList().ForEach(addr =>
+                        employee.AddAddress(addr.AddressID,
+                                            addr.BusinessEntityID,
+                                            (AddressTypeEnum)addr.AddressTypeID,
+                                            addr.Address!.AddressLine1!,
+                                            addr.Address.AddressLine2,
+                                            addr.Address!.City!,
+                                            addr.Address.StateProvinceID,
+                                            addr.Address!.PostalCode!));
+                }
+
 
                 // Add email addresses to employee from person data model
-                person.EmailAddresses.ToList().ForEach(email =>
-                    employee.AddEmailAddress(
-                        email.BusinessEntityID,
-                        email.EmailAddressID,
-                        email.MailAddress!
-                    ));
+                if (person.EmailAddresses.ToList().Any())
+                {
+                    person.EmailAddresses.ToList().ForEach(email =>
+                        employee.AddEmailAddress(
+                            email.BusinessEntityID,
+                            email.EmailAddressID,
+                            email.MailAddress!
+                        ));
+                }
 
                 // Add email addresses to employee from person data model
-                person!.Telephones.ToList().ForEach(tel =>
-                    employee.AddPhoneNumbers(
-                        tel.BusinessEntityID,
-                        (PhoneNumberTypeEnum)tel.PhoneNumberTypeID,
-                        tel.PhoneNumber!
-                    ));
+                if (person!.Telephones.ToList().Any())
+                {
+                    person!.Telephones.ToList().ForEach(tel =>
+                        employee.AddPhoneNumbers(
+                            tel.BusinessEntityID,
+                            (PhoneNumberTypeEnum)tel.PhoneNumberTypeID,
+                            tel.PhoneNumber!
+                        ));
+                }
 
                 return OperationResult<DomainModelEmployee>.CreateSuccessResult(employee);
             }
@@ -133,6 +106,50 @@ namespace REA.Accounting.UnitTests.Repositories
         public Task<OperationResult<bool>> Remove(IEnumerable<DomainModelEmployee> entitiesToRemove)
         {
             throw new NotImplementedException();
+        }
+
+        private DomainModelEmployee CreateDomainEmployee(ref PersonModel person)
+        {
+            DomainModelEmployee domainObj = DomainModelEmployee.Create
+            (
+                person!.BusinessEntityID,
+                person!.PersonType!,
+                (NameStyleEnum)person!.NameStyle,
+                person!.Title!,
+                person!.FirstName!,
+                person!.LastName!,
+                person!.MiddleName!,
+                person!.Suffix!,
+                person!.Employee!.NationalIDNumber!,
+                person!.Employee!.LoginID!,
+                person!.Employee!.JobTitle!,
+                DateOnly.FromDateTime(person!.Employee!.BirthDate),
+                person!.Employee!.MaritalStatus!,
+                person!.Employee!.Gender!,
+                DateOnly.FromDateTime(person!.Employee!.HireDate),
+                person!.Employee!.SalariedFlag,
+                person!.Employee!.VacationHours,
+                person!.Employee!.SickLeaveHours,
+                person!.Employee!.CurrentFlag
+            );
+
+            // Add dept histories to employee from person data model
+            person!.Employee!.DepartmentHistories.ToList().ForEach(dept =>
+                domainObj.AddDepartmentHistory(dept.BusinessEntityID,
+                                               dept.ShiftID,
+                                               DateOnly.FromDateTime(dept.StartDate),
+                                               dept.EndDate));
+
+            // Add pay histories to employee from person data model
+            person!.Employee!.PayHistories.ToList().ForEach(pay =>
+                domainObj.AddPayHistory(
+                    pay.BusinessEntityID,
+                    pay.RateChangeDate,
+                    pay.Rate,
+                    (PayFrequencyEnum)pay.PayFrequency
+                ));
+
+            return domainObj;
         }
     }
 }

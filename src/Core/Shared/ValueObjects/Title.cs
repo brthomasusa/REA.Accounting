@@ -1,4 +1,5 @@
 using REA.Accounting.SharedKernel;
+using REA.Accounting.SharedKernel.Guards;
 
 namespace REA.Accounting.Core.Shared.ValueObjects
 {
@@ -6,10 +7,8 @@ namespace REA.Accounting.Core.Shared.ValueObjects
     {
         public string? Value { get; }
 
-        protected Title() { }
-
         private Title(string title)
-            : this() => Value = title;
+            => Value = title;
 
         public static implicit operator string(Title self) => self.Value!;
 
@@ -21,9 +20,9 @@ namespace REA.Accounting.Core.Shared.ValueObjects
 
         private static void CheckValidity(string value)
         {
-            if (!string.IsNullOrEmpty(value) && value.Length > 8)
+            if (!string.IsNullOrEmpty(value))
             {
-                throw new ArgumentException("Title can not be greater than 8 characters.");
+                Guard.Against.LengthGreaterThan(value, 8, "Title", "The maximum length of the title is 8 characters.");
             }
         }
     }

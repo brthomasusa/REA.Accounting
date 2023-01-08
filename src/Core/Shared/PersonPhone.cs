@@ -2,38 +2,48 @@
 
 using REA.Accounting.SharedKernel;
 using REA.Accounting.SharedKernel.CommonValueObjects;
+using REA.Accounting.SharedKernel.Guards;
+using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Core.Shared
 {
     public class PersonPhone : Entity<int>
     {
-        protected PersonPhone() { }
-
         private PersonPhone
         (
             int id,
             PhoneNumberTypeEnum phoneType,
             PhoneNumber phoneNumber
-        ) : this()
+        )
         {
             Id = id;
             PhoneNumberType = phoneType;
             Telephone = phoneNumber.Value!;
         }
 
-        internal static PersonPhone Create
+        internal static OperationResult<PersonPhone> Create
         (
             int id,
             PhoneNumberTypeEnum phoneNumberType,
             string telephone
         )
         {
-            return new PersonPhone
-            (
-                id,
-                Enum.IsDefined(typeof(PhoneNumberTypeEnum), phoneNumberType) ? phoneNumberType : throw new ArgumentException("Invalid phone number type."),
-                PhoneNumber.Create(telephone)
-            );
+            try
+            {
+                PersonPhone phone = new
+                (
+                    id,
+                    Enum.IsDefined(typeof(PhoneNumberTypeEnum), phoneNumberType) ? phoneNumberType : throw new ArgumentException("Invalid phone number type."),
+                    PhoneNumber.Create(telephone)
+                );
+
+                return OperationResult<PersonPhone>.CreateSuccessResult(phone);
+
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<PersonPhone>.CreateFailure(Helpers.GetExceptionMessage(ex));
+            }
         }
 
         public PhoneNumberTypeEnum PhoneNumberType { get; private set; }

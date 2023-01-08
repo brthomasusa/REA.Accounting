@@ -1,5 +1,7 @@
 using REA.Accounting.Core.HumanResources.ValueObjects;
 using REA.Accounting.SharedKernel;
+using REA.Accounting.SharedKernel.Guards;
+using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Core.HumanResources
 {
@@ -19,7 +21,7 @@ namespace REA.Accounting.Core.HumanResources
             PayFrequency = payFrequency;
         }
 
-        internal static PayHistory Create
+        internal static OperationResult<PayHistory> Create
         (
             int id,
             DateTime rateChangeDate,
@@ -27,12 +29,22 @@ namespace REA.Accounting.Core.HumanResources
             PayFrequencyEnum payFrequency
         )
         {
-            if (!Enum.IsDefined(typeof(PayFrequencyEnum), payFrequency))
+            try
             {
-                throw new ArgumentException("Invalid pay frequency.");
-            }
+                PayHistory history = new
+                    (
+                        Guard.Against.LessThanZero(id, "Id", "PayHistory id can not be negative."),
+                        DateOfRateChange.Create(rateChangeDate),
+                        RateOfPay.Create(rate),
+                        Enum.IsDefined(typeof(PayFrequencyEnum), payFrequency) ? payFrequency : throw new ArgumentException("Invalid pay frequency.")
+                    );
+                return OperationResult<PayHistory>.CreateSuccessResult(history);
 
-            return new PayHistory(id, DateOfRateChange.Create(rateChangeDate), RateOfPay.Create(rate), payFrequency);
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<PayHistory>.CreateFailure(Helpers.GetExceptionMessage(ex));
+            }
         }
 
         public DateTime RateChangeDate { get; private set; }

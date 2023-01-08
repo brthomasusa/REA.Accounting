@@ -1,11 +1,10 @@
+using REA.Accounting.SharedKernel.Guards;
+
 namespace REA.Accounting.SharedKernel.CommonValueObjects
 {
     public class PersonName : ValueObject
     {
-        protected PersonName() { }
-
         private PersonName(string last, string first, string? mi)
-            : this()
         {
             FirstName = first;
             LastName = last;
@@ -24,36 +23,15 @@ namespace REA.Accounting.SharedKernel.CommonValueObjects
 
         private static void CheckValidity(string last, string first, string mi)
         {
-            if (string.IsNullOrEmpty(first))
-            {
-                throw new ArgumentNullException("A first name is required.", nameof(first));
-            }
+            Guard.Against.NullOrEmpty(last, "LastName", "A last name is required.");
+            Guard.Against.LengthGreaterThan(last, 25, "LastName", "Maximum length of the last name is 25 characters.");
 
-            if (string.IsNullOrEmpty(last))
-            {
-                throw new ArgumentNullException("A last name is required.", nameof(last));
-            }
-
-            first = first.Trim();
-            last = last.Trim();
-
-            if (first.Length > 50)
-            {
-                throw new ArgumentOutOfRangeException("Maximum length of the first name is 25 characters.", nameof(first));
-            }
-
-            if (last.Length > 50)
-            {
-                throw new ArgumentOutOfRangeException("Maximum length of the last name is 25 characters.", nameof(last));
-            }
+            Guard.Against.NullOrEmpty(first, "FirstName", "A first name is required.");
+            Guard.Against.LengthGreaterThan(first, 25, "FirstName", "Maximum length of the first name is 25 characters.");
 
             if (!string.IsNullOrEmpty(mi))
             {
-                mi = mi.Trim();
-                if (mi.Length > 50)
-                {
-                    throw new ArgumentOutOfRangeException("Maximum length of middle initial is 1 character.", nameof(mi));
-                }
+                Guard.Against.LengthGreaterThan(mi, 25, "MiddleName", "Maximum length of the middle name is 25 characters.");
             }
         }
     }

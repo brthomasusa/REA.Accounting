@@ -1,5 +1,6 @@
 using System.Globalization;
 using System.Text.RegularExpressions;
+using REA.Accounting.SharedKernel.Guards;
 
 namespace REA.Accounting.SharedKernel.CommonValueObjects
 {
@@ -7,13 +8,8 @@ namespace REA.Accounting.SharedKernel.CommonValueObjects
     {
         public string? Value { get; }
 
-        protected EmailAddress() { }
-
         private EmailAddress(string email)
-            : this()
-        {
-            Value = email;
-        }
+            => Value = email;
 
         public static implicit operator string(EmailAddress self) => self.Value!;
 
@@ -25,10 +21,8 @@ namespace REA.Accounting.SharedKernel.CommonValueObjects
 
         private static void CheckValidity(string value)
         {
-            if (value.Length > 50)
-            {
-                throw new ArgumentException("Maximum email address length is 50 characters.", nameof(value));
-            }
+            Guard.Against.NullOrEmpty(value, "EmailAddress", "The email address is required.");
+            Guard.Against.LengthGreaterThan(value, 50, "EmailAddress", "The maximum length of the email address is 50 characters.");
 
             if (!IsValidEmail(value))
             {

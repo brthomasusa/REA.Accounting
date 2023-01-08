@@ -1,4 +1,5 @@
 using REA.Accounting.SharedKernel;
+using REA.Accounting.SharedKernel.Guards;
 
 namespace REA.Accounting.Core.Shared.ValueObjects
 {
@@ -6,10 +7,8 @@ namespace REA.Accounting.Core.Shared.ValueObjects
     {
         public string? Value { get; }
 
-        protected Suffix() { }
-
         private Suffix(string value)
-            : this() => Value = value;
+            => Value = value;
 
         public static implicit operator string(Suffix self) => self.Value!;
 
@@ -21,9 +20,9 @@ namespace REA.Accounting.Core.Shared.ValueObjects
 
         private static void CheckValidity(string value)
         {
-            if (!string.IsNullOrEmpty(value) && value.Length > 10)
+            if (!string.IsNullOrEmpty(value))
             {
-                throw new ArgumentException("The suffix can not be greater than 10 characters.");
+                Guard.Against.LengthGreaterThan(value, 10, "Suffix", "The maximum length of the suffix is 10 characters.");
             }
         }
     }

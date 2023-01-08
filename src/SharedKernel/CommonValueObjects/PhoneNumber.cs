@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using REA.Accounting.SharedKernel.Guards;
 
 namespace REA.Accounting.SharedKernel.CommonValueObjects
 {
@@ -24,15 +25,8 @@ namespace REA.Accounting.SharedKernel.CommonValueObjects
 
         private static void CheckValidity(string value)
         {
-            if (string.IsNullOrEmpty(value))
-            {
-                throw new ArgumentNullException("The PhoneNumber number is required.");
-            }
-
-            if (value.Length > 25)
-            {
-                throw new ArgumentException("Invalid PhoneNumber number, maximum length is 25 characters.");
-            }
+            Guard.Against.NullOrEmpty(value, "PhoneNumber", "The PhoneNumber number is required.");
+            Guard.Against.LengthGreaterThan(value, 25, "PhoneNumber", "Invalid PhoneNumber number, maximum length is 25 characters.");
 
             Regex validatePhoneNumberRegex = new Regex("^\\+?\\d{1,4}?[-.\\s]?\\(?\\d{1,3}?\\)?[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,9}$");
             if (!validatePhoneNumberRegex.IsMatch(value))

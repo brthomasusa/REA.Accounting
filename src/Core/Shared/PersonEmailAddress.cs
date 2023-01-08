@@ -1,7 +1,9 @@
 #pragma warning disable CS8618
 
 using REA.Accounting.SharedKernel;
+using REA.Accounting.SharedKernel.Guards;
 using REA.Accounting.SharedKernel.CommonValueObjects;
+using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Core.Shared
 {
@@ -14,14 +16,23 @@ namespace REA.Accounting.Core.Shared
             EmailAddress = emailAddress.Value!;
         }
 
-        internal static PersonEmailAddress Create(int id, int emailAddressID, string email)
+        internal static OperationResult<PersonEmailAddress> Create(int id, int emailAddressID, string email)
         {
-            return new PersonEmailAddress
-            (
-                id,
-                emailAddressID,
-                REA.Accounting.SharedKernel.CommonValueObjects.EmailAddress.Create(email)
-            );
+            try
+            {
+                PersonEmailAddress emailAddress = new
+                (
+                    Guard.Against.LessThanZero(id, "BusinessEntityID", "BusinessEntity Id can not be negative."),
+                    Guard.Against.LessThanZero(emailAddressID, "EmailAddressID", "Email address Id can not be negative."),
+                    REA.Accounting.SharedKernel.CommonValueObjects.EmailAddress.Create(email)
+                );
+
+                return OperationResult<PersonEmailAddress>.CreateSuccessResult(emailAddress);
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<PersonEmailAddress>.CreateFailure(Helpers.GetExceptionMessage(ex));
+            }
         }
 
         public int EmailAddressID { get; private set; }

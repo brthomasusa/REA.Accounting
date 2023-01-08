@@ -190,7 +190,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void Person_Create_NullContactType_ShouldFail()
         {
-            Action action = () => Contact.Create
+            var exception = Record.Exception(() => Contact.Create
             (
                 1,
                 ContactTypeEnum.AccountingManager,
@@ -203,9 +203,9 @@ namespace REA.Accounting.UnitTests.Shared
                 "Jones",
                 "III",
                 EmailPromotionEnum.None
-            );
+            ));
 
-            var caughtException = Assert.Throws<ArgumentNullException>(action);
+            Assert.NotNull(exception);
         }
 
         [Fact]

@@ -1,16 +1,13 @@
+using REA.Accounting.SharedKernel.Guards;
+
 namespace REA.Accounting.SharedKernel.CommonValueObjects
 {
     public class OrganizationName : ValueObject
     {
         public string? Value { get; }
 
-        protected OrganizationName() { }
-
         private OrganizationName(string orgName)
-            : this()
-        {
-            Value = orgName;
-        }
+            => Value = orgName;
 
         public static implicit operator string(OrganizationName self) => self.Value!;
 
@@ -20,17 +17,10 @@ namespace REA.Accounting.SharedKernel.CommonValueObjects
             return new OrganizationName(orgName);
         }
 
-        private static void CheckValidity(string orgName)
+        private static void CheckValidity(string value)
         {
-            if (string.IsNullOrEmpty(orgName))
-            {
-                throw new ArgumentNullException("An organization name is required.", nameof(orgName));
-            }
-
-            if (orgName.Trim().Length > 50)
-            {
-                throw new ArgumentOutOfRangeException("Maximum length of the organization name is 50 characters.", nameof(orgName));
-            }
+            Guard.Against.NullOrEmpty(value, "OrganizationName", "An organization name is required.");
+            Guard.Against.LengthGreaterThan(value, 50, "OrganizationName", "Maximum length of the organization name is 50 characters.");
         }
     }
 }

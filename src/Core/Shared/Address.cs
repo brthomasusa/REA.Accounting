@@ -2,15 +2,14 @@
 
 using REA.Accounting.Core.Shared.ValueObjects;
 using REA.Accounting.SharedKernel;
-using ValueObject = REA.Accounting.Core.Shared.ValueObjects;
+using REA.Accounting.SharedKernel.Guards;
 using REA.Accounting.SharedKernel.Utilities;
+using ValueObject = REA.Accounting.Core.Shared.ValueObjects;
 
 namespace REA.Accounting.Core.Shared
 {
     public class Address : Entity<int>
     {
-        protected Address() { }
-
         private Address
         (
             int addressID,
@@ -21,7 +20,7 @@ namespace REA.Accounting.Core.Shared
             City city,
             int stateProvinceID,
             PostalCode postalCode
-        ) : this()
+        )
         {
             Id = addressID;
             BusinessEntityID = businessEntityID;
@@ -33,7 +32,7 @@ namespace REA.Accounting.Core.Shared
             PostalCode = postalCode.Value!;
         }
 
-        internal static Address Create
+        internal static OperationResult<Address> Create
         (
             int addressID,
             int businessEntityID,
@@ -45,17 +44,27 @@ namespace REA.Accounting.Core.Shared
             string postalCode
         )
         {
-            return new Address
-            (
-                addressID,
-                businessEntityID,
-                Enum.IsDefined(typeof(AddressTypeEnum), addressType) ? addressType : throw new ArgumentException("Invalid address type."),
-                ValueObject.AddressLine1.Create(line1),
-                ValueObject.AddressLine2.Create(line2!),
-                ValueObject.City.Create(city),
-                (stateProvinceID > 0 ? stateProvinceID : throw new ArgumentNullException("A state/province id is required.")),
-                ValueObject.PostalCode.Create(postalCode)
-            );
+            try
+            {
+                Address address = new
+                (
+                    Guard.Against.LessThanZero(addressID, "Id", "Address Id can not be negative."),
+                    Guard.Against.LessThanZero(businessEntityID, "Id", "BusinessEntity Id can not be negative."),
+                    Enum.IsDefined(typeof(AddressTypeEnum), addressType) ? addressType : throw new ArgumentException("Invalid address type."),
+                    ValueObject.AddressLine1.Create(line1),
+                    ValueObject.AddressLine2.Create(line2!),
+                    ValueObject.City.Create(city),
+                    (stateProvinceID > 0 ? stateProvinceID : throw new ArgumentNullException("A state/province id is required.")),
+                    ValueObject.PostalCode.Create(postalCode)
+                );
+
+                return OperationResult<Address>.CreateSuccessResult(address);
+
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<Address>.CreateFailure(Helpers.GetExceptionMessage(ex));
+            }
         }
 
         public int BusinessEntityID { get; private set; }

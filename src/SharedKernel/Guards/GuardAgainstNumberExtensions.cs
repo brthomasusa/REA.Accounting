@@ -3,7 +3,7 @@ namespace REA.Accounting.SharedKernel.Guards
 {
     public static partial class GuardClauseExtensions
     {
-        public static decimal LessThan(this IGuardClause guardClause, decimal input, int minValue, string parameterName = "Amount", string message = null!)
+        public static int LessThan(this IGuardClause guardClause, int input, int minValue, string parameterName = "Amount", string message = null!)
         {
             if (input < minValue)
             {
@@ -22,6 +22,11 @@ namespace REA.Accounting.SharedKernel.Guards
         }
 
         public static decimal LessThanZero(this IGuardClause guardClause, decimal input, string parameterName = "Amount", string message = null!)
+        {
+            return guardClause.LessThan(input, 0, parameterName, message);
+        }
+
+        public static int LessThanZero(this IGuardClause guardClause, int input, string parameterName = "Amount", string message = null!)
         {
             return guardClause.LessThan(input, 0, parameterName, message);
         }

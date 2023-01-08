@@ -187,7 +187,7 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
             CancellationToken cancellationToken = default;
 
             //ATTEMPT
-            var person = await
+            PersonModel? person = await
                 SpecificationEvaluator.Default.GetQuery
                 (
                     context.Set<PersonModel>().AsNoTracking(),

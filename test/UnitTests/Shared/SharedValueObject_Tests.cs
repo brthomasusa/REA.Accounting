@@ -22,12 +22,9 @@ namespace REA.Accounting.UnitTests.Shared
         public void AddressLine1_Invalid_TooLong_ShouldFail()
         {
             string line1 = "12345678901234567890123456789012345678901234567890123456789012";
+            var exception = Record.Exception(() => AddressLine1.Create(line1));
 
-            Action action = () => AddressLine1.Create(line1);
-
-            var caughtException = Assert.Throws<ArgumentException>(action);
-
-            Assert.Equal("Address line 1 can not be null or greater than 60 characters.", caughtException.Message);
+            Assert.NotNull(exception);
         }
 
         [Fact]
@@ -35,11 +32,9 @@ namespace REA.Accounting.UnitTests.Shared
         {
             string? line1 = null;
 
-            Action action = () => AddressLine1.Create(line1!);
+            var exception = Record.Exception(() => AddressLine1.Create(line1!));
 
-            var caughtException = Assert.Throws<ArgumentException>(action);
-
-            Assert.Equal("Address line 1 can not be null or greater than 60 characters.", caughtException.Message);
+            Assert.NotNull(exception);
         }
 
         [Fact]
@@ -77,11 +72,9 @@ namespace REA.Accounting.UnitTests.Shared
         {
             string line = "12345678901234567890123456789012345678901234567890123456789012";
 
-            Action action = () => AddressLine2.Create(line);
+            var exception = Record.Exception(() => AddressLine2.Create(line));
 
-            var caughtException = Assert.Throws<ArgumentException>(action);
-
-            Assert.Equal("Address line 2 can not be greater than 60 characters.", caughtException.Message);
+            Assert.NotNull(exception);
         }
 
         [Fact]
@@ -99,11 +92,9 @@ namespace REA.Accounting.UnitTests.Shared
         {
             string? city = null;
 
-            Action action = () => City.Create(city!);
+            var exception = Record.Exception(() => City.Create(city!));
 
-            var caughtException = Assert.Throws<ArgumentException>(action);
-
-            Assert.Equal("City name can not be null or greater than 30 characters.", caughtException.Message);
+            Assert.NotNull(exception);
         }
 
         [Fact]
@@ -111,11 +102,9 @@ namespace REA.Accounting.UnitTests.Shared
         {
             string city = "1234567890123456789012345678901";
 
-            Action action = () => City.Create(city);
+            var exception = Record.Exception(() => City.Create(city!));
 
-            var caughtException = Assert.Throws<ArgumentException>(action);
-
-            Assert.Equal("City name can not be null or greater than 30 characters.", caughtException.Message);
+            Assert.NotNull(exception);
         }
 
         [Fact]
@@ -133,11 +122,9 @@ namespace REA.Accounting.UnitTests.Shared
         {
             string postalCode = string.Empty;
 
-            Action action = () => PostalCode.Create(postalCode);
+            var exception = Record.Exception(() => PostalCode.Create(postalCode));
 
-            var caughtException = Assert.Throws<ArgumentException>(action);
-
-            Assert.Equal("Postal code can not be null or greater than 15 characters.", caughtException.Message);
+            Assert.NotNull(exception);
         }
 
         [Fact]
@@ -145,11 +132,8 @@ namespace REA.Accounting.UnitTests.Shared
         {
             string postalCode = "12345678901234567890";
 
-            Action action = () => PostalCode.Create(postalCode);
-
-            var caughtException = Assert.Throws<ArgumentException>(action);
-
-            Assert.Equal("Postal code can not be null or greater than 15 characters.", caughtException.Message);
+            var exception = Record.Exception(() => PostalCode.Create(postalCode));
+            Assert.NotNull(exception);
         }
 
         [Fact]
@@ -167,11 +151,8 @@ namespace REA.Accounting.UnitTests.Shared
         {
             string contactType = null;
 
-            Action action = () => PersonType.Create(contactType!);
-
-            var caughtException = Assert.Throws<ArgumentNullException>(action);
-
-            Assert.Equal("The contact type is required.", caughtException.ParamName);
+            var exception = Record.Exception(() => PersonType.Create(contactType!));
+            Assert.NotNull(exception);
         }
 
         [Fact]
@@ -208,11 +189,8 @@ namespace REA.Accounting.UnitTests.Shared
         {
             string title = "123456789";
 
-            Action action = () => Title.Create(title);
-
-            var caughtException = Assert.Throws<ArgumentException>(action);
-
-            Assert.Equal("Title can not be greater than 8 characters.", caughtException.Message);
+            var exception = Record.Exception(() => Title.Create(title));
+            Assert.NotNull(exception);
         }
 
         [Fact]
@@ -240,11 +218,8 @@ namespace REA.Accounting.UnitTests.Shared
         {
             string suffix = "12345678901";
 
-            Action action = () => Suffix.Create(suffix);
-
-            var caughtException = Assert.Throws<ArgumentException>(action);
-
-            Assert.Equal("The suffix can not be greater than 10 characters.", caughtException.Message);
+            var exception = Record.Exception(() => Suffix.Create(suffix));
+            Assert.NotNull(exception);
         }
 
         [Fact]

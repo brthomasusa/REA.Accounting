@@ -1,5 +1,7 @@
-using REA.Accounting.SharedKernel;
 using REA.Accounting.Core.HumanResources.ValueObjects;
+using REA.Accounting.SharedKernel;
+using REA.Accounting.SharedKernel.Guards;
+using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Core.HumanResources
 {
@@ -21,7 +23,7 @@ namespace REA.Accounting.Core.HumanResources
             CheckValidity();
         }
 
-        internal static DepartmentHistory Create
+        internal static OperationResult<DepartmentHistory> Create
         (
             int id,
             int shiftId,
@@ -29,7 +31,24 @@ namespace REA.Accounting.Core.HumanResources
             DateTime? endDate
         )
         {
-            return new DepartmentHistory(id, shiftId, DepartmentStartDate.Create(startDate), DateOnly.FromDateTime(endDate is null ? default : (DateTime)endDate));
+            try
+            {
+                DepartmentHistory history = new
+                    (
+                        Guard.Against.LessThanZero(id, "Id", "DepartmentHistory id can not be negative."),
+                        Guard.Against.LessThanZero(shiftId, "shiftId", "Shift id can not be negative."),
+                        DepartmentStartDate.Create(startDate),
+                        DateOnly.FromDateTime(endDate is null ? default : (DateTime)endDate)
+                    );
+                return OperationResult<DepartmentHistory>.CreateSuccessResult(history);
+
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<DepartmentHistory>.CreateFailure(Helpers.GetExceptionMessage(ex));
+            }
+
+
         }
 
         public int DepartmentID { get; private set; }
@@ -39,7 +58,7 @@ namespace REA.Accounting.Core.HumanResources
 
         protected override void CheckValidity()
         {
-            if (EndDate is not null && StartDate > EndDate)
+            if (EndDate != new DateOnly() && StartDate > EndDate)
                 throw new ArgumentException("Start date can not be after end date.");
         }
     }

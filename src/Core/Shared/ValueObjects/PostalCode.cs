@@ -1,4 +1,5 @@
 using REA.Accounting.SharedKernel;
+using REA.Accounting.SharedKernel.Guards;
 
 namespace REA.Accounting.Core.Shared.ValueObjects
 {
@@ -6,10 +7,8 @@ namespace REA.Accounting.Core.Shared.ValueObjects
     {
         public string? Value { get; }
 
-        protected PostalCode() { }
-
         private PostalCode(string postalCode)
-            : this() => Value = postalCode;
+            => Value = postalCode;
 
         public static implicit operator string(PostalCode self) => self.Value!;
 
@@ -21,10 +20,8 @@ namespace REA.Accounting.Core.Shared.ValueObjects
 
         private static void CheckValidity(string value)
         {
-            if (string.IsNullOrEmpty(value) || value.Length > 15)
-            {
-                throw new ArgumentException("Postal code can not be null or greater than 15 characters.");
-            }
+            Guard.Against.NullOrEmpty(value, "PostalCode", "The postal code is required.");
+            Guard.Against.LengthGreaterThan(value, 15, "PostalCode", "The maximum length of the postal code is 15 characters.");
         }
     }
 }
