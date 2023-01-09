@@ -3,11 +3,9 @@
 using REA.Accounting.UnitTests.Data;
 using REA.Accounting.UnitTests.TestHelpers;
 using TestSupport.EfHelpers;
-using TestSupport.Helpers;
 
 using REA.Accounting.Infrastructure.Persistence;
 using REA.Accounting.Infrastructure.Persistence.DataModels.HumanResources;
-using REA.Accounting.Infrastructure.Persistence.DataModels.Organizations;
 using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
 
 namespace REA.Accounting.UnitTests.DbContext.Sqlite

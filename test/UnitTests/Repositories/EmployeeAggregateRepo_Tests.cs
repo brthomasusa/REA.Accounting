@@ -1,7 +1,8 @@
 using TestSupport.EfHelpers;
 
-using REA.Accounting.Core.Interfaces;
 using REA.Accounting.Core.HumanResources;
+using REA.Accounting.Core.Interfaces;
+using REA.Accounting.Core.Shared;
 using REA.Accounting.Infrastructure.Persistence;
 using REA.Accounting.SharedKernel.Utilities;
 using REA.Accounting.UnitTests.TestHelpers;
@@ -13,9 +14,7 @@ namespace REA.Accounting.UnitTests.Repositories
         private EfCoreContext? _context;
 
         public EmployeeAggregateRepo_Tests()
-        {
-            ConfigureDbContextAsync();
-        }
+            => ConfigureDbContextAsync();
 
         public void Dispose()
         {
@@ -42,7 +41,46 @@ namespace REA.Accounting.UnitTests.Repositories
             Assert.True(result.Success);
         }
 
+        [Fact]
+        public async Task Update_EmployeeAggregateRepo_ShouldSucceed()
+        {
+            IEmployeeAggregateRepository repo = new EmployeeAggregateRepo(_context!);
 
+            OperationResult<Employee> getResult = await repo.GetByIdAsync(16);
+
+            Assert.True(getResult.Success);
+
+            OperationResult<Employee> updateResult =
+                getResult.Result.Update("EM", NameStyleEnum.Western, "Mr.", "Jabu", "Jabi", "J", "Sr.",
+                                        EmailPromotionEnum.None, "98765432", @"adventure-works\jabi", "Big Dog",
+                                        new DateOnly(2000, 1, 31), "M", "M", new DateOnly(2018, 5, 4), true, 5, 1, true);
+
+            Assert.True(updateResult.Success);
+
+            OperationResult<bool> saveResult = await repo.Update(updateResult.Result);
+
+            Assert.True(saveResult.Success);
+
+            getResult = await repo.GetByIdAsync(16);
+            Assert.Equal(@"adventure-works\jabi", getResult.Result.LoginID);
+        }
+
+        [Fact]
+        public async Task Delete_Employee_EmployeeAggregateRepo_ShouldSucceed()
+        {
+            IEmployeeAggregateRepository repo = new EmployeeAggregateRepo(_context!);
+
+            OperationResult<Employee> getResult = await repo.GetByIdAsync(16);
+
+            Assert.True(getResult.Success);
+
+            OperationResult<bool> deleteResult = await repo.Delete(getResult.Result);
+
+            Assert.True(deleteResult.Success);
+
+            OperationResult<Employee> test = await repo.GetByIdAsync(16);
+            Assert.Null(test.Result);
+        }
 
 
 

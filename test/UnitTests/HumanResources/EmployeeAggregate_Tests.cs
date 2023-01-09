@@ -105,6 +105,18 @@ namespace REA.Accounting.UnitTests.HumanResources
         }
 
         [Fact]
+        public void Update_Employee_ValidData_ShouldSucceed()
+        {
+            Employee employee = GetEmployeeForEditing();
+
+            OperationResult<Employee> result = employee.Update("EM", NameStyleEnum.Western, "Mr.", "Jabu", "Jabi", "J", "Sr.",
+                                                                EmailPromotionEnum.None, "98765432", @"adventure-works\jabi", "Jo",
+                                                                new DateOnly(2000, 1, 31), "M", "M", new DateOnly(2018, 5, 4), true, 5, 1, true);
+
+            Assert.True(result.Success);
+        }
+
+        [Fact]
         public void Create_PayHistory_ShouldSucceed()
         {
             Employee employee = GetEmployeeForEditing();

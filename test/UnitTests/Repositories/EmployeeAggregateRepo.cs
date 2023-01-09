@@ -5,17 +5,14 @@ using REA.Accounting.Core.HumanResources;
 using REA.Accounting.Core.Interfaces;
 using REA.Accounting.Core.Shared;
 using REA.Accounting.Infrastructure.Persistence;
-using REA.Accounting.Infrastructure.Persistence.DataModels.HumanResources;
 using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
 using REA.Accounting.Infrastructure.Persistence.Repositories;
-using REA.Accounting.Infrastructure.Persistence.Specifications;
 using REA.Accounting.Infrastructure.Persistence.Specifications.Person;
 using REA.Accounting.SharedKernel;
-using REA.Accounting.SharedKernel.CommonValueObjects;
 using REA.Accounting.SharedKernel.Utilities;
-using DataModelEmployee = REA.Accounting.Infrastructure.Persistence.DataModels.HumanResources.Employee;
-using DomainModelEmployee = REA.Accounting.Core.HumanResources.Employee;
 
+using EmployeeDataModel = REA.Accounting.Infrastructure.Persistence.DataModels.HumanResources.Employee;
+using DomainModelEmployee = REA.Accounting.Core.HumanResources.Employee;
 
 namespace REA.Accounting.UnitTests.Repositories
 {
@@ -110,7 +107,7 @@ namespace REA.Accounting.UnitTests.Repositories
                         LastName = employee.LastName,
                         Suffix = employee.Suffix,
                         EmailPromotion = (int)employee.EmailPromotions,
-                        Employee = new DataModelEmployee()
+                        Employee = new EmployeeDataModel()
                         {
                             NationalIDNumber = employee.NationalIDNumber,
                             LoginID = employee.LoginID,
@@ -137,18 +134,85 @@ namespace REA.Accounting.UnitTests.Repositories
             {
                 return OperationResult<int>.CreateFailure(Helpers.GetExceptionMessage(ex));
             }
-
-            throw new NotImplementedException();
         }
 
-        public Task<OperationResult<bool>> Delete(DomainModelEmployee entity)
+        public async Task<OperationResult<bool>> Update(DomainModelEmployee entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                CancellationToken cancellationToken = default;
+
+                var person = await
+                    SpecificationEvaluator.Default.GetQuery
+                    (
+                        _context.Set<PersonModel>(),
+                        new PersonByIDWithEmployeeSpec(entity.Id)
+                    ).FirstOrDefaultAsync(cancellationToken);
+
+                if (person is not null)
+                {
+                    person.PersonType = entity.PersonType;
+                    person.NameStyle = (int)entity.NameStyle;
+                    person.Title = entity.Title;
+                    person.FirstName = entity.FirstName;
+                    person.MiddleName = entity.MiddleName!;
+                    person.LastName = entity.LastName;
+                    person.Suffix = entity.Suffix;
+                    person.EmailPromotion = (int)entity.EmailPromotions;
+
+                    person.Employee!.NationalIDNumber = entity.NationalIDNumber;
+                    person.Employee!.LoginID = entity.LoginID;
+                    person.Employee!.JobTitle = entity.JobTitle;
+                    person.Employee!.BirthDate = entity.BirthDate.ToDateTime(new TimeOnly());
+                    person.Employee!.MaritalStatus = entity.MaritalStatus;
+                    person.Employee!.Gender = entity.Gender;
+                    person.Employee!.HireDate = entity.HireDate.ToDateTime(new TimeOnly());
+                    person.Employee!.SalariedFlag = entity.IsSalaried;
+                    person.Employee!.VacationHours = entity.VacationHours;
+                    person.Employee!.SickLeaveHours = entity.SickLeaveHours;
+                    person.Employee!.CurrentFlag = entity.IsActive;
+
+                    await _unitOfWork.CommitAsync();
+
+                    return OperationResult<bool>.CreateSuccessResult(true);
+                }
+                else
+                {
+                    return OperationResult<bool>.CreateFailure("Failed to retrieve employee for editing.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<bool>.CreateFailure(Helpers.GetExceptionMessage(ex));
+            }
         }
 
-        public Task<OperationResult<bool>> Remove(IEnumerable<DomainModelEmployee> entitiesToRemove)
+        public async Task<OperationResult<bool>> Delete(DomainModelEmployee entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                EmployeeDataModel? employee = await _context.Employee!.FindAsync(entity.Id);
+                PersonModel? person = await _context.Person!.FindAsync(entity.Id);
+                BusinessEntity? businessEntity = await _context.BusinessEntity!.FindAsync(entity.Id);
+
+                if (employee is not null && person is not null && businessEntity is not null)
+                {
+                    _context.Employee!.Remove(employee);
+                    _context.Person!.Remove(person);
+                    _context.BusinessEntity!.Remove(businessEntity);
+
+                    await _unitOfWork.CommitAsync();
+                    return OperationResult<bool>.CreateSuccessResult(true);
+                }
+                else
+                {
+                    return OperationResult<bool>.CreateFailure("Errors occurred while retrieving entities to be deleted.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<bool>.CreateFailure(Helpers.GetExceptionMessage(ex));
+            }
         }
 
         private DomainModelEmployee CreateDomainEmployee(ref PersonModel person)
