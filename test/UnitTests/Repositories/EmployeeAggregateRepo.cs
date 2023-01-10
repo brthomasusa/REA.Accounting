@@ -197,6 +197,12 @@ namespace REA.Accounting.UnitTests.Repositories
 
                 if (employee is not null && person is not null && businessEntity is not null)
                 {
+                    RemovePayHistories(entity.Id);
+                    RemoveDepartmentHistories(entity.Id);
+                    RemovePersonPhones(entity.Id);
+                    RemovePersonEmailAddresses(entity.Id);
+                    RemoveBusinessEntityAddresses(entity.Id);
+
                     _context.Employee!.Remove(employee);
                     _context.Person!.Remove(person);
                     _context.BusinessEntity!.Remove(businessEntity);
@@ -213,6 +219,65 @@ namespace REA.Accounting.UnitTests.Repositories
             {
                 return OperationResult<bool>.CreateFailure(Helpers.GetExceptionMessage(ex));
             }
+        }
+
+        private void RemovePayHistories(int employeeID)
+        {
+            if (_context.EmployeePayHistory!.Where(hist => hist.BusinessEntityID == employeeID).Any())
+            {
+                var histories = _context.EmployeePayHistory!.Where(hist => hist.BusinessEntityID == employeeID).ToList();
+                _context.EmployeePayHistory!.RemoveRange(histories);
+            }
+        }
+
+        private void RemoveDepartmentHistories(int employeeID)
+        {
+            if (_context.EmployeeDepartmentHistory!.Where(hist => hist.BusinessEntityID == employeeID).Any())
+            {
+                var histories = _context.EmployeeDepartmentHistory!.Where(hist => hist.BusinessEntityID == employeeID).ToList();
+                _context.EmployeeDepartmentHistory!.RemoveRange(histories);
+            }
+        }
+
+        private void RemovePersonPhones(int employeeID)
+        {
+            if (_context.PersonPhone!.Where(ph => ph.BusinessEntityID == employeeID).Any())
+            {
+                var phones = _context.PersonPhone!.Where(ph => ph.BusinessEntityID == employeeID).ToList();
+                _context.PersonPhone!.RemoveRange(phones);
+            }
+        }
+
+        private void RemovePersonEmailAddresses(int employeeID)
+        {
+            if (_context.EmailAddress!.Where(addr => addr.BusinessEntityID == employeeID).Any())
+            {
+                var addresses = _context.EmailAddress!.Where(addr => addr.BusinessEntityID == employeeID).ToList();
+                _context.EmailAddress!.RemoveRange(addresses);
+            }
+        }
+
+        private void RemoveBusinessEntityAddresses(int employeeID)
+        {
+            if (_context.BusinessEntityAddress!.Where(addr => addr.BusinessEntityID == employeeID).Any())
+            {
+                var businessEntityAddresses = _context.BusinessEntityAddress!.Where(addr => addr.BusinessEntityID == employeeID).ToList();
+                _context.BusinessEntityAddress!.RemoveRange(businessEntityAddresses);
+
+                RemoveAddresses(employeeID);
+            }
+        }
+
+        private void RemoveAddresses(int employeeID)
+        {
+            int[] addressIDs = _context
+                .BusinessEntityAddress!
+                .Where(addr => addr.BusinessEntityID == employeeID)
+                .Select(addr => addr.AddressID)
+                .ToArray<int>();
+
+            var addresses = _context.Address!.Where(addr => addressIDs.Contains(addr.AddressID)).ToList();
+            _context.Address!.RemoveRange(addresses);
         }
 
         private DomainModelEmployee CreateDomainEmployee(ref PersonModel person)
