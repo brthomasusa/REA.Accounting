@@ -151,7 +151,7 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
             };
 
             // Link the Address to the PersonModel
-            person.Addresses.Add(businessEntityAddress);
+            person.BusinessEntityAddresses.Add(businessEntityAddress);
             await context.SaveChangesAsync();
 
             // Commit transaction
@@ -160,7 +160,7 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
             person = await context.Person!.FindAsync(person.BusinessEntityID);
 
             //VERIFY
-            Assert.Equal(address.AddressLine1, person!.Addresses[0].Address!.AddressLine1);
+            Assert.Equal(address.AddressLine1, person!.BusinessEntityAddresses[0].Address!.AddressLine1);
         }
     }
 }

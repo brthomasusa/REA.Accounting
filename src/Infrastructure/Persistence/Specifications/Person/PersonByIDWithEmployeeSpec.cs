@@ -11,7 +11,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Specifications.Person
                  .Include(person => person.Employee!)
                  .Include(person => person.EmailAddresses!)
                  .Include(person => person.Telephones!)
-                 .Include(person => person.Addresses!)
+                 .Include(person => person.BusinessEntityAddresses!)
                  .Include(person => person.Employee!.DepartmentHistories)
                  .Include(person => person.Employee!.PayHistories);
         }

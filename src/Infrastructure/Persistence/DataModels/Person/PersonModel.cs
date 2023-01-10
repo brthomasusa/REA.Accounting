@@ -19,6 +19,6 @@ namespace REA.Accounting.Infrastructure.Persistence.DataModels.Person
         public virtual Employee? Employee { get; set; }
         public virtual List<EmailAddress> EmailAddresses { get; set; } = new();
         public virtual List<PersonPhone> Telephones { get; set; } = new();
-        public virtual List<BusinessEntityAddress> Addresses { get; set; } = new();
+        public virtual List<BusinessEntityAddress> BusinessEntityAddresses { get; set; } = new();
     }
 }

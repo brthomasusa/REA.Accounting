@@ -4,9 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using REA.Accounting.Core.HumanResources;
 using REA.Accounting.Core.Interfaces;
 using REA.Accounting.Core.Shared;
-using REA.Accounting.Infrastructure.Persistence;
 using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
-using REA.Accounting.Infrastructure.Persistence.Repositories;
 using REA.Accounting.Infrastructure.Persistence.Specifications.Person;
 using REA.Accounting.SharedKernel;
 using REA.Accounting.SharedKernel.Utilities;
@@ -14,7 +12,7 @@ using REA.Accounting.SharedKernel.Utilities;
 using EmployeeDataModel = REA.Accounting.Infrastructure.Persistence.DataModels.HumanResources.Employee;
 using DomainModelEmployee = REA.Accounting.Core.HumanResources.Employee;
 
-namespace REA.Accounting.UnitTests.Repositories
+namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
 {
     public class EmployeeAggregateRepo : IEmployeeAggregateRepository
     {
@@ -46,9 +44,9 @@ namespace REA.Accounting.UnitTests.Repositories
                 DomainModelEmployee employee = CreateDomainEmployee(ref person!);
 
                 // Add addresses to employee from person data model
-                if (person!.Addresses.ToList().Any())
+                if (person!.BusinessEntityAddresses.ToList().Any())
                 {
-                    person!.Addresses.ToList().ForEach(addr =>
+                    person!.BusinessEntityAddresses.ToList().ForEach(addr =>
                         employee.AddAddress(addr.AddressID,
                                             addr.BusinessEntityID,
                                             (AddressTypeEnum)addr.AddressTypeID,
@@ -146,7 +144,7 @@ namespace REA.Accounting.UnitTests.Repositories
                     SpecificationEvaluator.Default.GetQuery
                     (
                         _context.Set<PersonModel>(),
-                        new PersonByIDWithEmployeeSpec(entity.Id)
+                        new PersonByIDWithEmployeeOnlySpec(entity.Id)
                     ).FirstOrDefaultAsync(cancellationToken);
 
                 if (person is not null)
@@ -212,7 +210,7 @@ namespace REA.Accounting.UnitTests.Repositories
                 }
                 else
                 {
-                    return OperationResult<bool>.CreateFailure("Errors occurred while retrieving entities to be deleted.");
+                    return OperationResult<bool>.CreateFailure("Errors occurred while retrieving employee to be deleted.");
                 }
             }
             catch (Exception ex)
@@ -277,7 +275,9 @@ namespace REA.Accounting.UnitTests.Repositories
                 .ToArray<int>();
 
             var addresses = _context.Address!.Where(addr => addressIDs.Contains(addr.AddressID)).ToList();
-            _context.Address!.RemoveRange(addresses);
+
+            if (addresses.Any())
+                _context.Address!.RemoveRange(addresses);
         }
 
         private DomainModelEmployee CreateDomainEmployee(ref PersonModel person)

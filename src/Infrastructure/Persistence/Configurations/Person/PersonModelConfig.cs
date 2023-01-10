@@ -24,7 +24,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Configurations.Person
             entity.HasMany(p => p.Telephones)
                 .WithOne()
                 .HasForeignKey(p => p.BusinessEntityID);
-            entity.HasMany(p => p.Addresses)
+            entity.HasMany(p => p.BusinessEntityAddresses)
                 .WithOne()
                 .HasForeignKey(p => p.BusinessEntityID);
 

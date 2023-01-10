@@ -4,6 +4,7 @@ using REA.Accounting.Core.HumanResources;
 using REA.Accounting.Core.Interfaces;
 using REA.Accounting.Core.Shared;
 using REA.Accounting.Infrastructure.Persistence;
+using REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources;
 using REA.Accounting.SharedKernel.Utilities;
 using REA.Accounting.UnitTests.TestHelpers;
 
