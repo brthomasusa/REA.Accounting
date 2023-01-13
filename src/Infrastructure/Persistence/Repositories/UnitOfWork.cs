@@ -1,6 +1,6 @@
 using MediatR;
 using REA.Accounting.Infrastructure.Persistence;
-using REA.Accounting.SharedKernel.Base;
+using REA.Accounting.SharedKernel.Interfaces;
 
 namespace REA.Accounting.Infrastructure.Persistence.Repositories
 {

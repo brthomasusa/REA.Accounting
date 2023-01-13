@@ -1,6 +1,6 @@
 ﻿using REA.Accounting.SharedKernel.Utilities;
 
-namespace REA.Accounting.SharedKernel.Base
+namespace REA.Accounting.SharedKernel.Interfaces
 {
     public interface IRepository<T>
     {

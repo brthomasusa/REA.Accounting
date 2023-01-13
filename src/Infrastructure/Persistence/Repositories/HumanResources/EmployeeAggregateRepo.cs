@@ -6,7 +6,7 @@ using REA.Accounting.Core.Interfaces;
 using REA.Accounting.Core.Shared;
 using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
 using REA.Accounting.Infrastructure.Persistence.Specifications.Person;
-using REA.Accounting.SharedKernel.Base;
+using REA.Accounting.SharedKernel.Interfaces;
 using REA.Accounting.SharedKernel.Utilities;
 
 using EmployeeDataModel = REA.Accounting.Infrastructure.Persistence.DataModels.HumanResources.Employee;
