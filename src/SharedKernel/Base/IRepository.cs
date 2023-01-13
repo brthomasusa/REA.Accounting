@@ -1,10 +1,9 @@
 ﻿using REA.Accounting.SharedKernel.Utilities;
 
-namespace REA.Accounting.SharedKernel
+namespace REA.Accounting.SharedKernel.Base
 {
     public interface IRepository<T>
     {
-        IUnitOfWork UnitOfWork { get; }
         Task<OperationResult<T>> GetByIdAsync(int id, bool asNoTracking = false);
         Task<OperationResult<int>> InsertAsync(T entity);
         Task<OperationResult<bool>> Update(T entity);

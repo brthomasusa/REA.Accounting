@@ -8,7 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Spectacular" Version="1.1.2" />
     <PackageReference Include="MediatR" Version="10.0.1" />
   </ItemGroup>
 

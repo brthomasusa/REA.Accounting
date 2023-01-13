@@ -1,6 +1,6 @@
 #pragma warning disable CS8618
 
-using REA.Accounting.SharedKernel;
+using REA.Accounting.SharedKernel.Base;
 using REA.Accounting.Core.HumanResources.ValueObjects;
 
 namespace REA.Accounting.Core.Organization

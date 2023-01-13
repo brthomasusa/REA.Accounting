@@ -3,6 +3,8 @@
 using REA.Accounting.Core.HumanResources.ValueObjects;
 using REA.Accounting.Core.Shared;
 using REA.Accounting.Core.Shared.ValueObjects;
+using REA.Accounting.SharedKernel;
+using REA.Accounting.SharedKernel.Base;
 using REA.Accounting.SharedKernel.Utilities;
 using REA.Accounting.SharedKernel.CommonValueObjects;
 

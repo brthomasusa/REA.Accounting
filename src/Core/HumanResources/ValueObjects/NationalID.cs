@@ -1,5 +1,5 @@
 using System.Text.RegularExpressions;
-using REA.Accounting.SharedKernel;
+using REA.Accounting.SharedKernel.Base;
 
 namespace REA.Accounting.Core.HumanResources.ValueObjects
 {

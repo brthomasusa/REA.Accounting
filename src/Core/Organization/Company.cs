@@ -3,7 +3,7 @@
 using REA.Accounting.Core.Shared;
 using REA.Accounting.Core.HumanResources;
 using REA.Accounting.Core.HumanResources.ValueObjects;
-using REA.Accounting.SharedKernel;
+using REA.Accounting.SharedKernel.Base;
 using REA.Accounting.SharedKernel.CommonValueObjects;
 
 namespace REA.Accounting.Core.Organization

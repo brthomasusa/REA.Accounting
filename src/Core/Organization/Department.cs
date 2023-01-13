@@ -1,7 +1,7 @@
 #pragma warning disable CS8618
 
 using System.Text.Json.Serialization;
-using REA.Accounting.SharedKernel;
+using REA.Accounting.SharedKernel.Base;
 using REA.Accounting.SharedKernel.CommonValueObjects;
 
 namespace REA.Accounting.Core.Organization

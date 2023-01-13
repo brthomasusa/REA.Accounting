@@ -1,4 +1,4 @@
-using REA.Accounting.SharedKernel;
+using REA.Accounting.SharedKernel.Base;
 using REA.Accounting.SharedKernel.Guards;
 
 namespace REA.Accounting.Core.Shared.ValueObjects

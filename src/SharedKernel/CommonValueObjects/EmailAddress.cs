@@ -1,5 +1,6 @@
 using System.Globalization;
 using System.Text.RegularExpressions;
+using REA.Accounting.SharedKernel.Base;
 using REA.Accounting.SharedKernel.Guards;
 
 namespace REA.Accounting.SharedKernel.CommonValueObjects

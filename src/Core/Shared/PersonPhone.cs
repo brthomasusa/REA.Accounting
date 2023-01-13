@@ -1,6 +1,6 @@
 #pragma warning disable CS8618
 
-using REA.Accounting.SharedKernel;
+using REA.Accounting.SharedKernel.Base;
 using REA.Accounting.SharedKernel.CommonValueObjects;
 using REA.Accounting.SharedKernel.Guards;
 using REA.Accounting.SharedKernel.Utilities;

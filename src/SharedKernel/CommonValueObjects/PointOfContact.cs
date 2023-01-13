@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using REA.Accounting.SharedKernel.Base;
 
 namespace REA.Accounting.SharedKernel.CommonValueObjects
 {

@@ -1,5 +1,5 @@
 using REA.Accounting.Core.HumanResources.ValueObjects;
-using REA.Accounting.SharedKernel;
+using REA.Accounting.SharedKernel.Base;
 using REA.Accounting.SharedKernel.Guards;
 using REA.Accounting.SharedKernel.Utilities;
 

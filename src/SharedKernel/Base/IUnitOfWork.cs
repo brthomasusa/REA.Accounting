@@ -1,5 +1,5 @@
 ﻿
-namespace REA.Accounting.SharedKernel
+namespace REA.Accounting.SharedKernel.Base
 {
     public interface IUnitOfWork : IDisposable
     {

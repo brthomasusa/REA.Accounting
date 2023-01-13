@@ -1,7 +1,7 @@
 #pragma warning disable CS8618
 
 using System.Text.RegularExpressions;
-using REA.Accounting.SharedKernel;
+using REA.Accounting.SharedKernel.Base;
 
 namespace REA.Accounting.SharedKernel.CommonValueObjects
 {

@@ -2,6 +2,7 @@
 
 using REA.Accounting.Core.Shared.ValueObjects;
 using REA.Accounting.SharedKernel;
+using REA.Accounting.SharedKernel.Base;
 using REA.Accounting.SharedKernel.Guards;
 using REA.Accounting.SharedKernel.Utilities;
 using ValueObject = REA.Accounting.Core.Shared.ValueObjects;

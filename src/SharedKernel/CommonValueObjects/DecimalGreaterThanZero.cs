@@ -1,3 +1,5 @@
+using REA.Accounting.SharedKernel.Base;
+
 namespace REA.Accounting.SharedKernel.CommonValueObjects
 {
     public class DecimalGreaterThanZero : ValueObject
