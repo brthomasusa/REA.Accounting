@@ -23,9 +23,9 @@ namespace REA.Accounting.Core.HumanResources
             int employeeID,
             PersonType personType,
             NameStyleEnum nameStyle,
-            Title title,
+            Title? title,
             PersonName name,
-            Suffix suffix,
+            Suffix? suffix,
             EmailPromotionEnum emailPromotionEnum,
             NationalID nationalID,
             Login login,
@@ -39,7 +39,7 @@ namespace REA.Accounting.Core.HumanResources
             SickLeave sickLeave,
             bool active
 
-        ) : base(employeeID, personType, nameStyle, title, name, suffix, emailPromotionEnum)
+        ) : base(employeeID, personType, nameStyle, title!, name, suffix!, emailPromotionEnum)
         {
             NationalIDNumber = nationalID.Value!;
             LoginID = login.Value;
@@ -61,11 +61,11 @@ namespace REA.Accounting.Core.HumanResources
             int employeeID,
             string personType,
             NameStyleEnum nameStyle,
-            string title,
+            string? title,
             string firstName,
             string lastName,
             string middleName,
-            string suffix,
+            string? suffix,
             string nationalID,
             string login,
             string jobTitle,
@@ -84,9 +84,9 @@ namespace REA.Accounting.Core.HumanResources
                 employeeID,
                 SharedValueObject.PersonType.Create(personType),
                 nameStyle,
-                SharedValueObject.Title.Create(title),
+                SharedValueObject.Title.Create(title!),
                 PersonName.Create(lastName, firstName, middleName),
-                SharedValueObject.Suffix.Create(suffix),
+                SharedValueObject.Suffix.Create(suffix!),
                 EmailPromotionEnum.None,
                 NationalID.Create(nationalID),
                 Login.Create(login),

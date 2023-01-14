@@ -14,7 +14,7 @@ using DomainModelEmployee = REA.Accounting.Core.HumanResources.Employee;
 
 namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
 {
-    public class EmployeeAggregateRepo : IEmployeeAggregateRepository
+    public sealed class EmployeeAggregateRepo : IEmployeeAggregateRepository
     {
         private EfCoreContext _context;
         private IUnitOfWork _unitOfWork;
