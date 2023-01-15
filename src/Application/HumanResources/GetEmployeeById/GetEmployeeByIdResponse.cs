@@ -1,4 +1,4 @@
-namespace REA.Accounting.Application.HumanResources.Queries.GetEmployeeById
+namespace REA.Accounting.Application.HumanResources.GetEmployeeById
 {
     public sealed record GetEmployeeByIdResponse
     (

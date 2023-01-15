@@ -1,6 +1,6 @@
 using REA.Accounting.Application.Interfaces.Messaging;
 
-namespace REA.Accounting.Application.HumanResources.Commands.CreateEmployee
+namespace REA.Accounting.Application.HumanResources.CreateEmployee
 {
     public sealed record CreateEmployeeCommand
     (

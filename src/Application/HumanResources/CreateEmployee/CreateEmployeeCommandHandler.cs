@@ -4,7 +4,7 @@ using REA.Accounting.Core.Shared;
 using REA.Accounting.Infrastructure.Persistence.Interfaces;
 using REA.Accounting.SharedKernel.Utilities;
 
-namespace REA.Accounting.Application.HumanResources.Commands.CreateEmployee
+namespace REA.Accounting.Application.HumanResources.CreateEmployee
 {
     public sealed class CreateEmployeeCommandHandler : ICommandHandler<CreateEmployeeCommand, int>
     {

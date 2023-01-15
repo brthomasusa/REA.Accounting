@@ -1,15 +1,8 @@
 using TestSupport.EfHelpers;
-
-using REA.Accounting.Application.HumanResources.Commands.CreateEmployee;
-using REA.Accounting.Application.HumanResources.Queries.GetEmployeeById;
-using REA.Accounting.Core.HumanResources;
-using REA.Accounting.Core.Interfaces;
-using REA.Accounting.Core.Shared;
+using REA.Accounting.Application.HumanResources.GetEmployeeById;
 using REA.Accounting.Infrastructure.Persistence;
 using REA.Accounting.Infrastructure.Persistence.Interfaces;
 using REA.Accounting.Infrastructure.Persistence.Repositories;
-using REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources;
-using REA.Accounting.SharedKernel.Utilities;
 using REA.Accounting.UnitTests.TestHelpers;
 
 namespace REA.Accounting.UnitTests.QueryHandlers

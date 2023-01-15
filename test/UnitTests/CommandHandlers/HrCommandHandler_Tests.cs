@@ -1,6 +1,6 @@
 using TestSupport.EfHelpers;
 
-using REA.Accounting.Application.HumanResources.Commands.CreateEmployee;
+using REA.Accounting.Application.HumanResources.CreateEmployee;
 using REA.Accounting.Core.HumanResources;
 using REA.Accounting.Core.Interfaces;
 using REA.Accounting.Core.Shared;

@@ -3,7 +3,7 @@ using REA.Accounting.Core.HumanResources;
 using REA.Accounting.Infrastructure.Persistence.Interfaces;
 using REA.Accounting.SharedKernel.Utilities;
 
-namespace REA.Accounting.Application.HumanResources.Queries.GetEmployeeById
+namespace REA.Accounting.Application.HumanResources.GetEmployeeById
 {
     public class GetEmployeeByIdQueryHandler : IQueryHandler<GetEmployeeByIdQuery, GetEmployeeByIdResponse>
     {
