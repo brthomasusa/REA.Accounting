@@ -8,14 +8,21 @@ using REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources;
 using REA.Accounting.SharedKernel.Utilities;
 using REA.Accounting.UnitTests.TestHelpers;
 
+using REA.Accounting.Infrastructure.Persistence.Interfaces;
+using REA.Accounting.Infrastructure.Persistence.Repositories;
+
 namespace REA.Accounting.UnitTests.Repositories
 {
     public class EmployeeAggregateRepo_Tests : IDisposable
     {
         private EfCoreContext? _context;
+        private IWriteRepositoryManager _writeRepository;
 
         public EmployeeAggregateRepo_Tests()
-            => ConfigureDbContextAsync();
+        {
+            ConfigureDbContextAsync();
+            _writeRepository = new WriteRepositoryManager(_context!);
+        }
 
         public void Dispose()
         {
@@ -25,8 +32,7 @@ namespace REA.Accounting.UnitTests.Repositories
         [Fact]
         public async Task GetById_EmployeeAggregateRepo_ShouldSucceed()
         {
-            IEmployeeAggregateRepository repo = new EmployeeAggregateRepository(_context!);
-            OperationResult<Employee> result = await repo.GetByIdAsync(2);
+            OperationResult<Employee> result = await _writeRepository.EmployeeAggregate.GetByIdAsync(2);
 
             Assert.True(result.Success);
         }
@@ -35,9 +41,8 @@ namespace REA.Accounting.UnitTests.Repositories
         public async Task InsertAsync_EmployeeAggregateRepo_ShouldSucceed()
         {
             Employee employee = GetEmployeeForCreate();
-            IEmployeeAggregateRepository repo = new EmployeeAggregateRepository(_context!);
 
-            OperationResult<int> result = await repo.InsertAsync(employee);
+            OperationResult<int> result = await _writeRepository.EmployeeAggregate.InsertAsync(employee);
 
             Assert.True(result.Success);
         }
@@ -45,9 +50,7 @@ namespace REA.Accounting.UnitTests.Repositories
         [Fact]
         public async Task Update_EmployeeAggregateRepo_ShouldSucceed()
         {
-            IEmployeeAggregateRepository repo = new EmployeeAggregateRepository(_context!);
-
-            OperationResult<Employee> getResult = await repo.GetByIdAsync(16);
+            OperationResult<Employee> getResult = await _writeRepository.EmployeeAggregate.GetByIdAsync(16);
 
             Assert.True(getResult.Success);
 
@@ -58,28 +61,26 @@ namespace REA.Accounting.UnitTests.Repositories
 
             Assert.True(updateResult.Success);
 
-            OperationResult<bool> saveResult = await repo.Update(updateResult.Result);
+            OperationResult<bool> saveResult = await _writeRepository.EmployeeAggregate.Update(updateResult.Result);
 
             Assert.True(saveResult.Success);
 
-            getResult = await repo.GetByIdAsync(16);
+            getResult = await _writeRepository.EmployeeAggregate.GetByIdAsync(16);
             Assert.Equal(@"adventure-works\jabi", getResult.Result.LoginID);
         }
 
         [Fact]
         public async Task Delete_Employee_EmployeeAggregateRepo_ShouldSucceed()
         {
-            IEmployeeAggregateRepository repo = new EmployeeAggregateRepository(_context!);
-
-            OperationResult<Employee> getResult = await repo.GetByIdAsync(16);
+            OperationResult<Employee> getResult = await _writeRepository.EmployeeAggregate.GetByIdAsync(16);
 
             Assert.True(getResult.Success);
 
-            OperationResult<bool> deleteResult = await repo.Delete(getResult.Result);
+            OperationResult<bool> deleteResult = await _writeRepository.EmployeeAggregate.Delete(getResult.Result);
 
             Assert.True(deleteResult.Success);
 
-            OperationResult<Employee> test = await repo.GetByIdAsync(16);
+            OperationResult<Employee> test = await _writeRepository.EmployeeAggregate.GetByIdAsync(16);
             Assert.Null(test.Result);
         }
 
