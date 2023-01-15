@@ -26,7 +26,7 @@ namespace REA.Accounting.UnitTests.CommandHandlers
         [Fact]
         public async Task Handle_CreateEmployeeCommandHandler_ShouldSucceed()
         {
-            IEmployeeAggregateRepository repo = new EmployeeAggregateRepo(_context!);
+            IEmployeeAggregateRepository repo = new EmployeeAggregateRepository(_context!);
             CreateEmployeeCommand command = GetCreateEmployeeCommand();
             CreateEmployeeCommandHandler handler = new(repo);
 

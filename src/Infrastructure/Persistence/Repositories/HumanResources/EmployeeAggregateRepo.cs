@@ -14,15 +14,39 @@ using DomainModelEmployee = REA.Accounting.Core.HumanResources.Employee;
 
 namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
 {
-    public sealed class EmployeeAggregateRepo : IEmployeeAggregateRepository
+    public sealed class EmployeeAggregateRepository : IEmployeeAggregateRepository
     {
         private EfCoreContext _context;
         private IUnitOfWork _unitOfWork;
 
-        public EmployeeAggregateRepo(EfCoreContext ctx)
+        public EmployeeAggregateRepository(EfCoreContext ctx)
         {
             _context = ctx;
             _unitOfWork = new UnitOfWork(_context);
+        }
+
+        public async Task<OperationResult<DomainModelEmployee>> GetEmployeeOnlyAsync(int empployeeID, bool asNoTracking = false)
+        {
+            try
+            {
+                CancellationToken cancellationToken = default;
+
+                var person = await
+                    SpecificationEvaluator.Default.GetQuery
+                    (
+                        asNoTracking ? _context.Set<PersonModel>().AsNoTracking() : _context.Set<PersonModel>(),
+                        new PersonByIDWithEmployeeOnlySpec(empployeeID)
+                    ).FirstOrDefaultAsync(cancellationToken);
+
+                // Create employee domain object from person data model
+                DomainModelEmployee employee = CreateDomainEmployee(ref person!);
+
+                return OperationResult<DomainModelEmployee>.CreateSuccessResult(employee);
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<DomainModelEmployee>.CreateFailure(ex.Message);
+            }
         }
 
         public async Task<OperationResult<DomainModelEmployee>> GetByIdAsync(int empployeeID, bool asNoTracking = false)

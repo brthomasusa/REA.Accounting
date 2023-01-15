@@ -9,14 +9,15 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.11" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Client\REA.Accounting.Client.csproj" />
     <ProjectReference Include="..\Shared\REA.Accounting.Shared.csproj" />
     <ProjectReference Include="..\Application\REA.Accounting.Application.csproj" />
-    <ProjectReference Include="..\Infrastructure\REA.Accounting.Infrastructure.csproj" />    
+    <ProjectReference Include="..\Infrastructure\REA.Accounting.Infrastructure.csproj" />
+    <ProjectReference Include="..\Presentation\Presentation.csproj" />    
   </ItemGroup>
-
 
 </Project>

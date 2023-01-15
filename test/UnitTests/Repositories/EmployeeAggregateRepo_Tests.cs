@@ -25,7 +25,7 @@ namespace REA.Accounting.UnitTests.Repositories
         [Fact]
         public async Task GetById_EmployeeAggregateRepo_ShouldSucceed()
         {
-            IEmployeeAggregateRepository repo = new EmployeeAggregateRepo(_context!);
+            IEmployeeAggregateRepository repo = new EmployeeAggregateRepository(_context!);
             OperationResult<Employee> result = await repo.GetByIdAsync(2);
 
             Assert.True(result.Success);
@@ -35,7 +35,7 @@ namespace REA.Accounting.UnitTests.Repositories
         public async Task InsertAsync_EmployeeAggregateRepo_ShouldSucceed()
         {
             Employee employee = GetEmployeeForCreate();
-            IEmployeeAggregateRepository repo = new EmployeeAggregateRepo(_context!);
+            IEmployeeAggregateRepository repo = new EmployeeAggregateRepository(_context!);
 
             OperationResult<int> result = await repo.InsertAsync(employee);
 
@@ -45,7 +45,7 @@ namespace REA.Accounting.UnitTests.Repositories
         [Fact]
         public async Task Update_EmployeeAggregateRepo_ShouldSucceed()
         {
-            IEmployeeAggregateRepository repo = new EmployeeAggregateRepo(_context!);
+            IEmployeeAggregateRepository repo = new EmployeeAggregateRepository(_context!);
 
             OperationResult<Employee> getResult = await repo.GetByIdAsync(16);
 
@@ -69,7 +69,7 @@ namespace REA.Accounting.UnitTests.Repositories
         [Fact]
         public async Task Delete_Employee_EmployeeAggregateRepo_ShouldSucceed()
         {
-            IEmployeeAggregateRepository repo = new EmployeeAggregateRepo(_context!);
+            IEmployeeAggregateRepository repo = new EmployeeAggregateRepository(_context!);
 
             OperationResult<Employee> getResult = await repo.GetByIdAsync(16);
 
