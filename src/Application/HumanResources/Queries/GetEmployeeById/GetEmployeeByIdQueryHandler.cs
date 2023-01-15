@@ -1,14 +1,15 @@
+using REA.Accounting.Application.Interfaces.Messaging;
 using REA.Accounting.Core.HumanResources;
-using REA.Accounting.Core.Interfaces;
+using REA.Accounting.Infrastructure.Persistence.Interfaces;
 using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Application.HumanResources.Queries.GetEmployeeById
 {
-    public class GetEmployeeByIdQueryHandler
+    public class GetEmployeeByIdQueryHandler : IQueryHandler<GetEmployeeByIdQuery, GetEmployeeByIdResponse>
     {
-        private IEmployeeAggregateRepository _repo;
+        private IWriteRepositoryManager _repo;
 
-        public GetEmployeeByIdQueryHandler(IEmployeeAggregateRepository repo)
+        public GetEmployeeByIdQueryHandler(IWriteRepositoryManager repo)
             => _repo = repo;
 
         public async Task<GetEmployeeByIdResponse> Handle
@@ -17,7 +18,7 @@ namespace REA.Accounting.Application.HumanResources.Queries.GetEmployeeById
             CancellationToken cancellationToken
         )
         {
-            OperationResult<Employee> result = await _repo.GetEmployeeOnlyAsync(request.employeeID);
+            OperationResult<Employee> result = await _repo.EmployeeAggregate.GetEmployeeOnlyAsync(request.EmployeeID, true);
 
             Employee employee = result.Result;
 

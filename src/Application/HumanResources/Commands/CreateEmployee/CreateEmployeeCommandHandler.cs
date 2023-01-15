@@ -1,16 +1,16 @@
 using REA.Accounting.Application.Interfaces.Messaging;
 using REA.Accounting.Core.HumanResources;
-using REA.Accounting.Core.Interfaces;
 using REA.Accounting.Core.Shared;
+using REA.Accounting.Infrastructure.Persistence.Interfaces;
 using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Application.HumanResources.Commands.CreateEmployee
 {
     public sealed class CreateEmployeeCommandHandler : ICommandHandler<CreateEmployeeCommand, int>
     {
-        private IEmployeeAggregateRepository _repo;
+        private IWriteRepositoryManager _repo;
 
-        public CreateEmployeeCommandHandler(IEmployeeAggregateRepository repo)
+        public CreateEmployeeCommandHandler(IWriteRepositoryManager repo)
             => _repo = repo;
 
         public async Task<int> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
@@ -80,7 +80,7 @@ namespace REA.Accounting.Application.HumanResources.Commands.CreateEmployee
                 request.PhoneNumber
             );
 
-            OperationResult<int> result = await _repo.InsertAsync(employee);
+            OperationResult<int> result = await _repo.EmployeeAggregate.InsertAsync(employee);
 
             return result.Result;
         }

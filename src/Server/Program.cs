@@ -18,7 +18,7 @@ builder.Services.ConfigureCors();
 builder.Services.AddInfrastructureServices();
 builder.Services.ConfigureEfCoreDbContext(builder.Configuration);
 builder.Services.ConfigureDapper(builder.Configuration);
-builder.Services.AddRepositoryServices(); ;
+builder.Services.AddRepositoryServices();
 
 var app = builder.Build();
 
