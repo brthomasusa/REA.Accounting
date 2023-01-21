@@ -9,7 +9,7 @@ namespace REA.Accounting.UnitTests.Data
 {
     public static class CreateTestData
     {
-        public static async Task<PersonModel> CreateEmployeeAggregateForEditing(EfCoreContext ctx)
+        public static async Task<PersonDataModel> CreateEmployeeAggregateForEditing(EfCoreContext ctx)
         {
             BusinessEntity entity = new()
             {
@@ -17,7 +17,7 @@ namespace REA.Accounting.UnitTests.Data
                 PersonModel = new()
                 {
                     PersonType = "EM",
-                    NameStyle = 0,
+                    NameStyle = false,
                     Title = "Mr.",
                     FirstName = "Johnny",
                     MiddleName = "D",

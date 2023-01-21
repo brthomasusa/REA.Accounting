@@ -62,9 +62,9 @@ namespace REA.Accounting.UnitTests.Data
             return await Task.FromResult(getTask.Result);
         }
 
-        public static async Task<HashSet<PersonModel>> LoadPersonDataAsync()
+        public static async Task<HashSet<PersonDataModel>> LoadPersonDataAsync()
         {
-            Task<HashSet<PersonModel>> getTask = Task.Run(() => LoadTestData.LoadPersonData())
+            Task<HashSet<PersonDataModel>> getTask = Task.Run(() => LoadTestData.LoadPersonData())
                                                          .ContinueWith(antecedent => antecedent.Result);
 
             return await Task.FromResult(getTask.Result);
@@ -176,12 +176,12 @@ namespace REA.Accounting.UnitTests.Data
             return JsonConvert.DeserializeObject<HashSet<Address>>(jsonString)!;
         }
 
-        private static HashSet<PersonModel> LoadPersonData()
+        private static HashSet<PersonDataModel> LoadPersonData()
         {
             string fileName = $"{BaseFilePath}Person-XS.json";
             string jsonString = File.ReadAllText(fileName);
 
-            return JsonConvert.DeserializeObject<HashSet<PersonModel>>(jsonString)!;
+            return JsonConvert.DeserializeObject<HashSet<PersonDataModel>>(jsonString)!;
         }
 
         private static HashSet<BusinessEntityAddress> LoadBusinessEntityAddressData()

@@ -3,7 +3,7 @@ using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
 
 namespace REA.Accounting.Infrastructure.Persistence.Specifications.Person
 {
-    public class PersonByLastNameWithEmployeeSpec : Specification<PersonModel>
+    public class PersonByLastNameWithEmployeeSpec : Specification<PersonDataModel>
     {
         public PersonByLastNameWithEmployeeSpec(string lastName)
         {

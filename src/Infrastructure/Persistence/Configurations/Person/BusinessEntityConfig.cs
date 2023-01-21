@@ -13,7 +13,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Configurations.Person
             entity.HasKey(e => e.BusinessEntityID);
             entity.HasOne(p => p.PersonModel)
                 .WithOne()
-                .HasForeignKey<PersonModel>(p => p.BusinessEntityID)
+                .HasForeignKey<PersonDataModel>(p => p.BusinessEntityID)
                 .IsRequired();
 
             entity.Property(e => e.BusinessEntityID)

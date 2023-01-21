@@ -34,7 +34,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
                 var person = await
                     SpecificationEvaluator.Default.GetQuery
                     (
-                        asNoTracking ? _context.Set<PersonModel>().AsNoTracking() : _context.Set<PersonModel>(),
+                        asNoTracking ? _context.Set<PersonDataModel>().AsNoTracking() : _context.Set<PersonDataModel>(),
                         new PersonByIDWithEmployeeOnlySpec(empployeeID)
                     ).FirstOrDefaultAsync(cancellationToken);
 
@@ -58,7 +58,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
                 var person = await
                     SpecificationEvaluator.Default.GetQuery
                     (
-                        asNoTracking ? _context.Set<PersonModel>().AsNoTracking() : _context.Set<PersonModel>(),
+                        asNoTracking ? _context.Set<PersonDataModel>().AsNoTracking() : _context.Set<PersonDataModel>(),
                         new PersonByIDWithEmployeeSpec(empployeeID)
                     ).FirstOrDefaultAsync(cancellationToken);
 
@@ -120,7 +120,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
                     PersonModel = new()
                     {
                         PersonType = employee.PersonType,
-                        NameStyle = (int)employee.NameStyle,
+                        NameStyle = employee.NameStyle == NameStyleEnum.Western ? false : true,
                         Title = employee.Title,
                         FirstName = employee.FirstName,
                         MiddleName = employee.MiddleName,
@@ -165,14 +165,14 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
                 var person = await
                     SpecificationEvaluator.Default.GetQuery
                     (
-                        _context.Set<PersonModel>(),
+                        _context.Set<PersonDataModel>(),
                         new PersonByIDWithEmployeeOnlySpec(entity.Id)
                     ).FirstOrDefaultAsync(cancellationToken);
 
                 if (person is not null)
                 {
                     person.PersonType = entity.PersonType;
-                    person.NameStyle = (int)entity.NameStyle;
+                    person.NameStyle = entity.NameStyle == NameStyleEnum.Western ? false : true;
                     person.Title = entity.Title;
                     person.FirstName = entity.FirstName;
                     person.MiddleName = entity.MiddleName!;
@@ -212,7 +212,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
             try
             {
                 EmployeeDataModel? employee = await _context.Employee!.FindAsync(entity.Id);
-                PersonModel? person = await _context.Person!.FindAsync(entity.Id);
+                PersonDataModel? person = await _context.Person!.FindAsync(entity.Id);
                 BusinessEntity? businessEntity = await _context.BusinessEntity!.FindAsync(entity.Id);
 
                 if (employee is not null && person is not null && businessEntity is not null)
@@ -302,13 +302,13 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
                 _context.Address!.RemoveRange(addresses);
         }
 
-        private DomainModelEmployee CreateDomainEmployee(ref PersonModel person)
+        private DomainModelEmployee CreateDomainEmployee(ref PersonDataModel person)
         {
             DomainModelEmployee domainObj = DomainModelEmployee.Create
             (
                 person!.BusinessEntityID,
                 person!.PersonType!,
-                (NameStyleEnum)person!.NameStyle,
+                person!.NameStyle ? NameStyleEnum.Eastern : NameStyleEnum.Western,
                 person!.Title!,
                 person!.FirstName!,
                 person!.LastName!,

@@ -27,7 +27,7 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
                 PersonModel = new()
                 {
                     PersonType = "EM",
-                    NameStyle = 0,
+                    NameStyle = false,
                     Title = "Mr.",
                     FirstName = "Johnny",
                     MiddleName = "D",
@@ -41,7 +41,7 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
             await context.SaveChangesAsync();
 
             //ATTEMPT
-            PersonModel? result = context.Person!.FirstOrDefault();
+            PersonDataModel? result = context.Person!.FirstOrDefault();
 
             //VERIFY
             Assert.NotNull(result);
@@ -63,7 +63,7 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
                 PersonModel = new()
                 {
                     PersonType = "EM",
-                    NameStyle = 0,
+                    NameStyle = false,
                     Title = "Mr.",
                     FirstName = "Johnny",
                     MiddleName = "D",
@@ -105,7 +105,7 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
             await context.SaveChangesAsync();
 
             //ATTEMPT
-            PersonModel? result = context.Person!.FirstOrDefault();
+            PersonDataModel? result = context.Person!.FirstOrDefault();
 
             //VERIFY
             Assert.NotNull(result);
@@ -122,7 +122,7 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
             await context.SeedLookupData();
 
             // Get PersonModel
-            PersonModel person = await CreateTestData.CreateEmployeeAggregateForEditing(context);
+            PersonDataModel person = await CreateTestData.CreateEmployeeAggregateForEditing(context);
 
             // Create Address
             Address address = new()

@@ -5,9 +5,9 @@ using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
 
 namespace REA.Accounting.Infrastructure.Persistence.Configurations.Person
 {
-    internal class PersonModelConfig : IEntityTypeConfiguration<PersonModel>
+    internal class PersonModelConfig : IEntityTypeConfiguration<PersonDataModel>
     {
-        public void Configure(EntityTypeBuilder<PersonModel> entity)
+        public void Configure(EntityTypeBuilder<PersonDataModel> entity)
         {
             entity.ToTable("Person", schema: "Person");
             entity.HasKey(e => e.BusinessEntityID);
@@ -36,7 +36,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Configurations.Person
                 .HasColumnName("PersonType")
                 .HasColumnType("nchar(2)");
             entity.Property(e => e.NameStyle)
-                .HasColumnName("NameStype")
+                .HasColumnName("NameStyle")
                 .HasColumnType("bit")
                 .IsRequired()
                 .HasDefaultValue(0);

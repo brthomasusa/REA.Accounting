@@ -12,7 +12,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Configurations.HumanResource
             entity.HasKey(e => e.ShiftID);
             entity.HasIndex(p => p.Name).IsUnique();
 
-            entity.Property(e => e.ShiftID)
+            entity.Property(e => e.ShiftID)  // tinyint
                 .HasColumnName("ShiftID")
                 .ValueGeneratedOnAdd();
             entity.Property(e => e.Name)

@@ -23,7 +23,7 @@ namespace REA.Accounting.UnitTests.TestHelpers
         public static async Task SeedPersonAndHrData(this EfCoreContext context)
         {
             HashSet<BusinessEntity> businessEntities = await Data.LoadTestData.LoadBusinessEntityDataAsync();
-            HashSet<PersonModel> people = await Data.LoadTestData.LoadPersonDataAsync();
+            HashSet<PersonDataModel> people = await Data.LoadTestData.LoadPersonDataAsync();
             HashSet<Address> addresses = await Data.LoadTestData.LoadAddressDataAsync();
             HashSet<BusinessEntityAddress> businessEntityAddresses = await Data.LoadTestData.LoadBusinessEntityAddressDataAsync();
             HashSet<EmailAddress> emailAddresses = await Data.LoadTestData.LoadEmailAddressDataAsync();

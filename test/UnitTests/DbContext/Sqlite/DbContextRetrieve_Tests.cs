@@ -187,10 +187,10 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
             CancellationToken cancellationToken = default;
 
             //ATTEMPT
-            PersonModel? person = await
+            PersonDataModel? person = await
                 SpecificationEvaluator.Default.GetQuery
                 (
-                    context.Set<PersonModel>().AsNoTracking(),
+                    context.Set<PersonDataModel>().AsNoTracking(),
                     new PersonByIDWithEmployeeSpec(businessEntityID)
                 ).FirstOrDefaultAsync(cancellationToken);
 
@@ -218,7 +218,7 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
             var people = await
                 SpecificationEvaluator.Default.GetQuery
                 (
-                    context.Set<PersonModel>(),
+                    context.Set<PersonDataModel>(),
                     new PersonByLastNameWithEmployeeSpec(lastNameFragment)
                 ).ToListAsync(cancellationToken);
 
@@ -237,7 +237,7 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
             await context.SeedLookupData();
             await context.SeedPersonAndHrData();
 
-            var filters = new List<SpecificationBase<PersonModel>>()
+            var filters = new List<SpecificationBase<PersonDataModel>>()
             {
                 new PersonHasLastNameSpecification("Hamilton")
             };
@@ -246,7 +246,7 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
 
             //ATTEMPT
             // Use Specification for query
-            var people = context.Person!.ApplyFilters<PersonModel>(filters);
+            var people = context.Person!.ApplyFilters<PersonDataModel>(filters);
 
             //VERIFY
             Assert.Equal("Hamilton", people!.ToList()[0].LastName);
@@ -266,9 +266,9 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
             await context.SeedLookupData();
             await context.SeedPersonAndHrData();
 
-            PersonModel? person = await context.Person!.FindAsync(2);
+            PersonDataModel? person = await context.Person!.FindAsync(2);
 
-            var filters = new List<SpecificationBase<PersonModel>>()
+            var filters = new List<SpecificationBase<PersonDataModel>>()
             {
                 new PersonHasLastNameSpecification("Duffy"),
                 new PersonHasEmployeePersonTypeSpecification("EM")
@@ -276,8 +276,8 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
 
             //ATTEMPT
             // Use multiple specifications for validation
-            var people = context.Person!.ApplyFilters<PersonModel>(filters);
-            bool isValid = person!.SatisfiesFilters<PersonModel>(filters);
+            var people = context.Person!.ApplyFilters<PersonDataModel>(filters);
+            bool isValid = person!.SatisfiesFilters<PersonDataModel>(filters);
 
             //VERIFY
             Assert.True(isValid);

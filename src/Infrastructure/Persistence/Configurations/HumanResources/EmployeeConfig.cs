@@ -61,12 +61,12 @@ namespace REA.Accounting.Infrastructure.Persistence.Configurations.HumanResource
             entity.Property(e => e.VacationHours)
                 .IsRequired()
                 .HasColumnName("VacationHours")
-                .HasColumnType("int")
+                .HasColumnType("smallint")
                 .HasDefaultValue(0);
             entity.Property(e => e.SickLeaveHours)
                 .IsRequired()
                 .HasColumnName("SickLeaveHours")
-                .HasColumnType("int")
+                .HasColumnType("smallint")
                 .HasDefaultValue(0);
             entity.Property(e => e.CurrentFlag)
                 .IsRequired()

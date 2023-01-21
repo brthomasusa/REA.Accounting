@@ -2,7 +2,7 @@
   {
     "BusinessEntityID": 2,
     "PersonType": "EM",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": null,
     "FirstName": "Terri",
     "MiddleName": "Lee",
@@ -15,7 +15,7 @@
   {
     "BusinessEntityID": 3,
     "PersonType": "EM",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": null,
     "FirstName": "Roberto",
     "MiddleName": null,
@@ -28,7 +28,7 @@
   {
     "BusinessEntityID": 16,
     "PersonType": "EM",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": null,
     "FirstName": "David",
     "MiddleName": "M",
@@ -41,7 +41,7 @@
   {
     "BusinessEntityID": 17,
     "PersonType": "EM",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": null,
     "FirstName": "Kevin",
     "MiddleName": "F",
@@ -54,7 +54,7 @@
   {
     "BusinessEntityID": 18,
     "PersonType": "EM",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": null,
     "FirstName": "John",
     "MiddleName": "L",
@@ -67,7 +67,7 @@
   {
     "BusinessEntityID": 19,
     "PersonType": "EM",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": null,
     "FirstName": "Mary",
     "MiddleName": "A",
@@ -80,7 +80,7 @@
   {
     "BusinessEntityID": 20,
     "PersonType": "EM",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": null,
     "FirstName": "Wanida",
     "MiddleName": "M",
@@ -93,7 +93,7 @@
   {
     "BusinessEntityID": 21,
     "PersonType": "EM",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": null,
     "FirstName": "Terry",
     "MiddleName": "J",
@@ -106,7 +106,7 @@
   {
     "BusinessEntityID": 22,
     "PersonType": "EM",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": null,
     "FirstName": "Sariya",
     "MiddleName": "E",
@@ -119,7 +119,7 @@
   {
     "BusinessEntityID": 23,
     "PersonType": "EM",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": null,
     "FirstName": "Mary",
     "MiddleName": "E",
@@ -132,7 +132,7 @@
   {
     "BusinessEntityID": 24,
     "PersonType": "EM",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": "Ms.",
     "FirstName": "Jill",
     "MiddleName": "A",
@@ -145,7 +145,7 @@
   {
     "BusinessEntityID": 25,
     "PersonType": "EM",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": null,
     "FirstName": "James",
     "MiddleName": "R",
@@ -158,7 +158,7 @@
   {
     "BusinessEntityID": 26,
     "PersonType": "EM",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": null,
     "FirstName": "Peter",
     "MiddleName": "J",
@@ -171,7 +171,7 @@
   {
     "BusinessEntityID": 211,
     "PersonType": "EM",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": null,
     "FirstName": "Hazem",
     "MiddleName": "E",
@@ -184,7 +184,7 @@
   {
     "BusinessEntityID": 222,
     "PersonType": "EM",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": null,
     "FirstName": "A. Scott",
     "MiddleName": null,
@@ -197,7 +197,7 @@
   {
     "BusinessEntityID": 227,
     "PersonType": "EM",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": null,
     "FirstName": "Gary",
     "MiddleName": "E.",
@@ -210,7 +210,7 @@
   {
     "BusinessEntityID": 234,
     "PersonType": "EM",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": null,
     "FirstName": "Laura",
     "MiddleName": "F",
@@ -223,7 +223,7 @@
   {
     "BusinessEntityID": 235,
     "PersonType": "EM",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": null,
     "FirstName": "Paula",
     "MiddleName": "M",
@@ -236,7 +236,7 @@
   {
     "BusinessEntityID": 241,
     "PersonType": "EM",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": null,
     "FirstName": "David",
     "MiddleName": "J",
@@ -249,7 +249,7 @@
   {
     "BusinessEntityID": 249,
     "PersonType": "EM",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": null,
     "FirstName": "Wendy",
     "MiddleName": "Beth",
@@ -262,7 +262,7 @@
   {
     "BusinessEntityID": 262,
     "PersonType": "EM",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": null,
     "FirstName": "David",
     "MiddleName": "M",
@@ -275,7 +275,7 @@
   {
     "BusinessEntityID": 263,
     "PersonType": "EM",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": null,
     "FirstName": "Jean",
     "MiddleName": "E",
@@ -288,7 +288,7 @@
   {
     "BusinessEntityID": 264,
     "PersonType": "EM",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": null,
     "FirstName": "Stephanie",
     "MiddleName": "A",
@@ -301,7 +301,7 @@
   {
     "BusinessEntityID": 267,
     "PersonType": "EM",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": null,
     "FirstName": "Karen",
     "MiddleName": "A",
@@ -314,7 +314,7 @@
   {
     "BusinessEntityID": 268,
     "PersonType": "EM",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": null,
     "FirstName": "Ramesh",
     "MiddleName": "V",
@@ -327,7 +327,7 @@
   {
     "BusinessEntityID": 269,
     "PersonType": "EM",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": null,
     "FirstName": "Dan",
     "MiddleName": "K",
@@ -340,7 +340,7 @@
   {
     "BusinessEntityID": 270,
     "PersonType": "EM",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": null,
     "FirstName": "François",
     "MiddleName": "P",
@@ -353,7 +353,7 @@
   {
     "BusinessEntityID": 271,
     "PersonType": "EM",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": null,
     "FirstName": "Dan",
     "MiddleName": "B",
@@ -366,7 +366,7 @@
   {
     "BusinessEntityID": 272,
     "PersonType": "EM",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": null,
     "FirstName": "Janaina",
     "MiddleName": "Barreiro Gambaro",
@@ -379,7 +379,7 @@
   {
     "BusinessEntityID": 273,
     "PersonType": "EM",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": "Mr.",
     "FirstName": "Brian",
     "MiddleName": "S",
@@ -392,7 +392,7 @@
   {
     "BusinessEntityID": 274,
     "PersonType": "SP",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": null,
     "FirstName": "Stephen",
     "MiddleName": "Y",
@@ -405,7 +405,7 @@
   {
     "BusinessEntityID": 285,
     "PersonType": "SP",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": "Mr.",
     "FirstName": "Syed",
     "MiddleName": "E",
@@ -418,7 +418,7 @@
   {
     "BusinessEntityID": 287,
     "PersonType": "SP",
-    "NameStyle": "0",
+    "NameStyle": 0,
     "Title": null,
     "FirstName": "Amy",
     "MiddleName": "E",

@@ -18,11 +18,13 @@ namespace REA.Accounting.Application.HumanResources.GetEmployeeById
             CancellationToken cancellationToken
         )
         {
-            OperationResult<Employee> result = await _repo.EmployeeAggregate.GetEmployeeOnlyAsync(request.EmployeeID, true);
+            OperationResult<Employee> result = await _repo.EmployeeAggregate.GetEmployeeOnlyAsync(request.EmployeeID);
+            if (!result.Success)
+                Console.WriteLine(result.NonSuccessMessage);
 
             Employee employee = result.Result;
 
-            return new GetEmployeeByIdResponse
+            GetEmployeeByIdResponse response = new
             (
                 employee.Id,
                 employee.PersonType,
@@ -35,15 +37,17 @@ namespace REA.Accounting.Application.HumanResources.GetEmployeeById
                 employee.NationalIDNumber,
                 employee.LoginID,
                 employee.JobTitle,
-                employee.BirthDate,
+                employee.BirthDate.ToDateTime(new TimeOnly()),
                 employee.MaritalStatus,
                 employee.Gender,
-                employee.HireDate,
+                employee.HireDate.ToDateTime(new TimeOnly()),
                 employee.IsSalaried,
                 employee.VacationHours,
                 employee.SickLeaveHours,
                 employee.IsActive
             );
+
+            return response;
         }
     }
 }

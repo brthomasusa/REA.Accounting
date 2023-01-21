@@ -1,0 +1,1 @@
+kill -9 $(lsof -i:7259 -t) 2> /dev/null

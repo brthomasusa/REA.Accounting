@@ -22,8 +22,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Configurations.HumanResource
                 .HasColumnType("money");
             entity.Property(e => e.PayFrequency)
                 .IsRequired()
-                .HasColumnName("PayFrequency")
-                .HasColumnType("tinyint");
+                .HasColumnName("PayFrequency");
             entity.Property(e => e.ModifiedDate)
                 .HasColumnName("ModifiedDate")
                 .IsRequired()
