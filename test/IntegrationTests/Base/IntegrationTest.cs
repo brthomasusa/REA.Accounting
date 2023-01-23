@@ -11,7 +11,7 @@ namespace REA.Accounting.IntegrationTests.Base
     {
         protected readonly ApiWebApplicationFactory _factory;
         protected readonly HttpClient _client;
-        protected readonly string _urlRoot = "api/1.0";
+        protected readonly string _urlRoot = "api/";
         protected readonly JsonSerializerOptions _options;
 
         public IntegrationTest(ApiWebApplicationFactory fixture)
@@ -21,7 +21,7 @@ namespace REA.Accounting.IntegrationTests.Base
             _client.DefaultRequestHeaders.Accept.Clear();
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            // OperationResult<bool> result = ReseedTestDatabase.ReseedDatabase();
+            OperationResult<bool> result = ReseedTestDatabase.ReseedDatabase();
         }
     }
 }

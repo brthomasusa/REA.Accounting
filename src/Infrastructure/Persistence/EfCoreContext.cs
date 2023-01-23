@@ -28,6 +28,7 @@ namespace REA.Accounting.Infrastructure.Persistence
         public DbSet<PersonDataModel>? Person { get; set; }
         public DbSet<EmailAddress>? EmailAddress { get; set; }
         public DbSet<PersonPhone>? PersonPhone { get; set; }
+        public DbSet<Password>? Password { get; set; }
         public DbSet<Department>? Department { get; set; }
         public DbSet<Shift>? Shift { get; set; }
         public DbSet<Employee>? Employee { get; set; }

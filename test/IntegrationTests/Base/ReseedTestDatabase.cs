@@ -14,7 +14,7 @@ namespace REA.Accounting.IntegrationTests.Base
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    SqlCommand command = new SqlCommand("dbo.usp_resetTestDb", connection);
+                    SqlCommand command = new SqlCommand("dbo.usp_InitializeTestDb", connection);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
 
@@ -23,7 +23,7 @@ namespace REA.Accounting.IntegrationTests.Base
             }
             catch (Exception ex)
             {
-                return OperationResult<bool>.CreateFailure(ex.Message);
+                return OperationResult<bool>.CreateFailure(Helpers.GetExceptionMessage(ex));
             }
         }
     }

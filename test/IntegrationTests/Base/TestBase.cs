@@ -5,7 +5,7 @@ using REA.Accounting.Infrastructure.Persistence;
 
 namespace REA.Accounting.IntegrationTests.Base
 {
-    public class TestBase : IDisposable
+    public abstract class TestBase : IDisposable
     {
         protected readonly string _connectionString;
         protected readonly EfCoreContext _dbContext;
@@ -24,11 +24,10 @@ namespace REA.Accounting.IntegrationTests.Base
                 msSqlOptions => msSqlOptions.MigrationsAssembly(typeof(EfCoreContext).Assembly.FullName)
             )
             .EnableSensitiveDataLogging()
-            .EnableDetailedErrors()
-            .UseLazyLoadingProxies();
+            .EnableDetailedErrors();
 
             _dbContext = new EfCoreContext(optionsBuilder.Options);
-            _dbContext.Database.ExecuteSqlRaw("EXEC dbo.usp_resetTestDb");  // This is 4 times as fast (897ms -vs- 4 seconds) as calling                        
+            _dbContext.Database.ExecuteSqlRaw("EXEC dbo.usp_InitializeTestDb");
         }
 
         public void Dispose()

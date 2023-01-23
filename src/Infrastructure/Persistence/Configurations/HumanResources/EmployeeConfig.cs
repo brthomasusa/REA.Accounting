@@ -70,7 +70,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Configurations.HumanResource
                 .HasDefaultValue(0);
             entity.Property(e => e.CurrentFlag)
                 .IsRequired()
-                .HasColumnName("SalariedFlag")
+                .HasColumnName("CurrentFlag")
                 .HasColumnType("bit")
                 .HasDefaultValue(1);
             entity.Property(e => e.RowGuid)

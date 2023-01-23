@@ -1,31 +1,21 @@
-using TestSupport.EfHelpers;
-
 using REA.Accounting.Core.HumanResources;
+using REA.Accounting.Core.Interfaces;
 using REA.Accounting.Core.Shared;
 using REA.Accounting.Infrastructure.Persistence;
+using REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources;
 using REA.Accounting.SharedKernel.Utilities;
-using REA.Accounting.UnitTests.TestHelpers;
-
+using REA.Accounting.IntegrationTests.Base;
 using REA.Accounting.Infrastructure.Persistence.Interfaces;
 using REA.Accounting.Infrastructure.Persistence.Repositories;
 
-namespace REA.Accounting.UnitTests.Repositories
+namespace REA.Accounting.IntegrationTests.Repositories
 {
-    public class EmployeeAggregateRepo_Tests : IDisposable
+    public class EmployeeAggregateRepo_Tests : TestBase
     {
-        private EfCoreContext? _context;
         private IWriteRepositoryManager _writeRepository;
 
         public EmployeeAggregateRepo_Tests()
-        {
-            ConfigureDbContextAsync();
-            _writeRepository = new WriteRepositoryManager(_context!);
-        }
-
-        public void Dispose()
-        {
-            _context!.Dispose();
-        }
+            => _writeRepository = new WriteRepositoryManager(_dbContext);
 
         [Fact]
         public async Task GetById_EmployeeAggregateRepo_ShouldSucceed()
@@ -33,6 +23,9 @@ namespace REA.Accounting.UnitTests.Repositories
             OperationResult<Employee> result = await _writeRepository.EmployeeAggregate.GetByIdAsync(2);
 
             Assert.True(result.Success);
+
+            Address address = result.Result.Addresses.ToList()[0];
+            Assert.Equal("7559 Worth Ct.", address.AddressLine1);
         }
 
         [Fact]
@@ -83,6 +76,8 @@ namespace REA.Accounting.UnitTests.Repositories
         }
 
 
+
+
         private Employee GetEmployeeForCreate()
             => Employee.Create
                 (
@@ -106,14 +101,5 @@ namespace REA.Accounting.UnitTests.Repositories
                     0,
                     true
                 );
-
-        private async void ConfigureDbContextAsync()
-        {
-            var options = SqliteInMemory.CreateOptions<EfCoreContext>();
-            _context = new EfCoreContext(options);
-            _context.Database.EnsureCreated();
-            await _context.SeedLookupData();
-            await _context.SeedPersonAndHrData();
-        }
     }
 }

@@ -27,7 +27,6 @@ namespace REA.Accounting.Server.Extensions
                 )
                 .EnableSensitiveDataLogging()
                 .EnableDetailedErrors()
-                .UseLazyLoadingProxies()
             );
         }
 

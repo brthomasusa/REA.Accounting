@@ -18,7 +18,7 @@ namespace REA.Accounting.Application.HumanResources.GetEmployeeById
             CancellationToken cancellationToken
         )
         {
-            OperationResult<Employee> result = await _repo.EmployeeAggregate.GetEmployeeOnlyAsync(request.EmployeeID);
+            OperationResult<Employee> result = await _repo.EmployeeAggregate.GetEmployeeOnlyAsync(request.EmployeeID, true);
             if (!result.Success)
                 Console.WriteLine(result.NonSuccessMessage);
 

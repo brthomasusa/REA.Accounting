@@ -221,6 +221,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
                     RemoveDepartmentHistories(entity.Id);
                     RemovePersonPhones(entity.Id);
                     RemovePersonEmailAddresses(entity.Id);
+                    RemovePersonPasswords(entity.Id);
                     RemoveBusinessEntityAddresses(entity.Id);
 
                     _context.Employee!.Remove(employee);
@@ -265,6 +266,15 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
             {
                 var phones = _context.PersonPhone!.Where(ph => ph.BusinessEntityID == employeeID).ToList();
                 _context.PersonPhone!.RemoveRange(phones);
+            }
+        }
+
+        private void RemovePersonPasswords(int employeeID)
+        {
+            if (_context.Password!.Where(pw => pw.BusinessEntityID == employeeID).Any())
+            {
+                var passwords = _context.Password!.Where(pw => pw.BusinessEntityID == employeeID).ToList();
+                _context.Password!.RemoveRange(passwords);
             }
         }
 

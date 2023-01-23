@@ -14,7 +14,7 @@ namespace REA.Accounting.Presentation.HumanResources
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
-            app.MapGet("/employees/{id}", async (int id, ISender sender) =>
+            app.MapGet("api/employees/{id}", async (int id, ISender sender) =>
             {
                 GetEmployeeByIdResponse result = await sender.Send(new GetEmployeeByIdQuery(EmployeeID: id));
 

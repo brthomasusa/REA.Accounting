@@ -1,15 +1,10 @@
 using Ardalis.Specification.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TestSupport.EfHelpers;
-using TestSupport.Helpers;
-using System.Linq;
 using REA.Accounting.Infrastructure.Persistence;
-using REA.Accounting.Infrastructure.Persistence.DataModels.HumanResources;
-using REA.Accounting.Infrastructure.Persistence.DataModels.Organizations;
 using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
 using REA.Accounting.Infrastructure.Persistence.Extensions;
 using REA.Accounting.Infrastructure.Persistence.Interfaces;
-using REA.Accounting.Infrastructure.Persistence.Specifications;
 using REA.Accounting.Infrastructure.Persistence.Specifications.Person;
 using REA.Accounting.UnitTests.TestHelpers;
 

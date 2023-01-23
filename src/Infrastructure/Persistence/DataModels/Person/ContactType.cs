@@ -4,7 +4,6 @@ namespace REA.Accounting.Infrastructure.Persistence.DataModels.Person
     {
         public int ContactTypeID { get; set; }
         public string? Name { get; set; }
-        public Guid RowGuid { get; set; }
         public DateTime ModifiedDate { get; set; }
     }
 }
