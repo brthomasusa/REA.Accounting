@@ -28,10 +28,10 @@ namespace REA.Accounting.Application.HumanResources.CreateEmployee
                 request.NationalID,
                 request.Login,
                 request.JobTitle,
-                request.BirthDate,
+                DateOnly.FromDateTime(request.BirthDate),
                 request.MaritalStatus,
                 request.Gender,
-                request.HireDate,
+                DateOnly.FromDateTime(request.HireDate),
                 request.Salaried,
                 request.Vacation,
                 request.SickLeave,
@@ -42,14 +42,14 @@ namespace REA.Accounting.Application.HumanResources.CreateEmployee
             (
                 employee.Id,
                 request.ShiftID,
-                request.HireDate,
+                DateOnly.FromDateTime(request.HireDate),
                 null
             );
 
             OperationResult<PayHistory> payResult = employee.AddPayHistory
             (
                 employee.Id,
-                request.HireDate.ToDateTime(new TimeOnly()),
+                request.HireDate,
                 request.PayRate,
                 (PayFrequencyEnum)request.PayFrequency
             );

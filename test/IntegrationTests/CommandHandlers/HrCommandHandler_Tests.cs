@@ -1,28 +1,16 @@
-using TestSupport.EfHelpers;
-
 using REA.Accounting.Application.HumanResources.CreateEmployee;
-using REA.Accounting.Infrastructure.Persistence;
 using REA.Accounting.Infrastructure.Persistence.Interfaces;
 using REA.Accounting.Infrastructure.Persistence.Repositories;
-using REA.Accounting.UnitTests.TestHelpers;
+using REA.Accounting.IntegrationTests.Base;
 
-namespace REA.Accounting.UnitTests.CommandHandlers
+namespace REA.Accounting.IntegrationTests.CommandHandlers
 {
-    public class HrCommandHandler_Tests : IDisposable
+    public class HrCommandHandler_Tests : TestBase
     {
-        private EfCoreContext? _context;
         private IWriteRepositoryManager _writeRepository;
 
         public HrCommandHandler_Tests()
-        {
-            ConfigureDbContextAsync();
-            _writeRepository = new WriteRepositoryManager(_context!);
-        }
-
-        public void Dispose()
-        {
-            _context!.Dispose();
-        }
+            => _writeRepository = new WriteRepositoryManager(_dbContext);
 
         [Fact]
         public async Task Handle_CreateEmployeeCommandHandler_ShouldSucceed()
@@ -34,24 +22,6 @@ namespace REA.Accounting.UnitTests.CommandHandlers
 
             Assert.True(retVal > 0);
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         private CreateEmployeeCommand GetCreateEmployeeCommand()
             => new CreateEmployeeCommand
@@ -89,14 +59,5 @@ namespace REA.Accounting.UnitTests.CommandHandlers
                 PhoneNumber: "555-555-5555",
                 PhoneNumberType: 2
             );
-
-        private async void ConfigureDbContextAsync()
-        {
-            var options = SqliteInMemory.CreateOptions<EfCoreContext>();
-            _context = new EfCoreContext(options);
-            _context.Database.EnsureCreated();
-            await _context.SeedLookupData();
-            await _context.SeedPersonAndHrData();
-        }
     }
 }

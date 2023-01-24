@@ -16,9 +16,14 @@ namespace REA.Accounting.Presentation.HumanResources
         {
             app.MapGet("api/employees/{id}", async (int id, ISender sender) =>
             {
-                GetEmployeeByIdResponse result = await sender.Send(new GetEmployeeByIdQuery(EmployeeID: id));
+                return await sender.Send(new GetEmployeeByIdQuery(EmployeeID: id))
+                    is GetEmployeeByIdResponse response ? Results.Ok(response) : Results.NotFound();
+            });
 
-                return Results.Ok(result);
+            app.MapPost("api/employees/create", async (CreateEmployeeCommand cmd, ISender sender) =>
+            {
+                int newPrimaryKey = await sender.Send(cmd);
+                return Results.Created($"api/employees/{newPrimaryKey}", cmd);
             });
         }
     }
