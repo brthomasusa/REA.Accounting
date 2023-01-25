@@ -1,9 +1,12 @@
 using TestSupport.EfHelpers;
 
 using REA.Accounting.Application.HumanResources.CreateEmployee;
+using REA.Accounting.Application.HumanResources.DeleteEmployee;
+using REA.Accounting.Application.HumanResources.UpdateEmployee;
 using REA.Accounting.Infrastructure.Persistence;
 using REA.Accounting.Infrastructure.Persistence.Interfaces;
 using REA.Accounting.Infrastructure.Persistence.Repositories;
+using REA.Accounting.SharedKernel.Utilities;
 using REA.Accounting.UnitTests.TestHelpers;
 
 namespace REA.Accounting.UnitTests.CommandHandlers
@@ -30,27 +33,33 @@ namespace REA.Accounting.UnitTests.CommandHandlers
             CreateEmployeeCommand command = GetCreateEmployeeCommand();
             CreateEmployeeCommandHandler handler = new(_writeRepository);
 
-            int retVal = await handler.Handle(command, new CancellationToken());
+            OperationResult<int> result = await handler.Handle(command, new CancellationToken());
 
-            Assert.True(retVal > 0);
+            Assert.True(result.Success);
+            Assert.True(result.Result > 0);
         }
 
+        [Fact]
+        public async Task Handle_UpdateEmployeeCommandHandler_ShouldSucceed()
+        {
+            UpdateEmployeeCommand command = GetUpdateEmployeeCommand();
+            UpdateEmployeeCommandHandler handler = new(_writeRepository);
 
+            OperationResult<bool> result = await handler.Handle(command, new CancellationToken());
 
+            Assert.True(result.Success);
+        }
 
+        [Fact]
+        public async Task Handle_DeleteEmployeeCommandHandler_ShouldSucceed()
+        {
+            DeleteEmployeeCommand command = new DeleteEmployeeCommand(EmployeeID: 273);
+            DeleteEmployeeCommandHandler handler = new(_writeRepository);
 
+            OperationResult<bool> result = await handler.Handle(command, new CancellationToken());
 
-
-
-
-
-
-
-
-
-
-
-
+            Assert.True(result.Success);
+        }
 
 
         private CreateEmployeeCommand GetCreateEmployeeCommand()
@@ -64,6 +73,7 @@ namespace REA.Accounting.UnitTests.CommandHandlers
                 LastName: "Doe",
                 MiddleName: "J",
                 Suffix: null,
+                EmailPromotion: 2,
                 NationalID: "13232145",
                 Login: @"adventure-works\johnny0",
                 JobTitle: "The Man",
@@ -88,6 +98,31 @@ namespace REA.Accounting.UnitTests.CommandHandlers
                 EmailAddress: "johnny@adventure-works.com",
                 PhoneNumber: "555-555-5555",
                 PhoneNumberType: 2
+            );
+
+        private UpdateEmployeeCommand GetUpdateEmployeeCommand()
+            => new UpdateEmployeeCommand
+            (
+                EmployeeID: 273,
+                PersonType: "EM",
+                NameStyle: 0,
+                Title: "Mr.",
+                FirstName: "Johnny",
+                LastName: "Doe",
+                MiddleName: "J",
+                Suffix: null,
+                EmailPromotion: 2,
+                NationalID: "112432117",
+                Login: @"adventure-works\johnny0",
+                JobTitle: "The Man",
+                BirthDate: new DateTime(2000, 1, 28),
+                MaritalStatus: "M",
+                Gender: "M",
+                HireDate: new DateTime(2020, 1, 28),
+                Salaried: true,
+                Vacation: 5,
+                SickLeave: 1,
+                Active: true
             );
 
         private async void ConfigureDbContextAsync()

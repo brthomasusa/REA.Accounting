@@ -2,6 +2,7 @@ using REA.Accounting.Application.HumanResources.GetEmployeeById;
 using REA.Accounting.Infrastructure.Persistence.Interfaces;
 using REA.Accounting.Infrastructure.Persistence.Repositories;
 using REA.Accounting.IntegrationTests.Base;
+using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.IntegrationTests.QueryHandlers
 {
@@ -18,9 +19,9 @@ namespace REA.Accounting.IntegrationTests.QueryHandlers
             GetEmployeeByIdQuery query = new(EmployeeID: 2);
             GetEmployeeByIdQueryHandler handler = new(_writeRepository);
 
-            GetEmployeeByIdResponse response = await handler.Handle(query, new CancellationToken());
+            OperationResult<GetEmployeeByIdResponse> response = await handler.Handle(query, new CancellationToken());
 
-            Assert.NotNull(response);
+            Assert.True(response.Success);
         }
 
 

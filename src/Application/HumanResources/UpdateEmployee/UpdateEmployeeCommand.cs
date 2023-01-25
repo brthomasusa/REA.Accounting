@@ -1,9 +1,9 @@
 using REA.Accounting.Application.Interfaces.Messaging;
 using REA.Accounting.SharedKernel.Utilities;
 
-namespace REA.Accounting.Application.HumanResources.CreateEmployee
+namespace REA.Accounting.Application.HumanResources.UpdateEmployee
 {
-    public sealed record CreateEmployeeCommand
+    public sealed record UpdateEmployeeCommand
     (
             int EmployeeID,
             string PersonType,
@@ -24,20 +24,7 @@ namespace REA.Accounting.Application.HumanResources.CreateEmployee
             bool Salaried,
             int Vacation,
             int SickLeave,
-            bool Active,
-            decimal PayRate,
-            int PayFrequency,
-            int DepartmentID,
-            int ShiftID,
-            int AddressType,
-            string AddressLine1,
-            string AddressLine2,
-            string City,
-            int StateCode,
-            string PostalCode,
-            string EmailAddress,
-            string PhoneNumber,
-            int PhoneNumberType
-    ) : ICommand<OperationResult<int>>;
+            bool Active
+    ) : ICommand<OperationResult<bool>>;
 
 }

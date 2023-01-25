@@ -6,14 +6,14 @@ using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Application.HumanResources.CreateEmployee
 {
-    public sealed class CreateEmployeeCommandHandler : ICommandHandler<CreateEmployeeCommand, int>
+    public sealed class CreateEmployeeCommandHandler : ICommandHandler<CreateEmployeeCommand, OperationResult<int>>
     {
         private IWriteRepositoryManager _repo;
 
         public CreateEmployeeCommandHandler(IWriteRepositoryManager repo)
             => _repo = repo;
 
-        public async Task<int> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
+        public async Task<OperationResult<int>> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
         {
             Employee employee = Employee.Create
             (
@@ -45,6 +45,8 @@ namespace REA.Accounting.Application.HumanResources.CreateEmployee
                 DateOnly.FromDateTime(request.HireDate),
                 null
             );
+            if (!deptResult.Success)
+                return OperationResult<int>.CreateFailure(deptResult.NonSuccessMessage!);
 
             OperationResult<PayHistory> payResult = employee.AddPayHistory
             (
@@ -53,6 +55,8 @@ namespace REA.Accounting.Application.HumanResources.CreateEmployee
                 request.PayRate,
                 (PayFrequencyEnum)request.PayFrequency
             );
+            if (!payResult.Success)
+                return OperationResult<int>.CreateFailure(payResult.NonSuccessMessage!);
 
             OperationResult<Address> addrResult = employee.AddAddress
             (
@@ -65,6 +69,8 @@ namespace REA.Accounting.Application.HumanResources.CreateEmployee
                 request.StateCode,
                 request.PersonType
             );
+            if (!addrResult.Success)
+                return OperationResult<int>.CreateFailure(addrResult.NonSuccessMessage!);
 
             OperationResult<PersonEmailAddress> emailResult = employee.AddEmailAddress
             (
@@ -72,6 +78,8 @@ namespace REA.Accounting.Application.HumanResources.CreateEmployee
                 0,
                 request.EmailAddress
             );
+            if (!emailResult.Success)
+                return OperationResult<int>.CreateFailure(emailResult.NonSuccessMessage!);
 
             OperationResult<PersonPhone> phoneResult = employee.AddPhoneNumbers
             (
@@ -79,10 +87,18 @@ namespace REA.Accounting.Application.HumanResources.CreateEmployee
                 (PhoneNumberTypeEnum)request.PhoneNumberType,
                 request.PhoneNumber
             );
+            if (!phoneResult.Success)
+                return OperationResult<int>.CreateFailure(phoneResult.NonSuccessMessage!);
 
-            OperationResult<int> result = await _repo.EmployeeAggregate.InsertAsync(employee);
-
-            return result.Result;
+            OperationResult<int> insertDbResult = await _repo.EmployeeAggregate.InsertAsync(employee);
+            if (insertDbResult.Success)
+            {
+                return OperationResult<int>.CreateSuccessResult(insertDbResult.Result);
+            }
+            else
+            {
+                return OperationResult<int>.CreateFailure(insertDbResult.NonSuccessMessage!);
+            }
         }
     }
 }

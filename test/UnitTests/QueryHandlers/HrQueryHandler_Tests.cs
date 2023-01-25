@@ -3,6 +3,8 @@ using REA.Accounting.Application.HumanResources.GetEmployeeById;
 using REA.Accounting.Infrastructure.Persistence;
 using REA.Accounting.Infrastructure.Persistence.Interfaces;
 using REA.Accounting.Infrastructure.Persistence.Repositories;
+using REA.Accounting.SharedKernel.Utilities;
+
 using REA.Accounting.UnitTests.TestHelpers;
 
 namespace REA.Accounting.UnitTests.QueryHandlers
@@ -29,9 +31,9 @@ namespace REA.Accounting.UnitTests.QueryHandlers
             GetEmployeeByIdQuery query = new(EmployeeID: 2);
             GetEmployeeByIdQueryHandler handler = new(_writeRepository);
 
-            GetEmployeeByIdResponse response = await handler.Handle(query, new CancellationToken());
+            OperationResult<GetEmployeeByIdResponse> response = await handler.Handle(query, new CancellationToken());
 
-            Assert.NotNull(response);
+            Assert.True(response.Success);
         }
 
 
