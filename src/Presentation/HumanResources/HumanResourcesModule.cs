@@ -3,6 +3,7 @@ using Carter;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Mvc;
 
 using REA.Accounting.Application.HumanResources.CreateEmployee;
 using REA.Accounting.Application.HumanResources.DeleteEmployee;
@@ -45,9 +46,9 @@ namespace REA.Accounting.Presentation.HumanResources
                 return Results.Problem(putResult.NonSuccessMessage!);
             });
 
-            app.MapDelete("api/employees/delete/{id}", async (int id, ISender sender) =>
+            app.MapDelete("api/employees/delete", async ([FromBody] DeleteEmployeeCommand cmd, ISender sender) =>
             {
-                OperationResult<bool> deleteResult = await sender.Send(new DeleteEmployeeCommand(EmployeeID: id));
+                OperationResult<bool> deleteResult = await sender.Send(cmd);
                 if (deleteResult.Success)
                     return Results.Ok();
 

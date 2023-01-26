@@ -6,6 +6,7 @@ using System.Text.Json;
 using Microsoft.AspNetCore.WebUtilities;
 
 using REA.Accounting.Application.HumanResources.CreateEmployee;
+using REA.Accounting.Application.HumanResources.DeleteEmployee;
 using REA.Accounting.Application.HumanResources.UpdateEmployee;
 using REA.Accounting.Application.HumanResources.GetEmployeeById;
 using REA.Accounting.IntegrationTests.Base;
@@ -89,12 +90,26 @@ namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
         [Fact]
         public async Task Employee_DeleteEmployeeInfo_FromStream()
         {
-            int employeeId = 273;
-            string uri = $"{_urlRoot}employees/delete{employeeId}";
+            string uri = $"{_urlRoot}employees/delete";
+            DeleteEmployeeCommand command = new(EmployeeID: 2);
 
-            using var response = await _client.DeleteAsync($"{_urlRoot}employees/delete/{employeeId}");
+            var memStream = new MemoryStream();
+            await JsonSerializer.SerializeAsync(memStream, command);
+            memStream.Seek(0, SeekOrigin.Begin);
 
-            response.EnsureSuccessStatusCode();
+            var request = new HttpRequestMessage(HttpMethod.Delete, uri);
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            using (var requestContent = new StreamContent(memStream))
+            {
+                request.Content = requestContent;
+                requestContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+                using (var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead))
+                {
+                    response.EnsureSuccessStatusCode();
+                }
+            }
         }
     }
 }
