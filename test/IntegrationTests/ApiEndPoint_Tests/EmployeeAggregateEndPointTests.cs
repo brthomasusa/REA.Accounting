@@ -35,10 +35,10 @@ namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
         }
 
         [Fact]
-        public async Task Employee_CreateEmployeeInfo_FromStream()
+        public async Task Employee_CreateEmployeeInfo_ValidData_ShouldSucceed()
         {
             string uri = $"{_urlRoot}employees/create";
-            CreateEmployeeCommand command = EmployeeTestData.GetCreateEmployeeCommand();
+            CreateEmployeeCommand command = EmployeeTestData.GetValidCreateEmployeeCommand();
 
             var memStream = new MemoryStream();
             await JsonSerializer.SerializeAsync(memStream, command);
@@ -63,7 +63,35 @@ namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
         }
 
         [Fact]
-        public async Task Employee_UpdateEmployeeInfo_FromStream()
+        public async Task Employee_CreateEmployeeInfo_InvalidData_ShouldFail()
+        {
+            string uri = $"{_urlRoot}employees/create";
+            CreateEmployeeCommand command = EmployeeTestData.GetInvalidCreateEmployeeCommand();
+
+            var memStream = new MemoryStream();
+            await JsonSerializer.SerializeAsync(memStream, command);
+            memStream.Seek(0, SeekOrigin.Begin);
+
+            var request = new HttpRequestMessage(HttpMethod.Post, uri);
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            using (var requestContent = new StreamContent(memStream))
+            {
+                request.Content = requestContent;
+                requestContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+                using (var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead))
+                {
+                    response.EnsureSuccessStatusCode();
+
+                    var jsonResponse = await response.Content.ReadAsStreamAsync();
+                    var employeeResponse = await JsonSerializer.DeserializeAsync<GetEmployeeByIdResponse>(jsonResponse, _options);
+                }
+            }
+        }
+
+        [Fact]
+        public async Task Employee_UpdateEmployeeInfo_ValidData_ShouldSucceed()
         {
             string uri = $"{_urlRoot}employees/update";
             UpdateEmployeeCommand command = EmployeeTestData.GetUpdateEmployeeCommand();
@@ -88,7 +116,7 @@ namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
         }
 
         [Fact]
-        public async Task Employee_DeleteEmployeeInfo_FromStream()
+        public async Task Employee_DeleteEmployeeInfo_Valid_ShouldSucceed()
         {
             string uri = $"{_urlRoot}employees/delete";
             DeleteEmployeeCommand command = new(EmployeeID: 2);

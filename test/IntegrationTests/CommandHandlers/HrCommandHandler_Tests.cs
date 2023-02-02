@@ -18,7 +18,7 @@ namespace REA.Accounting.IntegrationTests.CommandHandlers
         [Fact]
         public async Task Handle_CreateEmployeeCommandHandler_ShouldSucceed()
         {
-            CreateEmployeeCommand command = EmployeeTestData.GetCreateEmployeeCommand();
+            CreateEmployeeCommand command = EmployeeTestData.GetValidCreateEmployeeCommand();
             CreateEmployeeCommandHandler handler = new(_writeRepository);
 
             OperationResult<int> result = await handler.Handle(command, new CancellationToken());

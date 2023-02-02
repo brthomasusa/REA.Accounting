@@ -24,7 +24,7 @@ namespace REA.Accounting.Application.HumanResources.UpdateEmployee
                     OperationResult<Employee> updateDomainObjResult = getResult.Result.Update
                     (
                         request.PersonType,
-                        (NameStyleEnum)request.NameStyle,
+                        request.NameStyle ? NameStyleEnum.Eastern : NameStyleEnum.Western,
                         request.Title!,
                         request.FirstName,
                         request.LastName,

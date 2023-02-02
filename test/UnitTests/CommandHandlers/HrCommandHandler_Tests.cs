@@ -67,7 +67,7 @@ namespace REA.Accounting.UnitTests.CommandHandlers
             (
                 EmployeeID: 0,
                 PersonType: "EM",
-                NameStyle: 0,
+                NameStyle: false,
                 Title: "Mr.",
                 FirstName: "Johnny",
                 LastName: "Doe",
@@ -105,7 +105,7 @@ namespace REA.Accounting.UnitTests.CommandHandlers
             (
                 EmployeeID: 273,
                 PersonType: "EM",
-                NameStyle: 0,
+                NameStyle: false,
                 Title: "Mr.",
                 FirstName: "Johnny",
                 LastName: "Doe",

@@ -1,3 +1,4 @@
+using REA.Accounting.SharedKernel.Base;
 using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.SharedKernel.Interfaces

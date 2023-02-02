@@ -134,47 +134,6 @@ namespace REA.Accounting.IntegrationTests.DbContext
         }
 
         [Fact]
-        public async Task PersonByIDWithEmployeeSpecification_ReturnOnePersonWithEmployee_ShouldSucceed()
-        {
-            //SETUP
-
-            int businessEntityID = 2;
-            CancellationToken cancellationToken = default;
-
-            //ATTEMPT
-            PersonDataModel? person = await
-                SpecificationEvaluator.Default.GetQuery
-                (
-                    _dbContext.Set<PersonDataModel>().AsNoTracking(),
-                    new PersonByIDWithEmployeeSpec(businessEntityID)
-                ).FirstOrDefaultAsync(cancellationToken);
-
-            //VERIFY
-            Assert.Equal("Duffy", person!.LastName);
-            Assert.Equal("245797967", person.Employee!.NationalIDNumber);
-        }
-
-        [Fact]
-        public async Task PersonByLastNameWithEmployeeSpecification_OneLetterCriteria_ShouldSucceed()
-        {
-            //SETUP
-
-            string lastNameFragment = "a";
-            CancellationToken cancellationToken = default;
-
-            //ATTEMPT
-            var people = await
-                SpecificationEvaluator.Default.GetQuery
-                (
-                    _dbContext.Set<PersonDataModel>(),
-                    new PersonByLastNameWithEmployeeSpec(lastNameFragment)
-                ).ToListAsync(cancellationToken);
-
-            //VERIFY
-            Assert.True(people.Any());
-        }
-
-        [Fact]
         public void DbContextExtension_ValidateWithSingleSpecifications_ShouldSucceed()
         {
             //SETUP

@@ -5,6 +5,7 @@ using REA.Accounting.Core.HumanResources;
 using REA.Accounting.Core.Interfaces;
 using REA.Accounting.Core.Shared;
 using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
+using REA.Accounting.Infrastructure.Persistence.Specifications.HumanResources;
 using REA.Accounting.Infrastructure.Persistence.Specifications.Person;
 using REA.Accounting.SharedKernel.Interfaces;
 using REA.Accounting.SharedKernel.Utilities;
@@ -24,6 +25,73 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
             _context = ctx;
             _unitOfWork = new UnitOfWork(_context);
         }
+
+        public async Task<OperationResult<bool>> ValidatePersonNameIsUnique(string fname, string lname, string? middleName, bool asNoTracking = true)
+        {
+            try
+            {
+                CancellationToken cancellationToken = default;
+
+                var person = await
+                    SpecificationEvaluator.Default.GetQuery
+                    (
+                        asNoTracking ? _context.Set<PersonDataModel>().AsNoTracking() : _context.Set<PersonDataModel>(),
+                        new ValidateEmployeeNameIsUniqueSpec(fname, lname, middleName)
+                    ).FirstOrDefaultAsync(cancellationToken);
+
+                return OperationResult<bool>.CreateSuccessResult(person is null ? true : false);
+
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<bool>.CreateFailure(Helpers.GetExceptionMessage(ex));
+            }
+        }
+
+        public async Task<OperationResult<bool>> ValidateNationalIdNumberIsUnique(string nationalIdNumber, bool asNoTracking = true)
+        {
+            try
+            {
+                CancellationToken cancellationToken = default;
+
+                var employee = await
+                    SpecificationEvaluator.Default.GetQuery
+                    (
+                        asNoTracking ? _context.Set<EmployeeDataModel>().AsNoTracking() : _context.Set<EmployeeDataModel>(),
+                        new ValidateNationalIdNumberIsUniqueSpec("295847004")
+                    ).FirstOrDefaultAsync(cancellationToken);
+
+                return OperationResult<bool>.CreateSuccessResult(employee is null ? true : false);
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<bool>.CreateFailure(Helpers.GetExceptionMessage(ex));
+            }
+        }
+
+
+        public async Task<OperationResult<bool>> ValidateEmployeeEmailIsUnique(string emailAddres, bool asNoTracking = true)
+        {
+            try
+            {
+                CancellationToken cancellationToken = default;
+
+                var person = await
+                    SpecificationEvaluator.Default.GetQuery
+                    (
+                        asNoTracking ? _context.Set<PersonDataModel>().AsNoTracking() : _context.Set<PersonDataModel>(),
+                        new ValidateEmployeeEmailIsUniqueSpec(emailAddres)
+                    ).FirstOrDefaultAsync(cancellationToken);
+
+                return OperationResult<bool>.CreateSuccessResult(person is null ? true : false);
+
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<bool>.CreateFailure(Helpers.GetExceptionMessage(ex));
+            }
+        }
+
 
         public async Task<OperationResult<DomainModelEmployee>> GetEmployeeOnlyAsync(int empployeeID, bool asNoTracking = false)
         {

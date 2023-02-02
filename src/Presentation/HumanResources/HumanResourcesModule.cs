@@ -2,13 +2,13 @@ using MediatR;
 using Carter;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 
 using REA.Accounting.Application.HumanResources.CreateEmployee;
 using REA.Accounting.Application.HumanResources.DeleteEmployee;
-using REA.Accounting.Application.HumanResources.UpdateEmployee;
 using REA.Accounting.Application.HumanResources.GetEmployeeById;
+using REA.Accounting.Application.HumanResources.UpdateEmployee;
 using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Presentation.HumanResources

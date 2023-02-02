@@ -1,4 +1,4 @@
-namespace REA.Accounting.SharedKernel.Utilities
+namespace REA.Accounting.SharedKernel.Base
 {
     public class ValidationResult
     {

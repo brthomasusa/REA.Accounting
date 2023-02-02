@@ -19,7 +19,7 @@ namespace REA.Accounting.Application.HumanResources.CreateEmployee
             (
                 request.EmployeeID,
                 request.PersonType,
-                (NameStyleEnum)request.NameStyle,
+                request.NameStyle ? NameStyleEnum.Eastern : NameStyleEnum.Western,
                 request.Title!,
                 request.FirstName,
                 request.LastName,

@@ -1,14 +1,20 @@
 using Microsoft.AspNetCore.ResponseCompression;
-
 using Carter;
+using FluentValidation;
 using MediatR;
+
 using REA.Accounting.Application;
 using REA.Accounting.Presentation;
+using REA.Accounting.Server;
 using REA.Accounting.Server.Extensions;
+using REA.Accounting.Application.HumanResources.CreateEmployee;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddMediatR(ApplicationAssembly.Instance);
+builder.Services.AddValidatorsFromAssemblyContaining<CreateEmployeeCommandValidator>();
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(FluentValidationBehavior<,>));
+
 builder.Services.AddCarter();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();

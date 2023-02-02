@@ -1,5 +1,6 @@
 using REA.Accounting.Application.Interfaces.Messaging;
 using REA.Accounting.Core.HumanResources;
+using REA.Accounting.Core.Shared;
 using REA.Accounting.Infrastructure.Persistence.Interfaces;
 using REA.Accounting.SharedKernel.Utilities;
 
@@ -29,7 +30,7 @@ namespace REA.Accounting.Application.HumanResources.GetEmployeeById
                     (
                         employee.Id,
                         employee.PersonType,
-                        (int)employee.NameStyle,
+                        employee.NameStyle == NameStyleEnum.Western ? false : true,
                         employee.Title!,
                         employee.FirstName,
                         employee.LastName,

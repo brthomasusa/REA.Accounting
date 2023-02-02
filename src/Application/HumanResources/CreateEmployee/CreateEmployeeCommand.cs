@@ -7,7 +7,7 @@ namespace REA.Accounting.Application.HumanResources.CreateEmployee
     (
             int EmployeeID,
             string PersonType,
-            int NameStyle,
+            bool NameStyle,
             string? Title,
             string FirstName,
             string LastName,
