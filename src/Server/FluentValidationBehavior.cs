@@ -1,10 +1,11 @@
 using FluentValidation;
 using MediatR;
+using REA.Accounting.Application.Interfaces.Messaging;
 
 namespace REA.Accounting.Server
 {
     public class FluentValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : IRequest<TResponse>
+        where TRequest : ICommand<TResponse>
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
 

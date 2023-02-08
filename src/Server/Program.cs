@@ -4,16 +4,19 @@ using FluentValidation;
 using MediatR;
 
 using REA.Accounting.Application;
+using REA.Accounting.Application.Interfaces.Messaging;
 using REA.Accounting.Presentation;
 using REA.Accounting.Server;
 using REA.Accounting.Server.Extensions;
 using REA.Accounting.Application.HumanResources.CreateEmployee;
+using REA.Accounting.Application.HumanResources.UpdateEmployee;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddMediatR(ApplicationAssembly.Instance);
-builder.Services.AddValidatorsFromAssemblyContaining<CreateEmployeeCommandValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateEmployeeCommandDataValidator>();
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(FluentValidationBehavior<,>));
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(BusinessRulesValidationBehavior<,>));
 
 builder.Services.AddCarter();
 builder.Services.AddControllersWithViews();
@@ -25,6 +28,7 @@ builder.Services.AddInfrastructureServices();
 builder.Services.ConfigureEfCoreDbContext(builder.Configuration);
 builder.Services.ConfigureDapper(builder.Configuration);
 builder.Services.AddRepositoryServices();
+builder.Services.AddPipelineBehaviorServices();
 
 var app = builder.Build();
 

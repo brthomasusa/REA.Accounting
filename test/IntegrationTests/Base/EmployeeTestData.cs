@@ -43,7 +43,7 @@ namespace REA.Accounting.IntegrationTests.Base
                 PhoneNumberType: 2
             );
 
-        public static CreateEmployeeCommand GetInvalidCreateEmployeeCommand()
+        public static CreateEmployeeCommand GetInvalidCreateEmployeeCommand_Under18()
             => new CreateEmployeeCommand
             (
                 EmployeeID: 0,
@@ -81,7 +81,121 @@ namespace REA.Accounting.IntegrationTests.Base
                 PhoneNumberType: 2
             );
 
-        public static UpdateEmployeeCommand GetUpdateEmployeeCommand()
+        public static CreateEmployeeCommand GetInvalidCreateEmployeeCommand_DupeEmployeeName()
+            => new CreateEmployeeCommand
+            (
+                EmployeeID: 0,
+                PersonType: "EM",
+                NameStyle: false,
+                Title: "Ms  .",
+                FirstName: "Laura",
+                LastName: "Norman",
+                MiddleName: "F",
+                Suffix: null,
+                EmailPromotion: 2,
+                NationalID: "13232145",
+                Login: @"adventure-works\johnny0",
+                JobTitle: "The Man",
+                BirthDate: new DateTime(2006, 1, 31),
+                MaritalStatus: "M",
+                Gender: "M",
+                HireDate: new DateTime(2020, 1, 28),
+                Salaried: true,
+                Vacation: 5,
+                SickLeave: 1,
+                Active: true,
+                PayRate: 20.00M,
+                PayFrequency: 1,
+                DepartmentID: 1,
+                ShiftID: 1,
+                AddressType: 2,
+                AddressLine1: "123 street",
+                AddressLine2: "Apt 123",
+                City: "Somewhere",
+                StateCode: 73,
+                PostalCode: "12345",
+                EmailAddress: "johnny@adventure-works.com",
+                PhoneNumber: "555-555-5555",
+                PhoneNumberType: 2
+            );
+
+        public static CreateEmployeeCommand GetInvalidCreateEmployeeCommand_DupeNationalID()
+            => new CreateEmployeeCommand
+            (
+                EmployeeID: 0,
+                PersonType: "EM",
+                NameStyle: false,
+                Title: "Ms  .",
+                FirstName: "Laureen",
+                LastName: "Jones",
+                MiddleName: "F",
+                Suffix: null,
+                EmailPromotion: 2,
+                NationalID: "295847284",
+                Login: @"adventure-works\johnny0",
+                JobTitle: "The Man",
+                BirthDate: new DateTime(2000, 1, 31),
+                MaritalStatus: "M",
+                Gender: "M",
+                HireDate: new DateTime(2020, 1, 28),
+                Salaried: true,
+                Vacation: 5,
+                SickLeave: 1,
+                Active: true,
+                PayRate: 20.00M,
+                PayFrequency: 1,
+                DepartmentID: 1,
+                ShiftID: 1,
+                AddressType: 2,
+                AddressLine1: "123 street",
+                AddressLine2: "Apt 123",
+                City: "Somewhere",
+                StateCode: 73,
+                PostalCode: "12345",
+                EmailAddress: "johnny@adventure-works.com",
+                PhoneNumber: "555-555-5555",
+                PhoneNumberType: 2
+            );
+
+        public static CreateEmployeeCommand GetInvalidCreateEmployeeCommand_DupeEmail()
+            => new CreateEmployeeCommand
+            (
+                EmployeeID: 0,
+                PersonType: "EM",
+                NameStyle: false,
+                Title: "Ms  .",
+                FirstName: "Laureen",
+                LastName: "Jones",
+                MiddleName: "F",
+                Suffix: null,
+                EmailPromotion: 2,
+                NationalID: "295847284",
+                Login: @"adventure-works\johnny0",
+                JobTitle: "The Man",
+                BirthDate: new DateTime(2006, 1, 31),
+                MaritalStatus: "M",
+                Gender: "M",
+                HireDate: new DateTime(2020, 1, 28),
+                Salaried: true,
+                Vacation: 5,
+                SickLeave: 1,
+                Active: true,
+                PayRate: 20.00M,
+                PayFrequency: 1,
+                DepartmentID: 1,
+                ShiftID: 1,
+                AddressType: 2,
+                AddressLine1: "123 street",
+                AddressLine2: "Apt 123",
+                City: "Somewhere",
+                StateCode: 73,
+                PostalCode: "12345",
+                EmailAddress: "jean0@adventure-works.com",
+                PhoneNumber: "555-555-5555",
+                PhoneNumberType: 2
+            );
+
+        public static UpdateEmployeeCommand GetUpdateEmployeeCommand_ValidData()
             => new UpdateEmployeeCommand
             (
                 EmployeeID: 273,

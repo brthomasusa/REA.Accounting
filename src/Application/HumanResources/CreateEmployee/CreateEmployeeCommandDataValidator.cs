@@ -2,9 +2,9 @@ using FluentValidation;
 
 namespace REA.Accounting.Application.HumanResources.CreateEmployee
 {
-    public class CreateEmployeeCommandValidator : AbstractValidator<CreateEmployeeCommand>
+    public class CreateEmployeeCommandDataValidator : AbstractValidator<CreateEmployeeCommand>
     {
-        public CreateEmployeeCommandValidator()
+        public CreateEmployeeCommandDataValidator()
         {
             RuleFor(employee => employee.EmployeeID)
                                         .Equal(0)

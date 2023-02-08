@@ -3,7 +3,7 @@ using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
 
 namespace REA.Accounting.Infrastructure.Persistence.Specifications.HumanResources
 {
-    public class ValidateEmployeeEmailIsUniqueSpec : Specification<PersonDataModel>, ISingleResultSpecification
+    public sealed class ValidateEmployeeEmailIsUniqueSpec : Specification<PersonDataModel>, ISingleResultSpecification
     {
         public ValidateEmployeeEmailIsUniqueSpec(string emailAddress)
             => Query.Include(person => person.EmailAddresses!)

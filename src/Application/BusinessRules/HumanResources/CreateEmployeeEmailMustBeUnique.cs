@@ -5,11 +5,11 @@ using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Application.BusinessRules.HumanResources
 {
-    public class EmployeeNameMustBeUnique : BusinessRule<CreateEmployeeCommand>
+    public sealed class CreateEmployeeEmailMustBeUnique : BusinessRule<CreateEmployeeCommand>
     {
         private readonly IWriteRepositoryManager _repository;
 
-        public EmployeeNameMustBeUnique(IWriteRepositoryManager repo)
+        public CreateEmployeeEmailMustBeUnique(IWriteRepositoryManager repo)
             => _repository = repo;
 
         public override async Task<ValidationResult> Validate(CreateEmployeeCommand employee)
@@ -17,7 +17,7 @@ namespace REA.Accounting.Application.BusinessRules.HumanResources
             ValidationResult validationResult = new();
 
             OperationResult<bool> result =
-                await _repository.EmployeeAggregate.ValidatePersonNameIsUnique(employee.FirstName, employee.LastName, employee.MiddleName!);
+                await _repository.EmployeeAggregate.ValidateEmployeeEmailIsUnique(employee.EmployeeID, employee.EmailAddress);
 
             if (result.Success)
             {
@@ -32,10 +32,7 @@ namespace REA.Accounting.Application.BusinessRules.HumanResources
                 }
                 else
                 {
-                    string msg = $"An employee named {employee.FirstName} {employee.MiddleName!} {employee.LastName} is already in the database.";
-
-
-
+                    string msg = "An employee in the database already has this email address.";
                     validationResult.Messages.Add(msg);
                 }
             }

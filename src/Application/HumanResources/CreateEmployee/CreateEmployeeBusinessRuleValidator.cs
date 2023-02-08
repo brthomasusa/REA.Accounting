@@ -1,12 +1,12 @@
+using REA.Accounting.Application.BusinessRules.HumanResources;
 using REA.Accounting.Application.Interfaces.Messaging;
-using REA.Accounting.Core.HumanResources;
-using REA.Accounting.Core.Shared;
 using REA.Accounting.Infrastructure.Persistence.Interfaces;
+using REA.Accounting.SharedKernel.Base;
 using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Application.HumanResources.CreateEmployee
 {
-    public class CreateEmployeeBusinessRuleValidator : CommandValidator<CreateEmployeeCommand>
+    public sealed class CreateEmployeeBusinessRuleValidator : CommandValidator<CreateEmployeeCommand>
     {
         private IWriteRepositoryManager _repo;
 
@@ -15,7 +15,23 @@ namespace REA.Accounting.Application.HumanResources.CreateEmployee
 
         public override async Task<OperationResult<bool>> Validate(CreateEmployeeCommand command)
         {
-            return OperationResult<bool>.CreateSuccessResult(true);
+            CreateEmployeeNameMustBeUnique verifyNameIsUnique = new(_repo);
+            CreateEmployeeEmailMustBeUnique verifyEmailIsUnique = new(_repo);
+            CreateEmployeeNationalIdNumberMustBeUnique verifyNationalIdIsUnique = new(_repo);
+
+            verifyNameIsUnique.SetNext(verifyEmailIsUnique);
+            verifyEmailIsUnique.SetNext(verifyNationalIdIsUnique);
+
+            ValidationResult result = await verifyNameIsUnique.Validate(command);
+
+            if (result.IsValid)
+            {
+                return OperationResult<bool>.CreateSuccessResult(true);
+            }
+            else
+            {
+                return OperationResult<bool>.CreateFailure(result.Messages[0]);
+            }
         }
     }
 }

@@ -30,7 +30,7 @@ namespace REA.Accounting.IntegrationTests.CommandHandlers
         [Fact]
         public async Task Handle_UpdateEmployeeCommandHandler_ShouldSucceed()
         {
-            UpdateEmployeeCommand command = EmployeeTestData.GetUpdateEmployeeCommand();
+            UpdateEmployeeCommand command = EmployeeTestData.GetUpdateEmployeeCommand_ValidData();
             UpdateEmployeeCommandHandler handler = new(_writeRepository);
 
             OperationResult<bool> result = await handler.Handle(command, new CancellationToken());

@@ -1,14 +1,18 @@
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using REA.Accounting.Application.Interfaces.Messaging;
+using REA.Accounting.SharedKernel.Exceptions;
+using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Server
 {
     public class BusinessRulesValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : IRequest<TResponse>
+        where TRequest : ICommand<TResponse>
     {
+        private CommandValidator<TRequest> _businessRulesValidator;
+
+        public BusinessRulesValidationBehavior(CommandValidator<TRequest> rulesValidator)
+            => _businessRulesValidator = rulesValidator;
+
         public async Task<TResponse> Handle
         (
             TRequest request,
@@ -16,9 +20,14 @@ namespace REA.Accounting.Server
             RequestHandlerDelegate<TResponse> next
         )
         {
-            throw new NotImplementedException();
+            OperationResult<bool> result = await _businessRulesValidator.Validate(request);
 
-            return await next();
+            if (result.Success)
+            {
+                return await next();
+            }
+
+            throw new BusinessRuleValidationException(result.NonSuccessMessage!);
         }
     }
 }
