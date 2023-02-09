@@ -6,7 +6,7 @@ namespace REA.Accounting.SharedKernel.Interfaces
     {
         Task<OperationResult<T>> GetByIdAsync(int id, bool asNoTracking = false);
         Task<OperationResult<int>> InsertAsync(T entity);
-        Task<OperationResult<bool>> Update(T entity);
-        Task<OperationResult<bool>> Delete(T entity);
+        Task<OperationResult<int>> Update(T entity);
+        Task<OperationResult<int>> Delete(T entity);
     }
 }

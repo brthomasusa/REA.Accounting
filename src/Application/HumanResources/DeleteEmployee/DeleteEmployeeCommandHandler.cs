@@ -5,14 +5,14 @@ using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Application.HumanResources.DeleteEmployee
 {
-    public sealed class DeleteEmployeeCommandHandler : ICommandHandler<DeleteEmployeeCommand, OperationResult<bool>>
+    public sealed class DeleteEmployeeCommandHandler : ICommandHandler<DeleteEmployeeCommand, OperationResult<int>>
     {
         private IWriteRepositoryManager _repo;
 
         public DeleteEmployeeCommandHandler(IWriteRepositoryManager repo)
             => _repo = repo;
 
-        public async Task<OperationResult<bool>> Handle(DeleteEmployeeCommand request, CancellationToken cancellationToken)
+        public async Task<OperationResult<int>> Handle(DeleteEmployeeCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -20,20 +20,20 @@ namespace REA.Accounting.Application.HumanResources.DeleteEmployee
 
                 if (getResult.Success)
                 {
-                    OperationResult<bool> deleteDbResult = await _repo.EmployeeAggregate.Delete(getResult.Result);
+                    OperationResult<int> deleteDbResult = await _repo.EmployeeAggregate.Delete(getResult.Result);
                     if (deleteDbResult.Success)
-                        return OperationResult<bool>.CreateSuccessResult(true);
+                        return OperationResult<int>.CreateSuccessResult(0);
 
-                    return OperationResult<bool>.CreateFailure(deleteDbResult.NonSuccessMessage!);
+                    return OperationResult<int>.CreateFailure(deleteDbResult.NonSuccessMessage!);
                 }
                 else
                 {
-                    return OperationResult<bool>.CreateFailure(getResult.NonSuccessMessage!);
+                    return OperationResult<int>.CreateFailure(getResult.NonSuccessMessage!);
                 }
             }
             catch (Exception ex)
             {
-                return OperationResult<bool>.CreateFailure(Helpers.GetExceptionMessage(ex));
+                return OperationResult<int>.CreateFailure(Helpers.GetExceptionMessage(ex));
             }
         }
     }

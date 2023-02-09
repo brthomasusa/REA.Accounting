@@ -49,7 +49,7 @@ namespace REA.Accounting.IntegrationTests.Repositories
 
             Assert.True(updateResult.Success);
 
-            OperationResult<bool> saveResult = await _writeRepository.EmployeeAggregate.Update(updateResult.Result);
+            OperationResult<int> saveResult = await _writeRepository.EmployeeAggregate.Update(updateResult.Result);
 
             Assert.True(saveResult.Success);
 
@@ -64,7 +64,7 @@ namespace REA.Accounting.IntegrationTests.Repositories
 
             Assert.True(getResult.Success);
 
-            OperationResult<bool> deleteResult = await _writeRepository.EmployeeAggregate.Delete(getResult.Result);
+            OperationResult<int> deleteResult = await _writeRepository.EmployeeAggregate.Delete(getResult.Result);
 
             Assert.True(deleteResult.Success);
 

@@ -6,14 +6,14 @@ using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Application.HumanResources.UpdateEmployee
 {
-    public sealed class UpdateEmployeeCommandHandler : ICommandHandler<UpdateEmployeeCommand, OperationResult<bool>>
+    public sealed class UpdateEmployeeCommandHandler : ICommandHandler<UpdateEmployeeCommand, OperationResult<int>>
     {
         private IWriteRepositoryManager _repo;
 
         public UpdateEmployeeCommandHandler(IWriteRepositoryManager repo)
             => _repo = repo;
 
-        public async Task<OperationResult<bool>> Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken)
+        public async Task<OperationResult<int>> Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -46,30 +46,30 @@ namespace REA.Accounting.Application.HumanResources.UpdateEmployee
 
                     if (updateDomainObjResult.Success)
                     {
-                        OperationResult<bool> updateDbResult = await _repo.EmployeeAggregate.Update(updateDomainObjResult.Result);
+                        OperationResult<int> updateDbResult = await _repo.EmployeeAggregate.Update(updateDomainObjResult.Result);
 
                         if (updateDbResult.Success)
                         {
-                            return OperationResult<bool>.CreateSuccessResult(true);
+                            return OperationResult<int>.CreateSuccessResult(0);
                         }
                         else
                         {
-                            return OperationResult<bool>.CreateFailure(updateDbResult.NonSuccessMessage!);
+                            return OperationResult<int>.CreateFailure(updateDbResult.NonSuccessMessage!);
                         }
                     }
                     else
                     {
-                        return OperationResult<bool>.CreateFailure(updateDomainObjResult.NonSuccessMessage!);
+                        return OperationResult<int>.CreateFailure(updateDomainObjResult.NonSuccessMessage!);
                     }
                 }
                 else
                 {
-                    return OperationResult<bool>.CreateFailure(getResult.NonSuccessMessage!);
+                    return OperationResult<int>.CreateFailure(getResult.NonSuccessMessage!);
                 }
             }
             catch (Exception ex)
             {
-                return OperationResult<bool>.CreateFailure(Helpers.GetExceptionMessage(ex));
+                return OperationResult<int>.CreateFailure(Helpers.GetExceptionMessage(ex));
             }
         }
     }

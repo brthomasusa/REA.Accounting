@@ -33,7 +33,7 @@ namespace REA.Accounting.IntegrationTests.CommandHandlers
             UpdateEmployeeCommand command = EmployeeTestData.GetUpdateEmployeeCommand_ValidData();
             UpdateEmployeeCommandHandler handler = new(_writeRepository);
 
-            OperationResult<bool> result = await handler.Handle(command, new CancellationToken());
+            OperationResult<int> result = await handler.Handle(command, new CancellationToken());
 
             Assert.True(result.Success);
         }
@@ -44,7 +44,7 @@ namespace REA.Accounting.IntegrationTests.CommandHandlers
             DeleteEmployeeCommand command = new DeleteEmployeeCommand(EmployeeID: 273);
             DeleteEmployeeCommandHandler handler = new(_writeRepository);
 
-            OperationResult<bool> result = await handler.Handle(command, new CancellationToken());
+            OperationResult<int> result = await handler.Handle(command, new CancellationToken());
 
             Assert.True(result.Success);
         }

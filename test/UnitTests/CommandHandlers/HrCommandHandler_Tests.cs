@@ -45,7 +45,7 @@ namespace REA.Accounting.UnitTests.CommandHandlers
             UpdateEmployeeCommand command = GetUpdateEmployeeCommand();
             UpdateEmployeeCommandHandler handler = new(_writeRepository);
 
-            OperationResult<bool> result = await handler.Handle(command, new CancellationToken());
+            OperationResult<int> result = await handler.Handle(command, new CancellationToken());
 
             Assert.True(result.Success);
         }
@@ -56,7 +56,7 @@ namespace REA.Accounting.UnitTests.CommandHandlers
             DeleteEmployeeCommand command = new DeleteEmployeeCommand(EmployeeID: 273);
             DeleteEmployeeCommandHandler handler = new(_writeRepository);
 
-            OperationResult<bool> result = await handler.Handle(command, new CancellationToken());
+            OperationResult<int> result = await handler.Handle(command, new CancellationToken());
 
             Assert.True(result.Success);
         }

@@ -38,7 +38,7 @@ namespace REA.Accounting.Presentation.HumanResources
 
             app.MapPut("api/employees/update", async (UpdateEmployeeCommand cmd, ISender sender) =>
             {
-                OperationResult<bool> putResult = await sender.Send(cmd);
+                OperationResult<int> putResult = await sender.Send(cmd);
 
                 if (putResult.Success)
                     return Results.Ok();
@@ -48,7 +48,7 @@ namespace REA.Accounting.Presentation.HumanResources
 
             app.MapDelete("api/employees/delete", async ([FromBody] DeleteEmployeeCommand cmd, ISender sender) =>
             {
-                OperationResult<bool> deleteResult = await sender.Send(cmd);
+                OperationResult<int> deleteResult = await sender.Send(cmd);
                 if (deleteResult.Success)
                     return Results.Ok();
 

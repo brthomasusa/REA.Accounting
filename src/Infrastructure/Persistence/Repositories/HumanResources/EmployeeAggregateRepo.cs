@@ -260,7 +260,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
             }
         }
 
-        public async Task<OperationResult<bool>> Update(DomainModelEmployee entity)
+        public async Task<OperationResult<int>> Update(DomainModelEmployee entity)
         {
             try
             {
@@ -298,20 +298,20 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
 
                     await _unitOfWork.CommitAsync();
 
-                    return OperationResult<bool>.CreateSuccessResult(true);
+                    return OperationResult<int>.CreateSuccessResult(0);
                 }
                 else
                 {
-                    return OperationResult<bool>.CreateFailure("Failed to retrieve employee for editing.");
+                    return OperationResult<int>.CreateFailure("Failed to retrieve employee for editing.");
                 }
             }
             catch (Exception ex)
             {
-                return OperationResult<bool>.CreateFailure(Helpers.GetExceptionMessage(ex));
+                return OperationResult<int>.CreateFailure(Helpers.GetExceptionMessage(ex));
             }
         }
 
-        public async Task<OperationResult<bool>> Delete(DomainModelEmployee entity)
+        public async Task<OperationResult<int>> Delete(DomainModelEmployee entity)
         {
             try
             {
@@ -333,16 +333,16 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
                     _context.BusinessEntity!.Remove(businessEntity);
 
                     await _unitOfWork.CommitAsync();
-                    return OperationResult<bool>.CreateSuccessResult(true);
+                    return OperationResult<int>.CreateSuccessResult(0);
                 }
                 else
                 {
-                    return OperationResult<bool>.CreateFailure("Errors occurred while retrieving employee to be deleted.");
+                    return OperationResult<int>.CreateFailure("Errors occurred while retrieving employee to be deleted.");
                 }
             }
             catch (Exception ex)
             {
-                return OperationResult<bool>.CreateFailure(Helpers.GetExceptionMessage(ex));
+                return OperationResult<int>.CreateFailure(Helpers.GetExceptionMessage(ex));
             }
         }
 
