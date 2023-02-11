@@ -1,61 +1,78 @@
-using Microsoft.AspNetCore.ResponseCompression;
 using Carter;
 using FluentValidation;
 using MediatR;
+using NLog;
+using NLog.Web;
 
 using REA.Accounting.Application;
-using REA.Accounting.Application.Interfaces.Messaging;
-using REA.Accounting.Presentation;
-using REA.Accounting.Server;
+using REA.Accounting.Server.Behaviors;
 using REA.Accounting.Server.Extensions;
 using REA.Accounting.Application.HumanResources.CreateEmployee;
-using REA.Accounting.Application.HumanResources.UpdateEmployee;
 
-var builder = WebApplication.CreateBuilder(args);
+var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+GlobalDiagnosticsContext.Set("logDirectory", Directory.GetCurrentDirectory());
 
-builder.Services.AddMediatR(ApplicationAssembly.Instance);
-builder.Services.AddValidatorsFromAssemblyContaining<CreateEmployeeCommandDataValidator>();
-builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(FluentValidationBehavior<,>));
-builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(BusinessRulesValidationBehavior<,>));
+logger.Debug("init main");
 
-builder.Services.AddCarter();
-builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages();
-
-// Add services from namespace Server.Extensions to the container.
-builder.Services.ConfigureCors();
-builder.Services.AddInfrastructureServices();
-builder.Services.ConfigureEfCoreDbContext(builder.Configuration);
-builder.Services.ConfigureDapper(builder.Configuration);
-builder.Services.AddRepositoryServices();
-builder.Services.AddPipelineBehaviorServices();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+try
 {
-    app.UseWebAssemblyDebugging();
+    var builder = WebApplication.CreateBuilder(args);
+
+    builder.Services.AddMediatR(ApplicationAssembly.Instance);
+    builder.Services.AddValidatorsFromAssemblyContaining<CreateEmployeeCommandDataValidator>();
+    builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(FluentValidationBehavior<,>));
+    builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(BusinessRulesValidationBehavior<,>));
+
+    builder.Services.AddCarter();
+    builder.Services.AddControllersWithViews();
+    builder.Services.AddRazorPages();
+
+    // Add services from namespace Server.Extensions to the container.
+    builder.Services.ConfigureCors();
+    builder.Services.AddInfrastructureServices();
+    builder.Services.ConfigureEfCoreDbContext(builder.Configuration);
+    builder.Services.ConfigureDapper(builder.Configuration);
+    builder.Services.AddRepositoryServices();
+    builder.Services.AddPipelineBehaviorServices();
+
+    var app = builder.Build();
+
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseWebAssemblyDebugging();
+    }
+    else
+    {
+        app.UseExceptionHandler("/Error");
+        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+        app.UseHsts();
+    }
+
+    app.UseHttpsRedirection();
+
+    app.UseBlazorFrameworkFiles();
+    app.UseStaticFiles();
+
+    app.UseRouting();
+
+    app.MapRazorPages();
+    app.MapControllers();
+    app.MapFallbackToFile("index.html");
+    app.MapCarter();
+
+    app.Run();
 }
-else
+catch (Exception exception)
 {
-    app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    logger.Error(exception, "Stopped program because of exception");
+    throw;
+}
+finally
+{
+    // Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)
+    NLog.LogManager.Shutdown();
 }
 
-app.UseHttpsRedirection();
-
-app.UseBlazorFrameworkFiles();
-app.UseStaticFiles();
-
-app.UseRouting();
-
-app.MapRazorPages();
-app.MapControllers();
-app.MapFallbackToFile("index.html");
-app.MapCarter();
-
-app.Run();
 
 public partial class Program { }

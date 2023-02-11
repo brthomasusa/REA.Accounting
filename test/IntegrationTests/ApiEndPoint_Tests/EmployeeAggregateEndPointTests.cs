@@ -77,13 +77,8 @@ namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
                 request.Content = requestContent;
                 requestContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-                using (var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead))
-                {
-                    response.EnsureSuccessStatusCode();
-
-                    var jsonResponse = await response.Content.ReadAsStreamAsync();
-                    var employeeResponse = await JsonSerializer.DeserializeAsync<GetEmployeeByIdResponse>(jsonResponse, _options);
-                }
+                using var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
+                Assert.False(response.IsSuccessStatusCode);
             }
         }
 
@@ -105,13 +100,8 @@ namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
                 request.Content = requestContent;
                 requestContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-                using (var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead))
-                {
-                    response.EnsureSuccessStatusCode();
-
-                    var jsonResponse = await response.Content.ReadAsStreamAsync();
-                    var employeeResponse = await JsonSerializer.DeserializeAsync<GetEmployeeByIdResponse>(jsonResponse, _options);
-                }
+                using var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
+                Assert.False(response.IsSuccessStatusCode);
             }
         }
 
@@ -183,10 +173,8 @@ namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
                 request.Content = requestContent;
                 requestContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-                using (var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead))
-                {
-                    response.EnsureSuccessStatusCode();
-                }
+                using var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
+                Assert.False(response.IsSuccessStatusCode);
             }
         }
     }

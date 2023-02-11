@@ -6,7 +6,7 @@ using System.Text;
 using REA.Accounting.Application.Interfaces.Messaging;
 using REA.Accounting.SharedKernel.Utilities;
 
-namespace REA.Accounting.Server
+namespace REA.Accounting.Server.Behaviors
 {
     public class FluentValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : ICommand<TResponse> where TResponse : class

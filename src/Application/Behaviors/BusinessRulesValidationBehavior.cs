@@ -5,7 +5,7 @@ using REA.Accounting.Application.Interfaces.Messaging;
 using REA.Accounting.SharedKernel.Exceptions;
 using REA.Accounting.SharedKernel.Utilities;
 
-namespace REA.Accounting.Server
+namespace REA.Accounting.Server.Behaviors
 {
     public class BusinessRulesValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : ICommand<TResponse> where TResponse : class
