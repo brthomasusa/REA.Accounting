@@ -1,3 +1,4 @@
+using MediatR;
 using REA.Accounting.Application.Interfaces.Messaging;
 using REA.Accounting.Core.HumanResources;
 using REA.Accounting.Core.Shared;
@@ -6,14 +7,15 @@ using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Application.HumanResources.UpdateEmployee
 {
-    public sealed class UpdateEmployeeCommandHandler : ICommandHandler<UpdateEmployeeCommand, OperationResult<int>>
+    public sealed class UpdateEmployeeCommandHandler : ICommandHandler<UpdateEmployeeCommand, int>
     {
+        private const int RETURN_VALUE = 0;
         private IWriteRepositoryManager _repo;
 
         public UpdateEmployeeCommandHandler(IWriteRepositoryManager repo)
             => _repo = repo;
 
-        public async Task<OperationResult<int>> Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -50,26 +52,26 @@ namespace REA.Accounting.Application.HumanResources.UpdateEmployee
 
                         if (updateDbResult.Success)
                         {
-                            return OperationResult<int>.CreateSuccessResult(0);
+                            return RETURN_VALUE;
                         }
                         else
                         {
-                            return OperationResult<int>.CreateFailure(updateDbResult.NonSuccessMessage!);
+                            return Result<int>.Failure<int>(new Error("UpdateEmployeeCommandHandler.Handle", updateDbResult.NonSuccessMessage!));
                         }
                     }
                     else
                     {
-                        return OperationResult<int>.CreateFailure(updateDomainObjResult.NonSuccessMessage!);
+                        return Result<int>.Failure<int>(new Error("UpdateEmployeeCommandHandler.Handle", updateDomainObjResult.NonSuccessMessage!));
                     }
                 }
                 else
                 {
-                    return OperationResult<int>.CreateFailure(getResult.NonSuccessMessage!);
+                    return Result<int>.Failure<int>(new Error("UpdateEmployeeCommandHandler.Handle", getResult.NonSuccessMessage!));
                 }
             }
             catch (Exception ex)
             {
-                return OperationResult<int>.CreateFailure(Helpers.GetExceptionMessage(ex));
+                return Result<int>.Failure<int>(new Error("UpdateEmployeeCommandHandler.Handle", Helpers.GetExceptionMessage(ex)));
             }
         }
     }

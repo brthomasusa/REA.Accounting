@@ -1,5 +1,4 @@
 using REA.Accounting.Application.Interfaces.Messaging;
-using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Application.HumanResources.CreateEmployee
 {
@@ -38,6 +37,5 @@ namespace REA.Accounting.Application.HumanResources.CreateEmployee
             string EmailAddress,
             string PhoneNumber,
             int PhoneNumberType
-    ) : ICommand<OperationResult<int>>;
-
+    ) : ICommand<int>;
 }

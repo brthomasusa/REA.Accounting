@@ -142,10 +142,17 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
                         new PersonByIDWithEmployeeOnlySpec(empployeeID)
                     ).FirstOrDefaultAsync(cancellationToken);
 
-                // Create employee domain object from person data model
-                DomainModelEmployee employee = CreateDomainEmployee(ref person!);
-
-                return OperationResult<DomainModelEmployee>.CreateSuccessResult(employee);
+                if (person is not null)
+                {
+                    // Create employee domain object from person data model
+                    DomainModelEmployee employee = CreateDomainEmployee(ref person!);
+                    return OperationResult<DomainModelEmployee>.CreateSuccessResult(employee);
+                }
+                else
+                {
+                    string errMsg = $"An employee with ID: {empployeeID} could not be found.";
+                    return OperationResult<DomainModelEmployee>.CreateFailure(errMsg);
+                }
             }
             catch (Exception ex)
             {

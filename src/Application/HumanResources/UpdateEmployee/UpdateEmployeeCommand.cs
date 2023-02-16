@@ -1,5 +1,5 @@
+using MediatR;
 using REA.Accounting.Application.Interfaces.Messaging;
-using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Application.HumanResources.UpdateEmployee
 {
@@ -25,6 +25,6 @@ namespace REA.Accounting.Application.HumanResources.UpdateEmployee
             int Vacation,
             int SickLeave,
             bool Active
-    ) : ICommand<OperationResult<int>>;
+    ) : ICommand<int>;
 
 }

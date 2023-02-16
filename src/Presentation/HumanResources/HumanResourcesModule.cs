@@ -19,40 +19,42 @@ namespace REA.Accounting.Presentation.HumanResources
         {
             app.MapGet("api/employees/{id}", async (int id, ISender sender) =>
             {
-                OperationResult<GetEmployeeByIdResponse> getResult = await sender.Send(new GetEmployeeByIdQuery(EmployeeID: id));
-                if (getResult.Success)
-                    return Results.Ok(getResult.Result);
+                Result<GetEmployeeByIdResponse> result = await sender.Send(new GetEmployeeByIdQuery(EmployeeID: id));
 
-                return Results.Problem(getResult.NonSuccessMessage!);
+                if (result.IsSuccess)
+                    return Results.Ok(result.Value);
+
+                return Results.Problem(result.Error);
             });
 
             app.MapPost("api/employees/create", async (CreateEmployeeCommand cmd, ISender sender) =>
             {
-                OperationResult<int> postResult = await sender.Send(cmd);
+                Result<int> result = await sender.Send(cmd);
 
-                if (postResult.Success)
-                    return Results.Created($"api/employees/{postResult.Result}", cmd);
+                if (result.IsSuccess)
+                    return Results.Created($"api/employees/{result.Value}", cmd);
 
-                return Results.Problem(postResult.NonSuccessMessage!);
+                return Results.Problem(result.Error);
             });
 
             app.MapPut("api/employees/update", async (UpdateEmployeeCommand cmd, ISender sender) =>
             {
-                OperationResult<int> putResult = await sender.Send(cmd);
+                Result<int> result = await sender.Send(cmd);
 
-                if (putResult.Success)
+                if (result.IsSuccess)
                     return Results.Ok();
 
-                return Results.Problem(putResult.NonSuccessMessage!);
+                return Results.Problem(result.Error);
             });
 
             app.MapDelete("api/employees/delete", async ([FromBody] DeleteEmployeeCommand cmd, ISender sender) =>
             {
-                OperationResult<int> deleteResult = await sender.Send(cmd);
-                if (deleteResult.Success)
+                Result<int> result = await sender.Send(cmd);
+
+                if (result.IsSuccess)
                     return Results.Ok();
 
-                return Results.Problem(deleteResult.NonSuccessMessage!);
+                return Results.Problem(result.Error);
             });
         }
     }

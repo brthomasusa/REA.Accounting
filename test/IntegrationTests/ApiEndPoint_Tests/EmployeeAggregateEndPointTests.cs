@@ -32,6 +32,16 @@ namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
         }
 
         [Fact]
+        public async Task Employee_GetEmployeeByIdQuery_InvalidEmployeeID_ShouldFail()
+        {
+            int employeeId = 100000;
+            using var response = await _client.GetAsync($"{_urlRoot}employees/{employeeId}",
+                                                        HttpCompletionOption.ResponseHeadersRead);
+
+            Assert.False(response.IsSuccessStatusCode);
+        }
+
+        [Fact]
         public async Task Employee_CreateEmployeeInfo_ValidData_ShouldSucceed()
         {
             string uri = $"{_urlRoot}employees/create";

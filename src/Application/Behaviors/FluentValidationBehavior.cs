@@ -3,13 +3,13 @@
 using FluentValidation;
 using MediatR;
 using System.Text;
-using REA.Accounting.Application.Interfaces.Messaging;
 using REA.Accounting.SharedKernel.Utilities;
 
-namespace REA.Accounting.Server.Behaviors
+namespace REA.Accounting.Application.Behaviors
 {
     public class FluentValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : ICommand<TResponse> where TResponse : class
+        where TRequest : IRequest<TResponse>
+        where TResponse : Result
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
 
@@ -36,7 +36,7 @@ namespace REA.Accounting.Server.Behaviors
                     StringBuilder sb = new();
                     failures.ToList().ForEach(err => sb.AppendLine(err.ErrorMessage));
 
-                    return OperationResult<int>.CreateFailure(sb.ToString()) as TResponse;
+                    return (Result<int>.Failure<int>(new Error("FluentValidationBehavior.Handle", sb.ToString()))) as TResponse;
                 }
             }
 

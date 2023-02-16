@@ -6,14 +6,14 @@ using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Application.HumanResources.CreateEmployee
 {
-    public sealed class CreateEmployeeCommandHandler : ICommandHandler<CreateEmployeeCommand, OperationResult<int>>
+    public sealed class CreateEmployeeCommandHandler : ICommandHandler<CreateEmployeeCommand, int>
     {
         private IWriteRepositoryManager _repo;
 
         public CreateEmployeeCommandHandler(IWriteRepositoryManager repo)
             => _repo = repo;
 
-        public async Task<OperationResult<int>> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
         {
             Employee employee = Employee.Create
             (
@@ -46,7 +46,7 @@ namespace REA.Accounting.Application.HumanResources.CreateEmployee
                 null
             );
             if (!deptResult.Success)
-                return OperationResult<int>.CreateFailure(deptResult.NonSuccessMessage!);
+                return Result<int>.Failure<int>(new Error("CreateEmployeeCommandHandler.Handle", deptResult.NonSuccessMessage!));
 
             OperationResult<PayHistory> payResult = employee.AddPayHistory
             (
@@ -56,7 +56,7 @@ namespace REA.Accounting.Application.HumanResources.CreateEmployee
                 (PayFrequencyEnum)request.PayFrequency
             );
             if (!payResult.Success)
-                return OperationResult<int>.CreateFailure(payResult.NonSuccessMessage!);
+                return Result<int>.Failure<int>(new Error("CreateEmployeeCommandHandler.Handle", payResult.NonSuccessMessage!));
 
             OperationResult<Address> addrResult = employee.AddAddress
             (
@@ -70,7 +70,7 @@ namespace REA.Accounting.Application.HumanResources.CreateEmployee
                 request.PersonType
             );
             if (!addrResult.Success)
-                return OperationResult<int>.CreateFailure(addrResult.NonSuccessMessage!);
+                return Result<int>.Failure<int>(new Error("CreateEmployeeCommandHandler.Handle", addrResult.NonSuccessMessage!));
 
             OperationResult<PersonEmailAddress> emailResult = employee.AddEmailAddress
             (
@@ -79,7 +79,7 @@ namespace REA.Accounting.Application.HumanResources.CreateEmployee
                 request.EmailAddress
             );
             if (!emailResult.Success)
-                return OperationResult<int>.CreateFailure(emailResult.NonSuccessMessage!);
+                return Result<int>.Failure<int>(new Error("CreateEmployeeCommandHandler.Handle", emailResult.NonSuccessMessage!));
 
             OperationResult<PersonPhone> phoneResult = employee.AddPhoneNumbers
             (
@@ -88,16 +88,16 @@ namespace REA.Accounting.Application.HumanResources.CreateEmployee
                 request.PhoneNumber
             );
             if (!phoneResult.Success)
-                return OperationResult<int>.CreateFailure(phoneResult.NonSuccessMessage!);
+                return Result<int>.Failure<int>(new Error("CreateEmployeeCommandHandler.Handle", phoneResult.NonSuccessMessage!));
 
             OperationResult<int> insertDbResult = await _repo.EmployeeAggregate.InsertAsync(employee);
             if (insertDbResult.Success)
             {
-                return OperationResult<int>.CreateSuccessResult(insertDbResult.Result);
+                return insertDbResult.Result;
             }
             else
             {
-                return OperationResult<int>.CreateFailure(insertDbResult.NonSuccessMessage!);
+                return Result<int>.Failure<int>(new Error("CreateEmployeeCommandHandler.Handle", insertDbResult.NonSuccessMessage!));
             }
         }
     }

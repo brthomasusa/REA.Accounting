@@ -6,14 +6,14 @@ using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Application.HumanResources.GetEmployeeById
 {
-    public class GetEmployeeByIdQueryHandler : IQueryHandler<GetEmployeeByIdQuery, OperationResult<GetEmployeeByIdResponse>>
+    public class GetEmployeeByIdQueryHandler : IQueryHandler<GetEmployeeByIdQuery, GetEmployeeByIdResponse>
     {
         private IWriteRepositoryManager _repo;
 
         public GetEmployeeByIdQueryHandler(IWriteRepositoryManager repo)
             => _repo = repo;
 
-        public async Task<OperationResult<GetEmployeeByIdResponse>> Handle
+        public async Task<Result<GetEmployeeByIdResponse>> Handle
         (
             GetEmployeeByIdQuery request,
             CancellationToken cancellationToken
@@ -49,16 +49,16 @@ namespace REA.Accounting.Application.HumanResources.GetEmployeeById
                         employee.IsActive
                     );
 
-                    return OperationResult<GetEmployeeByIdResponse>.CreateSuccessResult(response);
+                    return response;
                 }
                 else
                 {
-                    return OperationResult<GetEmployeeByIdResponse>.CreateFailure(result.NonSuccessMessage!);
+                    return Result<GetEmployeeByIdResponse>.Failure<GetEmployeeByIdResponse>(new Error("GetEmployeeByIdQueryHandler.Handle", result.NonSuccessMessage!));
                 }
             }
             catch (Exception ex)
             {
-                return OperationResult<GetEmployeeByIdResponse>.CreateFailure(Helpers.GetExceptionMessage(ex));
+                return Result<GetEmployeeByIdResponse>.Failure<GetEmployeeByIdResponse>(new Error("GetEmployeeByIdQueryHandler.Handle", Helpers.GetExceptionMessage(ex)));
             }
         }
     }

@@ -1,3 +1,4 @@
+using MediatR;
 using REA.Accounting.Application.Interfaces.Messaging;
 using REA.Accounting.Core.HumanResources;
 using REA.Accounting.Infrastructure.Persistence.Interfaces;
@@ -5,14 +6,15 @@ using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Application.HumanResources.DeleteEmployee
 {
-    public sealed class DeleteEmployeeCommandHandler : ICommandHandler<DeleteEmployeeCommand, OperationResult<int>>
+    public sealed class DeleteEmployeeCommandHandler : ICommandHandler<DeleteEmployeeCommand, int>
     {
+        private const int RETURN_VALUE = 0;
         private IWriteRepositoryManager _repo;
 
         public DeleteEmployeeCommandHandler(IWriteRepositoryManager repo)
             => _repo = repo;
 
-        public async Task<OperationResult<int>> Handle(DeleteEmployeeCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(DeleteEmployeeCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -22,18 +24,18 @@ namespace REA.Accounting.Application.HumanResources.DeleteEmployee
                 {
                     OperationResult<int> deleteDbResult = await _repo.EmployeeAggregate.Delete(getResult.Result);
                     if (deleteDbResult.Success)
-                        return OperationResult<int>.CreateSuccessResult(0);
+                        return RETURN_VALUE;
 
-                    return OperationResult<int>.CreateFailure(deleteDbResult.NonSuccessMessage!);
+                    return Result<int>.Failure<int>(new Error("DeleteEmployeeCommandHandler.Handle", deleteDbResult.NonSuccessMessage!));
                 }
                 else
                 {
-                    return OperationResult<int>.CreateFailure(getResult.NonSuccessMessage!);
+                    return Result<int>.Failure<int>(new Error("DeleteEmployeeCommandHandler.Handle", getResult.NonSuccessMessage!));
                 }
             }
             catch (Exception ex)
             {
-                return OperationResult<int>.CreateFailure(Helpers.GetExceptionMessage(ex));
+                return Result<int>.Failure<int>(new Error("DeleteEmployeeCommandHandler.Handle", Helpers.GetExceptionMessage(ex)));
             }
         }
     }

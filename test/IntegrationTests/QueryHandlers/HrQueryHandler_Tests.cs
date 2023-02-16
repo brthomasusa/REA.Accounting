@@ -19,9 +19,9 @@ namespace REA.Accounting.IntegrationTests.QueryHandlers
             GetEmployeeByIdQuery query = new(EmployeeID: 2);
             GetEmployeeByIdQueryHandler handler = new(_writeRepository);
 
-            OperationResult<GetEmployeeByIdResponse> response = await handler.Handle(query, new CancellationToken());
+            Result<GetEmployeeByIdResponse> response = await handler.Handle(query, new CancellationToken());
 
-            Assert.True(response.Success);
+            Assert.True(response.IsSuccess);
         }
 
 

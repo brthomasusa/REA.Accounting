@@ -33,10 +33,10 @@ namespace REA.Accounting.UnitTests.CommandHandlers
             CreateEmployeeCommand command = GetCreateEmployeeCommand();
             CreateEmployeeCommandHandler handler = new(_writeRepository);
 
-            OperationResult<int> result = await handler.Handle(command, new CancellationToken());
+            Result<int> result = await handler.Handle(command, new CancellationToken());
 
-            Assert.True(result.Success);
-            Assert.True(result.Result > 0);
+            Assert.True(result.IsSuccess);
+            Assert.True(result.Value > 0);
         }
 
         [Fact]
@@ -45,9 +45,9 @@ namespace REA.Accounting.UnitTests.CommandHandlers
             UpdateEmployeeCommand command = GetUpdateEmployeeCommand();
             UpdateEmployeeCommandHandler handler = new(_writeRepository);
 
-            OperationResult<int> result = await handler.Handle(command, new CancellationToken());
+            Result<int> result = await handler.Handle(command, new CancellationToken());
 
-            Assert.True(result.Success);
+            Assert.True(result.IsSuccess);
         }
 
         [Fact]
@@ -56,9 +56,9 @@ namespace REA.Accounting.UnitTests.CommandHandlers
             DeleteEmployeeCommand command = new DeleteEmployeeCommand(EmployeeID: 273);
             DeleteEmployeeCommandHandler handler = new(_writeRepository);
 
-            OperationResult<int> result = await handler.Handle(command, new CancellationToken());
+            Result<int> result = await handler.Handle(command, new CancellationToken());
 
-            Assert.True(result.Success);
+            Assert.True(result.IsSuccess);
         }
 
 

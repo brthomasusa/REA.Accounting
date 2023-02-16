@@ -1,7 +1,8 @@
 ﻿using MediatR;
+using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Application.Interfaces.Messaging;
 
-public interface IQuery<out TResponse> : IRequest<TResponse>
+public interface IQuery<TResponse> : IRequest<Result<TResponse>>
 {
 }

@@ -2,13 +2,13 @@
 
 using MediatR;
 using REA.Accounting.Application.Interfaces.Messaging;
-using REA.Accounting.SharedKernel.Exceptions;
 using REA.Accounting.SharedKernel.Utilities;
 
-namespace REA.Accounting.Server.Behaviors
+namespace REA.Accounting.Application.Behaviors
 {
     public class BusinessRulesValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : ICommand<TResponse> where TResponse : class
+        where TRequest : IRequest<TResponse>, ICommand
+        where TResponse : Result
     {
         private CommandValidator<TRequest> _businessRulesValidator;
 
@@ -22,14 +22,24 @@ namespace REA.Accounting.Server.Behaviors
             RequestHandlerDelegate<TResponse> next
         )
         {
-            OperationResult<bool> result = await _businessRulesValidator.Validate(request);
+            var isCommand = typeof(TRequest).GetInterfaces()
+                                            .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICommand<>));
 
-            if (result.Success)
+            if (isCommand)
             {
-                return await next();
+                OperationResult<bool> result = await _businessRulesValidator.Validate(request);
+
+                if (result.Success)
+                {
+                    return await next();
+                }
+                else
+                {
+                    return (Result<int>.Failure<int>(new Error("BusinessRulesValidationBehavior.Handle", result.NonSuccessMessage!))) as TResponse;
+                }
             }
 
-            return OperationResult<int>.CreateFailure(result.NonSuccessMessage!) as TResponse;
+            return await next();
         }
     }
 }
