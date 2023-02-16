@@ -7,6 +7,7 @@ using NLog.Web;
 using REA.Accounting.Application;
 using REA.Accounting.Application.Behaviors;
 using REA.Accounting.Server.Extensions;
+using REA.Accounting.Server.Middleware;
 using REA.Accounting.Application.HumanResources.CreateEmployee;
 
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
@@ -35,6 +36,7 @@ try
     builder.Services.ConfigureEfCoreDbContext(builder.Configuration);
     builder.Services.ConfigureDapper(builder.Configuration);
     builder.Services.AddRepositoryServices();
+    builder.Services.AddTransient<GlobalExceptionHandlingMiddleware>();
 
     var app = builder.Build();
 
@@ -51,7 +53,7 @@ try
     }
 
     app.UseHttpsRedirection();
-
+    app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
     app.UseBlazorFrameworkFiles();
     app.UseStaticFiles();
 
