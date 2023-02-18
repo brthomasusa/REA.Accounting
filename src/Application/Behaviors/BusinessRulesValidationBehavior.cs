@@ -10,7 +10,7 @@ namespace REA.Accounting.Application.Behaviors
         where TRequest : ICommand<int>, IRequest<TResponse>
         where TResponse : Result
     {
-        private CommandValidator<TRequest> _businessRulesValidator;
+        private readonly CommandValidator<TRequest> _businessRulesValidator;
 
         public BusinessRulesValidationBehavior(CommandValidator<TRequest> rulesValidator)
             => _businessRulesValidator = rulesValidator;

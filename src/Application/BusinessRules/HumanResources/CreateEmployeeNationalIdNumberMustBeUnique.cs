@@ -32,7 +32,7 @@ namespace REA.Accounting.Application.BusinessRules.HumanResources
                 }
                 else
                 {
-                    string msg = "Another employee in the database already has this natioanal ID.";
+                    const string msg = "Another employee in the database already has this natioanal ID.";
                     validationResult.Messages.Add(msg);
                 }
             }

@@ -4,12 +4,6 @@ namespace REA.Accounting.SharedKernel.CommonValueObjects
 {
     public class Address : ValueObject
     {
-        private static readonly string[] _stateCodes = { "AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "GA", "HI", "IA",
-                                                         "ID", "IL", "IN", "KS", "KY", "LA", "MA", "ME", "MD", "MI", "MN", "MO",
-                                                         "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK",
-                                                         "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WI",
-                                                         "WV", "WY" };
-
         public string? AddressLine1 { get; }
         public string? AddressLine2 { get; }
         public string? City { get; }

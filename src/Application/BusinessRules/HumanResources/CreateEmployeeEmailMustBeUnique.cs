@@ -32,7 +32,7 @@ namespace REA.Accounting.Application.BusinessRules.HumanResources
                 }
                 else
                 {
-                    string msg = "An employee in the database already has this email address.";
+                    const string msg = "An employee in the database already has this email address.";
                     validationResult.Messages.Add(msg);
                 }
             }

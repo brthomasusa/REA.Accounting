@@ -11,7 +11,7 @@ namespace REA.Accounting.Application.Behaviors
         where TRequest : IRequest<TResponse>
         where TResponse : Result
     {
-        private ILogger<LoggingBehavior<TRequest, TResponse>> _logger;
+        private readonly ILogger<LoggingBehavior<TRequest, TResponse>> _logger;
 
         public LoggingBehavior(ILogger<LoggingBehavior<TRequest, TResponse>> logger)
             => _logger = logger;
@@ -27,8 +27,6 @@ namespace REA.Accounting.Application.Behaviors
                 "Starting request {@RequestName}, {@DateTimeUtc}",
                 typeof(TRequest).Name,
                 DateTime.UtcNow);
-
-
 
             var result = await next();
             if (result.IsFailure)

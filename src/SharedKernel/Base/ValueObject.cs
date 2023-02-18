@@ -13,11 +13,7 @@ namespace REA.Accounting.SharedKernel.Base
         {
             if (object.Equals(obj1, null))
             {
-                if (object.Equals(obj2, null))
-                {
-                    return true;
-                }
-                return false;
+                return object.Equals(obj2, null);
             }
             return obj1.Equals(obj2);
         }
@@ -52,30 +48,17 @@ namespace REA.Accounting.SharedKernel.Base
 
         private IEnumerable<PropertyInfo> GetProperties()
         {
-            if (this.properties == null)
-            {
-                this.properties = GetType()
+            return this.properties ??= GetType()
                     .GetProperties(BindingFlags.Instance | BindingFlags.Public)
                     .Where(p => p.GetCustomAttribute(typeof(IgnoreMemberAttribute)) == null)
                     .ToList();
-
-                // Not available in Core
-                // !Attribute.IsDefined(p, typeof(IgnoreMemberAttribute))).ToList();
-            }
-
-            return this.properties;
         }
 
         private IEnumerable<FieldInfo> GetFields()
         {
-            if (this.fields == null)
-            {
-                this.fields = GetType().GetFields(BindingFlags.Instance | BindingFlags.Public)
+            return this.fields ??= GetType().GetFields(BindingFlags.Instance | BindingFlags.Public)
                     .Where(p => p.GetCustomAttribute(typeof(IgnoreMemberAttribute)) == null)
                     .ToList();
-            }
-
-            return this.fields;
         }
 
         public override int GetHashCode()
@@ -99,13 +82,11 @@ namespace REA.Accounting.SharedKernel.Base
             }
         }
 
-        private int HashValue(int seed, object value)
+        private static int HashValue(int seed, object value)
         {
-            var currentHash = value != null
-                ? value.GetHashCode()
-                : 0;
+            var currentHash = (value?.GetHashCode()) ?? 0;
 
-            return seed * 23 + currentHash;
+            return (seed * 23) + currentHash;
         }
     }
 }

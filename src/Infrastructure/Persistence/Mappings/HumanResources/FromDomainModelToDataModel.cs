@@ -33,5 +33,39 @@ namespace REA.Accounting.Infrastructure.Persistence.Mappings.HumanResources
                     CurrentFlag = employee.IsActive
                 }
             };
+
+        public static void MapToPersonDataModelForUpdate(this Employee employee, ref PersonDataModel person)
+        {
+            person.PersonType = employee.PersonType;
+            person.NameStyle = employee.NameStyle != NameStyleEnum.Western;
+            person.Title = employee.Title;
+            person.FirstName = employee.FirstName;
+            person.MiddleName = employee.MiddleName!;
+            person.LastName = employee.LastName;
+            person.Suffix = employee.Suffix;
+            person.EmailPromotion = (int)employee.EmailPromotions;
+
+            person.Employee!.NationalIDNumber = employee.NationalIDNumber;
+            person.Employee!.LoginID = employee.LoginID;
+            person.Employee!.JobTitle = employee.JobTitle;
+            person.Employee!.BirthDate = employee.BirthDate.ToDateTime(new TimeOnly());
+            person.Employee!.MaritalStatus = employee.MaritalStatus;
+            person.Employee!.Gender = employee.Gender;
+            person.Employee!.HireDate = employee.HireDate.ToDateTime(new TimeOnly());
+            person.Employee!.SalariedFlag = employee.IsSalaried;
+            person.Employee!.VacationHours = employee.VacationHours;
+            person.Employee!.SickLeaveHours = employee.SickLeaveHours;
+            person.Employee!.CurrentFlag = employee.IsActive;
+        }
+
+        public static void MapDataModelAddressToDomainAddress(this BusinessEntityAddress businessEntityAddress, ref Employee employee)
+            => employee.AddAddress(businessEntityAddress.AddressID,
+                                   businessEntityAddress.BusinessEntityID,
+                                   (AddressTypeEnum)businessEntityAddress.AddressTypeID,
+                                   businessEntityAddress.Address!.AddressLine1!,
+                                   businessEntityAddress.Address.AddressLine2,
+                                   businessEntityAddress.Address!.City!,
+                                   businessEntityAddress.Address.StateProvinceID,
+                                   businessEntityAddress.Address!.PostalCode!);
     }
 }

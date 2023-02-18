@@ -78,7 +78,6 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
             }
         }
 
-
         public async Task<OperationResult<bool>> ValidateEmployeeEmailIsUnique(int id, string emailAddres, bool asNoTracking = true)
         {
             try
@@ -144,7 +143,6 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
 
                 if (person is not null)
                 {
-                    // Create employee domain object from person data model
                     DomainModelEmployee employee = person!.MapToEmployeeDomainObject();
                     return OperationResult<DomainModelEmployee>.CreateSuccessResult(employee);
                 }
@@ -173,21 +171,13 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
                         new PersonByIDWithEmployeeSpec(empployeeID)
                     ).FirstOrDefaultAsync(cancellationToken);
 
-                // Create employee domain object from person data model
                 DomainModelEmployee employee = person!.MapToEmployeeDomainObject();
 
                 // Add addresses to employee from person data model
                 if (person!.BusinessEntityAddresses.ToList().Any())
                 {
-                    person!.BusinessEntityAddresses.ToList().ForEach(addr =>
-                        employee.AddAddress(addr.AddressID,
-                                            addr.BusinessEntityID,
-                                            (AddressTypeEnum)addr.AddressTypeID,
-                                            addr.Address!.AddressLine1!,
-                                            addr.Address.AddressLine2,
-                                            addr.Address!.City!,
-                                            addr.Address.StateProvinceID,
-                                            addr.Address!.PostalCode!));
+                    person!.BusinessEntityAddresses.ToList().ForEach(dataModelAddress =>
+                        dataModelAddress.MapDataModelAddressToDomainAddress(ref employee));
                 }
 
                 // Add email addresses to employee from person data model
@@ -234,7 +224,6 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
                 await _unitOfWork.CommitAsync();
 
                 return OperationResult<int>.CreateSuccessResult(entity.BusinessEntityID);
-
             }
             catch (Exception ex)
             {
@@ -257,26 +246,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
 
                 if (person is not null)
                 {
-                    person.PersonType = employee.PersonType;
-                    person.NameStyle = employee.NameStyle != NameStyleEnum.Western;
-                    person.Title = employee.Title;
-                    person.FirstName = employee.FirstName;
-                    person.MiddleName = employee.MiddleName!;
-                    person.LastName = employee.LastName;
-                    person.Suffix = employee.Suffix;
-                    person.EmailPromotion = (int)employee.EmailPromotions;
-
-                    person.Employee!.NationalIDNumber = employee.NationalIDNumber;
-                    person.Employee!.LoginID = employee.LoginID;
-                    person.Employee!.JobTitle = employee.JobTitle;
-                    person.Employee!.BirthDate = employee.BirthDate.ToDateTime(new TimeOnly());
-                    person.Employee!.MaritalStatus = employee.MaritalStatus;
-                    person.Employee!.Gender = employee.Gender;
-                    person.Employee!.HireDate = employee.HireDate.ToDateTime(new TimeOnly());
-                    person.Employee!.SalariedFlag = employee.IsSalaried;
-                    person.Employee!.VacationHours = employee.VacationHours;
-                    person.Employee!.SickLeaveHours = employee.SickLeaveHours;
-                    person.Employee!.CurrentFlag = employee.IsActive;
+                    employee.MapToPersonDataModelForUpdate(ref person);
 
                     await _unitOfWork.CommitAsync();
 

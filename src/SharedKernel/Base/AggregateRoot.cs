@@ -9,7 +9,7 @@ namespace REA.Accounting.SharedKernel.Base
 
         protected void AddDomainEvent(DomainEvent eventItem)
         {
-            _domainEvents = _domainEvents ?? new List<DomainEvent>();
+            _domainEvents ??= new List<DomainEvent>();
             _domainEvents.Add(eventItem);
         }
 

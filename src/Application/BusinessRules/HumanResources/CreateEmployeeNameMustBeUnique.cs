@@ -17,7 +17,7 @@ namespace REA.Accounting.Application.BusinessRules.HumanResources
             ValidationResult validationResult = new();
 
             OperationResult<bool> result =
-                await _repository.EmployeeAggregate.ValidatePersonNameIsUnique(employee.EmployeeID, employee.FirstName, employee.LastName, employee.MiddleName!);
+                await _repository.EmployeeAggregate.ValidatePersonNameIsUnique(employee.EmployeeID, employee.FirstName, employee.LastName, employee.MiddleName);
 
             if (result.Success)
             {
