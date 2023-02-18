@@ -11,6 +11,6 @@ namespace REA.Accounting.Infrastructure.Persistence.DataModels.Person
             => _personType = personType;
 
         public override Expression<Func<PersonDataModel, bool>> ToExpression()
-            => person => person.PersonType!.ToUpper() == _personType.ToUpper();
+            => person => string.Equals(person.PersonType, _personType, StringComparison.OrdinalIgnoreCase);
     }
 }

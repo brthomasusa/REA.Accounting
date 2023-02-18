@@ -1,24 +1,24 @@
 using Ardalis.Specification.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-using REA.Accounting.Core.HumanResources;
 using REA.Accounting.Core.Interfaces;
 using REA.Accounting.Core.Shared;
 using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
+using REA.Accounting.Infrastructure.Persistence.Mappings.HumanResources;
 using REA.Accounting.Infrastructure.Persistence.Specifications.HumanResources;
 using REA.Accounting.Infrastructure.Persistence.Specifications.Person;
 using REA.Accounting.SharedKernel.Interfaces;
 using REA.Accounting.SharedKernel.Utilities;
 
-using EmployeeDataModel = REA.Accounting.Infrastructure.Persistence.DataModels.HumanResources.Employee;
+using EmployeeDataModel = REA.Accounting.Infrastructure.Persistence.DataModels.HumanResources.EmployeeDataModel;
 using DomainModelEmployee = REA.Accounting.Core.HumanResources.Employee;
 
 namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
 {
     public sealed class EmployeeAggregateRepository : IEmployeeAggregateRepository
     {
-        private EfCoreContext _context;
-        private IUnitOfWork _unitOfWork;
+        private readonly EfCoreContext _context;
+        private readonly IUnitOfWork _unitOfWork;
 
         public EmployeeAggregateRepository(EfCoreContext ctx)
         {
@@ -38,7 +38,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
                         asNoTracking ? _context.Set<PersonDataModel>().AsNoTracking() : _context.Set<PersonDataModel>(),
                         new ValidateEmployeeNameIsUniqueSpec(fname, lname, middleName)
                     )
-                    .Select(s => new { EmployeeID = s.BusinessEntityID, FirstName = s.FirstName, MiddleName = s.MiddleName, LastName = s.LastName })
+                    .Select(s => new { EmployeeID = s.BusinessEntityID, s.FirstName, s.MiddleName, s.LastName })
                     .FirstOrDefaultAsync(cancellationToken);
 
                 if (person is null || person.EmployeeID == id)
@@ -145,7 +145,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
                 if (person is not null)
                 {
                     // Create employee domain object from person data model
-                    DomainModelEmployee employee = CreateDomainEmployee(ref person!);
+                    DomainModelEmployee employee = person!.MapToEmployeeDomainObject();
                     return OperationResult<DomainModelEmployee>.CreateSuccessResult(employee);
                 }
                 else
@@ -174,7 +174,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
                     ).FirstOrDefaultAsync(cancellationToken);
 
                 // Create employee domain object from person data model
-                DomainModelEmployee employee = CreateDomainEmployee(ref person!);
+                DomainModelEmployee employee = person!.MapToEmployeeDomainObject();
 
                 // Add addresses to employee from person data model
                 if (person!.BusinessEntityAddresses.ToList().Any())
@@ -189,7 +189,6 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
                                             addr.Address.StateProvinceID,
                                             addr.Address!.PostalCode!));
                 }
-
 
                 // Add email addresses to employee from person data model
                 if (person.EmailAddresses.ToList().Any())
@@ -228,31 +227,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
                 BusinessEntity entity = new()
                 {
                     BusinessEntityID = 0,
-                    PersonModel = new()
-                    {
-                        PersonType = employee.PersonType,
-                        NameStyle = employee.NameStyle == NameStyleEnum.Western ? false : true,
-                        Title = employee.Title,
-                        FirstName = employee.FirstName,
-                        MiddleName = employee.MiddleName,
-                        LastName = employee.LastName,
-                        Suffix = employee.Suffix,
-                        EmailPromotion = (int)employee.EmailPromotions,
-                        Employee = new EmployeeDataModel()
-                        {
-                            NationalIDNumber = employee.NationalIDNumber,
-                            LoginID = employee.LoginID,
-                            JobTitle = employee.JobTitle,
-                            BirthDate = employee.BirthDate.ToDateTime(new TimeOnly()),
-                            MaritalStatus = employee.MaritalStatus,
-                            Gender = employee.Gender,
-                            HireDate = employee.HireDate.ToDateTime(new TimeOnly()),
-                            SalariedFlag = employee.IsSalaried,
-                            VacationHours = employee.VacationHours,
-                            SickLeaveHours = employee.SickLeaveHours,
-                            CurrentFlag = employee.IsActive
-                        }
-                    }
+                    PersonModel = employee.MapToPersonDataModelForCreate()
                 };
 
                 await _context.AddAsync(entity);
@@ -267,7 +242,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
             }
         }
 
-        public async Task<OperationResult<int>> Update(DomainModelEmployee entity)
+        public async Task<OperationResult<int>> Update(DomainModelEmployee employee)
         {
             try
             {
@@ -277,31 +252,31 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
                     SpecificationEvaluator.Default.GetQuery
                     (
                         _context.Set<PersonDataModel>(),
-                        new PersonByIDWithEmployeeOnlySpec(entity.Id)
+                        new PersonByIDWithEmployeeOnlySpec(employee.Id)
                     ).FirstOrDefaultAsync(cancellationToken);
 
                 if (person is not null)
                 {
-                    person.PersonType = entity.PersonType;
-                    person.NameStyle = entity.NameStyle == NameStyleEnum.Western ? false : true;
-                    person.Title = entity.Title;
-                    person.FirstName = entity.FirstName;
-                    person.MiddleName = entity.MiddleName!;
-                    person.LastName = entity.LastName;
-                    person.Suffix = entity.Suffix;
-                    person.EmailPromotion = (int)entity.EmailPromotions;
+                    person.PersonType = employee.PersonType;
+                    person.NameStyle = employee.NameStyle != NameStyleEnum.Western;
+                    person.Title = employee.Title;
+                    person.FirstName = employee.FirstName;
+                    person.MiddleName = employee.MiddleName!;
+                    person.LastName = employee.LastName;
+                    person.Suffix = employee.Suffix;
+                    person.EmailPromotion = (int)employee.EmailPromotions;
 
-                    person.Employee!.NationalIDNumber = entity.NationalIDNumber;
-                    person.Employee!.LoginID = entity.LoginID;
-                    person.Employee!.JobTitle = entity.JobTitle;
-                    person.Employee!.BirthDate = entity.BirthDate.ToDateTime(new TimeOnly());
-                    person.Employee!.MaritalStatus = entity.MaritalStatus;
-                    person.Employee!.Gender = entity.Gender;
-                    person.Employee!.HireDate = entity.HireDate.ToDateTime(new TimeOnly());
-                    person.Employee!.SalariedFlag = entity.IsSalaried;
-                    person.Employee!.VacationHours = entity.VacationHours;
-                    person.Employee!.SickLeaveHours = entity.SickLeaveHours;
-                    person.Employee!.CurrentFlag = entity.IsActive;
+                    person.Employee!.NationalIDNumber = employee.NationalIDNumber;
+                    person.Employee!.LoginID = employee.LoginID;
+                    person.Employee!.JobTitle = employee.JobTitle;
+                    person.Employee!.BirthDate = employee.BirthDate.ToDateTime(new TimeOnly());
+                    person.Employee!.MaritalStatus = employee.MaritalStatus;
+                    person.Employee!.Gender = employee.Gender;
+                    person.Employee!.HireDate = employee.HireDate.ToDateTime(new TimeOnly());
+                    person.Employee!.SalariedFlag = employee.IsSalaried;
+                    person.Employee!.VacationHours = employee.VacationHours;
+                    person.Employee!.SickLeaveHours = employee.SickLeaveHours;
+                    person.Employee!.CurrentFlag = employee.IsActive;
 
                     await _unitOfWork.CommitAsync();
 
@@ -421,50 +396,6 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
 
             if (addresses.Any())
                 _context.Address!.RemoveRange(addresses);
-        }
-
-        private DomainModelEmployee CreateDomainEmployee(ref PersonDataModel person)
-        {
-            DomainModelEmployee domainObj = DomainModelEmployee.Create
-            (
-                person!.BusinessEntityID,
-                person!.PersonType!,
-                person!.NameStyle ? NameStyleEnum.Eastern : NameStyleEnum.Western,
-                person!.Title!,
-                person!.FirstName!,
-                person!.LastName!,
-                person!.MiddleName!,
-                person!.Suffix!,
-                person!.Employee!.NationalIDNumber!,
-                person!.Employee!.LoginID!,
-                person!.Employee!.JobTitle!,
-                DateOnly.FromDateTime(person!.Employee!.BirthDate),
-                person!.Employee!.MaritalStatus!,
-                person!.Employee!.Gender!,
-                DateOnly.FromDateTime(person!.Employee!.HireDate),
-                person!.Employee!.SalariedFlag,
-                person!.Employee!.VacationHours,
-                person!.Employee!.SickLeaveHours,
-                person!.Employee!.CurrentFlag
-            );
-
-            // Add dept histories to employee from person data model
-            person!.Employee!.DepartmentHistories.ToList().ForEach(dept =>
-                domainObj.AddDepartmentHistory(dept.BusinessEntityID,
-                                               dept.ShiftID,
-                                               DateOnly.FromDateTime(dept.StartDate),
-                                               dept.EndDate));
-
-            // Add pay histories to employee from person data model
-            person!.Employee!.PayHistories.ToList().ForEach(pay =>
-                domainObj.AddPayHistory(
-                    pay.BusinessEntityID,
-                    pay.RateChangeDate,
-                    pay.Rate,
-                    (PayFrequencyEnum)pay.PayFrequency
-                ));
-
-            return domainObj;
         }
     }
 }

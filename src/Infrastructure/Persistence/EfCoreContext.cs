@@ -31,7 +31,7 @@ namespace REA.Accounting.Infrastructure.Persistence
         public DbSet<Password>? Password { get; set; }
         public DbSet<Department>? Department { get; set; }
         public DbSet<Shift>? Shift { get; set; }
-        public DbSet<Employee>? Employee { get; set; }
+        public DbSet<EmployeeDataModel>? Employee { get; set; }
         public DbSet<EmployeeDepartmentHistory>? EmployeeDepartmentHistory { get; set; }
         public DbSet<EmployeePayHistory>? EmployeePayHistory { get; set; }
 

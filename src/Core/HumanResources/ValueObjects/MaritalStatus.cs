@@ -24,10 +24,10 @@ namespace REA.Accounting.Core.HumanResources.ValueObjects
         {
             if (string.IsNullOrEmpty(value))
             {
-                throw new ArgumentNullException("The marital status is required.", nameof(value));
+                throw new ArgumentNullException(nameof(value), "The marital status is required.");
             }
 
-            if (value.ToUpper() != "M" && value.ToUpper() != "S")
+            if (!string.Equals(value, "M", StringComparison.OrdinalIgnoreCase) && !string.Equals(value, "S", StringComparison.OrdinalIgnoreCase))
             {
                 throw new ArgumentException("Invalid marital status, valid statues are 'S' and 'M'.", nameof(value));
             }

@@ -3,8 +3,6 @@
 using REA.Accounting.Core.HumanResources.ValueObjects;
 using REA.Accounting.Core.Shared;
 using REA.Accounting.Core.Shared.ValueObjects;
-using REA.Accounting.SharedKernel;
-using REA.Accounting.SharedKernel.Base;
 using REA.Accounting.SharedKernel.Utilities;
 using REA.Accounting.SharedKernel.CommonValueObjects;
 
@@ -15,8 +13,8 @@ namespace REA.Accounting.Core.HumanResources
 {
     public class Employee : Person
     {
-        private List<DepartmentHistory> _deptHistories = new();
-        private List<PayHistory> _payHistories = new();
+        private readonly List<DepartmentHistory> _deptHistories = new();
+        private readonly List<PayHistory> _payHistories = new();
 
         protected Employee
         (
@@ -127,7 +125,6 @@ namespace REA.Accounting.Core.HumanResources
         {
             try
             {
-
                 base.UpdatePerson(personType, nameStyle, title, firstName, lastName, middleName, suffix, emailPromotionEnum);
 
                 NationalIDNumber = NationalID.Create(nationalID).Value!;
@@ -156,7 +153,7 @@ namespace REA.Accounting.Core.HumanResources
 
         public string LoginID { get; private set; }
 
-        public string OrganizationNode { get; private set; }
+        public string OrganizationNode { get; }
 
         public string JobTitle { get; private set; }
 
@@ -254,7 +251,7 @@ namespace REA.Accounting.Core.HumanResources
 
         protected override void CheckValidity()
         {
-            if (!PersonType.ToUpper().Equals("EM"))
+            if (!PersonType.Equals("EM", StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException("Employee must be person type 'EM'.");
         }
     }

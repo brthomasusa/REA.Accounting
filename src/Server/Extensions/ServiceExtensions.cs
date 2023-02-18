@@ -32,7 +32,7 @@ namespace REA.Accounting.Server.Extensions
 
         public static void ConfigureDapper(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddSingleton<DapperContext>(s => new DapperContext(configuration["ConnectionStrings:DefaultConnection"]));
+            services.AddSingleton<DapperContext>(_ => new DapperContext(configuration["ConnectionStrings:DefaultConnection"]));
         }
 
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)

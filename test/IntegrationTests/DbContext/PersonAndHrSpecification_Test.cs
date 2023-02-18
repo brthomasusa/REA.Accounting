@@ -100,7 +100,7 @@ namespace REA.Accounting.IntegrationTests.DbContext
             var employee = await
                 SpecificationEvaluator.Default.GetQuery
                 (
-                    _dbContext.Set<Employee>().AsNoTracking(),
+                    _dbContext.Set<EmployeeDataModel>().AsNoTracking(),
                     new ValidateNationalIdNumberIsUniqueSpec("295847004")
                 ).FirstOrDefaultAsync(cancellationToken);
 
@@ -118,7 +118,7 @@ namespace REA.Accounting.IntegrationTests.DbContext
             var employee = await
                 SpecificationEvaluator.Default.GetQuery
                 (
-                    _dbContext.Set<Employee>(),
+                    _dbContext.Set<EmployeeDataModel>(),
                     new ValidateNationalIdNumberIsUniqueSpec("295847284")
                 ).FirstOrDefaultAsync(cancellationToken);
 

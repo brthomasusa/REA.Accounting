@@ -5,9 +5,9 @@ using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
 
 namespace REA.Accounting.Infrastructure.Persistence.Configurations.HumanResources
 {
-    internal class EmployeeConfig : IEntityTypeConfiguration<Employee>
+    internal class EmployeeConfig : IEntityTypeConfiguration<EmployeeDataModel>
     {
-        public void Configure(EntityTypeBuilder<Employee> entity)
+        public void Configure(EntityTypeBuilder<EmployeeDataModel> entity)
         {
             entity.ToTable("Employee", schema: "HumanResources");
             entity.HasKey(e => e.BusinessEntityID);

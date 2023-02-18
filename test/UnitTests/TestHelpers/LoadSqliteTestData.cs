@@ -28,7 +28,7 @@ namespace REA.Accounting.UnitTests.TestHelpers
             HashSet<BusinessEntityAddress> businessEntityAddresses = await Data.LoadTestData.LoadBusinessEntityAddressDataAsync();
             HashSet<EmailAddress> emailAddresses = await Data.LoadTestData.LoadEmailAddressDataAsync();
             HashSet<PersonPhone> telephones = await Data.LoadTestData.LoadPhoneDataAsync();
-            HashSet<Employee> employees = await Data.LoadTestData.LoadEmployeeDataAsync();
+            HashSet<EmployeeDataModel> employees = await Data.LoadTestData.LoadEmployeeDataAsync();
             HashSet<EmployeeDepartmentHistory> departmentHistories = await Data.LoadTestData.LoadEmployeeDepartmentHistoryDataAsync();
             HashSet<EmployeePayHistory> payHistories = await Data.LoadTestData.LoadEmployeePayHistoryDataAsync();
 

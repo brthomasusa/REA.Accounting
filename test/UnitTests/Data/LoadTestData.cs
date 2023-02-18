@@ -94,9 +94,9 @@ namespace REA.Accounting.UnitTests.Data
             return await Task.FromResult(getTask.Result);
         }
 
-        public static async Task<HashSet<Employee>> LoadEmployeeDataAsync()
+        public static async Task<HashSet<EmployeeDataModel>> LoadEmployeeDataAsync()
         {
-            Task<HashSet<Employee>> getTask = Task.Run(() => LoadTestData.LoadEmployeeData())
+            Task<HashSet<EmployeeDataModel>> getTask = Task.Run(() => LoadTestData.LoadEmployeeData())
                                                   .ContinueWith(antecedent => antecedent.Result);
 
             return await Task.FromResult(getTask.Result);
@@ -120,12 +120,12 @@ namespace REA.Accounting.UnitTests.Data
 
         /* --------------------------------------------------------------------------------------------- */
 
-        private static HashSet<Employee> LoadEmployeeData()
+        private static HashSet<EmployeeDataModel> LoadEmployeeData()
         {
             string fileName = $"{BaseFilePath}Employee-XS.json";
             string jsonString = File.ReadAllText(fileName);
 
-            return JsonConvert.DeserializeObject<HashSet<Employee>>(jsonString)!;
+            return JsonConvert.DeserializeObject<HashSet<EmployeeDataModel>>(jsonString)!;
         }
 
         private static HashSet<BusinessEntity> LoadBusinessEntityData()

@@ -4,7 +4,7 @@ using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
 
 namespace REA.Accounting.Infrastructure.Persistence.DataModels.HumanResources
 {
-    public class Employee
+    public class EmployeeDataModel
     {
         public int BusinessEntityID { get; set; }
         public string? NationalIDNumber { get; set; }

@@ -62,7 +62,7 @@ namespace REA.Accounting.IntegrationTests.DbContext
                     LastName = "Doe",
                     Suffix = "Jr.",
                     EmailPromotion = 2,
-                    Employee = new Employee()
+                    Employee = new EmployeeDataModel()
                     {
                         NationalIDNumber = "245797967",
                         LoginID = "adventure-works\terri0",

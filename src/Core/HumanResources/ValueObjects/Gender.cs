@@ -21,14 +21,14 @@ namespace REA.Accounting.Core.HumanResources.ValueObjects
             return new Gender(gender);
         }
 
-        private static void CheckValidity(string value)
+        private static void CheckValidity(string gender)
         {
-            if (string.IsNullOrEmpty(value))
+            if (string.IsNullOrEmpty(gender))
             {
-                throw new ArgumentNullException("Gender is required.");
+                throw new ArgumentNullException(nameof(gender), "Gender is required.");
             }
 
-            if (value.ToUpper() != "M" && value.ToUpper() != "F")
+            if (!string.Equals(gender, "M", StringComparison.OrdinalIgnoreCase) && !string.Equals(gender, "F", StringComparison.OrdinalIgnoreCase))
             {
                 throw new ArgumentException("Invalid gender, valid statues are 'M' for male and 'F' for female.");
             }

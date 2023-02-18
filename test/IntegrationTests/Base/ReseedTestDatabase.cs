@@ -4,22 +4,20 @@ using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.IntegrationTests.Base
 {
-    public class ReseedTestDatabase
+    public static class ReseedTestDatabase
     {
         public static OperationResult<bool> ReseedDatabase()
         {
-            string connectionString = "Server=tcp:mssql-server,1433;Database=AdventureWorks_Test;User Id=sa;Password=Info99Gum;MultipleActiveResultSets=true;TrustServerCertificate=true";
+            const string connectionString = "Server=tcp:mssql-server,1433;Database=AdventureWorks_Test;User Id=sa;Password=Info99Gum;MultipleActiveResultSets=true;TrustServerCertificate=true";
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    SqlCommand command = new SqlCommand("dbo.usp_InitializeTestDb", connection);
-                    command.Connection.Open();
-                    command.ExecuteNonQuery();
+                using SqlConnection connection = new(connectionString);
+                SqlCommand command = new("dbo.usp_InitializeTestDb", connection);
+                command.Connection.Open();
+                command.ExecuteNonQuery();
 
-                    return OperationResult<bool>.CreateSuccessResult(true);
-                }
+                return OperationResult<bool>.CreateSuccessResult(true);
             }
             catch (Exception ex)
             {

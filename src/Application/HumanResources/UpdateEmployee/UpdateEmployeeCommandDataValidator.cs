@@ -55,12 +55,14 @@ namespace REA.Accounting.Application.HumanResources.UpdateEmployee
 
             RuleFor(employee => employee.MaritalStatus)
                                         .NotEmpty().WithMessage("Employee marital status is required.")
-                                        .Must(status => status.ToUpper() == "S" || status.ToUpper() == "M")
+                                        .Must(status => string.Equals(status, "S", StringComparison.OrdinalIgnoreCase) ||
+                                                        string.Equals(status, "M", StringComparison.OrdinalIgnoreCase))
                                         .WithMessage("Marital status must be S for single or M for married.");
 
             RuleFor(employee => employee.Gender)
                                         .NotEmpty().WithMessage("Employee gender is required.")
-                                        .Must(gender => gender.ToUpper() == "F" || gender.ToUpper() == "M")
+                                        .Must(gender => string.Equals(gender, "F", StringComparison.OrdinalIgnoreCase) ||
+                                                        string.Equals(gender, "M", StringComparison.OrdinalIgnoreCase))
                                         .WithMessage("Gender must be F for female or M for male.");
 
             RuleFor(employee => employee.HireDate)

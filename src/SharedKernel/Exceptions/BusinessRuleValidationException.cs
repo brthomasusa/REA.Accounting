@@ -4,12 +4,14 @@ namespace REA.Accounting.SharedKernel.Exceptions
     {
         public BusinessRuleValidationException(string message, Exception ex) : base(message, ex)
         {
-
         }
 
         public BusinessRuleValidationException(string message) : base(message)
         {
+        }
 
+        public BusinessRuleValidationException() : base()
+        {
         }
     }
 }

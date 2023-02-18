@@ -77,5 +77,7 @@ finally
     NLog.LogManager.Shutdown();
 }
 
-
-public partial class Program { }
+namespace REA.Accounting.Server
+{
+    public partial class Program { }
+}
