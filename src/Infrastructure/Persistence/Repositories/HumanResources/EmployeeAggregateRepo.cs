@@ -26,7 +26,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
             _unitOfWork = new UnitOfWork(_context);
         }
 
-        public async Task<OperationResult<bool>> ValidatePersonNameIsUnique(int id, string fname, string lname, string? middleName, bool asNoTracking = true)
+        public async Task<Result> ValidatePersonNameIsUnique(int id, string fname, string lname, string? middleName, bool asNoTracking = true)
         {
             try
             {
@@ -42,17 +42,31 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
                     .FirstOrDefaultAsync(cancellationToken);
 
                 if (person is null || person.EmployeeID == id)
-                    return OperationResult<bool>.CreateSuccessResult(true);
+                    return Result.Success();
 
-                return OperationResult<bool>.CreateSuccessResult(false);
+                return Result.Failure
+                (
+                    new Error
+                    (
+                        "EmployeeAggregateRepository.ValidatePersonNameIsUnique",
+                        $"A person named ${fname} {middleName} {lname} is already in the database."
+                    )
+                );
             }
             catch (Exception ex)
             {
-                return OperationResult<bool>.CreateFailure(Helpers.GetExceptionMessage(ex));
+                return Result.Failure
+                (
+                    new Error
+                    (
+                        "EmployeeAggregateRepository.ValidatePersonNameIsUnique",
+                        Helpers.GetExceptionMessage(ex)
+                    )
+                );
             }
         }
 
-        public async Task<OperationResult<bool>> ValidateNationalIdNumberIsUnique(int id, string nationalIdNumber, bool asNoTracking = true)
+        public async Task<Result> ValidateNationalIdNumberIsUnique(int id, string nationalIdNumber, bool asNoTracking = true)
         {
             try
             {
@@ -68,17 +82,17 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
                     .FirstOrDefaultAsync(cancellationToken);
 
                 if (nationalId is null || nationalId.EmployeeID == id)
-                    return OperationResult<bool>.CreateSuccessResult(true);
+                    return Result.Success();
 
-                return OperationResult<bool>.CreateSuccessResult(false);
+                return Result.Failure(new Error("EmployeeAggregateRepository.ValidateNationalIdNumberIsUnique", $"An employee with natioanal ID {nationalIdNumber} is already in the database."));
             }
             catch (Exception ex)
             {
-                return OperationResult<bool>.CreateFailure(Helpers.GetExceptionMessage(ex));
+                return Result.Failure(new Error("EmployeeAggregateRepository.ValidateNationalIdNumberIsUnique.", Helpers.GetExceptionMessage(ex)));
             }
         }
 
-        public async Task<OperationResult<bool>> ValidateEmployeeEmailIsUnique(int id, string emailAddres, bool asNoTracking = true)
+        public async Task<Result> ValidateEmployeeEmailIsUnique(int id, string emailAddres, bool asNoTracking = true)
         {
             try
             {
@@ -92,17 +106,17 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
                     ).FirstOrDefaultAsync(cancellationToken);
 
                 if (email is null || email.BusinessEntityID == id)
-                    return OperationResult<bool>.CreateSuccessResult(true);
+                    return Result.Success();
 
-                return OperationResult<bool>.CreateSuccessResult(false);
+                return Result.Failure(new Error("EmployeeAggregateRepository.ValidateEmployeeEmailIsUnique", $"An employee with email address {emailAddres} is already in the database."));
             }
             catch (Exception ex)
             {
-                return OperationResult<bool>.CreateFailure(Helpers.GetExceptionMessage(ex));
+                return Result.Failure(new Error("EmployeeAggregateRepository.ValidateEmployeeEmailIsUnique", Helpers.GetExceptionMessage(ex)));
             }
         }
 
-        public async Task<OperationResult<bool>> ValidateEmployeeExist(int id, bool asNoTracking = true)
+        public async Task<Result> ValidateEmployeeExist(int id, bool asNoTracking = true)
         {
             try
             {
@@ -118,13 +132,13 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
                     .FirstOrDefaultAsync(cancellationToken);
 
                 if (employeeId is not null)
-                    return OperationResult<bool>.CreateSuccessResult(true);
+                    return Result.Success();
 
-                return OperationResult<bool>.CreateSuccessResult(false);
+                return Result.Failure(new Error("EmployeeAggregateRepository.ValidateEmployeeExist", $"An employee with ID {id} could not be found."));
             }
             catch (Exception ex)
             {
-                return OperationResult<bool>.CreateFailure(Helpers.GetExceptionMessage(ex));
+                return Result.Failure(new Error("EmployeeAggregateRepository.ValidateEmployeeExist", Helpers.GetExceptionMessage(ex)));
             }
         }
 

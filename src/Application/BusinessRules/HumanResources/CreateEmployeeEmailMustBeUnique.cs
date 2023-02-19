@@ -16,29 +16,21 @@ namespace REA.Accounting.Application.BusinessRules.HumanResources
         {
             ValidationResult validationResult = new();
 
-            OperationResult<bool> result =
+            Result result =
                 await _repository.EmployeeAggregate.ValidateEmployeeEmailIsUnique(employee.EmployeeID, employee.EmailAddress);
 
-            if (result.Success)
+            if (result.IsSuccess)
             {
-                if (result.Result)
-                {
-                    validationResult.IsValid = true;
+                validationResult.IsValid = true;
 
-                    if (Next is not null)
-                    {
-                        validationResult = await Next.Validate(employee);
-                    }
-                }
-                else
+                if (Next is not null)
                 {
-                    const string msg = "An employee in the database already has this email address.";
-                    validationResult.Messages.Add(msg);
+                    validationResult = await Next.Validate(employee);
                 }
             }
             else
             {
-                validationResult.Messages.Add(result.NonSuccessMessage!);
+                validationResult.Messages.Add(result.Error.Message);
             }
 
             return validationResult;

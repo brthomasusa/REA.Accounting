@@ -16,29 +16,21 @@ namespace REA.Accounting.Application.BusinessRules.HumanResources
         {
             ValidationResult validationResult = new();
 
-            OperationResult<bool> result =
+            Result result =
                 await _repository.EmployeeAggregate.ValidateNationalIdNumberIsUnique(employee.EmployeeID, employee.NationalID);
 
-            if (result.Success)
+            if (result.IsSuccess)
             {
-                if (result.Result)
-                {
-                    validationResult.IsValid = true;
+                validationResult.IsValid = true;
 
-                    if (Next is not null)
-                    {
-                        validationResult = await Next.Validate(employee);
-                    }
-                }
-                else
+                if (Next is not null)
                 {
-                    string msg = "Another employee in the database already has this natioanal ID.";
-                    validationResult.Messages.Add(msg);
+                    validationResult = await Next.Validate(employee);
                 }
             }
             else
             {
-                validationResult.Messages.Add(result.NonSuccessMessage!);
+                validationResult.Messages.Add(result.Error.Message);
             }
 
             return validationResult;

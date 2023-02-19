@@ -75,83 +75,74 @@ namespace REA.Accounting.IntegrationTests.Repositories
         [Fact]
         public async Task ValidatePersonNameIsUnique_EmployeeAggregateRepo_NewRecord_ShouldReturnTrue()
         {
-            OperationResult<bool> result = await _writeRepository.EmployeeAggregate.ValidatePersonNameIsUnique(0, "Henry", "Jones", "Z");
+            Result result = await _writeRepository.EmployeeAggregate.ValidatePersonNameIsUnique(0, "Henry", "Jones", "Z");
 
-            Assert.True(result.Success);
-            Assert.True(result.Result);
+            Assert.True(result.IsSuccess);
         }
 
         [Fact]
         public async Task ValidatePersonNameIsUnique_EmployeeAggregateRepo_EditingExistingWithoutNameChange_ShouldReturnTrue()
         {
-            OperationResult<bool> result = await _writeRepository.EmployeeAggregate.ValidatePersonNameIsUnique(25, "James", "Hamilton", "R");
+            Result result = await _writeRepository.EmployeeAggregate.ValidatePersonNameIsUnique(25, "James", "Hamilton", "R");
 
-            Assert.True(result.Success);
-            Assert.True(result.Result);
+            Assert.True(result.IsSuccess);
         }
 
         [Fact]
         public async Task ValidatePersonNameIsUnique_EmployeeAggregateRepo_EditingExistingNameChangeWouldCauseDupe_ShouldReturnFalse()
         {
             // EmployeeID 2 is Terri Lee Duffy, changing name to James R Hamilton would be a duplicate name of EmployeeID 25
-            OperationResult<bool> result = await _writeRepository.EmployeeAggregate.ValidatePersonNameIsUnique(2, "James", "Hamilton", "R");
+            Result result = await _writeRepository.EmployeeAggregate.ValidatePersonNameIsUnique(2, "James", "Hamilton", "R");
 
-            Assert.True(result.Success);
-            Assert.False(result.Result);
+            Assert.False(result.IsSuccess);
         }
 
         [Fact]
         public async Task ValidateNationalIdNumberIsUnique_EmployeeAggregateRepo_NewRecord_ShouldReturnTrue()
         {
-            OperationResult<bool> result = await _writeRepository.EmployeeAggregate.ValidateNationalIdNumberIsUnique(0, "632145877");
+            Result result = await _writeRepository.EmployeeAggregate.ValidateNationalIdNumberIsUnique(0, "632145877");
 
-            Assert.True(result.Success);
-            Assert.True(result.Result);
+            Assert.True(result.IsSuccess);
         }
 
         [Fact]
         public async Task ValidateNationalIdNumberIsUnique_EmployeeAggregateRepo_EditingExistingWithoutNatlIDChange_ShouldReturnTrue()
         {
-            OperationResult<bool> result = await _writeRepository.EmployeeAggregate.ValidateNationalIdNumberIsUnique(2, "245797967");
+            Result result = await _writeRepository.EmployeeAggregate.ValidateNationalIdNumberIsUnique(2, "245797967");
 
-            Assert.True(result.Success);
-            Assert.True(result.Result);
+            Assert.True(result.IsSuccess);
         }
 
         [Fact]
         public async Task ValidateNationalIdNumberIsUnique_EmployeeAggregateRepo_EditingExistingWithNatlIDChange_ShouldReturnFalse()
         {
-            OperationResult<bool> result = await _writeRepository.EmployeeAggregate.ValidateNationalIdNumberIsUnique(1, "245797967");
+            Result result = await _writeRepository.EmployeeAggregate.ValidateNationalIdNumberIsUnique(1, "245797967");
 
-            Assert.True(result.Success);
-            Assert.False(result.Result);
+            Assert.True(result.IsFailure);
         }
 
         [Fact]
         public async Task ValidateEmployeeEmailIsUnique_EmployeeAggregateRepo_NewRecord_ShouldReturnTrue()
         {
-            OperationResult<bool> result = await _writeRepository.EmployeeAggregate.ValidateEmployeeEmailIsUnique(0, "david4@adventure-works.com");
+            Result result = await _writeRepository.EmployeeAggregate.ValidateEmployeeEmailIsUnique(0, "david4@adventure-works.com");
 
-            Assert.True(result.Success);
-            Assert.True(result.Result);
+            Assert.True(result.IsSuccess);
         }
 
         [Fact]
         public async Task ValidateEmployeeEmailIsUnique_EmployeeAggregateRepo_EditingExistingWithoutEmailChange_ShouldReturnTrue()
         {
-            OperationResult<bool> result = await _writeRepository.EmployeeAggregate.ValidateEmployeeEmailIsUnique(16, "david0@adventure-works.com");
+            Result result = await _writeRepository.EmployeeAggregate.ValidateEmployeeEmailIsUnique(16, "david0@adventure-works.com");
 
-            Assert.True(result.Success);
-            Assert.True(result.Result);
+            Assert.True(result.IsSuccess);
         }
 
         [Fact]
         public async Task ValidateEmployeeEmailIsUnique_EmployeeAggregateRepo_EditingExistingWithEmailChange_ShouldReturnFalse()
         {
-            OperationResult<bool> result = await _writeRepository.EmployeeAggregate.ValidateEmployeeEmailIsUnique(25, "david0@adventure-works.com");
+            Result result = await _writeRepository.EmployeeAggregate.ValidateEmployeeEmailIsUnique(25, "david0@adventure-works.com");
 
-            Assert.True(result.Success);
-            Assert.False(result.Result);
+            Assert.True(result.IsFailure);
         }
 
 
