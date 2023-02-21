@@ -8,7 +8,7 @@ namespace REA.Accounting.Application.HumanResources.CreateEmployee
 {
     public sealed class CreateEmployeeCommandHandler : ICommandHandler<CreateEmployeeCommand, int>
     {
-        private IWriteRepositoryManager _repo;
+        private readonly IWriteRepositoryManager _repo;
 
         public CreateEmployeeCommandHandler(IWriteRepositoryManager repo)
             => _repo = repo;
@@ -20,11 +20,11 @@ namespace REA.Accounting.Application.HumanResources.CreateEmployee
                 request.EmployeeID,
                 request.PersonType,
                 request.NameStyle ? NameStyleEnum.Eastern : NameStyleEnum.Western,
-                request.Title!,
+                request.Title,
                 request.FirstName,
                 request.LastName,
                 request.MiddleName!,
-                request.Suffix!,
+                request.Suffix,
                 request.NationalID,
                 request.Login,
                 request.JobTitle,
@@ -64,7 +64,7 @@ namespace REA.Accounting.Application.HumanResources.CreateEmployee
                 employee.Id,
                 (AddressTypeEnum)request.AddressType,
                 request.AddressLine1,
-                request.AddressLine2!,
+                request.AddressLine2,
                 request.City,
                 request.StateCode,
                 request.PersonType

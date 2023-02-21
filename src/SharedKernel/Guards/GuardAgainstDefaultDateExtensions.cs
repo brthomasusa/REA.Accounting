@@ -1,5 +1,3 @@
-
-
 namespace REA.Accounting.SharedKernel.Guards
 {
     public static partial class GuardClauseExtensions

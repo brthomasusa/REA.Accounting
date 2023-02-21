@@ -7,7 +7,7 @@ using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Core.Shared
 {
-    public class PersonEmailAddress : Entity<int>
+    public sealed class PersonEmailAddress : Entity<int>
     {
         private PersonEmailAddress(int id, int emailAddressID, EmailAddress emailAddress)
         {
@@ -35,7 +35,7 @@ namespace REA.Accounting.Core.Shared
             }
         }
 
-        public int EmailAddressID { get; private set; }
+        public int EmailAddressID { get; }
 
         public string EmailAddress { get; private set; }
         public void UpdateEmailAddress(string email)

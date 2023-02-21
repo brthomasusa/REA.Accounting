@@ -21,14 +21,14 @@ namespace REA.Accounting.Core.HumanResources.ValueObjects
             return new Login(login);
         }
 
-        private static void CheckValidity(string value)
+        private static void CheckValidity(string login)
         {
-            if (string.IsNullOrEmpty(value))
+            if (string.IsNullOrEmpty(login))
             {
-                throw new ArgumentNullException("The login id is required.");
+                throw new ArgumentNullException(nameof(login), "The login id is required.");
             }
 
-            if (value.Length > 256)
+            if (login.Length > 256)
             {
                 throw new ArgumentException("Invalid login id, maximum length is 256 characters.");
             }

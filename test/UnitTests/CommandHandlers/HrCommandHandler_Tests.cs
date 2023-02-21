@@ -14,7 +14,7 @@ namespace REA.Accounting.UnitTests.CommandHandlers
     public class HrCommandHandler_Tests : IDisposable
     {
         private EfCoreContext? _context;
-        private IWriteRepositoryManager _writeRepository;
+        private readonly IWriteRepositoryManager _writeRepository;
 
         public HrCommandHandler_Tests()
         {
@@ -25,6 +25,7 @@ namespace REA.Accounting.UnitTests.CommandHandlers
         public void Dispose()
         {
             _context!.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         [Fact]
@@ -53,7 +54,7 @@ namespace REA.Accounting.UnitTests.CommandHandlers
         [Fact]
         public async Task Handle_DeleteEmployeeCommandHandler_ShouldSucceed()
         {
-            DeleteEmployeeCommand command = new DeleteEmployeeCommand(EmployeeID: 273);
+            DeleteEmployeeCommand command = new(EmployeeID: 273);
             DeleteEmployeeCommandHandler handler = new(_writeRepository);
 
             Result<int> result = await handler.Handle(command, new CancellationToken());
@@ -61,10 +62,8 @@ namespace REA.Accounting.UnitTests.CommandHandlers
             Assert.True(result.IsSuccess);
         }
 
-
-        private CreateEmployeeCommand GetCreateEmployeeCommand()
-            => new CreateEmployeeCommand
-            (
+        private static CreateEmployeeCommand GetCreateEmployeeCommand()
+            => new(
                 EmployeeID: 0,
                 PersonType: "EM",
                 NameStyle: false,
@@ -100,8 +99,8 @@ namespace REA.Accounting.UnitTests.CommandHandlers
                 PhoneNumberType: 2
             );
 
-        private UpdateEmployeeCommand GetUpdateEmployeeCommand()
-            => new UpdateEmployeeCommand
+        private static UpdateEmployeeCommand GetUpdateEmployeeCommand()
+            => new
             (
                 EmployeeID: 273,
                 PersonType: "EM",

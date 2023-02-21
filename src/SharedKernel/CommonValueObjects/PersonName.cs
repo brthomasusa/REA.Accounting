@@ -3,7 +3,7 @@ using REA.Accounting.SharedKernel.Guards;
 
 namespace REA.Accounting.SharedKernel.CommonValueObjects
 {
-    public class PersonName : ValueObject
+    public sealed class PersonName : ValueObject
     {
         private PersonName(string last, string first, string? mi)
         {

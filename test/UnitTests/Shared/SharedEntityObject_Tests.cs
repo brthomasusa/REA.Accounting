@@ -211,7 +211,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void Person_Create_InvalidContactType_ShouldFail()
         {
-            Action action = () => Contact.Create
+            static void action() => Contact.Create
             (
                 1,
                 ContactTypeEnum.AccountingManager,
@@ -233,7 +233,7 @@ namespace REA.Accounting.UnitTests.Shared
         public void PersonPhone_Create_ValidData_ShouldSucceed()
         {
             Employee employee = GetEmployeeForEditing();
-            string phoneNumber = "214-555-5555";
+            const string phoneNumber = "214-555-5555";
 
             OperationResult<PersonPhone> result = employee.AddPhoneNumbers(1, PhoneNumberTypeEnum.Cell, phoneNumber);
 
@@ -244,7 +244,7 @@ namespace REA.Accounting.UnitTests.Shared
         public void PersonPhone_Create_Invalid_TooLong_ShouldFail()
         {
             Employee employee = GetEmployeeForEditing();
-            string phoneNumber = "214-555-5555123145214514787771234785477777";
+            const string phoneNumber = "214-555-5555123145214514787771234785477777";
 
             OperationResult<PersonPhone> result = employee.AddPhoneNumbers(1, PhoneNumberTypeEnum.Cell, phoneNumber);
 
@@ -255,14 +255,14 @@ namespace REA.Accounting.UnitTests.Shared
         public void PersonPhone_Create_Invalid_PhoneType_ShouldFail()
         {
             Employee employee = GetEmployeeForEditing();
-            string phoneNumber = "214-555-5555";
+            const string phoneNumber = "214-555-5555";
 
             OperationResult<PersonPhone> result = employee.AddPhoneNumbers(1, 0, phoneNumber);
 
             Assert.False(result.Success);
         }
 
-        private Person GetContactForEditing()
+        private static Person GetContactForEditing()
             => Contact.Create
             (
                 1,
@@ -278,7 +278,7 @@ namespace REA.Accounting.UnitTests.Shared
                 EmailPromotionEnum.None
             );
 
-        private Employee GetEmployeeForEditing()
+        private static Employee GetEmployeeForEditing()
         => Employee.Create
                 (
                     1,

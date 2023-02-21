@@ -14,7 +14,7 @@ namespace REA.Accounting.UnitTests.Repositories
     public class EmployeeAggregateRepo_Tests : IDisposable
     {
         private EfCoreContext? _context;
-        private IWriteRepositoryManager _writeRepository;
+        private readonly IWriteRepositoryManager _writeRepository;
 
         public EmployeeAggregateRepo_Tests()
         {
@@ -25,6 +25,7 @@ namespace REA.Accounting.UnitTests.Repositories
         public void Dispose()
         {
             _context!.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         [Fact]
@@ -82,8 +83,7 @@ namespace REA.Accounting.UnitTests.Repositories
             Assert.Null(test.Result);
         }
 
-
-        private Employee GetEmployeeForCreate()
+        private static Employee GetEmployeeForCreate()
             => Employee.Create
                 (
                     0,

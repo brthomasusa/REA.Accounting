@@ -27,7 +27,5 @@ namespace REA.Accounting.Core.HumanResources.ValueObjects
         {
             Guard.Against.DefaultDateTime(value, "StartDate", "The date the employee was assigned to the department is required.");
         }
-
-
     }
 }

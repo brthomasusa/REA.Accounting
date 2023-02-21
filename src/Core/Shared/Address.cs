@@ -9,7 +9,7 @@ using ValueObject = REA.Accounting.Core.Shared.ValueObjects;
 
 namespace REA.Accounting.Core.Shared
 {
-    public class Address : Entity<int>
+    public sealed class Address : Entity<int>
     {
         private Address
         (
@@ -55,12 +55,11 @@ namespace REA.Accounting.Core.Shared
                     ValueObject.AddressLine1.Create(line1),
                     ValueObject.AddressLine2.Create(line2!),
                     ValueObject.City.Create(city),
-                    (stateProvinceID > 0 ? stateProvinceID : throw new ArgumentNullException("A state/province id is required.")),
+                    stateProvinceID > 0 ? stateProvinceID : throw new ArgumentException("A state/province id is required."),
                     ValueObject.PostalCode.Create(postalCode)
                 );
 
                 return OperationResult<Address>.CreateSuccessResult(address);
-
             }
             catch (Exception ex)
             {
@@ -68,7 +67,7 @@ namespace REA.Accounting.Core.Shared
             }
         }
 
-        public int BusinessEntityID { get; private set; }
+        public int BusinessEntityID { get; }
         public AddressTypeEnum AddressType { get; private set; }
         public string AddressLine1 { get; private set; }
         public string? AddressLine2 { get; private set; }
@@ -93,13 +92,12 @@ namespace REA.Accounting.Core.Shared
                 AddressLine1 = ValueObject.AddressLine1.Create(line1).Value!;
                 AddressLine2 = ValueObject.AddressLine2.Create(line2!).Value!;
                 City = ValueObject.City.Create(city).Value!;
-                StateProvinceId = (stateProvinceID > 0 ? stateProvinceID : throw new ArgumentNullException("A state/province id is required."));
+                StateProvinceId = (stateProvinceID > 0 ? stateProvinceID : throw new ArgumentException("A state/province id is required."));
                 PostalCode = ValueObject.PostalCode.Create(postalCode).Value!;
 
                 UpdateModifiedDate();
 
                 return OperationResult<Address>.CreateSuccessResult(this);
-
             }
             catch (Exception ex)
             {

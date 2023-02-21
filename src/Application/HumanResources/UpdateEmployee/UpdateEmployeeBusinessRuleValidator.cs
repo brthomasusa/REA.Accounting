@@ -8,7 +8,7 @@ namespace REA.Accounting.Application.HumanResources.UpdateEmployee
 {
     public class UpdateEmployeeBusinessRuleValidator : CommandValidator<UpdateEmployeeCommand>
     {
-        private IWriteRepositoryManager _repo;
+        private readonly IWriteRepositoryManager _repo;
 
         public UpdateEmployeeBusinessRuleValidator(IWriteRepositoryManager repo)
             => _repo = repo;

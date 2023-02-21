@@ -12,7 +12,6 @@ namespace REA.Accounting.IntegrationTests.Base
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
-
             builder.ConfigureAppConfiguration(config =>
             {
                 Configuration = new ConfigurationBuilder()
@@ -24,10 +23,10 @@ namespace REA.Accounting.IntegrationTests.Base
 
             // Is to be called after the `ConfigureServices` from the Startup
             // which allows you to overwrite the DI with mocked instances
-            builder.ConfigureTestServices(services =>
-            {
-                // services.AddTransient<IWeatherForecastConfigService, WeatherForecastConfigMock>();
-            });
+            // builder.ConfigureTestServices(services =>
+            // {
+            //     // services.AddTransient<IWeatherForecastConfigService, WeatherForecastConfigMock>();
+            // });
         }
     }
 }

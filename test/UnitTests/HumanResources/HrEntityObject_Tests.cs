@@ -12,8 +12,8 @@ namespace REA.Accounting.UnitTests.HumanResources
         [Fact]
         public void Create_Department_ShouldSucceed()
         {
-            string name = "Administration";
-            string groupName = "Admins";
+            const string name = "Administration";
+            const string groupName = "Admins";
 
             var exception = Record.Exception(() =>
                 Department.Create
@@ -30,8 +30,8 @@ namespace REA.Accounting.UnitTests.HumanResources
         [Fact]
         public void Create_Department_NullName_ShouldFail()
         {
-            string name = null;
-            string groupName = "Admins";
+            const string name = null;
+            const string groupName = "Admins";
 
             var exception = Record.Exception(() =>
                 Department.Create
@@ -48,8 +48,8 @@ namespace REA.Accounting.UnitTests.HumanResources
         [Fact]
         public void Create_Department_NullGroupName_ShouldFail()
         {
-            string name = "Administration";
-            string groupName = null;
+            const string name = "Administration";
+            const string groupName = null;
 
             var exception = Record.Exception(() =>
                 Department.Create
@@ -66,7 +66,7 @@ namespace REA.Accounting.UnitTests.HumanResources
         [Fact]
         public void Shift_Create_ShouldSucceed()
         {
-            string name = "Day Shift";
+            const string name = "Day Shift";
             var exception = Record.Exception(() =>
                 Shift.Create
                 (
@@ -85,7 +85,7 @@ namespace REA.Accounting.UnitTests.HumanResources
         [Fact]
         public void Shift_Create_ShiftNameIsNull_ShouldFail()
         {
-            string name = null;
+            const string name = null;
             var exception = Record.Exception(() =>
                 Shift.Create
                 (
@@ -104,7 +104,7 @@ namespace REA.Accounting.UnitTests.HumanResources
         [Fact]
         public void Shift_Create_InvalidStartHour_ShouldFail()
         {
-            string name = "Day Shift";
+            const string name = "Day Shift";
             var exception = Record.Exception(() =>
                 Shift.Create
                 (
@@ -123,7 +123,7 @@ namespace REA.Accounting.UnitTests.HumanResources
         [Fact]
         public void Shift_Create_InvalidStartMinute_ShouldFail()
         {
-            string name = "Day Shift";
+            const string name = "Day Shift";
             var exception = Record.Exception(() =>
                 Shift.Create
                 (
@@ -142,7 +142,7 @@ namespace REA.Accounting.UnitTests.HumanResources
         [Fact]
         public void Shift_Create_InvalidEndHour_ShouldFail()
         {
-            string name = "Day Shift";
+            const string name = "Day Shift";
             var exception = Record.Exception(() =>
                 Shift.Create
                 (
@@ -161,7 +161,7 @@ namespace REA.Accounting.UnitTests.HumanResources
         [Fact]
         public void Shift_Create_InvalidEndMinute_ShouldFail()
         {
-            string name = "Day Shift";
+            const string name = "Day Shift";
             var exception = Record.Exception(() =>
                 Shift.Create
                 (
@@ -237,16 +237,7 @@ namespace REA.Accounting.UnitTests.HumanResources
             Assert.NotNull(exception);
         }
 
-
-        private Department GetDepartmentForEditing()
-        => Department.Create
-                (
-                    1,
-                   OrganizationName.Create("Administration"),
-                   OrganizationName.Create("Admins")
-                );
-
-        private Shift GetShiftForEditing()
+        private static Shift GetShiftForEditing()
         => Shift.Create
                 (
                     1,

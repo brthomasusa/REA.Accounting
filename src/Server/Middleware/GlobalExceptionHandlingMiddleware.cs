@@ -1,3 +1,5 @@
+#pragma warning disable CS2254
+
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Text.Json;

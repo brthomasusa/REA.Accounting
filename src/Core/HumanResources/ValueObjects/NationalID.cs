@@ -23,21 +23,21 @@ namespace REA.Accounting.Core.HumanResources.ValueObjects
             return new NationalID(idNumber);
         }
 
-        private static void CheckValidity(string value)
+        private static void CheckValidity(string idNumber)
         {
-            if (string.IsNullOrEmpty(value))
+            if (string.IsNullOrEmpty(idNumber))
             {
-                throw new ArgumentNullException("The national id number is required.");
+                throw new ArgumentNullException(nameof(idNumber), "The national id number is required.");
             }
 
-            if (value.Length > 15)
+            if (idNumber.Length > 15)
             {
                 throw new ArgumentException("Invalid national id number, maximum length is 15 characters.");
             }
 
-            Regex validateNationalIdNumberRegex = new Regex("^\\d{5,9}$");
-            if (!validateNationalIdNumberRegex.IsMatch(value))
-                throw new ArgumentException($"{value} is not a valid national id number, should be 5 - 9 digits.");
+            Regex validateNationalIdNumberRegex = new("^\\d{5,9}$");
+            if (!validateNationalIdNumberRegex.IsMatch(idNumber))
+                throw new ArgumentException($"{idNumber} is not a valid national id number, should be 5 - 9 digits.");
         }
     }
 }

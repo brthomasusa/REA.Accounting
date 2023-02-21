@@ -12,7 +12,7 @@ namespace REA.Accounting.UnitTests.QueryHandlers
     public class HrQueryHandler_Tests : IDisposable
     {
         private EfCoreContext? _context;
-        private IWriteRepositoryManager _writeRepository;
+        private readonly IWriteRepositoryManager _writeRepository;
 
         public HrQueryHandler_Tests()
         {
@@ -23,6 +23,7 @@ namespace REA.Accounting.UnitTests.QueryHandlers
         public void Dispose()
         {
             _context!.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         [Fact]
@@ -35,27 +36,6 @@ namespace REA.Accounting.UnitTests.QueryHandlers
 
             Assert.True(response.IsSuccess);
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         private async void ConfigureDbContextAsync()
         {

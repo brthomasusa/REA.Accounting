@@ -8,7 +8,7 @@ namespace REA.Accounting.Application.HumanResources.CreateEmployee
 {
     public sealed class CreateEmployeeBusinessRuleValidator : CommandValidator<CreateEmployeeCommand>
     {
-        private IWriteRepositoryManager _repo;
+        private readonly IWriteRepositoryManager _repo;
 
         public CreateEmployeeBusinessRuleValidator(IWriteRepositoryManager repo)
             => _repo = repo;

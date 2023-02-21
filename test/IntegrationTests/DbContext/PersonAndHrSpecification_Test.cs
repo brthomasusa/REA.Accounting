@@ -18,7 +18,7 @@ namespace REA.Accounting.IntegrationTests.DbContext
         {
             //SETUP
 
-            int businessEntityID = 2;
+            const int businessEntityID = 2;
             CancellationToken cancellationToken = default;
 
             //ATTEMPT
@@ -39,7 +39,7 @@ namespace REA.Accounting.IntegrationTests.DbContext
         {
             //SETUP
 
-            string lastNameFragment = "a";
+            const string lastNameFragment = "a";
             CancellationToken cancellationToken = default;
 
             //ATTEMPT
@@ -137,7 +137,7 @@ namespace REA.Accounting.IntegrationTests.DbContext
                 SpecificationEvaluator.Default.GetQuery
                 (
                     _dbContext.Set<PersonDataModel>(),
-                    new ValidateEmployeeEmailIsUniqueSpec(@"kerri0@adventure-works.com")
+                    new ValidateEmployeeEmailIsUniqueSpec("kerri0@adventure-works.com")
                 ).FirstOrDefaultAsync(cancellationToken);
 
             //VERIFY
@@ -155,7 +155,7 @@ namespace REA.Accounting.IntegrationTests.DbContext
                 SpecificationEvaluator.Default.GetQuery
                 (
                     _dbContext.Set<PersonDataModel>(),
-                    new ValidateEmployeeEmailIsUniqueSpec(@"terri0@adventure-works.com")
+                    new ValidateEmployeeEmailIsUniqueSpec("terri0@adventure-works.com")
                 ).FirstOrDefaultAsync(cancellationToken);
 
             //VERIFY

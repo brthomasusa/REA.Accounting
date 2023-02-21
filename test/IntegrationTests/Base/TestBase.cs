@@ -11,7 +11,7 @@ namespace REA.Accounting.IntegrationTests.Base
         protected readonly EfCoreContext _dbContext;
         protected readonly DapperContext _dapperCtx;
 
-        public TestBase()
+        protected TestBase()
         {
             var config = AppSettings.GetConfiguration();
             _connectionString = config.GetConnectionString("DefaultConnection");
@@ -33,6 +33,7 @@ namespace REA.Accounting.IntegrationTests.Base
         public void Dispose()
         {
             _dbContext.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

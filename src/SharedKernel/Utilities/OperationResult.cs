@@ -2,7 +2,7 @@
 
 namespace REA.Accounting.SharedKernel.Utilities
 {
-    public class OperationResult<TResult>
+    public sealed class OperationResult<TResult>
     {
         private OperationResult() { }
 
@@ -12,13 +12,15 @@ namespace REA.Accounting.SharedKernel.Utilities
         public Exception Exception { get; private set; }
 
         public static OperationResult<TResult> CreateSuccessResult(TResult result)
-            => new OperationResult<TResult> { Success = true, Result = result };
+            => new()
+            { Success = true, Result = result };
 
         public static OperationResult<TResult> CreateFailure(string nonSuccessMessage)
-            => new OperationResult<TResult> { Success = false, NonSuccessMessage = nonSuccessMessage };
+            => new()
+            { Success = false, NonSuccessMessage = nonSuccessMessage };
 
         public static OperationResult<TResult> CreateFailure(Exception ex) =>
-            new OperationResult<TResult>
+            new()
             {
                 Success = false,
                 NonSuccessMessage = String.Format("{0}{1}{1}{2}", ex.Message, Environment.NewLine, ex.StackTrace),

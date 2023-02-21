@@ -9,7 +9,7 @@ namespace REA.Accounting.Application.HumanResources.DeleteEmployee
     public sealed class DeleteEmployeeCommandHandler : ICommandHandler<DeleteEmployeeCommand, int>
     {
         private const int RETURN_VALUE = 0;
-        private IWriteRepositoryManager _repo;
+        private readonly IWriteRepositoryManager _repo;
 
         public DeleteEmployeeCommandHandler(IWriteRepositoryManager repo)
             => _repo = repo;

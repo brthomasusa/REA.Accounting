@@ -14,14 +14,14 @@ namespace REA.Accounting.IntegrationTests.Base
         protected readonly string _urlRoot = "api/";
         protected readonly JsonSerializerOptions _options;
 
-        public IntegrationTest(ApiWebApplicationFactory fixture)
+        protected IntegrationTest(ApiWebApplicationFactory fixture)
         {
             _factory = fixture;
             _client = _factory.CreateClient();
             _client.DefaultRequestHeaders.Accept.Clear();
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            OperationResult<bool> result = ReseedTestDatabase.ReseedDatabase();
+            _ = ReseedTestDatabase.ReseedDatabase();
         }
     }
 }

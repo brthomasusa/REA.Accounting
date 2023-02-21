@@ -7,7 +7,6 @@ namespace REA.Accounting.Infrastructure.Persistence.DataModels.Organizations
         private List<Department> _departments = new();
         private List<Shift> _shifts = new();
 
-
         public Company Create
         (
             List<Department> departments,
@@ -27,6 +26,5 @@ namespace REA.Accounting.Infrastructure.Persistence.DataModels.Organizations
         public string? WebsiteUrl { get; set; }
         public Guid RowGuid { get; set; }
         public DateTime ModifiedDate { get; set; }
-
     }
 }

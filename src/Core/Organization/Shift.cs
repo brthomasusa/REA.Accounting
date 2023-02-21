@@ -33,7 +33,7 @@ namespace REA.Accounting.Core.Organization
             int endHour,
             int endMinute
         )
-        => new Shift
+        => new
             (id,
             ShiftName.Create(name),
             ShiftTime.Create(startHour, startMinute),

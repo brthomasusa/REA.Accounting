@@ -8,7 +8,7 @@ namespace REA.Accounting.IntegrationTests.QueryHandlers
 {
     public class HrQueryHandler_Tests : TestBase
     {
-        private IWriteRepositoryManager _writeRepository;
+        private readonly IWriteRepositoryManager _writeRepository;
 
         public HrQueryHandler_Tests()
             => _writeRepository = new WriteRepositoryManager(_dbContext);
@@ -23,7 +23,5 @@ namespace REA.Accounting.IntegrationTests.QueryHandlers
 
             Assert.True(response.IsSuccess);
         }
-
-
     }
 }

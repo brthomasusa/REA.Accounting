@@ -10,7 +10,7 @@ namespace REA.Accounting.IntegrationTests.CommandHandlers
 {
     public class HrCommandHandler_Tests : TestBase
     {
-        private IWriteRepositoryManager _writeRepository;
+        private readonly IWriteRepositoryManager _writeRepository;
 
         public HrCommandHandler_Tests()
             => _writeRepository = new WriteRepositoryManager(_dbContext);
@@ -41,13 +41,12 @@ namespace REA.Accounting.IntegrationTests.CommandHandlers
         [Fact]
         public async Task Handle_DeleteEmployeeCommandHandler_ShouldSucceed()
         {
-            DeleteEmployeeCommand command = new DeleteEmployeeCommand(EmployeeID: 273);
+            DeleteEmployeeCommand command = new(EmployeeID: 273);
             DeleteEmployeeCommandHandler handler = new(_writeRepository);
 
             Result<int> result = await handler.Handle(command, new CancellationToken());
 
             Assert.True(result.IsSuccess);
         }
-
     }
 }

@@ -4,6 +4,5 @@ namespace REA.Accounting.SharedKernel.Interfaces
     // Repositories will only work with aggregate roots, not their children    
     public interface IAggregateRoot
     {
-
     }
 }

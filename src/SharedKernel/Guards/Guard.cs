@@ -5,7 +5,7 @@ namespace REA.Accounting.SharedKernel.Guards
     {
     }
 
-    public class Guard : IGuardClause
+    public sealed class Guard : IGuardClause
     {
         public static IGuardClause Against { get; } = new Guard();
 

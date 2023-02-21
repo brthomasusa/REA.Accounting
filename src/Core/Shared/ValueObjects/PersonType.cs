@@ -3,7 +3,7 @@ using REA.Accounting.SharedKernel.Guards;
 
 namespace REA.Accounting.Core.Shared.ValueObjects
 {
-    public class PersonType : ValueObject
+    public sealed class PersonType : ValueObject
     {
         private static readonly string[] _contactTypes = { "SC", "IN", "SP", "EM", "VC", "GC" };
         public string? Value { get; }

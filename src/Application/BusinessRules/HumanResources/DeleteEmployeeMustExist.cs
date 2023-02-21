@@ -21,7 +21,6 @@ namespace REA.Accounting.Application.BusinessRules.HumanResources
 
             if (result.IsSuccess)
             {
-
                 if (Next is not null)
                 {
                     validationResult = await Next.Validate(employee);

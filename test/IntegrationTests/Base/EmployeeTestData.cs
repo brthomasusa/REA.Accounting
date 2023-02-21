@@ -6,8 +6,7 @@ namespace REA.Accounting.IntegrationTests.Base
     public static class EmployeeTestData
     {
         public static CreateEmployeeCommand GetValidCreateEmployeeCommand()
-            => new CreateEmployeeCommand
-            (
+            => new(
                 EmployeeID: 0,
                 PersonType: "EM",
                 NameStyle: false,
@@ -44,8 +43,7 @@ namespace REA.Accounting.IntegrationTests.Base
             );
 
         public static CreateEmployeeCommand GetInvalidCreateEmployeeCommand_Under18()
-            => new CreateEmployeeCommand
-            (
+            => new(
                 EmployeeID: 0,
                 PersonType: "EM",
                 NameStyle: false,
@@ -82,8 +80,7 @@ namespace REA.Accounting.IntegrationTests.Base
             );
 
         public static CreateEmployeeCommand GetInvalidCreateEmployeeCommand_DupeEmployeeName()
-            => new CreateEmployeeCommand
-            (
+            => new(
                 EmployeeID: 0,
                 PersonType: "EM",
                 NameStyle: false,
@@ -120,8 +117,7 @@ namespace REA.Accounting.IntegrationTests.Base
             );
 
         public static CreateEmployeeCommand GetInvalidCreateEmployeeCommand_DupeNationalID()
-            => new CreateEmployeeCommand
-            (
+            => new(
                 EmployeeID: 0,
                 PersonType: "EM",
                 NameStyle: false,
@@ -158,8 +154,7 @@ namespace REA.Accounting.IntegrationTests.Base
             );
 
         public static CreateEmployeeCommand GetInvalidCreateEmployeeCommand_DupeEmail()
-            => new CreateEmployeeCommand
-            (
+            => new(
                 EmployeeID: 0,
                 PersonType: "EM",
                 NameStyle: false,
@@ -196,8 +191,7 @@ namespace REA.Accounting.IntegrationTests.Base
             );
 
         public static UpdateEmployeeCommand GetUpdateEmployeeCommand_ValidData()
-            => new UpdateEmployeeCommand
-            (
+            => new(
                 EmployeeID: 273,
                 PersonType: "EM",
                 NameStyle: false,

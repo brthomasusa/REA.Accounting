@@ -8,7 +8,7 @@ namespace REA.Accounting.Application.HumanResources.GetEmployeeById
 {
     public class GetEmployeeByIdQueryHandler : IQueryHandler<GetEmployeeByIdQuery, GetEmployeeByIdResponse>
     {
-        private IWriteRepositoryManager _repo;
+        private readonly IWriteRepositoryManager _repo;
 
         public GetEmployeeByIdQueryHandler(IWriteRepositoryManager repo)
             => _repo = repo;
@@ -30,12 +30,12 @@ namespace REA.Accounting.Application.HumanResources.GetEmployeeById
                     (
                         employee.Id,
                         employee.PersonType,
-                        employee.NameStyle == NameStyleEnum.Western ? false : true,
-                        employee.Title!,
+                        employee.NameStyle != NameStyleEnum.Western,
+                        employee.Title,
                         employee.FirstName,
                         employee.LastName,
-                        employee.MiddleName!,
-                        employee.Suffix!,
+                        employee.MiddleName,
+                        employee.Suffix,
                         employee.NationalIDNumber,
                         employee.LoginID,
                         employee.JobTitle,

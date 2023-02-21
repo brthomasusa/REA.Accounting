@@ -35,7 +35,6 @@ namespace REA.Accounting.Infrastructure.Persistence
         public DbSet<EmployeeDepartmentHistory>? EmployeeDepartmentHistory { get; set; }
         public DbSet<EmployeePayHistory>? EmployeePayHistory { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

@@ -5,7 +5,6 @@ namespace REA.Accounting.Infrastructure.Persistence.DataModels.Sales
         public int TerritoryID { get; set; }
         public string? CountryRegionCode { get; set; }
 
-
         public string? Name { get; set; }
         public Guid RowGuid { get; set; }
         public DateTime ModifiedDate { get; set; }

@@ -11,13 +11,13 @@ namespace REA.Accounting.Core.Shared
 {
     public abstract class Person : Entity<int>
     {
-        private List<Address> _addresses = new();
-        private List<PersonEmailAddress> _emailAddresses = new();
-        private List<PersonPhone> _telephones = new();
+        private readonly List<Address> _addresses = new();
+        private readonly List<PersonEmailAddress> _emailAddresses = new();
+        private readonly List<PersonPhone> _telephones = new();
 
         protected Person() { }
 
-        public Person
+        protected Person
         (
             int personID,
             PersonType personType,
@@ -57,7 +57,7 @@ namespace REA.Accounting.Core.Shared
                 PersonType = ValueObject.PersonType.Create(personType).Value!;
                 NameStyle = Enum.IsDefined(typeof(NameStyleEnum), nameStyle) ? nameStyle : throw new ArgumentException("Invalid names style");
                 Title = ValueObject.Title.Create(title).Value!;
-                PersonName name = PersonName.Create(LastName, firstName, MiddleName);
+                PersonName name = PersonName.Create(lastName, firstName, middleName);
                 FirstName = name.FirstName!;
                 LastName = name.LastName!;
                 MiddleName = name.MiddleName!;
@@ -218,7 +218,6 @@ namespace REA.Accounting.Core.Shared
 
                 if (searchResult is not null)
                     return OperationResult<PersonPhone>.CreateFailure("This is a duplicate phone number.");
-
 
                 OperationResult<PersonPhone> result = PersonPhone.Create(id, phoneType, phoneNumber);
                 if (result.Success)

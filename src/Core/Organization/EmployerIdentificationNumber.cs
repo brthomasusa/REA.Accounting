@@ -20,13 +20,13 @@ namespace REA.Accounting.Core.Organization
             return new EmployerIdentificationNumber(ein);
         }
 
-        private static void CheckValidity(string value)
+        private static void CheckValidity(string ein)
         {                           // "^[1-9]\d?-\d{7}$"
-            if (string.IsNullOrEmpty(value))
-                throw new ArgumentNullException("employer identification number is require.");
+            if (string.IsNullOrEmpty(ein))
+                throw new ArgumentNullException(nameof(ein), "employer identification number is require.");
 
-            if (!Regex.IsMatch(value, @"^\d{9}|\d{2}-\d{7}$"))
-                throw new ArgumentException($"Invalid employer identification number {value}!");
+            if (!Regex.IsMatch(ein, @"^\d{9}|\d{2}-\d{7}$"))
+                throw new ArgumentException($"Invalid employer identification number {ein}!");
         }
     }
 }

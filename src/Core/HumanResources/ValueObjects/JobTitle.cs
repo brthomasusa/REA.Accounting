@@ -15,21 +15,20 @@ namespace REA.Accounting.Core.HumanResources.ValueObjects
 
         public static implicit operator string(JobTitle self) => self.Value;
 
-
         public static JobTitle Create(string value)
         {
             CheckValidity(value);
             return new JobTitle(value);
         }
 
-        private static void CheckValidity(string value)
+        private static void CheckValidity(string jobTitle)
         {
-            if (string.IsNullOrEmpty(value))
+            if (string.IsNullOrEmpty(jobTitle))
             {
-                throw new ArgumentNullException("The job title is required.");
+                throw new ArgumentNullException(nameof(jobTitle), "The job title is required.");
             }
 
-            if (value.Length > 50)
+            if (jobTitle.Length > 50)
             {
                 throw new ArgumentException("Invalid job title, maximum length is 50 characters.");
             }

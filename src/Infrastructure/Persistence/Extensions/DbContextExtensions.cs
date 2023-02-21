@@ -10,8 +10,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Extensions
             IEnumerable<SpecificationBase<T>>? filters = null
         )
         {
-            if (filters is not null)
-                filters.ToList().ForEach(item => entityCollection = entityCollection!.Where(item.ToExpression()));
+            filters?.ToList().ForEach(item => entityCollection = entityCollection!.Where(item.ToExpression()));
 
             return entityCollection;
         }

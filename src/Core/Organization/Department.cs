@@ -24,7 +24,7 @@ namespace REA.Accounting.Core.Organization
 
         public static Department Create
         (int id, string name, string groupName)
-            => new Department
+            => new
             (
                 id,
                 OrganizationName.Create(name),

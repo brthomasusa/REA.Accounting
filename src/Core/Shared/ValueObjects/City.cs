@@ -3,7 +3,7 @@ using REA.Accounting.SharedKernel.Guards;
 
 namespace REA.Accounting.Core.Shared.ValueObjects
 {
-    public class City : ValueObject
+    public sealed class City : ValueObject
     {
         public string? Value { get; }
 

@@ -30,12 +30,12 @@ namespace REA.Accounting.SharedKernel.CommonValueObjects
         {
             if (string.IsNullOrEmpty(first))
             {
-                throw new ArgumentNullException("A first name is required.", nameof(first));
+                throw new ArgumentNullException(nameof(first), "A first name is required.");
             }
 
             if (string.IsNullOrEmpty(last))
             {
-                throw new ArgumentNullException("A last name is required.", nameof(last));
+                throw new ArgumentNullException(nameof(last), "A last name is required.");
             }
 
             first = first.Trim();
@@ -43,12 +43,12 @@ namespace REA.Accounting.SharedKernel.CommonValueObjects
 
             if (first.Length > 25)
             {
-                throw new ArgumentOutOfRangeException("Maximum length of the first name is 25 characters.", nameof(first));
+                throw new ArgumentOutOfRangeException(nameof(first), "Maximum length of the first name is 25 characters.");
             }
 
             if (last.Length > 25)
             {
-                throw new ArgumentOutOfRangeException("Maximum length of the last name is 25 characters.", nameof(last));
+                throw new ArgumentOutOfRangeException(nameof(last), "Maximum length of the last name is 25 characters.");
             }
 
             if (!string.IsNullOrEmpty(mi))
@@ -56,15 +56,15 @@ namespace REA.Accounting.SharedKernel.CommonValueObjects
                 mi = mi.Trim();
                 if (mi.Length > 1)
                 {
-                    throw new ArgumentOutOfRangeException("Maximum length of middle initial is 1 character.", nameof(mi));
+                    throw new ArgumentOutOfRangeException(nameof(mi), "Maximum length of middle initial is 1 character.");
                 }
             }
 
-            string rgPhoneNumber = @"^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$";
+            const string rgPhoneNumber = @"^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$";
 
             if (string.IsNullOrEmpty(telephone))
             {
-                throw new ArgumentNullException("The PhoneNumber number is required.", nameof(telephone));
+                throw new ArgumentNullException(nameof(telephone), "The PhoneNumber number is required.");
             }
 
             if (!Regex.IsMatch(telephone, rgPhoneNumber))

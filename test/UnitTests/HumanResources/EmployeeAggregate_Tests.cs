@@ -350,32 +350,7 @@ namespace REA.Accounting.UnitTests.HumanResources
             Assert.False(result.Success);
         }
 
-        private Employee GetEmployeeForCreate()
-            => Employee.Create
-                (
-                    0,
-                    "EM",
-                    Core.Shared.NameStyleEnum.Western,
-                    "Mr",
-                    "John",
-                    "Doe",
-                    "D",
-                    "Senior",
-                    "358987145",
-                    "adventure-works\\john10",
-                    "Tool Designer",
-                    new DateOnly(1990, 2, 21),
-                    "M",
-                    "M",
-                    new DateOnly(2023, 1, 5),
-                    true,
-                    0,
-                    0,
-                    true
-                );
-
-
-        private Employee GetEmployeeForEditing()
+        private static Employee GetEmployeeForEditing()
             => Employee.Create
                 (
                     1,
@@ -400,6 +375,3 @@ namespace REA.Accounting.UnitTests.HumanResources
                 );
     }
 }
-
-
-

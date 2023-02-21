@@ -11,7 +11,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void AddressLine1_Valid_ShouldSucceed()
         {
-            string line1 = "123 Main Street";
+            const string line1 = "123 Main Street";
             AddressLine1 result = AddressLine1.Create(line1);
 
             Assert.IsType<AddressLine1>(result);
@@ -21,7 +21,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void AddressLine1_Invalid_TooLong_ShouldFail()
         {
-            string line1 = "12345678901234567890123456789012345678901234567890123456789012";
+            const string line1 = "12345678901234567890123456789012345678901234567890123456789012";
             var exception = Record.Exception(() => AddressLine1.Create(line1));
 
             Assert.NotNull(exception);
@@ -30,7 +30,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void AddressLine1_Invalid_Null_ShouldFail()
         {
-            string? line1 = null;
+            const string? line1 = null;
 
             var exception = Record.Exception(() => AddressLine1.Create(line1!));
 
@@ -40,7 +40,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void AddressLine2_Valid_ShouldSucceed()
         {
-            string line = "123 Main Street";
+            const string line = "123 Main Street";
             AddressLine2 result = AddressLine2.Create(line);
 
             Assert.IsType<AddressLine2>(result);
@@ -60,7 +60,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void AddressLine2_Valid_Null_ShouldSucceed()
         {
-            string? line = null;
+            const string? line = null;
             AddressLine2 result = AddressLine2.Create(line!);
 
             Assert.IsType<AddressLine2>(result);
@@ -70,7 +70,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void AddressLine2_Invalid_TooLong_ShouldFail()
         {
-            string line = "12345678901234567890123456789012345678901234567890123456789012";
+            const string line = "12345678901234567890123456789012345678901234567890123456789012";
 
             var exception = Record.Exception(() => AddressLine2.Create(line));
 
@@ -80,7 +80,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void City_Valid_ShouldSucceed()
         {
-            string city = "Dallas";
+            const string city = "Dallas";
             City result = City.Create(city);
 
             Assert.IsType<City>(result);
@@ -90,7 +90,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void City_Invalid_null_ShouldFail()
         {
-            string? city = null;
+            const string? city = null;
 
             var exception = Record.Exception(() => City.Create(city!));
 
@@ -100,7 +100,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void City_Invalid_TooLong_ShouldFail()
         {
-            string city = "1234567890123456789012345678901";
+            const string city = "1234567890123456789012345678901";
 
             var exception = Record.Exception(() => City.Create(city!));
 
@@ -110,7 +110,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void PostalCode_ValidData_ShouldSucceed()
         {
-            string postalCode = "123456";
+            const string postalCode = "123456";
             PostalCode result = PostalCode.Create(postalCode);
 
             Assert.IsType<PostalCode>(result);
@@ -130,7 +130,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void PostalCode_Invalid_TooManyCharacters_ShouldFail()
         {
-            string postalCode = "12345678901234567890";
+            const string postalCode = "12345678901234567890";
 
             var exception = Record.Exception(() => PostalCode.Create(postalCode));
             Assert.NotNull(exception);
@@ -139,7 +139,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void ContactType_ValidData_ShouldSucceed()
         {
-            string contactType = "SC";
+            const string contactType = "SC";
             PersonType result = PersonType.Create(contactType);
 
             Assert.IsType<PersonType>(result);
@@ -149,7 +149,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void Contact_Invalid_Null_ShouldFail()
         {
-            string contactType = null;
+            const string contactType = null;
 
             var exception = Record.Exception(() => PersonType.Create(contactType!));
             Assert.NotNull(exception);
@@ -158,7 +158,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void Contact_Invalid_InvalidType_ShouldFail()
         {
-            string contactType = "12";
+            const string contactType = "12";
 
             var exception = Record.Exception(() => PersonType.Create(contactType!));
             Assert.NotNull(exception);
@@ -167,7 +167,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void Title_ValidData_ShouldSucceed()
         {
-            string title = "Miss";
+            const string title = "Miss";
             Title result = Title.Create(title);
 
             Assert.IsType<Title>(result);
@@ -177,7 +177,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void Title_ValidData_Null_ShouldSucceed()
         {
-            string title = null;
+            const string title = null;
             Title result = Title.Create(title!);
 
             Assert.IsType<Title>(result);
@@ -187,7 +187,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void Title_Invalid_TooLong_ShouldFail()
         {
-            string title = "123456789";
+            const string title = "123456789";
 
             var exception = Record.Exception(() => Title.Create(title));
             Assert.NotNull(exception);
@@ -196,7 +196,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void Suffix_ValidData_ShouldSucceed()
         {
-            string suffix = "Junior";
+            const string suffix = "Junior";
             Suffix result = Suffix.Create(suffix!);
 
             Assert.IsType<Suffix>(result);
@@ -206,7 +206,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void Suffix_ValidData_Null_ShouldSucceed()
         {
-            string suffix = null;
+            const string suffix = null;
             Suffix result = Suffix.Create(suffix!);
 
             Assert.IsType<Suffix>(result);
@@ -216,7 +216,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void Suffix_Invalid_TooLong_ShouldFail()
         {
-            string suffix = "12345678901";
+            const string suffix = "12345678901";
 
             var exception = Record.Exception(() => Suffix.Create(suffix));
             Assert.NotNull(exception);
@@ -225,7 +225,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void EmailAddress_ValidData_ShouldSucceed()
         {
-            string email = "some.one@example.com";
+            const string email = "some.one@example.com";
             EmailAddress result = EmailAddress.Create(email);
 
             Assert.IsType<EmailAddress>(result);
@@ -244,7 +244,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void EmailAddress_Null_ShouldFail()
         {
-            string email = null;
+            const string email = null;
 
             var exception = Record.Exception(() => EmailAddress.Create(email!));
             Assert.NotNull(exception);
@@ -253,7 +253,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void EmailAddress_Malformed1_ShouldFail()
         {
-            string email = "hello@";
+            const string email = "hello@";
 
             var exception = Record.Exception(() => EmailAddress.Create(email!));
             Assert.NotNull(exception);
@@ -262,7 +262,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void EmailAddress_Malformed2_ShouldFail()
         {
-            string email = "@test";
+            const string email = "@test";
 
             var exception = Record.Exception(() => EmailAddress.Create(email!));
             Assert.NotNull(exception);
@@ -271,7 +271,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void EmailAddress_Malformed3_ShouldFail()
         {
-            string email = "theproblem@test@gmail.com";
+            const string email = "theproblem@test@gmail.com";
 
             var exception = Record.Exception(() => EmailAddress.Create(email!));
             Assert.NotNull(exception);
@@ -280,7 +280,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void EmailAddress_Malformed4_ShouldFail()
         {
-            string email = "mail with@space.com";
+            const string email = "mail with@space.com";
 
             var exception = Record.Exception(() => EmailAddress.Create(email!));
             Assert.NotNull(exception);
@@ -289,7 +289,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void PhoneNumber_InternationalPhoneNumber_ShouldSucceed()
         {
-            string phoneNumber = "1 (11) 500 555-0190";
+            const string phoneNumber = "1 (11) 500 555-0190";
 
             var exception = Record.Exception(() => PhoneNumber.Create(phoneNumber));
             Assert.Null(exception);
@@ -298,7 +298,7 @@ namespace REA.Accounting.UnitTests.Shared
         [Fact]
         public void PhoneNumber_USPhoneNumber_ShouldSucceed()
         {
-            string phoneNumber = "214-555-5555";
+            const string phoneNumber = "214-555-5555";
 
             var exception = Record.Exception(() => PhoneNumber.Create(phoneNumber));
             Assert.Null(exception);

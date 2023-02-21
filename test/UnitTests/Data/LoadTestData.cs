@@ -7,12 +7,10 @@ using REA.Accounting.Infrastructure.Persistence.DataModels.Sales;
 using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
 using REA.Accounting.Infrastructure.Persistence.DataModels.HumanResources;
 
-
 namespace REA.Accounting.UnitTests.Data
 {
     public static class LoadTestData
     {
-
         static readonly string BaseFilePath;
 
         static LoadTestData()
@@ -226,7 +224,6 @@ namespace REA.Accounting.UnitTests.Data
 
         /*  ================================================================================================  */
 
-
         public static async Task<List<PersonPhone>> LoadTelephoneDataAsync()
         {
             const string fileName = "/home/bthomas/Projects/NetCore/REA.Accounting/test/UnitTests/Data/Telephone-SM.json";
@@ -243,7 +240,6 @@ namespace REA.Accounting.UnitTests.Data
             return await Task.FromResult(getAddressTypeTask.Result);
         }
 
-
         public static HashSet<EmailAddress> GetEmailAddressData()
         {
             string fileName = $"{BaseFilePath}EmailAddress-XS.json";
@@ -257,7 +253,7 @@ namespace REA.Accounting.UnitTests.Data
     public class EmailAddressConverter : JsonCreationConverter<EmailAddress>
     {
         protected override EmailAddress Create(Type objectType, JObject jObject)
-            => new EmailAddress()
+            => new()
             {
                 BusinessEntityID = (int)jObject["BusinessEntityID"],
                 EmailAddressID = (int)jObject["EmailAddressID"],
@@ -265,11 +261,6 @@ namespace REA.Accounting.UnitTests.Data
                 RowGuid = new Guid(jObject["rowguid"]!.ToString()),
                 ModifiedDate = DateTime.Parse(jObject["ModifiedDate"]!.ToString())
             };
-
-        private bool FieldExists(string fieldName, JObject jObject)
-        {
-            return jObject[fieldName] != null;
-        }
     }
 
     public abstract class JsonCreationConverter<T> : JsonConverter
@@ -301,7 +292,6 @@ namespace REA.Accounting.UnitTests.Data
             JsonSerializer serializer
         )
         {
-
         }
 
         public override object ReadJson(JsonReader reader,

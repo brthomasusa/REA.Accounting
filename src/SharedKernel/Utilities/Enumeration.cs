@@ -7,7 +7,7 @@ namespace REA.Accounting.SharedKernel.Utilities
     {
         private static readonly Dictionary<int, TEnum> Enumerations = CreateEnumerations();
 
-        public Enumeration(int value, string name)
+        protected Enumeration(int value, string name)
             => (Value, Name) = (value, name);
 
         public int Value { get; protected init; }

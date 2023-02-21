@@ -3,7 +3,7 @@ using REA.Accounting.SharedKernel.Guards;
 
 namespace REA.Accounting.Core.Shared.ValueObjects
 {
-    public class Suffix : ValueObject
+    public sealed class Suffix : ValueObject
     {
         public string? Value { get; }
 

@@ -10,7 +10,7 @@ namespace REA.Accounting.UnitTests.HumanResources
         [Fact]
         public void ShiftName_Create_ShouldSucceed()
         {
-            string name = "Day Shift";
+            const string name = "Day Shift";
             var exception = Record.Exception(() => ShiftName.Create(name));
             Assert.Null(exception);
         }
@@ -18,7 +18,7 @@ namespace REA.Accounting.UnitTests.HumanResources
         [Fact]
         public void ShiftName_Create_Null_ShouldFail()
         {
-            string name = null;
+            const string name = null;
             var exception = Record.Exception(() => ShiftName.Create(name!));
             Assert.NotNull(exception);
         }

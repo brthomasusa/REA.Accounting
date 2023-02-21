@@ -3,7 +3,7 @@ using REA.Accounting.SharedKernel.Guards;
 
 namespace REA.Accounting.Core.Shared.ValueObjects
 {
-    public class AddressLine2 : ValueObject
+    public sealed class AddressLine2 : ValueObject
     {
         public string? Value { get; }
 

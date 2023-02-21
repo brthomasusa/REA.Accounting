@@ -18,7 +18,7 @@ namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
         [Fact]
         public async Task Employee_GetEmployeeByIdQuery_ShouldSucceed()
         {
-            int employeeId = 1;
+            const int employeeId = 1;
             using var response = await _client.GetAsync($"{_urlRoot}employees/{employeeId}",
                                                         HttpCompletionOption.ResponseHeadersRead);
 
@@ -34,7 +34,7 @@ namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
         [Fact]
         public async Task Employee_GetEmployeeByIdQuery_InvalidEmployeeID_ShouldFail()
         {
-            int employeeId = 100000;
+            const int employeeId = 100000;
             using var response = await _client.GetAsync($"{_urlRoot}employees/{employeeId}",
                                                         HttpCompletionOption.ResponseHeadersRead);
 
@@ -54,19 +54,15 @@ namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
             var request = new HttpRequestMessage(HttpMethod.Post, uri);
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            using (var requestContent = new StreamContent(memStream))
-            {
-                request.Content = requestContent;
-                requestContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            using var requestContent = new StreamContent(memStream);
+            request.Content = requestContent;
+            requestContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-                using (var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead))
-                {
-                    response.EnsureSuccessStatusCode();
+            using var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
+            response.EnsureSuccessStatusCode();
 
-                    var jsonResponse = await response.Content.ReadAsStreamAsync();
-                    var employeeResponse = await JsonSerializer.DeserializeAsync<GetEmployeeByIdResponse>(jsonResponse, _options);
-                }
-            }
+            var jsonResponse = await response.Content.ReadAsStreamAsync();
+            var employeeResponse = await JsonSerializer.DeserializeAsync<GetEmployeeByIdResponse>(jsonResponse, _options);
         }
 
         [Fact]
@@ -82,14 +78,12 @@ namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
             var request = new HttpRequestMessage(HttpMethod.Post, uri);
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            using (var requestContent = new StreamContent(memStream))
-            {
-                request.Content = requestContent;
-                requestContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            using var requestContent = new StreamContent(memStream);
+            request.Content = requestContent;
+            requestContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-                using var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
-                Assert.False(response.IsSuccessStatusCode);
-            }
+            using var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
+            Assert.False(response.IsSuccessStatusCode);
         }
 
         [Fact]
@@ -105,14 +99,12 @@ namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
             var request = new HttpRequestMessage(HttpMethod.Post, uri);
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            using (var requestContent = new StreamContent(memStream))
-            {
-                request.Content = requestContent;
-                requestContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            using var requestContent = new StreamContent(memStream);
+            request.Content = requestContent;
+            requestContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-                using var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
-                Assert.False(response.IsSuccessStatusCode);
-            }
+            using var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
+            Assert.False(response.IsSuccessStatusCode);
         }
 
         [Fact]
@@ -128,16 +120,12 @@ namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
             var request = new HttpRequestMessage(HttpMethod.Put, uri);
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            using (var requestContent = new StreamContent(memStream))
-            {
-                request.Content = requestContent;
-                requestContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            using var requestContent = new StreamContent(memStream);
+            request.Content = requestContent;
+            requestContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-                using (var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead))
-                {
-                    response.EnsureSuccessStatusCode();
-                }
-            }
+            using var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
+            response.EnsureSuccessStatusCode();
         }
 
         [Fact]
@@ -153,16 +141,12 @@ namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
             var request = new HttpRequestMessage(HttpMethod.Delete, uri);
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            using (var requestContent = new StreamContent(memStream))
-            {
-                request.Content = requestContent;
-                requestContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            using var requestContent = new StreamContent(memStream);
+            request.Content = requestContent;
+            requestContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-                using (var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead))
-                {
-                    response.EnsureSuccessStatusCode();
-                }
-            }
+            using var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
+            response.EnsureSuccessStatusCode();
         }
 
         [Fact]
@@ -178,14 +162,12 @@ namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
             var request = new HttpRequestMessage(HttpMethod.Delete, uri);
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            using (var requestContent = new StreamContent(memStream))
-            {
-                request.Content = requestContent;
-                requestContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            using var requestContent = new StreamContent(memStream);
+            request.Content = requestContent;
+            requestContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-                using var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
-                Assert.False(response.IsSuccessStatusCode);
-            }
+            using var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
+            Assert.False(response.IsSuccessStatusCode);
         }
     }
 }

@@ -5,7 +5,7 @@ using REA.Accounting.SharedKernel.Guards;
 
 namespace REA.Accounting.SharedKernel.CommonValueObjects
 {
-    public class EmailAddress : ValueObject
+    public sealed class EmailAddress : ValueObject
     {
         public string? Value { get; }
 
@@ -42,11 +42,11 @@ namespace REA.Accounting.SharedKernel.CommonValueObjects
             try
             {
                 // Normalize the domain
-                email = Regex.Replace(email, @"(@)(.+)$", DomainMapper,
+                email = Regex.Replace(email, "(@)(.+)$", DomainMapper,
                                       RegexOptions.None, TimeSpan.FromMilliseconds(200));
 
                 // Examines the domain part of the email and normalizes it.
-                string DomainMapper(Match match)
+                static string DomainMapper(Match match)
                 {
                     // Use IdnMapping class to convert Unicode domain names.
                     var idn = new IdnMapping();

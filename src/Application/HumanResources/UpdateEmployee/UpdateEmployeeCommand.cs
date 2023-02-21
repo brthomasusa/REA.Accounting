@@ -26,5 +26,4 @@ namespace REA.Accounting.Application.HumanResources.UpdateEmployee
             int SickLeave,
             bool Active
     ) : ICommand<int>;
-
 }

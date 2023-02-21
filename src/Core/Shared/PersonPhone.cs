@@ -7,7 +7,7 @@ using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Core.Shared
 {
-    public class PersonPhone : Entity<int>
+    public sealed class PersonPhone : Entity<int>
     {
         private PersonPhone
         (
@@ -38,7 +38,6 @@ namespace REA.Accounting.Core.Shared
                 );
 
                 return OperationResult<PersonPhone>.CreateSuccessResult(phone);
-
             }
             catch (Exception ex)
             {

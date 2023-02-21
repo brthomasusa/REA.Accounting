@@ -14,13 +14,7 @@ namespace REA.Accounting.SharedKernel.CommonValueObjects
 
         public static Status Create(bool status)
         {
-            CheckValidity(status);
             return new Status(status);
-        }
-
-        private static void CheckValidity(bool value)
-        {
-
         }
     }
 }

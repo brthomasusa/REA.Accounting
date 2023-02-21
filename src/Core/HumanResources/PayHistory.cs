@@ -5,7 +5,7 @@ using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Core.HumanResources
 {
-    public class PayHistory : Entity<int>
+    public sealed class PayHistory : Entity<int>
     {
         private PayHistory
         (
@@ -39,7 +39,6 @@ namespace REA.Accounting.Core.HumanResources
                         Enum.IsDefined(typeof(PayFrequencyEnum), payFrequency) ? payFrequency : throw new ArgumentException("Invalid pay frequency.")
                     );
                 return OperationResult<PayHistory>.CreateSuccessResult(history);
-
             }
             catch (Exception ex)
             {
@@ -47,9 +46,9 @@ namespace REA.Accounting.Core.HumanResources
             }
         }
 
-        public DateTime RateChangeDate { get; private set; }
-        public decimal Rate { get; private set; }
-        public PayFrequencyEnum PayFrequency { get; private set; }
+        public DateTime RateChangeDate { get; }
+        public decimal Rate { get; }
+        public PayFrequencyEnum PayFrequency { get; }
     }
 
     public enum PayFrequencyEnum : int

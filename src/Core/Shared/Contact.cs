@@ -8,7 +8,7 @@ using ValueObject = REA.Accounting.Core.Shared.ValueObjects;
 
 namespace REA.Accounting.Core.Shared
 {
-    public class Contact : Person
+    public sealed class Contact : Person
     {
         private Contact
         (
@@ -41,7 +41,7 @@ namespace REA.Accounting.Core.Shared
             string? suffix,
             EmailPromotionEnum emailPromotionEnum
         )
-            => new Contact
+            => new
                 (
                     businessEntityID,
                     Enum.IsDefined(typeof(ContactTypeEnum), contactType) ? contactType : throw new ArgumentException("Invalid contact type."),
@@ -54,7 +54,7 @@ namespace REA.Accounting.Core.Shared
                     Enum.IsDefined(typeof(EmailPromotionEnum), emailPromotionEnum) ? emailPromotionEnum : throw new ArgumentException("Invalid email promotion flag")
                 );
 
-        public int BusinessEntityID { get; private set; }
+        public int BusinessEntityID { get; }
 
         public ContactTypeEnum ContactType { get; private set; }
         public void UpdateContactType(ContactTypeEnum value)

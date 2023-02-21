@@ -5,7 +5,7 @@ using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Core.HumanResources
 {
-    public class DepartmentHistory : Entity<int>
+    public sealed class DepartmentHistory : Entity<int>
     {
         private DepartmentHistory
         (
@@ -36,24 +36,21 @@ namespace REA.Accounting.Core.HumanResources
                 DepartmentHistory history = new
                     (
                         Guard.Against.LessThanZero(id, "Id", "DepartmentHistory id can not be negative."),
-                        Guard.Against.LessThanZero(shiftId, "shiftId", "Shift id can not be negative."),
+                        Guard.Against.LessThanZero(shiftId, nameof(shiftId), "Shift id can not be negative."),
                         DepartmentStartDate.Create(startDate),
                         DateOnly.FromDateTime(endDate is null ? default : (DateTime)endDate)
                     );
                 return OperationResult<DepartmentHistory>.CreateSuccessResult(history);
-
             }
             catch (Exception ex)
             {
                 return OperationResult<DepartmentHistory>.CreateFailure(Helpers.GetExceptionMessage(ex));
             }
-
-
         }
 
-        public int DepartmentID { get; private set; }
-        public int ShiftID { get; private set; }
-        public DateOnly StartDate { get; private set; }
+        public int DepartmentID { get; }
+        public int ShiftID { get; }
+        public DateOnly StartDate { get; }
         public DateOnly? EndDate { get; private set; }
 
         protected override void CheckValidity()

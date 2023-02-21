@@ -178,7 +178,7 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
             await context.SeedLookupData();
             await context.SeedPersonAndHrData();
 
-            int businessEntityID = 2;
+            const int businessEntityID = 2;
             CancellationToken cancellationToken = default;
 
             //ATTEMPT
@@ -194,7 +194,6 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
             Assert.Equal("245797967", person.Employee!.NationalIDNumber);
         }
 
-
         [Fact]
         public async Task PersonByLastNameWithEmployeeSpecification_OneLetterCriteria_ShouldSucceed()
         {
@@ -206,7 +205,7 @@ namespace REA.Accounting.UnitTests.DbContext.Sqlite
             await context.SeedLookupData();
             await context.SeedPersonAndHrData();
 
-            string lastNameFragment = "a";
+            const string lastNameFragment = "a";
             CancellationToken cancellationToken = default;
 
             //ATTEMPT
