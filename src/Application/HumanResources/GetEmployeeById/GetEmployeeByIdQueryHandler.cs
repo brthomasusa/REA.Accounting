@@ -21,10 +21,10 @@ namespace REA.Accounting.Application.HumanResources.GetEmployeeById
         {
             try
             {
-                OperationResult<Employee> result = await _repo.EmployeeAggregate.GetEmployeeOnlyAsync(request.EmployeeID, true);
-                if (result.Success)
+                Result<Employee> result = await _repo.EmployeeAggregate.GetEmployeeOnlyAsync(request.EmployeeID, true);
+                if (result.IsSuccess)
                 {
-                    Employee employee = result.Result;
+                    Employee employee = result.Value;
 
                     GetEmployeeByIdResponse response = new
                     (
@@ -53,7 +53,7 @@ namespace REA.Accounting.Application.HumanResources.GetEmployeeById
                 }
                 else
                 {
-                    return Result<GetEmployeeByIdResponse>.Failure<GetEmployeeByIdResponse>(new Error("GetEmployeeByIdQueryHandler.Handle", result.NonSuccessMessage!));
+                    return Result<GetEmployeeByIdResponse>.Failure<GetEmployeeByIdResponse>(new Error("GetEmployeeByIdQueryHandler.Handle", result.Error.Message));
                 }
             }
             catch (Exception ex)

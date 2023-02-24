@@ -6,7 +6,7 @@ namespace REA.Accounting.Core.Interfaces
 {
     public interface IEmployeeAggregateRepository : IRepository<Employee>
     {
-        Task<OperationResult<Employee>> GetEmployeeOnlyAsync(int empployeeID, bool asNoTracking = false);
+        Task<Result<Employee>> GetEmployeeOnlyAsync(int empployeeID, bool asNoTracking = false);
         Task<Result> ValidatePersonNameIsUnique(int id, string fname, string lname, string? middleName, bool asNoTracking = true);
         Task<Result> ValidateNationalIdNumberIsUnique(int id, string nationalIdNumber, bool asNoTracking = true);
         Task<Result> ValidateEmployeeEmailIsUnique(int id, string emailAddres, bool asNoTracking = true);

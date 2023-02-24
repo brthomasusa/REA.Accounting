@@ -18,19 +18,20 @@ namespace REA.Accounting.Application.HumanResources.DeleteEmployee
         {
             try
             {
-                OperationResult<Employee> getResult = await _repo.EmployeeAggregate.GetByIdAsync(request.EmployeeID);
+                Result<Employee> getResult = await _repo.EmployeeAggregate.GetByIdAsync(request.EmployeeID);
 
-                if (getResult.Success)
+                if (getResult.IsSuccess)
                 {
-                    OperationResult<int> deleteDbResult = await _repo.EmployeeAggregate.Delete(getResult.Result);
-                    if (deleteDbResult.Success)
+                    Result<int> deleteDbResult = await _repo.EmployeeAggregate.Delete(getResult.Value);
+
+                    if (deleteDbResult.IsSuccess)
                         return RETURN_VALUE;
 
-                    return Result<int>.Failure<int>(new Error("DeleteEmployeeCommandHandler.Handle", deleteDbResult.NonSuccessMessage!));
+                    return Result<int>.Failure<int>(new Error("DeleteEmployeeCommandHandler.Handle", deleteDbResult.Error.Message));
                 }
                 else
                 {
-                    return Result<int>.Failure<int>(new Error("DeleteEmployeeCommandHandler.Handle", getResult.NonSuccessMessage!));
+                    return Result<int>.Failure<int>(new Error("DeleteEmployeeCommandHandler.Handle", getResult.Error.Message));
                 }
             }
             catch (Exception ex)

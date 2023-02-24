@@ -1,4 +1,5 @@
 #pragma warning disable CS8600, CS8602
+
 using System.Net.Http.Headers;
 using System.Text.Json;
 

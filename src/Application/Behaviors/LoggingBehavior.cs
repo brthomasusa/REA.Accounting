@@ -29,6 +29,7 @@ namespace REA.Accounting.Application.Behaviors
                 DateTime.UtcNow);
 
             var result = await next();
+
             if (result.IsFailure)
             {
                 _logger.LogError(

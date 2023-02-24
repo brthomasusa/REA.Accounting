@@ -11,7 +11,7 @@ using REA.Accounting.SharedKernel.Interfaces;
 using REA.Accounting.SharedKernel.Utilities;
 
 using EmployeeDataModel = REA.Accounting.Infrastructure.Persistence.DataModels.HumanResources.EmployeeDataModel;
-using DomainModelEmployee = REA.Accounting.Core.HumanResources.Employee;
+using EmployeeDomainModel = REA.Accounting.Core.HumanResources.Employee;
 
 namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
 {
@@ -142,7 +142,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
             }
         }
 
-        public async Task<OperationResult<DomainModelEmployee>> GetEmployeeOnlyAsync(int empployeeID, bool asNoTracking = false)
+        public async Task<Result<EmployeeDomainModel>> GetEmployeeOnlyAsync(int employeeID, bool asNoTracking = false)
         {
             try
             {
@@ -152,27 +152,28 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
                     SpecificationEvaluator.Default.GetQuery
                     (
                         asNoTracking ? _context.Set<PersonDataModel>().AsNoTracking() : _context.Set<PersonDataModel>(),
-                        new PersonByIDWithEmployeeOnlySpec(empployeeID)
+                        new PersonByIDWithEmployeeOnlySpec(employeeID)
                     ).FirstOrDefaultAsync(cancellationToken);
 
                 if (person is not null)
                 {
-                    DomainModelEmployee employee = person!.MapToEmployeeDomainObject();
-                    return OperationResult<DomainModelEmployee>.CreateSuccessResult(employee);
+                    EmployeeDomainModel employee = person!.MapToEmployeeDomainObject();
+                    return Result<EmployeeDomainModel>.Success<EmployeeDomainModel>(employee);
                 }
                 else
                 {
-                    string errMsg = $"An employee with ID: {empployeeID} could not be found.";
-                    return OperationResult<DomainModelEmployee>.CreateFailure(errMsg);
+                    string errMsg = $"An employee with ID: {employeeID} could not be found.";
+                    return Result<EmployeeDomainModel>.Failure<EmployeeDomainModel>(new Error("EmployeeAggregateRepository.GetEmployeeOnlyAsync", errMsg));
                 }
             }
             catch (Exception ex)
             {
-                return OperationResult<DomainModelEmployee>.CreateFailure(ex.Message);
+                return Result<EmployeeDomainModel>.Failure<EmployeeDomainModel>(new Error("EmployeeAggregateRepository.GetEmployeeOnlyAsync",
+                                                                                          Helpers.GetExceptionMessage(ex)));
             }
         }
 
-        public async Task<OperationResult<DomainModelEmployee>> GetByIdAsync(int empployeeID, bool asNoTracking = false)
+        public async Task<Result<EmployeeDomainModel>> GetByIdAsync(int employeeID, bool asNoTracking = false)
         {
             try
             {
@@ -182,49 +183,58 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
                     SpecificationEvaluator.Default.GetQuery
                     (
                         asNoTracking ? _context.Set<PersonDataModel>().AsNoTracking() : _context.Set<PersonDataModel>(),
-                        new PersonByIDWithEmployeeSpec(empployeeID)
+                        new PersonByIDWithEmployeeSpec(employeeID)
                     ).FirstOrDefaultAsync(cancellationToken);
 
-                DomainModelEmployee employee = person!.MapToEmployeeDomainObject();
-
-                // Add addresses to employee from person data model
-                if (person!.BusinessEntityAddresses.ToList().Any())
+                if (person is not null)
                 {
-                    person!.BusinessEntityAddresses.ToList().ForEach(dataModelAddress =>
-                        dataModelAddress.MapDataModelAddressToDomainAddress(ref employee));
-                }
+                    EmployeeDomainModel employee = person!.MapToEmployeeDomainObject();
 
-                // Add email addresses to employee from person data model
-                if (person.EmailAddresses.ToList().Any())
+                    // Add addresses to employee from person data model
+                    if (person!.BusinessEntityAddresses.ToList().Any())
+                    {
+                        person!.BusinessEntityAddresses.ToList().ForEach(dataModelAddress =>
+                            dataModelAddress.MapDataModelAddressToDomainAddress(ref employee));
+                    }
+
+                    // Add email addresses to employee from person data model
+                    if (person.EmailAddresses.ToList().Any())
+                    {
+                        person.EmailAddresses.ToList().ForEach(email =>
+                            employee.AddEmailAddress(
+                                email.BusinessEntityID,
+                                email.EmailAddressID,
+                                email.MailAddress!
+                            ));
+                    }
+
+                    // Add email addresses to employee from person data model
+                    if (person!.Telephones.ToList().Any())
+                    {
+                        person!.Telephones.ToList().ForEach(tel =>
+                            employee.AddPhoneNumbers(
+                                tel.BusinessEntityID,
+                                (PhoneNumberTypeEnum)tel.PhoneNumberTypeID,
+                                tel.PhoneNumber!
+                            ));
+                    }
+
+                    return Result<EmployeeDomainModel>.Success<EmployeeDomainModel>(employee);
+                }
+                else
                 {
-                    person.EmailAddresses.ToList().ForEach(email =>
-                        employee.AddEmailAddress(
-                            email.BusinessEntityID,
-                            email.EmailAddressID,
-                            email.MailAddress!
-                        ));
+                    string errMsg = $"An employee with ID: {employeeID} could not be found.";
+                    return Result<EmployeeDomainModel>.Failure<EmployeeDomainModel>(new Error("EmployeeAggregateRepository.GetByIdAsync", errMsg));
                 }
-
-                // Add email addresses to employee from person data model
-                if (person!.Telephones.ToList().Any())
-                {
-                    person!.Telephones.ToList().ForEach(tel =>
-                        employee.AddPhoneNumbers(
-                            tel.BusinessEntityID,
-                            (PhoneNumberTypeEnum)tel.PhoneNumberTypeID,
-                            tel.PhoneNumber!
-                        ));
-                }
-
-                return OperationResult<DomainModelEmployee>.CreateSuccessResult(employee);
             }
             catch (Exception ex)
             {
-                return OperationResult<DomainModelEmployee>.CreateFailure(ex.Message);
+                return Result<EmployeeDomainModel>.Failure<EmployeeDomainModel>(new Error("EmployeeAggregateRepository.GetByIdAsync",
+                                                                                          Helpers.GetExceptionMessage(ex)));
             }
         }
 
-        public async Task<OperationResult<int>> InsertAsync(DomainModelEmployee employee)
+        public async Task<Result<int>> InsertAsync(EmployeeDomainModel employee)
         {
             try
             {
@@ -237,15 +247,16 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
                 await _context.AddAsync(entity);
                 await _unitOfWork.CommitAsync();
 
-                return OperationResult<int>.CreateSuccessResult(entity.BusinessEntityID);
+                return Result<int>.Success<int>(entity.BusinessEntityID);
             }
             catch (Exception ex)
             {
-                return OperationResult<int>.CreateFailure(Helpers.GetExceptionMessage(ex));
+                return Result<int>.Failure<int>(new Error("EmployeeAggregateRepository.InsertAsync",
+                                                           Helpers.GetExceptionMessage(ex)));
             }
         }
 
-        public async Task<OperationResult<int>> Update(DomainModelEmployee employee)
+        public async Task<Result<int>> Update(EmployeeDomainModel employee)
         {
             try
             {
@@ -264,20 +275,22 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
 
                     await _unitOfWork.CommitAsync();
 
-                    return OperationResult<int>.CreateSuccessResult(0);
+                    return Result<int>.Success<int>(0);
                 }
                 else
                 {
-                    return OperationResult<int>.CreateFailure("Failed to retrieve employee for editing.");
+                    return Result<int>.Failure<int>(new Error("EmployeeAggregateRepository.Update",
+                                                              $"Failed to retrieve employee with ID: {employee.Id} for editing."));
                 }
             }
             catch (Exception ex)
             {
-                return OperationResult<int>.CreateFailure(Helpers.GetExceptionMessage(ex));
+                return Result<int>.Failure<int>(new Error("EmployeeAggregateRepository.Update",
+                                                           Helpers.GetExceptionMessage(ex)));
             }
         }
 
-        public async Task<OperationResult<int>> Delete(DomainModelEmployee entity)
+        public async Task<Result<int>> Delete(EmployeeDomainModel entity)
         {
             try
             {
@@ -299,16 +312,18 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
                     _context.BusinessEntity!.Remove(businessEntity);
 
                     await _unitOfWork.CommitAsync();
-                    return OperationResult<int>.CreateSuccessResult(0);
+                    return Result<int>.Success<int>(0);
                 }
                 else
                 {
-                    return OperationResult<int>.CreateFailure("Errors occurred while retrieving employee to be deleted.");
+                    return Result<int>.Failure<int>(new Error("EmployeeAggregateRepository.Delete",
+                                                              $"Failed to retrieve employee with ID: {entity.Id} for deletion."));
                 }
             }
             catch (Exception ex)
             {
-                return OperationResult<int>.CreateFailure(Helpers.GetExceptionMessage(ex));
+                return Result<int>.Failure<int>(new Error("EmployeeAggregateRepository.Delete",
+                                                           Helpers.GetExceptionMessage(ex)));
             }
         }
 

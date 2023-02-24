@@ -13,7 +13,7 @@ namespace REA.Accounting.Application.HumanResources.DeleteEmployee
         public DeleteEmployeeBusinessRuleValidator(IWriteRepositoryManager repo)
             => _repo = repo;
 
-        public override async Task<OperationResult<bool>> Validate(DeleteEmployeeCommand command)
+        public override async Task<Result> Validate(DeleteEmployeeCommand command)
         {
             DeleteEmployeeMustExist verifyEmployeeExist = new(_repo);
 
@@ -21,11 +21,11 @@ namespace REA.Accounting.Application.HumanResources.DeleteEmployee
 
             if (result.IsValid)
             {
-                return OperationResult<bool>.CreateSuccessResult(true);
+                return Result.Success();
             }
             else
             {
-                return OperationResult<bool>.CreateFailure(result.Messages[0]);
+                return Result.Failure(new Error("DeleteEmployeeBusinessRuleValidator.Validate", result.Messages[0]));
             }
         }
     }

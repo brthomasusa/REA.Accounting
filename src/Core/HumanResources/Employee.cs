@@ -100,7 +100,7 @@ namespace REA.Accounting.Core.HumanResources
             );
         }
 
-        public OperationResult<Employee> Update
+        public Result<Employee> Update
         (
             string personType,
             NameStyleEnum nameStyle,
@@ -141,11 +141,11 @@ namespace REA.Accounting.Core.HumanResources
 
                 CheckValidity();
                 UpdateModifiedDate();
-                return OperationResult<Employee>.CreateSuccessResult(this);
+                return Result<Employee>.Success<Employee>(this);
             }
             catch (Exception ex)
             {
-                return OperationResult<Employee>.CreateFailure(Helpers.GetExceptionMessage(ex));
+                return Result<Employee>.Failure<Employee>(new Error("Employee.Update", Helpers.GetExceptionMessage(ex)));
             }
         }
 

@@ -25,6 +25,10 @@ namespace REA.Accounting.Application.BusinessRules.HumanResources
                 {
                     validationResult = await Next.Validate(employee);
                 }
+                else
+                {
+                    validationResult.IsValid = true;
+                }
             }
             else
             {

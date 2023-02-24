@@ -90,14 +90,14 @@ namespace REA.Accounting.Application.HumanResources.CreateEmployee
             if (!phoneResult.Success)
                 return Result<int>.Failure<int>(new Error("CreateEmployeeCommandHandler.Handle", phoneResult.NonSuccessMessage!));
 
-            OperationResult<int> insertDbResult = await _repo.EmployeeAggregate.InsertAsync(employee);
-            if (insertDbResult.Success)
+            Result<int> insertDbResult = await _repo.EmployeeAggregate.InsertAsync(employee);
+            if (insertDbResult.IsSuccess)
             {
-                return insertDbResult.Result;
+                return insertDbResult;
             }
             else
             {
-                return Result<int>.Failure<int>(new Error("CreateEmployeeCommandHandler.Handle", insertDbResult.NonSuccessMessage!));
+                return Result<int>.Failure<int>(new Error("CreateEmployeeCommandHandler.Handle", insertDbResult.Error.Message));
             }
         }
     }

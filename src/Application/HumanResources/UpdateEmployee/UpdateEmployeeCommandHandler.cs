@@ -19,11 +19,11 @@ namespace REA.Accounting.Application.HumanResources.UpdateEmployee
         {
             try
             {
-                OperationResult<Employee> getResult = await _repo.EmployeeAggregate.GetByIdAsync(request.EmployeeID);
+                Result<Employee> getEmployee = await _repo.EmployeeAggregate.GetByIdAsync(request.EmployeeID);
 
-                if (getResult.Success)
+                if (getEmployee.IsSuccess)
                 {
-                    OperationResult<Employee> updateDomainObjResult = getResult.Result.Update
+                    Result<Employee> updateDomainObjResult = getEmployee.Value.Update
                     (
                         request.PersonType,
                         request.NameStyle ? NameStyleEnum.Eastern : NameStyleEnum.Western,
@@ -46,27 +46,32 @@ namespace REA.Accounting.Application.HumanResources.UpdateEmployee
                         request.Active
                     );
 
-                    if (updateDomainObjResult.Success)
+                    if (updateDomainObjResult.IsSuccess)
                     {
-                        OperationResult<int> updateDbResult = await _repo.EmployeeAggregate.Update(updateDomainObjResult.Result);
+                        // Employee domain obj update succeeded
+                        Result<int> updateDbResult = await _repo.EmployeeAggregate.Update(updateDomainObjResult.Value);
 
-                        if (updateDbResult.Success)
+                        if (updateDbResult.IsSuccess)
                         {
+                            // db update succeeded
                             return RETURN_VALUE;
                         }
                         else
                         {
-                            return Result<int>.Failure<int>(new Error("UpdateEmployeeCommandHandler.Handle", updateDbResult.NonSuccessMessage!));
+                            // db update failed
+                            return Result<int>.Failure<int>(new Error("UpdateEmployeeCommandHandler.Handle", updateDbResult.Error.Message));
                         }
                     }
                     else
                     {
-                        return Result<int>.Failure<int>(new Error("UpdateEmployeeCommandHandler.Handle", updateDomainObjResult.NonSuccessMessage!));
+                        // Employee domain obj update failed, probably because of validation errors
+                        return Result<int>.Failure<int>(new Error("UpdateEmployeeCommandHandler.Handle", updateDomainObjResult.Error.Message));
                     }
                 }
                 else
                 {
-                    return Result<int>.Failure<int>(new Error("UpdateEmployeeCommandHandler.Handle", getResult.NonSuccessMessage!));
+                    // Employee info could not be retrieved from the db
+                    return Result<int>.Failure<int>(new Error("UpdateEmployeeCommandHandler.Handle", getEmployee.Error.Message));
                 }
             }
             catch (Exception ex)

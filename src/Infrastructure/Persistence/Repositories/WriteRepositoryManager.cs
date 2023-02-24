@@ -1,5 +1,4 @@
 using REA.Accounting.Core.Interfaces;
-using REA.Accounting.Infrastructure.Persistence;
 using REA.Accounting.Infrastructure.Persistence.Interfaces;
 using REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources;
 

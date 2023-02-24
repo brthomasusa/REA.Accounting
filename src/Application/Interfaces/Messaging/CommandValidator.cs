@@ -12,14 +12,14 @@ namespace REA.Accounting.Application.Interfaces.Messaging
             Next = next;
         }
 
-        public virtual async Task<OperationResult<bool>> Validate(TCommand command)
+        public virtual async Task<Result> Validate(TCommand command)
         {
             if (Next is not null)
             {
                 await Next.Validate(command);
             }
 
-            return OperationResult<bool>.CreateSuccessResult(true);
+            return Result.Success();
         }
     }
 }

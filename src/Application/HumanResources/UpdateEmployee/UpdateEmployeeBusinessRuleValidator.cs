@@ -13,7 +13,7 @@ namespace REA.Accounting.Application.HumanResources.UpdateEmployee
         public UpdateEmployeeBusinessRuleValidator(IWriteRepositoryManager repo)
             => _repo = repo;
 
-        public override async Task<OperationResult<bool>> Validate(UpdateEmployeeCommand command)
+        public override async Task<Result> Validate(UpdateEmployeeCommand command)
         {
             UpdateEmployeeMustExist verifyEmployeeExist = new(_repo);
             UpdateEmployeeNameMustBeUnique verifyNameIsUnique = new(_repo);
@@ -26,11 +26,11 @@ namespace REA.Accounting.Application.HumanResources.UpdateEmployee
 
             if (result.IsValid)
             {
-                return OperationResult<bool>.CreateSuccessResult(true);
+                return Result.Success();
             }
             else
             {
-                return OperationResult<bool>.CreateFailure(result.Messages[0]);
+                return Result.Failure(new Error("UpdateEmployeeBusinessRuleValidator.Validate", result.Messages[0]));
             }
         }
     }

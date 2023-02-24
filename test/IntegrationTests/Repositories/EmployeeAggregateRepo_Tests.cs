@@ -17,11 +17,11 @@ namespace REA.Accounting.IntegrationTests.Repositories
         [Fact]
         public async Task GetById_EmployeeAggregateRepo_ShouldSucceed()
         {
-            OperationResult<Employee> result = await _writeRepository.EmployeeAggregate.GetByIdAsync(2);
+            Result<Employee> result = await _writeRepository.EmployeeAggregate.GetByIdAsync(2);
 
-            Assert.True(result.Success);
+            Assert.True(result.IsSuccess);
 
-            Address address = result.Result.Addresses.ToList()[0];
+            Address address = result.Value.Addresses.ToList()[0];
             Assert.Equal("7559 Worth Ct.", address.AddressLine1);
         }
 
@@ -30,46 +30,46 @@ namespace REA.Accounting.IntegrationTests.Repositories
         {
             Employee employee = GetEmployeeForCreate();
 
-            OperationResult<int> result = await _writeRepository.EmployeeAggregate.InsertAsync(employee);
+            Result<int> result = await _writeRepository.EmployeeAggregate.InsertAsync(employee);
 
-            Assert.True(result.Success);
+            Assert.True(result.IsSuccess);
         }
 
         [Fact]
         public async Task Update_EmployeeAggregateRepo_ShouldSucceed()
         {
-            OperationResult<Employee> getResult = await _writeRepository.EmployeeAggregate.GetByIdAsync(16);
+            Result<Employee> getResult = await _writeRepository.EmployeeAggregate.GetByIdAsync(16);
 
-            Assert.True(getResult.Success);
+            Assert.True(getResult.IsSuccess);
 
-            OperationResult<Employee> updateResult =
-                getResult.Result.Update("EM", NameStyleEnum.Western, "Mr.", "Jabu", "Jabi", "J", "Sr.",
+            Result<Employee> updateResult =
+                getResult.Value.Update("EM", NameStyleEnum.Western, "Mr.", "Jabu", "Jabi", "J", "Sr.",
                                         EmailPromotionEnum.None, "98765432", @"adventure-works\jabi", "Big Dog",
                                         new DateOnly(2000, 1, 31), "M", "M", new DateOnly(2018, 5, 4), true, 5, 1, true);
 
-            Assert.True(updateResult.Success);
+            Assert.True(updateResult.IsSuccess);
 
-            OperationResult<int> saveResult = await _writeRepository.EmployeeAggregate.Update(updateResult.Result);
+            Result<int> saveResult = await _writeRepository.EmployeeAggregate.Update(updateResult.Value);
 
-            Assert.True(saveResult.Success);
+            Assert.True(saveResult.IsSuccess);
 
             getResult = await _writeRepository.EmployeeAggregate.GetByIdAsync(16);
-            Assert.Equal(@"adventure-works\jabi", getResult.Result.LoginID);
+            Assert.Equal(@"adventure-works\jabi", getResult.Value.LoginID);
         }
 
         [Fact]
         public async Task Delete_Employee_EmployeeAggregateRepo_ShouldSucceed()
         {
-            OperationResult<Employee> getResult = await _writeRepository.EmployeeAggregate.GetByIdAsync(16);
+            Result<Employee> getResult = await _writeRepository.EmployeeAggregate.GetByIdAsync(16);
 
-            Assert.True(getResult.Success);
+            Assert.True(getResult.IsSuccess);
 
-            OperationResult<int> deleteResult = await _writeRepository.EmployeeAggregate.Delete(getResult.Result);
+            Result<int> deleteResult = await _writeRepository.EmployeeAggregate.Delete(getResult.Value);
 
-            Assert.True(deleteResult.Success);
+            Assert.True(deleteResult.IsSuccess);
 
-            OperationResult<Employee> test = await _writeRepository.EmployeeAggregate.GetByIdAsync(16);
-            Assert.Null(test.Result);
+            Result<Employee> test = await _writeRepository.EmployeeAggregate.GetByIdAsync(16);
+            Assert.True(test.IsFailure);
         }
 
         [Fact]

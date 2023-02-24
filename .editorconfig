@@ -14,6 +14,8 @@ insert_final_newline = false
 [*.cs]
 dotnet_diagnostic.CA2254.severity = silent
 dotnet_diagnostic.RCS1175.severity = none
+dotnet_diagnostic.RCS1036.severity = none
+dotnet_diagnostic.RCS1037.severity = none
 
 [GuardAgainst*.cs]
 dotnet_diagnostic.IDE0060.severity = none

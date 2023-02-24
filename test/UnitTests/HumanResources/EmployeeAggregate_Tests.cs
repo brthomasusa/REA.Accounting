@@ -87,7 +87,7 @@ namespace REA.Accounting.UnitTests.HumanResources
                     "358987145",
                     "adventure-works\\john10",
                     "Tool Designer",
-                    new DateOnly(2005, 2, 21),
+                    new DateOnly(2006, 2, 21),
                     "M",
                     "M",
                     new DateOnly(2011, 5, 30),
@@ -106,11 +106,11 @@ namespace REA.Accounting.UnitTests.HumanResources
         {
             Employee employee = GetEmployeeForEditing();
 
-            OperationResult<Employee> result = employee.Update("EM", NameStyleEnum.Western, "Mr.", "Jabu", "Jabi", "J", "Sr.",
+            Result<Employee> result = employee.Update("EM", NameStyleEnum.Western, "Mr.", "Jabu", "Jabi", "J", "Sr.",
                                                                 EmailPromotionEnum.None, "98765432", @"adventure-works\jabi", "Jo",
                                                                 new DateOnly(2000, 1, 31), "M", "M", new DateOnly(2018, 5, 4), true, 5, 1, true);
 
-            Assert.True(result.Success);
+            Assert.True(result.IsSuccess);
         }
 
         [Fact]

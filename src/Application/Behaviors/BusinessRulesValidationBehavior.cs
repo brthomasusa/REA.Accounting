@@ -25,15 +25,16 @@ namespace REA.Accounting.Application.Behaviors
             var isCommand = typeof(TRequest).GetInterfaces()
                                             .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICommand<>));
 
-            OperationResult<bool> result = await _businessRulesValidator.Validate(request);
+            Result result = await _businessRulesValidator.Validate(request);
 
-            if (result.Success)
+            if (result.IsSuccess)
             {
                 return await next();
             }
             else
             {
-                return (Result<int>.Failure<int>(new Error("BusinessRulesValidationBehavior.Handle", result.NonSuccessMessage!))) as TResponse;
+                var retVal = Result<int>.Failure<int>(new Error("BusinessRulesValidationBehavior.Handle", result.Error.Message));
+                return (retVal) as TResponse;
             }
         }
     }
