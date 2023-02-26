@@ -6,7 +6,7 @@ namespace REA.Accounting.IntegrationTests.Base
 {
     public static class ReseedTestDatabase
     {
-        public static OperationResult<bool> ReseedDatabase()
+        public static Result<bool> ReseedDatabase()
         {
             const string connectionString = "Server=tcp:mssql-server,1433;Database=AdventureWorks_Test;User Id=sa;Password=Info99Gum;MultipleActiveResultSets=true;TrustServerCertificate=true";
 
@@ -17,11 +17,11 @@ namespace REA.Accounting.IntegrationTests.Base
                 command.Connection.Open();
                 command.ExecuteNonQuery();
 
-                return OperationResult<bool>.CreateSuccessResult(true);
+                return true;
             }
             catch (Exception ex)
             {
-                return OperationResult<bool>.CreateFailure(Helpers.GetExceptionMessage(ex));
+                return Result<bool>.Failure<bool>(new Error("ReseedTestDatabase.ReseedTestDatabase", Helpers.GetExceptionMessage(ex)));
             }
         }
     }

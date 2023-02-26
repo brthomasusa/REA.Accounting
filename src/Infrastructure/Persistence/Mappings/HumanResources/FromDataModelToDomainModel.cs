@@ -1,14 +1,15 @@
 using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
 using REA.Accounting.Core.HumanResources;
 using REA.Accounting.Core.Shared;
+using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Infrastructure.Persistence.Mappings.HumanResources
 {
     public static class FromDataModelToDomainModel
     {
-        public static Employee MapToEmployeeDomainObject(this PersonDataModel person)
+        public static Result<Employee> MapToEmployeeDomainObject(this PersonDataModel person)
         {
-            Employee employee = Employee.Create
+            Result<Employee> employee = Employee.Create
             (
                 person!.BusinessEntityID,
                 person!.PersonType!,
@@ -31,23 +32,30 @@ namespace REA.Accounting.Infrastructure.Persistence.Mappings.HumanResources
                 person!.Employee!.CurrentFlag
             );
 
-            // Add dept histories to employee from person data model
-            person!.Employee!.DepartmentHistories.ToList().ForEach(dept =>
-                employee.AddDepartmentHistory(dept.BusinessEntityID,
-                                              dept.ShiftID,
-                                              DateOnly.FromDateTime(dept.StartDate),
-                                              dept.EndDate));
+            if (employee.IsSuccess)
+            {
+                // Add dept histories to employee from person data model
+                person!.Employee!.DepartmentHistories.ToList().ForEach(dept =>
+                    employee.Value.AddDepartmentHistory(dept.BusinessEntityID,
+                                                        dept.ShiftID,
+                                                        DateOnly.FromDateTime(dept.StartDate),
+                                                        dept.EndDate));
 
-            // Add pay histories to employee from person data model
-            person!.Employee!.PayHistories.ToList().ForEach(pay =>
-                employee.AddPayHistory(
-                    pay.BusinessEntityID,
-                    pay.RateChangeDate,
-                    pay.Rate,
-                    (PayFrequencyEnum)pay.PayFrequency
-                ));
+                // Add pay histories to employee from person data model
+                person!.Employee!.PayHistories.ToList().ForEach(pay =>
+                    employee.Value.AddPayHistory(
+                        pay.BusinessEntityID,
+                        pay.RateChangeDate,
+                        pay.Rate,
+                        (PayFrequencyEnum)pay.PayFrequency
+                    ));
 
-            return employee;
+                return employee;
+            }
+            else
+            {
+                return Result<Employee>.Failure<Employee>(new Error("FromDataModelToDomainModel.MapToEmployeeDomainObject", employee.Error.Message));
+            }
         }
     }
 }

@@ -21,7 +21,7 @@ namespace REA.Accounting.Core.HumanResources
             PayFrequency = payFrequency;
         }
 
-        internal static OperationResult<PayHistory> Create
+        internal static Result<PayHistory> Create
         (
             int id,
             DateTime rateChangeDate,
@@ -38,11 +38,11 @@ namespace REA.Accounting.Core.HumanResources
                         RateOfPay.Create(rate),
                         Enum.IsDefined(typeof(PayFrequencyEnum), payFrequency) ? payFrequency : throw new ArgumentException("Invalid pay frequency.")
                     );
-                return OperationResult<PayHistory>.CreateSuccessResult(history);
+                return history;
             }
             catch (Exception ex)
             {
-                return OperationResult<PayHistory>.CreateFailure(Helpers.GetExceptionMessage(ex));
+                return Result<PayHistory>.Failure<PayHistory>(new Error("PayHistory.Create", Helpers.GetExceptionMessage(ex)));
             }
         }
 

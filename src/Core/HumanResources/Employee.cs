@@ -54,7 +54,7 @@ namespace REA.Accounting.Core.HumanResources
             CheckValidity();
         }
 
-        public static Employee Create
+        public static Result<Employee> Create
         (
             int employeeID,
             string personType,
@@ -77,27 +77,35 @@ namespace REA.Accounting.Core.HumanResources
             bool active
         )
         {
-            return new Employee
-            (
-                employeeID,
-                SharedValueObject.PersonType.Create(personType),
-                nameStyle,
-                SharedValueObject.Title.Create(title!),
-                PersonName.Create(lastName, firstName, middleName),
-                SharedValueObject.Suffix.Create(suffix!),
-                EmailPromotionEnum.None,
-                NationalID.Create(nationalID),
-                Login.Create(login),
-                ValueObject.JobTitle.Create(jobTitle),
-                ValueObject.DateOfBirth.Create(birthDate),
-                ValueObject.MaritalStatus.Create(maritalStatus),
-                ValueObject.Gender.Create(gender),
-                ValueObject.DateOfHire.Create(hireDate),
-                salaried,
-                Vacation.Create(vacation),
-                SickLeave.Create(sickLeave),
-                active
-            );
+            try
+            {
+                Employee employee = new(
+                    employeeID,
+                    SharedValueObject.PersonType.Create(personType),
+                    nameStyle,
+                    SharedValueObject.Title.Create(title!),
+                    PersonName.Create(lastName, firstName, middleName),
+                    SharedValueObject.Suffix.Create(suffix!),
+                    EmailPromotionEnum.None,
+                    NationalID.Create(nationalID),
+                    Login.Create(login),
+                    ValueObject.JobTitle.Create(jobTitle),
+                    ValueObject.DateOfBirth.Create(birthDate),
+                    ValueObject.MaritalStatus.Create(maritalStatus),
+                    ValueObject.Gender.Create(gender),
+                    ValueObject.DateOfHire.Create(hireDate),
+                    salaried,
+                    Vacation.Create(vacation),
+                    SickLeave.Create(sickLeave),
+                    active
+                );
+
+                return employee;
+            }
+            catch (Exception ex)
+            {
+                return Result<Employee>.Failure<Employee>(new Error("Employee.Create", Helpers.GetExceptionMessage(ex)));
+            }
         }
 
         public Result<Employee> Update
@@ -125,7 +133,10 @@ namespace REA.Accounting.Core.HumanResources
         {
             try
             {
-                base.UpdatePerson(personType, nameStyle, title, firstName, lastName, middleName, suffix, emailPromotionEnum);
+                Result<Person> result = base.UpdatePerson(personType, nameStyle, title, firstName, lastName, middleName, suffix, emailPromotionEnum);
+
+                if (result.IsFailure)
+                    return Result<Employee>.Failure<Employee>(new Error("", result.Error.Message));
 
                 NationalIDNumber = NationalID.Create(nationalID).Value!;
                 LoginID = Login.Create(login).Value;
@@ -141,7 +152,7 @@ namespace REA.Accounting.Core.HumanResources
 
                 CheckValidity();
                 UpdateModifiedDate();
-                return Result<Employee>.Success<Employee>(this);
+                return this;
             }
             catch (Exception ex)
             {
@@ -175,7 +186,7 @@ namespace REA.Accounting.Core.HumanResources
 
         public virtual IReadOnlyCollection<DepartmentHistory> DepartmentHistories => _deptHistories.AsReadOnly();
 
-        public OperationResult<DepartmentHistory> AddDepartmentHistory
+        public Result<DepartmentHistory> AddDepartmentHistory
         (
             int id,
             int shiftId,
@@ -189,31 +200,31 @@ namespace REA.Accounting.Core.HumanResources
 
                 if (search is null)
                 {
-                    OperationResult<DepartmentHistory> result = DepartmentHistory.Create(id, shiftId, startDate, endDate);
-                    if (result.Success)
+                    Result<DepartmentHistory> result = DepartmentHistory.Create(id, shiftId, startDate, endDate);
+                    if (result.IsSuccess)
                     {
-                        _deptHistories.Add(result.Result);
-                        return OperationResult<DepartmentHistory>.CreateSuccessResult(result.Result);
+                        _deptHistories.Add(result.Value);
+                        return result.Value;
                     }
                     else
                     {
-                        return OperationResult<DepartmentHistory>.CreateFailure(result.NonSuccessMessage!);
+                        return Result<DepartmentHistory>.Failure<DepartmentHistory>(new Error("Employee.AddDepartmentHistory", result.Error.Message));
                     }
                 }
                 else
                 {
-                    return OperationResult<DepartmentHistory>.CreateFailure("This is a duplicate department history.");
+                    return Result<DepartmentHistory>.Failure<DepartmentHistory>(new Error("Employee.AddDepartmentHistory", "This is a duplicate department history."));
                 }
             }
             catch (Exception ex)
             {
-                return OperationResult<DepartmentHistory>.CreateFailure(Helpers.GetExceptionMessage(ex));
+                return Result<DepartmentHistory>.Failure<DepartmentHistory>(new Error("Employee.AddDepartmentHistory", Helpers.GetExceptionMessage(ex)));
             }
         }
 
         public virtual IReadOnlyCollection<PayHistory> PayHistories => _payHistories.AsReadOnly();
 
-        public OperationResult<PayHistory> AddPayHistory
+        public Result<PayHistory> AddPayHistory
         (
             int id,
             DateTime rateChangeDate,
@@ -227,25 +238,25 @@ namespace REA.Accounting.Core.HumanResources
 
                 if (search is null)
                 {
-                    OperationResult<PayHistory> result = PayHistory.Create(id, rateChangeDate, rate, payFrequency);
-                    if (result.Success)
+                    Result<PayHistory> result = PayHistory.Create(id, rateChangeDate, rate, payFrequency);
+                    if (result.IsSuccess)
                     {
-                        _payHistories.Add(result.Result);
-                        return OperationResult<PayHistory>.CreateSuccessResult(result.Result);
+                        _payHistories.Add(result.Value);
+                        return result.Value;
                     }
                     else
                     {
-                        return OperationResult<PayHistory>.CreateFailure(result.NonSuccessMessage!);
+                        return Result<PayHistory>.Failure<PayHistory>(new Error("Employee.AddPayHistory", result.Error.Message));
                     }
                 }
                 else
                 {
-                    return OperationResult<PayHistory>.CreateFailure("This is a duplicate pay history.");
+                    return Result<PayHistory>.Failure<PayHistory>(new Error("Employee.AddPayHistory", "This is a duplicate pay history."));
                 }
             }
             catch (Exception ex)
             {
-                return OperationResult<PayHistory>.CreateFailure(Helpers.GetExceptionMessage(ex));
+                return Result<PayHistory>.Failure<PayHistory>(new Error("Employee.AddPayHistory", Helpers.GetExceptionMessage(ex)));
             }
         }
 

@@ -146,7 +146,8 @@ namespace REA.Accounting.IntegrationTests.Repositories
         }
 
         private static Employee GetEmployeeForCreate()
-            => Employee.Create
+        {
+            Result<Employee> result = Employee.Create
                 (
                     0,
                     "EM",
@@ -168,5 +169,8 @@ namespace REA.Accounting.IntegrationTests.Repositories
                     0,
                     true
                 );
+
+            return result.Value;
+        }
     }
 }

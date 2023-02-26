@@ -23,7 +23,7 @@ namespace REA.Accounting.Core.HumanResources
             CheckValidity();
         }
 
-        internal static OperationResult<DepartmentHistory> Create
+        internal static Result<DepartmentHistory> Create
         (
             int id,
             int shiftId,
@@ -40,11 +40,11 @@ namespace REA.Accounting.Core.HumanResources
                         DepartmentStartDate.Create(startDate),
                         DateOnly.FromDateTime(endDate is null ? default : (DateTime)endDate)
                     );
-                return OperationResult<DepartmentHistory>.CreateSuccessResult(history);
+                return history;
             }
             catch (Exception ex)
             {
-                return OperationResult<DepartmentHistory>.CreateFailure(Helpers.GetExceptionMessage(ex));
+                return Result<DepartmentHistory>.Failure<DepartmentHistory>(new Error("DepartmentHistory.Create", Helpers.GetExceptionMessage(ex)));
             }
         }
 

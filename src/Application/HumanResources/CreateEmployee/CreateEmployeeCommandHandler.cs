@@ -15,7 +15,7 @@ namespace REA.Accounting.Application.HumanResources.CreateEmployee
 
         public async Task<Result<int>> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
         {
-            Employee employee = Employee.Create
+            Result<Employee> getEmployee = Employee.Create
             (
                 request.EmployeeID,
                 request.PersonType,
@@ -38,30 +38,33 @@ namespace REA.Accounting.Application.HumanResources.CreateEmployee
                 request.Active
             );
 
-            OperationResult<DepartmentHistory> deptResult = employee.AddDepartmentHistory
+            if (getEmployee.IsFailure)
+                return Result<int>.Failure<int>(new Error("CreateEmployeeCommandHandler.Handle", getEmployee.Error.Message));
+
+            Result<DepartmentHistory> deptResult = getEmployee.Value.AddDepartmentHistory
             (
-                employee.Id,
+                getEmployee.Value.Id,
                 request.ShiftID,
                 DateOnly.FromDateTime(request.HireDate),
                 null
             );
-            if (!deptResult.Success)
-                return Result<int>.Failure<int>(new Error("CreateEmployeeCommandHandler.Handle", deptResult.NonSuccessMessage!));
+            if (deptResult.IsFailure)
+                return Result<int>.Failure<int>(new Error("CreateEmployeeCommandHandler.Handle", deptResult.Error.Message));
 
-            OperationResult<PayHistory> payResult = employee.AddPayHistory
+            Result<PayHistory> payResult = getEmployee.Value.AddPayHistory
             (
-                employee.Id,
+                getEmployee.Value.Id,
                 request.HireDate,
                 request.PayRate,
                 (PayFrequencyEnum)request.PayFrequency
             );
-            if (!payResult.Success)
-                return Result<int>.Failure<int>(new Error("CreateEmployeeCommandHandler.Handle", payResult.NonSuccessMessage!));
+            if (payResult.IsFailure)
+                return Result<int>.Failure<int>(new Error("CreateEmployeeCommandHandler.Handle", payResult.Error.Message));
 
-            OperationResult<Address> addrResult = employee.AddAddress
+            Result<Address> addrResult = getEmployee.Value.AddAddress
             (
                 0,
-                employee.Id,
+                getEmployee.Value.Id,
                 (AddressTypeEnum)request.AddressType,
                 request.AddressLine1,
                 request.AddressLine2,
@@ -69,36 +72,32 @@ namespace REA.Accounting.Application.HumanResources.CreateEmployee
                 request.StateCode,
                 request.PersonType
             );
-            if (!addrResult.Success)
-                return Result<int>.Failure<int>(new Error("CreateEmployeeCommandHandler.Handle", addrResult.NonSuccessMessage!));
+            if (addrResult.IsFailure)
+                return Result<int>.Failure<int>(new Error("CreateEmployeeCommandHandler.Handle", addrResult.Error.Message));
 
-            OperationResult<PersonEmailAddress> emailResult = employee.AddEmailAddress
+            Result<PersonEmailAddress> emailResult = getEmployee.Value.AddEmailAddress
             (
-                employee.Id,
+                getEmployee.Value.Id,
                 0,
                 request.EmailAddress
             );
-            if (!emailResult.Success)
-                return Result<int>.Failure<int>(new Error("CreateEmployeeCommandHandler.Handle", emailResult.NonSuccessMessage!));
+            if (emailResult.IsFailure)
+                return Result<int>.Failure<int>(new Error("CreateEmployeeCommandHandler.Handle", emailResult.Error.Message));
 
-            OperationResult<PersonPhone> phoneResult = employee.AddPhoneNumbers
+            Result<PersonPhone> phoneResult = getEmployee.Value.AddPhoneNumber
             (
-                employee.Id,
+                getEmployee.Value.Id,
                 (PhoneNumberTypeEnum)request.PhoneNumberType,
                 request.PhoneNumber
             );
-            if (!phoneResult.Success)
-                return Result<int>.Failure<int>(new Error("CreateEmployeeCommandHandler.Handle", phoneResult.NonSuccessMessage!));
+            if (phoneResult.IsFailure)
+                return Result<int>.Failure<int>(new Error("CreateEmployeeCommandHandler.Handle", phoneResult.Error.Message));
 
-            Result<int> insertDbResult = await _repo.EmployeeAggregate.InsertAsync(employee);
-            if (insertDbResult.IsSuccess)
-            {
-                return insertDbResult;
-            }
-            else
-            {
+            Result<int> insertDbResult = await _repo.EmployeeAggregate.InsertAsync(getEmployee.Value);
+            if (!insertDbResult.IsSuccess)
                 return Result<int>.Failure<int>(new Error("CreateEmployeeCommandHandler.Handle", insertDbResult.Error.Message));
-            }
+
+            return insertDbResult;
         }
     }
 }

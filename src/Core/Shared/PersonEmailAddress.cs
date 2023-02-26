@@ -16,7 +16,7 @@ namespace REA.Accounting.Core.Shared
             EmailAddress = emailAddress.Value!;
         }
 
-        internal static OperationResult<PersonEmailAddress> Create(int id, int emailAddressID, string email)
+        internal static Result<PersonEmailAddress> Create(int id, int emailAddressID, string email)
         {
             try
             {
@@ -27,11 +27,11 @@ namespace REA.Accounting.Core.Shared
                     REA.Accounting.SharedKernel.CommonValueObjects.EmailAddress.Create(email)
                 );
 
-                return OperationResult<PersonEmailAddress>.CreateSuccessResult(emailAddress);
+                return emailAddress;
             }
             catch (Exception ex)
             {
-                return OperationResult<PersonEmailAddress>.CreateFailure(Helpers.GetExceptionMessage(ex));
+                return Result<PersonEmailAddress>.Failure<PersonEmailAddress>(new Error("PersonEmailAddress.Create", Helpers.GetExceptionMessage(ex)));
             }
         }
 

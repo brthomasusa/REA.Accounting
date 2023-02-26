@@ -12,7 +12,7 @@ namespace REA.Accounting.UnitTests.Shared
         public void Person_AddAddress_ShouldSucceed()
         {
             Person person = GetContactForEditing();
-            OperationResult<Address> result = person.AddAddress
+            Result<Address> result = person.AddAddress
             (
                 0,
                 1,
@@ -24,14 +24,14 @@ namespace REA.Accounting.UnitTests.Shared
                 "12345"
             );
 
-            Assert.True(result.Success);
+            Assert.True(result.IsSuccess);
         }
 
         [Fact]
         public void Address_Create_Invalid_NullLine1_ShouldFail()
         {
             Person person = GetContactForEditing();
-            OperationResult<Address> result = person.AddAddress
+            Result<Address> result = person.AddAddress
             (
                 0,
                 1,
@@ -43,14 +43,14 @@ namespace REA.Accounting.UnitTests.Shared
                 "12345"
             );
 
-            Assert.False(result.Success);
+            Assert.True(result.IsFailure);
         }
 
         [Fact]
         public void Address_Create_Invalid_BadStateProvinceID_ShouldFail()
         {
             Person person = GetContactForEditing();
-            OperationResult<Address> result = person.AddAddress
+            Result<Address> result = person.AddAddress
             (
                 0,
                 1,
@@ -62,14 +62,14 @@ namespace REA.Accounting.UnitTests.Shared
                 "12345"
             );
 
-            Assert.False(result.Success);
+            Assert.True(result.IsFailure);
         }
 
         [Fact]
         public void Address_Create_Invalid_NullPostalCode_ShouldFail()
         {
             Person person = GetContactForEditing();
-            OperationResult<Address> result = person.AddAddress
+            Result<Address> result = person.AddAddress
             (
                 0,
                 1,
@@ -81,14 +81,14 @@ namespace REA.Accounting.UnitTests.Shared
                 null
             );
 
-            Assert.False(result.Success);
+            Assert.True(result.IsFailure);
         }
 
         [Fact]
         public void Address_Update_ShouldSucceed()
         {
             Person person = GetContactForEditing();
-            OperationResult<Address> result = person.UpdateAddress
+            Result<Address> result = person.UpdateAddress
             (
                 1,
                 2,
@@ -100,7 +100,7 @@ namespace REA.Accounting.UnitTests.Shared
                 "12345"
             );
 
-            Assert.False(result.Success);
+            Assert.True(result.IsFailure);
         }
 
         [Fact]
@@ -235,9 +235,9 @@ namespace REA.Accounting.UnitTests.Shared
             Employee employee = GetEmployeeForEditing();
             const string phoneNumber = "214-555-5555";
 
-            OperationResult<PersonPhone> result = employee.AddPhoneNumbers(1, PhoneNumberTypeEnum.Cell, phoneNumber);
+            Result<PersonPhone> result = employee.AddPhoneNumber(1, PhoneNumberTypeEnum.Cell, phoneNumber);
 
-            Assert.True(result.Success);
+            Assert.True(result.IsSuccess);
         }
 
         [Fact]
@@ -246,9 +246,9 @@ namespace REA.Accounting.UnitTests.Shared
             Employee employee = GetEmployeeForEditing();
             const string phoneNumber = "214-555-5555123145214514787771234785477777";
 
-            OperationResult<PersonPhone> result = employee.AddPhoneNumbers(1, PhoneNumberTypeEnum.Cell, phoneNumber);
+            Result<PersonPhone> result = employee.AddPhoneNumber(1, PhoneNumberTypeEnum.Cell, phoneNumber);
 
-            Assert.False(result.Success);
+            Assert.True(result.IsFailure);
         }
 
         [Fact]
@@ -257,9 +257,9 @@ namespace REA.Accounting.UnitTests.Shared
             Employee employee = GetEmployeeForEditing();
             const string phoneNumber = "214-555-5555";
 
-            OperationResult<PersonPhone> result = employee.AddPhoneNumbers(1, 0, phoneNumber);
+            Result<PersonPhone> result = employee.AddPhoneNumber(1, 0, phoneNumber);
 
-            Assert.False(result.Success);
+            Assert.True(result.IsFailure);
         }
 
         private static Person GetContactForEditing()
@@ -279,7 +279,8 @@ namespace REA.Accounting.UnitTests.Shared
             );
 
         private static Employee GetEmployeeForEditing()
-        => Employee.Create
+        {
+            Result<Employee> result = Employee.Create
                 (
                     1,
                     "EM",
@@ -301,5 +302,8 @@ namespace REA.Accounting.UnitTests.Shared
                     10,
                     true
                 );
+
+            return result.Value;
+        }
     }
 }

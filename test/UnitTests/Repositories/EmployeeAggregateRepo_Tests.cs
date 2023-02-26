@@ -84,7 +84,8 @@ namespace REA.Accounting.UnitTests.Repositories
         }
 
         private static Employee GetEmployeeForCreate()
-            => Employee.Create
+        {
+            Result<Employee> result = Employee.Create
                 (
                     0,
                     "EM",
@@ -106,6 +107,9 @@ namespace REA.Accounting.UnitTests.Repositories
                     0,
                     true
                 );
+
+            return result.Value;
+        }
 
         private async void ConfigureDbContextAsync()
         {

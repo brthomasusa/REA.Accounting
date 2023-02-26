@@ -157,8 +157,11 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
 
                 if (person is not null)
                 {
-                    EmployeeDomainModel employee = person!.MapToEmployeeDomainObject();
-                    return Result<EmployeeDomainModel>.Success<EmployeeDomainModel>(employee);
+                    Result<EmployeeDomainModel> result = person!.MapToEmployeeDomainObject();
+                    if (result.IsSuccess)
+                        return Result<EmployeeDomainModel>.Success<EmployeeDomainModel>(result.Value);
+
+                    return Result<EmployeeDomainModel>.Failure<EmployeeDomainModel>(new Error("EmployeeAggregateRepository.GetEmployeeOnlyAsync", result.Error.Message));
                 }
                 else
                 {
@@ -188,38 +191,47 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
 
                 if (person is not null)
                 {
-                    EmployeeDomainModel employee = person!.MapToEmployeeDomainObject();
+                    Result<EmployeeDomainModel> result = person!.MapToEmployeeDomainObject();
 
-                    // Add addresses to employee from person data model
-                    if (person!.BusinessEntityAddresses.ToList().Any())
+                    if (result.IsSuccess)
                     {
-                        person!.BusinessEntityAddresses.ToList().ForEach(dataModelAddress =>
-                            dataModelAddress.MapDataModelAddressToDomainAddress(ref employee));
-                    }
+                        EmployeeDomainModel employee = result.Value;
 
-                    // Add email addresses to employee from person data model
-                    if (person.EmailAddresses.ToList().Any())
+                        // Add addresses to employee from person data model
+                        if (person!.BusinessEntityAddresses.ToList().Any())
+                        {
+                            person!.BusinessEntityAddresses.ToList().ForEach(dataModelAddress =>
+                                dataModelAddress.MapDataModelAddressToDomainAddress(ref employee));
+                        }
+
+                        // Add email addresses to employee from person data model
+                        if (person.EmailAddresses.ToList().Any())
+                        {
+                            person.EmailAddresses.ToList().ForEach(email =>
+                                employee.AddEmailAddress(
+                                    email.BusinessEntityID,
+                                    email.EmailAddressID,
+                                    email.MailAddress!
+                                ));
+                        }
+
+                        // Add email addresses to employee from person data model
+                        if (person!.Telephones.ToList().Any())
+                        {
+                            person!.Telephones.ToList().ForEach(tel =>
+                                employee.AddPhoneNumber(
+                                    tel.BusinessEntityID,
+                                    (PhoneNumberTypeEnum)tel.PhoneNumberTypeID,
+                                    tel.PhoneNumber!
+                                ));
+                        }
+
+                        return employee;
+                    }
+                    else
                     {
-                        person.EmailAddresses.ToList().ForEach(email =>
-                            employee.AddEmailAddress(
-                                email.BusinessEntityID,
-                                email.EmailAddressID,
-                                email.MailAddress!
-                            ));
+                        return Result<EmployeeDomainModel>.Failure<EmployeeDomainModel>(new Error("EmployeeAggregateRepository.GetByIdAsync", result.Error.Message));
                     }
-
-                    // Add email addresses to employee from person data model
-                    if (person!.Telephones.ToList().Any())
-                    {
-                        person!.Telephones.ToList().ForEach(tel =>
-                            employee.AddPhoneNumbers(
-                                tel.BusinessEntityID,
-                                (PhoneNumberTypeEnum)tel.PhoneNumberTypeID,
-                                tel.PhoneNumber!
-                            ));
-                    }
-
-                    return Result<EmployeeDomainModel>.Success<EmployeeDomainModel>(employee);
                 }
                 else
                 {

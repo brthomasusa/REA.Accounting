@@ -21,7 +21,7 @@ namespace REA.Accounting.Core.Shared
             Telephone = phoneNumber.Value!;
         }
 
-        internal static OperationResult<PersonPhone> Create
+        internal static Result<PersonPhone> Create
         (
             int id,
             PhoneNumberTypeEnum phoneNumberType,
@@ -37,28 +37,17 @@ namespace REA.Accounting.Core.Shared
                     PhoneNumber.Create(telephone)
                 );
 
-                return OperationResult<PersonPhone>.CreateSuccessResult(phone);
+                return phone;
             }
             catch (Exception ex)
             {
-                return OperationResult<PersonPhone>.CreateFailure(Helpers.GetExceptionMessage(ex));
+                return Result<PersonPhone>.Failure<PersonPhone>(new Error("PersonPhone.Create", Helpers.GetExceptionMessage(ex)));
             }
         }
 
-        public PhoneNumberTypeEnum PhoneNumberType { get; private set; }
-        public void UpdatePhoneNumberType(PhoneNumberTypeEnum value)
-        {
-            PhoneNumberType = Enum.IsDefined(typeof(PhoneNumberTypeEnum), value) ? value : throw new ArgumentException("Invalid phone number type.");
-            UpdateModifiedDate();
-        }
+        public PhoneNumberTypeEnum PhoneNumberType { get; }
 
-        public string Telephone { get; private set; }
-        public void UpdateTelephone(string value)
-        {
-            PhoneNumber phoneNumber = PhoneNumber.Create(value);
-            Telephone = phoneNumber.Value!;
-            UpdateModifiedDate();
-        }
+        public string Telephone { get; }
     }
 
     public enum PhoneNumberTypeEnum : int

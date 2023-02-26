@@ -40,7 +40,7 @@ namespace REA.Accounting.Core.Shared
             EmailPromotions = emailPromotionEnum;
         }
 
-        protected OperationResult<Person> UpdatePerson
+        protected Result<Person> UpdatePerson
         (
             string personType,
             NameStyleEnum nameStyle,
@@ -65,7 +65,6 @@ namespace REA.Accounting.Core.Shared
                 if (Enum.IsDefined(typeof(EmailPromotionEnum), emailPromotionEnum))
                 {
                     EmailPromotions = emailPromotionEnum;
-                    UpdateModifiedDate();
                 }
                 else
                 {
@@ -73,11 +72,11 @@ namespace REA.Accounting.Core.Shared
                 }
 
                 UpdateModifiedDate();
-                return OperationResult<Person>.CreateSuccessResult(this);
+                return this;
             }
             catch (Exception ex)
             {
-                return OperationResult<Person>.CreateFailure(Helpers.GetExceptionMessage(ex));
+                return Result<Person>.Failure<Person>(new Error("Person.UpdatePerson", Helpers.GetExceptionMessage(ex)));
             }
         }
 
@@ -99,7 +98,7 @@ namespace REA.Accounting.Core.Shared
 
         public virtual IReadOnlyCollection<Address> Addresses => _addresses.AsReadOnly();
 
-        public OperationResult<Address> AddAddress
+        public Result<Address> AddAddress
         (
             int addressID,
             int businessEntityID,
@@ -115,31 +114,27 @@ namespace REA.Accounting.Core.Shared
             {
                 if (_addresses.Find(addr => addr.Id == addressID) is not null)
                 {
-                    return OperationResult<Address>.CreateFailure("There is already an address with this Id.");
+                    return Result<Address>.Failure<Address>(new Error("Person.AddAddress", "There is already an address with this Id."));
                 }
 
-                OperationResult<Address> result = Address.Create
+                Result<Address> result = Address.Create
                 (
                     addressID, businessEntityID, addressType, line1, line2, city, stateProvinceID, postalCode
                 );
 
-                if (result.Success)
-                {
-                    _addresses.Add(result.Result);
-                    return OperationResult<Address>.CreateSuccessResult(result.Result);
-                }
-                else
-                {
-                    return OperationResult<Address>.CreateFailure(result.NonSuccessMessage!);
-                }
+                if (result.IsFailure)
+                    return Result<Address>.Failure<Address>(new Error("Address.Create", result.Error.Message));
+
+                _addresses.Add(result.Value);
+                return result.Value;
             }
             catch (Exception ex)
             {
-                return OperationResult<Address>.CreateFailure(Helpers.GetExceptionMessage(ex));
+                return Result<Address>.Failure<Address>(new Error("Person.AddAddress", Helpers.GetExceptionMessage(ex)));
             }
         }
 
-        public OperationResult<Address> UpdateAddress
+        public Result<Address> UpdateAddress
         (
             int addressID,
             int businessEntityID,
@@ -155,60 +150,52 @@ namespace REA.Accounting.Core.Shared
             {
                 if (_addresses.Find(addr => addr.Id == addressID && addr.BusinessEntityID == businessEntityID) is null)
                 {
-                    return OperationResult<Address>.CreateFailure($"Unable to locate an address with this Id {addressID}-{businessEntityID}.");
+                    return Result<Address>.Failure<Address>(new Error("Person.AddAddress", $"Unable to locate an address with this Id {addressID}-{businessEntityID}."));
                 }
 
                 var address = _addresses.Find(addr => addr.Id == addressID && addr.BusinessEntityID == businessEntityID);
-                OperationResult<Address> result = address!.Update
+                Result<Address> result = address!.Update
                 (
                     addressType, line1, line2, city, stateProvinceID, postalCode
                 );
 
-                if (result.Success)
-                {
-                    return OperationResult<Address>.CreateSuccessResult(address);
-                }
-                else
-                {
-                    return OperationResult<Address>.CreateFailure(result.NonSuccessMessage!);
-                }
+                if (result.IsFailure)
+                    return Result<Address>.Failure<Address>(new Error("Person.UpdateAddress", result.Error.Message));
+
+                return address;
             }
             catch (Exception ex)
             {
-                return OperationResult<Address>.CreateFailure(Helpers.GetExceptionMessage(ex));
+                return Result<Address>.Failure<Address>(new Error("Person.UpdateAddress", Helpers.GetExceptionMessage(ex)));
             }
         }
 
         public virtual IReadOnlyCollection<PersonEmailAddress> EmailAddresses => _emailAddresses.AsReadOnly();
 
-        public OperationResult<PersonEmailAddress> AddEmailAddress(int id, int emailAddressId, string emailAddress)
+        public Result<PersonEmailAddress> AddEmailAddress(int id, int emailAddressId, string emailAddress)
         {
             try
             {
                 var searchResult = _emailAddresses.Find(mail => mail.Id == id && mail.EmailAddressID == emailAddressId);
                 if (searchResult is not null)
-                    return OperationResult<PersonEmailAddress>.CreateFailure("This is a duplicate email address.");
+                    return Result<PersonEmailAddress>.Failure<PersonEmailAddress>(new Error("Person.AddEmailAddress", "This is a duplicate email address."));
 
-                OperationResult<PersonEmailAddress> result = PersonEmailAddress.Create(id, emailAddressId, emailAddress);
-                if (result.Success)
-                {
-                    _emailAddresses.Add(result.Result);
-                    return OperationResult<PersonEmailAddress>.CreateSuccessResult(result.Result);
-                }
-                else
-                {
-                    return OperationResult<PersonEmailAddress>.CreateFailure(result.NonSuccessMessage!);
-                }
+                Result<PersonEmailAddress> result = PersonEmailAddress.Create(id, emailAddressId, emailAddress);
+
+                if (result.IsFailure)
+                    return Result<PersonEmailAddress>.Failure<PersonEmailAddress>(new Error("Person.AddEmailAddress", result.Error.Message));
+
+                return result.Value;
             }
             catch (Exception ex)
             {
-                return OperationResult<PersonEmailAddress>.CreateFailure(Helpers.GetExceptionMessage(ex));
+                return Result<PersonEmailAddress>.Failure<PersonEmailAddress>(new Error("Person.AddEmailAddress", Helpers.GetExceptionMessage(ex)));
             }
         }
 
         public virtual IReadOnlyCollection<PersonPhone> Telephones => _telephones.AsReadOnly();
 
-        public OperationResult<PersonPhone> AddPhoneNumbers(int id, PhoneNumberTypeEnum phoneType, string phoneNumber)
+        public Result<PersonPhone> AddPhoneNumber(int id, PhoneNumberTypeEnum phoneType, string phoneNumber)
         {
             try
             {
@@ -217,22 +204,18 @@ namespace REA.Accounting.Core.Shared
                                                            tel.Telephone == phoneNumber);
 
                 if (searchResult is not null)
-                    return OperationResult<PersonPhone>.CreateFailure("This is a duplicate phone number.");
+                    return Result<PersonPhone>.Failure<PersonPhone>(new Error("PersonPhone.AddPhoneNumber", "This is a duplicate phone number."));
 
-                OperationResult<PersonPhone> result = PersonPhone.Create(id, phoneType, phoneNumber);
-                if (result.Success)
-                {
-                    _telephones.Add(result.Result);
-                    return OperationResult<PersonPhone>.CreateSuccessResult(result.Result);
-                }
-                else
-                {
-                    return OperationResult<PersonPhone>.CreateFailure(result.NonSuccessMessage!);
-                }
+                Result<PersonPhone> result = PersonPhone.Create(id, phoneType, phoneNumber);
+
+                if (result.IsFailure)
+                    return Result<PersonPhone>.Failure<PersonPhone>(new Error("PersonPhone.AddPhoneNumber", result.Error.Message));
+
+                return result.Value;
             }
             catch (Exception ex)
             {
-                return OperationResult<PersonPhone>.CreateFailure(Helpers.GetExceptionMessage(ex));
+                return Result<PersonPhone>.Failure<PersonPhone>(new Error("", Helpers.GetExceptionMessage(ex)));
             }
         }
     }

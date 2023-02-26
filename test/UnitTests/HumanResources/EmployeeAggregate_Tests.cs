@@ -11,8 +11,7 @@ namespace REA.Accounting.UnitTests.HumanResources
         [Fact]
         public void Create_Employee_ShouldSucceed()
         {
-            var exception = Record.Exception(() =>
-                Employee.Create
+            Result<Employee> result = Employee.Create
                 (
                     1,
                     "EM",
@@ -33,17 +32,15 @@ namespace REA.Accounting.UnitTests.HumanResources
                     80,
                     10,
                     true
-                )
-            );
+                );
 
-            Assert.Null(exception);
+            Assert.True(result.IsSuccess);
         }
 
         [Fact]
         public void Create_Employee_Invalid_PersonType_ShouldFail()
         {
-            var exception = Record.Exception(() =>
-                Employee.Create
+            Result<Employee> result = Employee.Create
                 (
                     1,
                     "IN",
@@ -64,17 +61,15 @@ namespace REA.Accounting.UnitTests.HumanResources
                     80,
                     10,
                     true
-                )
-            );
+                );
 
-            Assert.NotNull(exception);
+            Assert.True(result.IsFailure);
         }
 
         [Fact]
         public void Create_Employee_Invalid_BirthDate_ShouldFail()
         {
-            var exception = Record.Exception(() =>
-                Employee.Create
+            Result<Employee> result = Employee.Create
                 (
                     1,
                     "EM",
@@ -95,10 +90,9 @@ namespace REA.Accounting.UnitTests.HumanResources
                     80,
                     10,
                     true
-                )
-            );
+                );
 
-            Assert.NotNull(exception);
+            Assert.True(result.IsFailure);
         }
 
         [Fact]
@@ -117,81 +111,81 @@ namespace REA.Accounting.UnitTests.HumanResources
         public void Create_PayHistory_ShouldSucceed()
         {
             Employee employee = GetEmployeeForEditing();
-            OperationResult<PayHistory> result = employee.AddPayHistory(1, new DateTime(2023, 1, 7), 15.00M, PayFrequencyEnum.BiWeekly);
+            Result<PayHistory> result = employee.AddPayHistory(1, new DateTime(2023, 1, 7), 15.00M, PayFrequencyEnum.BiWeekly);
 
-            Assert.True(result.Success);
+            Assert.True(result.IsSuccess);
         }
 
         [Fact]
         public void Create_PayHistory_Default_RateChangeDate_ShouldFail()
         {
             Employee employee = GetEmployeeForEditing();
-            OperationResult<PayHistory> result = employee.AddPayHistory(1, new DateTime(), 15.00M, PayFrequencyEnum.BiWeekly);
+            Result<PayHistory> result = employee.AddPayHistory(1, new DateTime(), 15.00M, PayFrequencyEnum.BiWeekly);
 
-            Assert.False(result.Success);
+            Assert.True(result.IsFailure);
         }
 
         [Fact]
         public void Create_PayHistory_Invalid_Rate_ShouldFail()
         {
             Employee employee = GetEmployeeForEditing();
-            OperationResult<PayHistory> result = employee.AddPayHistory(1, new DateTime(2023, 1, 7), 6.49M, PayFrequencyEnum.BiWeekly);
+            Result<PayHistory> result = employee.AddPayHistory(1, new DateTime(2023, 1, 7), 6.49M, PayFrequencyEnum.BiWeekly);
 
-            Assert.False(result.Success);
+            Assert.True(result.IsFailure);
         }
 
         [Fact]
         public void Create_PayHistory_Invalid_PayFrequency_ShouldFail()
         {
             Employee employee = GetEmployeeForEditing();
-            OperationResult<PayHistory> result = employee.AddPayHistory(1, new DateTime(2023, 1, 7), 15.00M, 0);
+            Result<PayHistory> result = employee.AddPayHistory(1, new DateTime(2023, 1, 7), 15.00M, 0);
 
-            Assert.False(result.Success);
+            Assert.True(result.IsFailure);
         }
 
         [Fact]
         public void Create_DepartmentHistory_ValidEndDate_ShouldSucceed()
         {
             Employee employee = GetEmployeeForEditing();
-            OperationResult<DepartmentHistory> result = employee.AddDepartmentHistory(1, 1, new DateOnly(2023, 1, 7), new DateTime(2023, 1, 8));
+            Result<DepartmentHistory> result = employee.AddDepartmentHistory(1, 1, new DateOnly(2023, 1, 7), new DateTime(2023, 1, 8));
 
-            Assert.True(result.Success);
+            Assert.True(result.IsSuccess);
         }
 
         [Fact]
         public void Create_DepartmentHistory_DefaultEndDate_ShouldSucceed()
         {
             Employee employee = GetEmployeeForEditing();
-            OperationResult<DepartmentHistory> result = employee.AddDepartmentHistory(1, 1, new DateOnly(2023, 1, 7), new DateTime());
+            Result<DepartmentHistory> result = employee.AddDepartmentHistory(1, 1, new DateOnly(2023, 1, 7), new DateTime());
 
-            Assert.True(result.Success);
+            Assert.True(result.IsSuccess);
         }
 
         [Fact]
         public void Create_DepartmentHistory_NullEndDate_ShouldSucceed()
         {
             Employee employee = GetEmployeeForEditing();
-            OperationResult<DepartmentHistory> result = employee.AddDepartmentHistory(1, 1, new DateOnly(2023, 1, 7), null);
+            Result<DepartmentHistory> result = employee.AddDepartmentHistory(1, 1, new DateOnly(2023, 1, 7), null);
 
-            Assert.True(result.Success);
+            Assert.True(result.IsSuccess);
         }
 
         [Fact]
         public void Create_DepartmentHistory_StartDateAfterEndDate_ShouldFail()
         {
             Employee employee = GetEmployeeForEditing();
-            OperationResult<DepartmentHistory> result = employee.AddDepartmentHistory(1, 1, new DateOnly(2023, 1, 7), new DateTime(2023, 1, 1));
+            Result<DepartmentHistory> result = employee.AddDepartmentHistory(1, 1, new DateOnly(2023, 1, 7), new DateTime(2023, 1, 1));
 
-            Assert.False(result.Success);
+            Assert.True(result.IsFailure);
         }
 
         [Fact]
         public void Create_DepartmentHistory_DefaultStartDate_ShouldFail()
         {
             Employee employee = GetEmployeeForEditing();
-            OperationResult<DepartmentHistory> result = employee.AddDepartmentHistory(1, 1, new DateOnly(), new DateTime());
+            Result<DepartmentHistory> result = employee.AddDepartmentHistory(1, 1, new DateOnly(), new DateTime());
 
-            Assert.False(result.Success);
+            Assert.True(result.IsFailure);
         }
 
         [Fact]
@@ -199,12 +193,12 @@ namespace REA.Accounting.UnitTests.HumanResources
         {
             Employee employee = GetEmployeeForEditing();
 
-            OperationResult<REA.Accounting.Core.Shared.Address> result =
+            Result<REA.Accounting.Core.Shared.Address> result =
                 employee.AddAddress(
                     1, 1, AddressTypeEnum.Home, "123 Main", null, "Somewhere", 1, "12345"
                 );
 
-            Assert.True(result.Success);
+            Assert.True(result.IsSuccess);
         }
 
         [Fact]
@@ -212,12 +206,12 @@ namespace REA.Accounting.UnitTests.HumanResources
         {
             Employee employee = GetEmployeeForEditing();
 
-            OperationResult<REA.Accounting.Core.Shared.Address> result =
+            Result<REA.Accounting.Core.Shared.Address> result =
                 employee.AddAddress(
                     1, 1, AddressTypeEnum.Home, null, null, "Somewhere", 1, "12345"
                 );
 
-            Assert.False(result.Success);
+            Assert.True(result.IsFailure);
         }
 
         [Fact]
@@ -225,12 +219,12 @@ namespace REA.Accounting.UnitTests.HumanResources
         {
             Employee employee = GetEmployeeForEditing();
 
-            OperationResult<REA.Accounting.Core.Shared.Address> result =
+            Result<REA.Accounting.Core.Shared.Address> result =
                 employee.AddAddress(
                     1, 1, AddressTypeEnum.Home, "123 Main", null, null, 1, "12345"
                 );
 
-            Assert.False(result.Success);
+            Assert.True(result.IsFailure);
         }
 
         [Fact]
@@ -238,12 +232,12 @@ namespace REA.Accounting.UnitTests.HumanResources
         {
             Employee employee = GetEmployeeForEditing();
 
-            OperationResult<REA.Accounting.Core.Shared.Address> result =
+            Result<REA.Accounting.Core.Shared.Address> result =
                 employee.AddAddress(
                     1, 1, 0, "123 Main", null, "Somewhere", 1, "12345"
                 );
 
-            Assert.False(result.Success);
+            Assert.True(result.IsFailure);
         }
 
         [Fact]
@@ -251,12 +245,12 @@ namespace REA.Accounting.UnitTests.HumanResources
         {
             Employee employee = GetEmployeeForEditing();
 
-            OperationResult<REA.Accounting.Core.Shared.Address> result =
+            Result<REA.Accounting.Core.Shared.Address> result =
                 employee.AddAddress(
                     1, 1, AddressTypeEnum.Home, "123 Main", null, "Somewhere", 0, "12345"
                 );
 
-            Assert.False(result.Success);
+            Assert.True(result.IsFailure);
         }
 
         [Fact]
@@ -264,12 +258,12 @@ namespace REA.Accounting.UnitTests.HumanResources
         {
             Employee employee = GetEmployeeForEditing();
 
-            OperationResult<REA.Accounting.Core.Shared.PersonEmailAddress> result =
+            Result<REA.Accounting.Core.Shared.PersonEmailAddress> result =
                 employee.AddEmailAddress(
                     1, 1, "joe4@adventureworks.com"
                 );
 
-            Assert.True(result.Success);
+            Assert.True(result.IsSuccess);
         }
 
         [Fact]
@@ -277,12 +271,12 @@ namespace REA.Accounting.UnitTests.HumanResources
         {
             Employee employee = GetEmployeeForEditing();
 
-            OperationResult<REA.Accounting.Core.Shared.PersonEmailAddress> result =
+            Result<REA.Accounting.Core.Shared.PersonEmailAddress> result =
                 employee.AddEmailAddress(
                     1, 1, null
                 );
 
-            Assert.False(result.Success);
+            Assert.True(result.IsFailure);
         }
 
         [Fact]
@@ -290,12 +284,12 @@ namespace REA.Accounting.UnitTests.HumanResources
         {
             Employee employee = GetEmployeeForEditing();
 
-            OperationResult<REA.Accounting.Core.Shared.PersonEmailAddress> result =
+            Result<REA.Accounting.Core.Shared.PersonEmailAddress> result =
                 employee.AddEmailAddress(
                     1, 1, "joesemail"
                 );
 
-            Assert.False(result.Success);
+            Assert.True(result.IsFailure);
         }
 
         [Fact]
@@ -303,12 +297,12 @@ namespace REA.Accounting.UnitTests.HumanResources
         {
             Employee employee = GetEmployeeForEditing();
 
-            OperationResult<REA.Accounting.Core.Shared.PersonPhone> result =
-                employee.AddPhoneNumbers(
+            Result<REA.Accounting.Core.Shared.PersonPhone> result =
+                employee.AddPhoneNumber(
                     1, PhoneNumberTypeEnum.Home, "555-555-5555"
                 );
 
-            Assert.True(result.Success);
+            Assert.True(result.IsSuccess);
         }
 
         [Fact]
@@ -316,12 +310,12 @@ namespace REA.Accounting.UnitTests.HumanResources
         {
             Employee employee = GetEmployeeForEditing();
 
-            OperationResult<REA.Accounting.Core.Shared.PersonPhone> result =
-                employee.AddPhoneNumbers(
+            Result<REA.Accounting.Core.Shared.PersonPhone> result =
+                employee.AddPhoneNumber(
                     1, 0, "555-555-5555"
                 );
 
-            Assert.False(result.Success);
+            Assert.True(result.IsFailure);
         }
 
         [Fact]
@@ -329,12 +323,12 @@ namespace REA.Accounting.UnitTests.HumanResources
         {
             Employee employee = GetEmployeeForEditing();
 
-            OperationResult<REA.Accounting.Core.Shared.PersonPhone> result =
-                employee.AddPhoneNumbers(
+            Result<REA.Accounting.Core.Shared.PersonPhone> result =
+                employee.AddPhoneNumber(
                     1, PhoneNumberTypeEnum.Home, null
                 );
 
-            Assert.False(result.Success);
+            Assert.True(result.IsFailure);
         }
 
         [Fact]
@@ -342,16 +336,17 @@ namespace REA.Accounting.UnitTests.HumanResources
         {
             Employee employee = GetEmployeeForEditing();
 
-            OperationResult<REA.Accounting.Core.Shared.PersonPhone> result =
-                employee.AddPhoneNumbers(
+            Result<REA.Accounting.Core.Shared.PersonPhone> result =
+                employee.AddPhoneNumber(
                     1, PhoneNumberTypeEnum.Home, "(789)-555-555-5555"
                 );
 
-            Assert.False(result.Success);
+            Assert.True(result.IsFailure);
         }
 
         private static Employee GetEmployeeForEditing()
-            => Employee.Create
+        {
+            Result<Employee> result = Employee.Create
                 (
                     1,
                     "EM",
@@ -373,5 +368,8 @@ namespace REA.Accounting.UnitTests.HumanResources
                     10,
                     true
                 );
+
+            return result.Value;
+        }
     }
 }

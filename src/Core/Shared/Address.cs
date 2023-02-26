@@ -33,7 +33,7 @@ namespace REA.Accounting.Core.Shared
             PostalCode = postalCode.Value!;
         }
 
-        internal static OperationResult<Address> Create
+        internal static Result<Address> Create
         (
             int addressID,
             int businessEntityID,
@@ -59,11 +59,11 @@ namespace REA.Accounting.Core.Shared
                     ValueObject.PostalCode.Create(postalCode)
                 );
 
-                return OperationResult<Address>.CreateSuccessResult(address);
+                return address;
             }
             catch (Exception ex)
             {
-                return OperationResult<Address>.CreateFailure(Helpers.GetExceptionMessage(ex));
+                return Result<Address>.Failure<Address>(new Error("Address.Create", Helpers.GetExceptionMessage(ex)));
             }
         }
 
@@ -75,7 +75,7 @@ namespace REA.Accounting.Core.Shared
         public int StateProvinceId { get; private set; }
         public string PostalCode { get; private set; }
 
-        internal OperationResult<Address> Update
+        internal Result<Address> Update
         (
 
             AddressTypeEnum addressType,
@@ -97,11 +97,11 @@ namespace REA.Accounting.Core.Shared
 
                 UpdateModifiedDate();
 
-                return OperationResult<Address>.CreateSuccessResult(this);
+                return this;
             }
             catch (Exception ex)
             {
-                return OperationResult<Address>.CreateFailure(Helpers.GetExceptionMessage(ex));
+                return Result<Address>.Failure<Address>(new Error("Address.Update", Helpers.GetExceptionMessage(ex)));
             }
         }
     }
