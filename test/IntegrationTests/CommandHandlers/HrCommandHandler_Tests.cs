@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Logging.Abstractions;
+
 using REA.Accounting.Application.HumanResources.CreateEmployee;
 using REA.Accounting.Application.HumanResources.DeleteEmployee;
 using REA.Accounting.Application.HumanResources.UpdateEmployee;
@@ -13,7 +15,7 @@ namespace REA.Accounting.IntegrationTests.CommandHandlers
         private readonly IWriteRepositoryManager _writeRepository;
 
         public HrCommandHandler_Tests()
-            => _writeRepository = new WriteRepositoryManager(_dbContext);
+            => _writeRepository = new WriteRepositoryManager(_dbContext, new NullLogger<WriteRepositoryManager>());
 
         [Fact]
         public async Task Handle_CreateEmployeeCommandHandler_ShouldSucceed()

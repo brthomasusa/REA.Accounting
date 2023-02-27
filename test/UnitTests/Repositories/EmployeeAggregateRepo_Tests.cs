@@ -1,5 +1,6 @@
 using TestSupport.EfHelpers;
 
+using Microsoft.Extensions.Logging.Abstractions;
 using REA.Accounting.Core.HumanResources;
 using REA.Accounting.Core.Shared;
 using REA.Accounting.Infrastructure.Persistence;
@@ -19,7 +20,7 @@ namespace REA.Accounting.UnitTests.Repositories
         public EmployeeAggregateRepo_Tests()
         {
             ConfigureDbContextAsync();
-            _writeRepository = new WriteRepositoryManager(_context!);
+            _writeRepository = new WriteRepositoryManager(_context!, new NullLogger<WriteRepositoryManager>());
         }
 
         public void Dispose()

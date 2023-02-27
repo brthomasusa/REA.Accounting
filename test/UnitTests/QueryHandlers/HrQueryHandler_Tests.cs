@@ -1,4 +1,6 @@
 using TestSupport.EfHelpers;
+using Microsoft.Extensions.Logging.Abstractions;
+
 using REA.Accounting.Application.HumanResources.GetEmployeeById;
 using REA.Accounting.Infrastructure.Persistence;
 using REA.Accounting.Infrastructure.Persistence.Interfaces;
@@ -17,7 +19,7 @@ namespace REA.Accounting.UnitTests.QueryHandlers
         public HrQueryHandler_Tests()
         {
             ConfigureDbContextAsync();
-            _writeRepository = new WriteRepositoryManager(_context!);
+            _writeRepository = new WriteRepositoryManager(_context!, new NullLogger<WriteRepositoryManager>());
         }
 
         public void Dispose()

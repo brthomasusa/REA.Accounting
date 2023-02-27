@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Logging.Abstractions;
+
 using REA.Accounting.Core.HumanResources;
 using REA.Accounting.Core.Shared;
 using REA.Accounting.SharedKernel.Utilities;
@@ -12,7 +14,7 @@ namespace REA.Accounting.IntegrationTests.Repositories
         private readonly IWriteRepositoryManager _writeRepository;
 
         public EmployeeAggregateRepo_Tests()
-            => _writeRepository = new WriteRepositoryManager(_dbContext);
+            => _writeRepository = new WriteRepositoryManager(_dbContext, new NullLogger<WriteRepositoryManager>());
 
         [Fact]
         public async Task GetById_EmployeeAggregateRepo_ShouldSucceed()

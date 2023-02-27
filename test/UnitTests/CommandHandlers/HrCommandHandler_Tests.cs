@@ -1,4 +1,5 @@
 using TestSupport.EfHelpers;
+using Microsoft.Extensions.Logging.Abstractions;
 
 using REA.Accounting.Application.HumanResources.CreateEmployee;
 using REA.Accounting.Application.HumanResources.DeleteEmployee;
@@ -19,7 +20,7 @@ namespace REA.Accounting.UnitTests.CommandHandlers
         public HrCommandHandler_Tests()
         {
             ConfigureDbContextAsync();
-            _writeRepository = new WriteRepositoryManager(_context!);
+            _writeRepository = new WriteRepositoryManager(_context!, new NullLogger<WriteRepositoryManager>());
         }
 
         public void Dispose()

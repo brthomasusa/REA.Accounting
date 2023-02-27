@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Logging.Abstractions;
+
 using REA.Accounting.Application.HumanResources.GetEmployeeById;
 using REA.Accounting.Infrastructure.Persistence.Interfaces;
 using REA.Accounting.Infrastructure.Persistence.Repositories;
@@ -11,7 +13,7 @@ namespace REA.Accounting.IntegrationTests.QueryHandlers
         private readonly IWriteRepositoryManager _writeRepository;
 
         public HrQueryHandler_Tests()
-            => _writeRepository = new WriteRepositoryManager(_dbContext);
+            => _writeRepository = new WriteRepositoryManager(_dbContext, new NullLogger<WriteRepositoryManager>());
 
         [Fact]
         public async Task Handle_GetEmployeeByIdQueryHandler_ShouldSucceed()
