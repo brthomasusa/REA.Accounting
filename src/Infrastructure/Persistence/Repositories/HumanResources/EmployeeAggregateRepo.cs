@@ -6,7 +6,6 @@ using REA.Accounting.Core.Interfaces;
 using REA.Accounting.Core.Shared;
 using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
 using REA.Accounting.Infrastructure.Persistence.Mappings.HumanResources;
-using REA.Accounting.Infrastructure.Persistence.Repositories;
 using REA.Accounting.Infrastructure.Persistence.Specifications.HumanResources;
 using REA.Accounting.Infrastructure.Persistence.Specifications.Person;
 using REA.Accounting.SharedKernel.Interfaces;
@@ -19,7 +18,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
 {
     public sealed class EmployeeAggregateRepository : IEmployeeAggregateRepository
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<WriteRepositoryManager> _logger;
         private readonly EfCoreContext _context;
         private readonly IUnitOfWork _unitOfWork;
 
@@ -59,7 +58,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
             }
             catch (Exception ex)
             {
-                _logger.LogError($"EmployeeAggregateRepository.ValidatePersonNameIsUnique - {Helpers.GetExceptionMessage(ex)}");
+                _logger.LogError(ex, $"EmployeeAggregateRepository.ValidatePersonNameIsUnique - {Helpers.GetExceptionMessage(ex)}");
 
                 return Result.Failure
                 (
@@ -94,7 +93,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
             }
             catch (Exception ex)
             {
-                _logger.LogError($"EmployeeAggregateRepository.ValidateNationalIdNumberIsUnique - {Helpers.GetExceptionMessage(ex)}");
+                _logger.LogError(ex, $"EmployeeAggregateRepository.ValidateNationalIdNumberIsUnique - {Helpers.GetExceptionMessage(ex)}");
                 return Result.Failure(new Error("EmployeeAggregateRepository.ValidateNationalIdNumberIsUnique.", Helpers.GetExceptionMessage(ex)));
             }
         }
@@ -119,6 +118,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, $"EmployeeAggregateRepository.ValidateEmployeeEmailIsUnique - {Helpers.GetExceptionMessage(ex)}");
                 return Result.Failure(new Error("EmployeeAggregateRepository.ValidateEmployeeEmailIsUnique", Helpers.GetExceptionMessage(ex)));
             }
         }
@@ -145,7 +145,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
             }
             catch (Exception ex)
             {
-                _logger.LogError($"EmployeeAggregateRepository.ValidateEmployeeExist - {Helpers.GetExceptionMessage(ex)}");
+                _logger.LogError(ex, $"EmployeeAggregateRepository.ValidateEmployeeExist - {Helpers.GetExceptionMessage(ex)}");
                 return Result.Failure(new Error("EmployeeAggregateRepository.ValidateEmployeeExist", Helpers.GetExceptionMessage(ex)));
             }
         }
@@ -174,12 +174,13 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
                 else
                 {
                     string errMsg = $"An employee with ID: {employeeID} could not be found.";
+                    _logger.LogWarning($"An employee with ID: {employeeID} could not be found.");
                     return Result<EmployeeDomainModel>.Failure<EmployeeDomainModel>(new Error("EmployeeAggregateRepository.GetEmployeeOnlyAsync", errMsg));
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError($"EmployeeAggregateRepository.GetEmployeeOnlyAsync - {Helpers.GetExceptionMessage(ex)}");
+                _logger.LogError(ex, $"EmployeeAggregateRepository.GetEmployeeOnlyAsync - {Helpers.GetExceptionMessage(ex)}");
                 return Result<EmployeeDomainModel>.Failure<EmployeeDomainModel>(new Error("EmployeeAggregateRepository.GetEmployeeOnlyAsync",
                                                                                           Helpers.GetExceptionMessage(ex)));
             }
@@ -250,7 +251,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
             }
             catch (Exception ex)
             {
-                _logger.LogError($"EmployeeAggregateRepository.GetByIdAsync - {Helpers.GetExceptionMessage(ex)}");
+                _logger.LogError(ex, $"EmployeeAggregateRepository.GetByIdAsync - {Helpers.GetExceptionMessage(ex)}");
                 return Result<EmployeeDomainModel>.Failure<EmployeeDomainModel>(new Error("EmployeeAggregateRepository.GetByIdAsync",
                                                                                           Helpers.GetExceptionMessage(ex)));
             }
@@ -273,7 +274,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
             }
             catch (Exception ex)
             {
-                _logger.LogError($"EmployeeAggregateRepository.InsertAsync - {Helpers.GetExceptionMessage(ex)}");
+                _logger.LogError(ex, $"EmployeeAggregateRepository.InsertAsync - {Helpers.GetExceptionMessage(ex)}");
                 return Result<int>.Failure<int>(new Error("EmployeeAggregateRepository.InsertAsync",
                                                            Helpers.GetExceptionMessage(ex)));
             }
@@ -308,7 +309,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
             }
             catch (Exception ex)
             {
-                _logger.LogError($"EmployeeAggregateRepository.Update - {Helpers.GetExceptionMessage(ex)}");
+                _logger.LogError(ex, $"EmployeeAggregateRepository.Update - {Helpers.GetExceptionMessage(ex)}");
                 return Result<int>.Failure<int>(new Error("EmployeeAggregateRepository.Update",
                                                            Helpers.GetExceptionMessage(ex)));
             }
@@ -346,7 +347,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
             }
             catch (Exception ex)
             {
-                _logger.LogError($"EmployeeAggregateRepository.Delete - {Helpers.GetExceptionMessage(ex)}");
+                _logger.LogError(ex, $"EmployeeAggregateRepository.Delete - {Helpers.GetExceptionMessage(ex)}");
                 return Result<int>.Failure<int>(new Error("EmployeeAggregateRepository.Delete",
                                                            Helpers.GetExceptionMessage(ex)));
             }

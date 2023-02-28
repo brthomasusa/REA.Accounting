@@ -19,6 +19,9 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
 
+    builder.Logging.ClearProviders();
+    builder.Host.UseNLog();
+
     builder.Services.AddMediatR(ApplicationAssembly.Instance);
     builder.Services.AddValidatorsFromAssemblyContaining<CreateEmployeeCommandDataValidator>();
     builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
