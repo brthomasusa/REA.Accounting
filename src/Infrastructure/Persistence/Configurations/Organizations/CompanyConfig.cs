@@ -30,6 +30,50 @@ namespace REA.Accounting.Infrastructure.Persistence.Configurations.Organizations
             entity.Property(e => e.WebsiteUrl)
                 .HasColumnName("WebsiteUrl")
                 .HasColumnType("nvarchar(50)");
+            entity.Property(e => e.MailAddressLine1)
+                .IsRequired()
+                .HasColumnName("MailAddressLine1")
+                .HasColumnType("nvarchar(60)");
+            entity.Property(e => e.MailAddressLine2)
+                .HasColumnName("MailAddressLine2")
+                .HasColumnType("nvarchar(60)");
+            entity.Property(e => e.MailCity)
+                .IsRequired()
+                .HasColumnName("MailCity")
+                .HasColumnType("nvarchar(30)");
+            entity.Property(e => e.MailStateProvinceID)
+                .HasColumnName("MailStateProvinceID")
+                .IsRequired();
+            entity.Property(e => e.MailPostalCode)
+                .IsRequired()
+                .HasColumnName("MailPostalCode")
+                .HasColumnType("nvarchar(60)");
+            entity.Property(e => e.DeliveryAddressLine1)
+                .IsRequired()
+                .HasColumnName("DeliveryAddressLine1")
+                .HasColumnType("nvarchar(60)");
+            entity.Property(e => e.DeliveryAddressLine2)
+                .HasColumnName("DeliveryAddressLine2")
+                .HasColumnType("nvarchar(60)");
+            entity.Property(e => e.DeliveryCity)
+                .IsRequired()
+                .HasColumnName("DeliveryCity")
+                .HasColumnType("nvarchar(30)");
+            entity.Property(e => e.DeliveryStateProvinceID)
+                .HasColumnName("DeliveryStateProvinceID")
+                .IsRequired();
+            entity.Property(e => e.DeliveryPostalCode)
+                .IsRequired()
+                .HasColumnName("DeliveryPostalCode")
+                .HasColumnType("nvarchar(60)");
+            entity.Property(e => e.Telephone)
+                .IsRequired()
+                .HasColumnName("Telephone")
+                .HasColumnType("nvarchar(25)");
+            entity.Property(e => e.Fax)
+                .IsRequired()
+                .HasColumnName("Fax")
+                .HasColumnType("nvarchar(25)");
             entity.Property(e => e.RowGuid)
                 .HasColumnName("rowguid")
                 .HasColumnType("UNIQUEIDENTIFIER")
@@ -49,6 +93,18 @@ namespace REA.Accounting.Infrastructure.Persistence.Configurations.Organizations
                     LegalName = "AdventureWorks Cycles LLC",
                     EIN = "12-3456789",
                     WebsiteUrl = "https:\\www.Adventureworkscycles.com",
+                    MailAddressLine1 = "PO Box 6350",
+                    MailAddressLine2 = null,
+                    MailCity = "Dallas",
+                    MailStateProvinceID = 73,
+                    MailPostalCode = "75214-6350",
+                    DeliveryAddressLine1 = "6350 E. Mockingbird Ln",
+                    DeliveryAddressLine2 = "Suite 100",
+                    DeliveryCity = "Dallas",
+                    DeliveryStateProvinceID = 73,
+                    DeliveryPostalCode = "75214",
+                    Telephone = "214-828-0448",
+                    Fax = "214-828-1441",
                     RowGuid = new Guid("734a8aa4-0686-429c-8192-8bbd214132b7"),
                     ModifiedDate = DateTime.Now
                 }

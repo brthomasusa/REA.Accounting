@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using REA.Accounting.Infrastructure.Persistence.DataModels.HumanResources;
+using REA.Accounting.Infrastructure.Persistence.DataModels.Organizations;
 
-namespace REA.Accounting.Infrastructure.Persistence.Configurations.HumanResources
+namespace REA.Accounting.Infrastructure.Persistence.Configurations.Organizations
 {
     internal class ShiftConfig : IEntityTypeConfiguration<Shift>
     {

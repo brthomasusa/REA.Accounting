@@ -1,4 +1,4 @@
-namespace REA.Accounting.Infrastructure.Persistence.DataModels.HumanResources
+namespace REA.Accounting.Infrastructure.Persistence.DataModels.Organizations
 {
     public class Department
     {

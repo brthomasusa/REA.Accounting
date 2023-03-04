@@ -10,6 +10,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories
         private readonly ILogger<WriteRepositoryManager> _logger;
         private readonly EfCoreContext _context;
         private readonly Lazy<IEmployeeAggregateRepository> _employeeRepository;
+        private readonly Lazy<ICompanyAggregateRepository> _companyRepository;
 
         public WriteRepositoryManager
         (
@@ -22,8 +23,12 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories
 
             _employeeRepository = new Lazy<IEmployeeAggregateRepository>(()
                 => new EmployeeAggregateRepository(_context, _logger));
+
+            _companyRepository = new Lazy<ICompanyAggregateRepository>(()
+                => new CompanyAggregateRepository(_context, _logger));
         }
 
         public IEmployeeAggregateRepository EmployeeAggregate => _employeeRepository.Value;
+        public ICompanyAggregateRepository CompanyAggregate => _companyRepository.Value;
     }
 }

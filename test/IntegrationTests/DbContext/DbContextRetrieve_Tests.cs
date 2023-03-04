@@ -91,6 +91,7 @@ namespace REA.Accounting.IntegrationTests.DbContext
             //SETUP
 
             //ATTEMPT
+            var company = _dbContext.Company!.ToList();
             var businessEntities = _dbContext.BusinessEntity!.ToList();
             var people = _dbContext.Person!.ToList();
             var addresses = _dbContext.Address!.ToList();
@@ -103,6 +104,7 @@ namespace REA.Accounting.IntegrationTests.DbContext
             var departmentHistories = _dbContext.EmployeeDepartmentHistory!.ToList();
             var payHistories = _dbContext.EmployeePayHistory!.ToList();
 
+            int companyCount = company.Count;
             int businessEntityCount = businessEntities.Count;
             int peopleCount = people.Count;
             int addressCount = addresses.Count;
@@ -116,6 +118,7 @@ namespace REA.Accounting.IntegrationTests.DbContext
             int payHistoryCount = payHistories.Count;
 
             //VERIFY
+            Assert.Equal(1, companyCount);
             Assert.True(businessEntityCount > 0);
             Assert.True(peopleCount > 0);
             Assert.True(addressCount > 0);
@@ -129,49 +132,6 @@ namespace REA.Accounting.IntegrationTests.DbContext
             Assert.True(payHistoryCount > 0);
         }
 
-        // [Fact]
-        // public void DbContextExtension_ValidateWithSingleSpecifications_ShouldSucceed()
-        // {
-        //     //SETUP
 
-        //     var filters = new List<SpecificationBase<PersonDataModel>>()
-        //     {
-        //         new PersonHasLastNameSpecification("Hamilton")
-        //     };
-
-        //     // IQueryable<PersonModel>? people = null;
-
-        //     //ATTEMPT
-        //     // Use Specification for query
-        //     var people = _dbContext.Person!.ApplyFilters<PersonDataModel>(filters);
-
-        //     //VERIFY
-        //     Assert.Equal("Hamilton", people!.ToList()[0].LastName);
-
-        //     // Use Specification for validation
-        //     Assert.True(new PersonHasLastNameSpecification("Hamilton").IsSatisfiedBy(people!.ToList()[0]));
-        // }
-
-        // [Fact]
-        // public async Task DbContextExtension_ValidateWithMultipleSpecifications_ShouldSucceed()
-        // {
-        //     //SETUP
-
-        //     PersonDataModel? person = await _dbContext.Person!.FindAsync(2);
-
-        //     var filters = new List<SpecificationBase<PersonDataModel>>()
-        //     {
-        //         new PersonHasLastNameSpecification("Duffy"),
-        //         new PersonHasEmployeePersonTypeSpecification("EM")
-        //     };
-
-        //     //ATTEMPT
-        //     // Use multiple specifications for validation
-        //     var people = _dbContext.Person!.ApplyFilters<PersonDataModel>(filters);
-        //     bool isValid = person!.SatisfiesFilters<PersonDataModel>(filters);
-
-        //     //VERIFY
-        //     Assert.True(isValid);
-        // }
     }
 }
