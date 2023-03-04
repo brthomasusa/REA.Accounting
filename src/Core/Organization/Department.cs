@@ -1,15 +1,13 @@
 #pragma warning disable CS8618
 
-using System.Text.Json.Serialization;
 using REA.Accounting.SharedKernel.Base;
 using REA.Accounting.SharedKernel.CommonValueObjects;
+using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Core.Organization
 {
-    public class Department : Entity<int>
+    public sealed class Department : Entity<int>
     {
-        public Department() { }
-
         private Department
         (
             int id,
@@ -22,27 +20,43 @@ namespace REA.Accounting.Core.Organization
             GroupName = groupName.Value!;
         }
 
-        public static Department Create
-        (int id, string name, string groupName)
-            => new
-            (
-                id,
-                OrganizationName.Create(name),
-                OrganizationName.Create(groupName)
-            );
+        internal static Result<Department> Create(int id, string name, string groupName)
+        {
+            try
+            {
+                Department dept = new
+                (
+                    id,
+                    OrganizationName.Create(name),
+                    OrganizationName.Create(groupName)
+                );
+
+                return dept;
+            }
+            catch (Exception ex)
+            {
+                return Result<Department>.Failure<Department>(new Error("Department.Create", Helpers.GetExceptionMessage(ex)));
+            }
+        }
+
+        internal Result<Department> Update(string name, string groupName)
+        {
+            try
+            {
+                Name = OrganizationName.Create(name);
+                GroupName = OrganizationName.Create(groupName);
+                UpdateModifiedDate();
+
+                return this;
+            }
+            catch (Exception ex)
+            {
+                return Result<Department>.Failure<Department>(new Error("Department.Update", Helpers.GetExceptionMessage(ex)));
+            }
+        }
 
         public string Name { get; private set; }
-        public void UpdateName(string value)
-        {
-            Name = OrganizationName.Create(value).Value!;
-            UpdateModifiedDate();
-        }
 
         public string GroupName { get; private set; }
-        public void UpdateGroupName(string value)
-        {
-            GroupName = OrganizationName.Create(value).Value!;
-            UpdateModifiedDate();
-        }
     }
 }

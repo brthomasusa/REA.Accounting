@@ -2,13 +2,12 @@
 
 using REA.Accounting.SharedKernel.Base;
 using REA.Accounting.Core.HumanResources.ValueObjects;
+using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Core.Organization
 {
-    public class Shift : Entity<int>
+    public sealed class Shift : Entity<int>
     {
-        protected Shift() { }
-
         private Shift
         (
             int id,
@@ -16,7 +15,6 @@ namespace REA.Accounting.Core.Organization
             ShiftTime startTime,
             ShiftTime endTime
         )
-            : this()
         {
             Id = id;
             Name = name.Value!;
@@ -24,7 +22,7 @@ namespace REA.Accounting.Core.Organization
             EndTime = endTime.Value;
         }
 
-        public static Shift Create
+        internal static Result<Shift> Create
         (
             int id,
             string name,
@@ -33,32 +31,45 @@ namespace REA.Accounting.Core.Organization
             int endHour,
             int endMinute
         )
-        => new
-            (id,
-            ShiftName.Create(name),
-            ShiftTime.Create(startHour, startMinute),
-            ShiftTime.Create(endHour, endMinute)
-            );
+        {
+            try
+            {
+                Shift shift = new
+                 (id,
+                 ShiftName.Create(name),
+                 ShiftTime.Create(startHour, startMinute),
+                 ShiftTime.Create(endHour, endMinute)
+                 );
+
+                return shift;
+            }
+            catch (Exception ex)
+            {
+                return Result<Shift>.Failure<Shift>(new Error("Shift.Create", Helpers.GetExceptionMessage(ex)));
+            }
+        }
+
+        internal Result<Shift> Update(string name, int startHour, int startMinute, int endHour, int endMinute)
+        {
+            try
+            {
+                Name = ShiftName.Create(name);
+                StartTime = ShiftTime.Create(startHour, startMinute).Value;
+                EndTime = ShiftTime.Create(endHour, endMinute).Value;
+                UpdateModifiedDate();
+
+                return this;
+            }
+            catch (Exception ex)
+            {
+                return Result<Shift>.Failure<Shift>(new Error("Shift.Update", Helpers.GetExceptionMessage(ex)));
+            }
+        }
 
         public string Name { get; private set; }
-        public void UpdateShiftName(string value)
-        {
-            Name = ShiftName.Create(value).Value!;
-            UpdateModifiedDate();
-        }
 
         public TimeOnly StartTime { get; private set; }
-        public void UpdateStartTime(int hour, int minute)
-        {
-            StartTime = ShiftTime.Create(hour, minute).Value;
-            UpdateModifiedDate();
-        }
 
         public TimeOnly EndTime { get; private set; }
-        public void UpdateEndTime(int hour, int minute)
-        {
-            EndTime = ShiftTime.Create(hour, minute).Value;
-            UpdateModifiedDate();
-        }
     }
 }

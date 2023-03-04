@@ -291,7 +291,7 @@ namespace REA.Accounting.UnitTests.Shared
         {
             const string phoneNumber = "1 (11) 500 555-0190";
 
-            var exception = Record.Exception(() => PhoneNumber.Create(phoneNumber));
+            var exception = Record.Exception(() => Telephone.Create(phoneNumber));
             Assert.Null(exception);
         }
 
@@ -300,7 +300,7 @@ namespace REA.Accounting.UnitTests.Shared
         {
             const string phoneNumber = "214-555-5555";
 
-            var exception = Record.Exception(() => PhoneNumber.Create(phoneNumber));
+            var exception = Record.Exception(() => Telephone.Create(phoneNumber));
             Assert.Null(exception);
         }
     }

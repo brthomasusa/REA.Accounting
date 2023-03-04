@@ -13,7 +13,7 @@ namespace REA.Accounting.Core.Shared
         (
             int id,
             PhoneNumberTypeEnum phoneType,
-            PhoneNumber phoneNumber
+            Telephone phoneNumber
         )
         {
             Id = id;
@@ -34,7 +34,7 @@ namespace REA.Accounting.Core.Shared
                 (
                     id,
                     Enum.IsDefined(typeof(PhoneNumberTypeEnum), phoneNumberType) ? phoneNumberType : throw new ArgumentException("Invalid phone number type."),
-                    PhoneNumber.Create(telephone)
+                    SharedKernel.CommonValueObjects.Telephone.Create(telephone)
                 );
 
                 return phone;

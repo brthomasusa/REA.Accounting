@@ -4,24 +4,24 @@ using REA.Accounting.SharedKernel.Guards;
 
 namespace REA.Accounting.SharedKernel.CommonValueObjects
 {
-    public class PhoneNumber : ValueObject
+    public class Telephone : ValueObject
     {
         public string? Value { get; }
 
-        protected PhoneNumber() { }
+        protected Telephone() { }
 
-        private PhoneNumber(string phoneNumber)
+        private Telephone(string phoneNumber)
             : this()
         {
             Value = phoneNumber;
         }
 
-        public static implicit operator string(PhoneNumber self) => self.Value!;
+        public static implicit operator string(Telephone self) => self.Value!;
 
-        public static PhoneNumber Create(string phoneNumber)
+        public static Telephone Create(string phoneNumber)
         {
             CheckValidity(phoneNumber);
-            return new PhoneNumber(phoneNumber);
+            return new Telephone(phoneNumber);
         }
 
         private static void CheckValidity(string value)
