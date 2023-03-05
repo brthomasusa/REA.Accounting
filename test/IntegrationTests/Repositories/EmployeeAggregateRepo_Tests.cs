@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging.Abstractions;
 using REA.Accounting.Core.HumanResources;
 using REA.Accounting.Core.Shared;
 using REA.Accounting.SharedKernel.Utilities;
-using REA.Accounting.IntegrationTests.Base;
 using REA.Accounting.Infrastructure.Persistence.Interfaces;
 using REA.Accounting.Infrastructure.Persistence.Repositories;
 

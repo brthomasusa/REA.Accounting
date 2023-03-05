@@ -25,3 +25,11 @@ echo -en '\n'
  dotnet test --no-restore --nologo -v q --filter PersonHrCreate_Tests
  echo "--------------------------> PersonHrCreate_Tests completed <--------------------------"
 echo -en '\n'
+
+ dotnet test --no-restore --nologo -v q --filter EmployeeAggregateRepo_Tests 
+ echo "--------------------------> EmployeeAggregateRepo_Tests completed <--------------------------"
+echo -en '\n'
+
+ dotnet test --no-restore --nologo -v q --filter CompanyAggregateRepo_Tests
+ echo "--------------------------> CompanyAggregateRepo_Tests completed <--------------------------"
+echo -en '\n'

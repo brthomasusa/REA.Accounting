@@ -38,7 +38,7 @@ namespace REA.Accounting.Core.Organization
             DeliveryCity = deliveryAddress.City!;
             DeliveryStateProvinceId = deliveryAddress.StateProvinceID;
             DeliveryPostalCode = deliveryAddress.Zipcode!;
-            PhoneNumber = telephone.Value!;
+            Telephone = telephone.Value!;
             Fax = fax.Value;
         }
 
@@ -74,8 +74,8 @@ namespace REA.Accounting.Core.Organization
                     WebsiteUrl.Create(companyWebSite),
                     Address.Create(mailLine1, mailLine2, mailCity, mailStateProvinceID, mailPostalCode),
                     Address.Create(deliveryLine1, deliveryLine2, deliveryCity, deliveryStateProvinceID, deliveryPostalCode),
-                    Telephone.Create(telephone),
-                    Telephone.Create(fax)
+                    SharedKernel.CommonValueObjects.Telephone.Create(telephone),
+                    SharedKernel.CommonValueObjects.Telephone.Create(fax)
                 );
 
                 return company;
@@ -110,8 +110,8 @@ namespace REA.Accounting.Core.Organization
             {
                 Address mailAddress = Address.Create(mailLine1, mailLine2, mailCity, mailStateProvinceID, mailPostalCode);
                 Address deliveryAddress = Address.Create(deliveryLine1, deliveryLine2, deliveryCity, deliveryStateProvinceID, deliveryPostalCode);
-                Telephone phoneNumber = Telephone.Create(telephone);
-                Telephone faxNumber = Telephone.Create(fax);
+                Telephone phoneNumber = SharedKernel.CommonValueObjects.Telephone.Create(telephone);
+                Telephone faxNumber = SharedKernel.CommonValueObjects.Telephone.Create(fax);
 
                 CompanyName = OrganizationName.Create(companyName);
                 LegalName = OrganizationName.Create(legalName);
@@ -127,7 +127,7 @@ namespace REA.Accounting.Core.Organization
                 DeliveryCity = deliveryAddress.City!;
                 DeliveryStateProvinceId = deliveryAddress.StateProvinceID;
                 DeliveryPostalCode = deliveryAddress.Zipcode!;
-                PhoneNumber = phoneNumber.Value!;
+                Telephone = phoneNumber.Value!;
                 Fax = faxNumber.Value!;
 
                 return this;
@@ -152,7 +152,7 @@ namespace REA.Accounting.Core.Organization
         public string DeliveryCity { get; private set; }
         public int DeliveryStateProvinceId { get; private set; }
         public string DeliveryPostalCode { get; private set; }
-        public string PhoneNumber { get; private set; }
+        public string Telephone { get; private set; }
         public string? Fax { get; private set; }
 
         public IReadOnlyCollection<Department> Departments => _departments.AsReadOnly();
