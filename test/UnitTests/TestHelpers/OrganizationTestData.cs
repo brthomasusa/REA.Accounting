@@ -1,3 +1,4 @@
+using REA.Accounting.Application.Organization.UpdateCompany;
 using REA.Accounting.Core.Organization;
 using REA.Accounting.SharedKernel.Base;
 using REA.Accounting.SharedKernel.CommonValueObjects;
@@ -7,6 +8,28 @@ namespace REA.Accounting.UnitTests.TestHelpers
 {
     public static class OrganizationTestData
     {
+        public static Result<Company> GetCompanyResultWithValidData()
+            => Company.Create
+            (
+                0,
+                "Test Company",
+                "Test Company",
+                "123456789",
+                "https://www.testcompany.com",
+                "123 Main Street",
+                "Suite 10",
+                "Austin",
+                73,
+                "78123",
+                "123 Main Street",
+                "Suite 10",
+                "Austin",
+                73,
+                "78123",
+                "512-555-5555",
+                "512-555-9999"
+            );
+
         public static Company GetCompanyWithValidData()
         {
             Result<Company> result = Company.Create
@@ -92,6 +115,48 @@ namespace REA.Accounting.UnitTests.TestHelpers
 
             return result.Value;
         }
+
+        public static UpdateCompanyCommand GetUpdateCompanyCommandWithValidData()
+            => new(
+                CompanyID: 1,
+                CompanyName: "Test Company",
+                LegalName: "Test Company",
+                EIN: "123456789",
+                CompanyWebSite: "https://www.testcompany.com",
+                MailAddressLine1: "PO Box 6429",
+                MailAddressLine2: null,
+                MailCity: "Austin",
+                MailStateProvinceID: 73,
+                MailPostalCode: "78123",
+                DeliveryAddressLine1: "123 Main Street",
+                DeliveryAddressLine2: "Suite 1",
+                DeliveryCity: "Austin",
+                DeliveryStateProvinceID: 73,
+                DeliveryPostalCode: "78123",
+                Telephone: "512-555-5555",
+                Fax: "512-555-9999"
+            );
+
+        public static UpdateCompanyCommand GetUpdateCompanyCommandWithInvalidData()
+            => new(
+                CompanyID: 1,
+                CompanyName: "Test Company",
+                LegalName: "Test Company",
+                EIN: "123",
+                CompanyWebSite: "https://www.testcompany.com",
+                MailAddressLine1: "PO Box 6429",
+                MailAddressLine2: null,
+                MailCity: "Austin",
+                MailStateProvinceID: 73,
+                MailPostalCode: "78123",
+                DeliveryAddressLine1: "123 Main Street",
+                DeliveryAddressLine2: "Suite 1",
+                DeliveryCity: "Austin",
+                DeliveryStateProvinceID: 73,
+                DeliveryPostalCode: "78123",
+                Telephone: "512-555-5555",
+                Fax: "512-555-9999"
+            );
 
     }
 }

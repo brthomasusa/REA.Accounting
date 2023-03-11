@@ -1,5 +1,4 @@
 using REA.Accounting.Application.Interfaces.Messaging;
-using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Application.HumanResources.GetEmployeeById
 {
