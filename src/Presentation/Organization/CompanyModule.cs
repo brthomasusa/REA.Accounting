@@ -2,7 +2,6 @@ using MediatR;
 using Carter;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
 using REA.Accounting.Application.Organization.GetCompanyById;
