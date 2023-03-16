@@ -5,7 +5,7 @@ using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Core.Interfaces
 {
-    public interface ICompanyAggregateRepository : IRepository<Company>
+    public interface ICompanyWriteRepository : IRepository<Company>
     {
 
     }

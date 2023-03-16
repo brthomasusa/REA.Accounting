@@ -16,13 +16,13 @@ using EmployeeDomainModel = REA.Accounting.Core.HumanResources.Employee;
 
 namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
 {
-    public sealed class EmployeeAggregateRepository : IEmployeeAggregateRepository
+    public sealed class EmployeeWriteRepository : IEmployeeWriteRepository
     {
         private readonly ILogger<WriteRepositoryManager> _logger;
         private readonly EfCoreContext _context;
         private readonly IUnitOfWork _unitOfWork;
 
-        public EmployeeAggregateRepository(EfCoreContext ctx, ILogger<WriteRepositoryManager> logger)
+        public EmployeeWriteRepository(EfCoreContext ctx, ILogger<WriteRepositoryManager> logger)
         {
             _context = ctx;
             _unitOfWork = new UnitOfWork(_context);

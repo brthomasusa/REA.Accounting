@@ -18,11 +18,11 @@ namespace REA.Accounting.Application.HumanResources.DeleteEmployee
         {
             try
             {
-                Result<Employee> getResult = await _repo.EmployeeAggregate.GetByIdAsync(request.EmployeeID);
+                Result<Employee> getResult = await _repo.EmployeeAggregateRepository.GetByIdAsync(request.EmployeeID);
 
                 if (getResult.IsSuccess)
                 {
-                    Result<int> deleteDbResult = await _repo.EmployeeAggregate.Delete(getResult.Value);
+                    Result<int> deleteDbResult = await _repo.EmployeeAggregateRepository.Delete(getResult.Value);
 
                     if (deleteDbResult.IsSuccess)
                         return RETURN_VALUE;

@@ -17,7 +17,7 @@ namespace REA.Accounting.Application.BusinessRules.HumanResources
             ValidationResult validationResult = new();
 
             Result result =
-                await _repository.EmployeeAggregate.ValidateNationalIdNumberIsUnique(employee.EmployeeID, employee.NationalID);
+                await _repository.EmployeeAggregateRepository.ValidateNationalIdNumberIsUnique(employee.EmployeeID, employee.NationalID);
 
             if (result.IsSuccess)
             {

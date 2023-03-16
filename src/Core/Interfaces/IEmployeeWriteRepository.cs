@@ -4,7 +4,7 @@ using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Core.Interfaces
 {
-    public interface IEmployeeAggregateRepository : IRepository<Employee>
+    public interface IEmployeeWriteRepository : IRepository<Employee>
     {
         Task<Result<Employee>> GetEmployeeOnlyAsync(int empployeeID, bool asNoTracking = false);
         Task<Result> ValidatePersonNameIsUnique(int id, string fname, string lname, string? middleName, bool asNoTracking = true);

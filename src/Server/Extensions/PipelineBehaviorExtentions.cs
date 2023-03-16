@@ -2,6 +2,7 @@ using REA.Accounting.Application.Interfaces.Messaging;
 using REA.Accounting.Application.HumanResources.CreateEmployee;
 using REA.Accounting.Application.HumanResources.DeleteEmployee;
 using REA.Accounting.Application.HumanResources.UpdateEmployee;
+using REA.Accounting.Application.Organization.UpdateCompany;
 
 namespace REA.Accounting.Server.Extensions
 {
@@ -12,7 +13,8 @@ namespace REA.Accounting.Server.Extensions
             return services
                 .AddScoped(typeof(CommandValidator<CreateEmployeeCommand>), typeof(CreateEmployeeBusinessRuleValidator))
                 .AddScoped(typeof(CommandValidator<DeleteEmployeeCommand>), typeof(DeleteEmployeeBusinessRuleValidator))
-                .AddScoped(typeof(CommandValidator<UpdateEmployeeCommand>), typeof(UpdateEmployeeBusinessRuleValidator));
+                .AddScoped(typeof(CommandValidator<UpdateEmployeeCommand>), typeof(UpdateEmployeeBusinessRuleValidator))
+                .AddScoped(typeof(CommandValidator<UpdateCompanyCommand>), typeof(UpdateCompanyBusinessRuleValidator));
         }
     }
 }

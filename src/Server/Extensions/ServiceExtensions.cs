@@ -44,7 +44,8 @@ namespace REA.Accounting.Server.Extensions
         public static IServiceCollection AddRepositoryServices(this IServiceCollection services)
         {
             return services
-                .AddScoped<IWriteRepositoryManager, WriteRepositoryManager>();
+                .AddScoped<IWriteRepositoryManager, WriteRepositoryManager>()
+                .AddScoped<IReadRepositoryManager, ReadRepositoryManager>();
         }
     }
 }

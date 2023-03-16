@@ -32,7 +32,7 @@ namespace REA.Accounting.UnitTests.Repositories
         [Fact]
         public async Task GetById_EmployeeAggregateRepo_ShouldSucceed()
         {
-            Result<Employee> result = await _writeRepository.EmployeeAggregate.GetByIdAsync(2);
+            Result<Employee> result = await _writeRepository.EmployeeAggregateRepository.GetByIdAsync(2);
 
             Assert.True(result.IsSuccess);
         }
@@ -42,7 +42,7 @@ namespace REA.Accounting.UnitTests.Repositories
         {
             Employee employee = GetEmployeeForCreate();
 
-            Result<int> result = await _writeRepository.EmployeeAggregate.InsertAsync(employee);
+            Result<int> result = await _writeRepository.EmployeeAggregateRepository.InsertAsync(employee);
 
             Assert.True(result.IsSuccess);
         }
@@ -50,7 +50,7 @@ namespace REA.Accounting.UnitTests.Repositories
         [Fact]
         public async Task Update_EmployeeAggregateRepo_ShouldSucceed()
         {
-            Result<Employee> getResult = await _writeRepository.EmployeeAggregate.GetByIdAsync(16);
+            Result<Employee> getResult = await _writeRepository.EmployeeAggregateRepository.GetByIdAsync(16);
 
             Assert.True(getResult.IsSuccess);
 
@@ -61,26 +61,26 @@ namespace REA.Accounting.UnitTests.Repositories
 
             Assert.True(updateResult.IsSuccess);
 
-            Result<int> saveResult = await _writeRepository.EmployeeAggregate.Update(updateResult.Value);
+            Result<int> saveResult = await _writeRepository.EmployeeAggregateRepository.Update(updateResult.Value);
 
             Assert.True(saveResult.IsSuccess);
 
-            getResult = await _writeRepository.EmployeeAggregate.GetByIdAsync(16);
+            getResult = await _writeRepository.EmployeeAggregateRepository.GetByIdAsync(16);
             Assert.Equal(@"adventure-works\jabi", getResult.Value.LoginID);
         }
 
         [Fact]
         public async Task Delete_Employee_EmployeeAggregateRepo_ShouldSucceed()
         {
-            Result<Employee> getResult = await _writeRepository.EmployeeAggregate.GetByIdAsync(16);
+            Result<Employee> getResult = await _writeRepository.EmployeeAggregateRepository.GetByIdAsync(16);
 
             Assert.True(getResult.IsSuccess);
 
-            Result<int> deleteResult = await _writeRepository.EmployeeAggregate.Delete(getResult.Value);
+            Result<int> deleteResult = await _writeRepository.EmployeeAggregateRepository.Delete(getResult.Value);
 
             Assert.True(deleteResult.IsSuccess);
 
-            Result<Employee> test = await _writeRepository.EmployeeAggregate.GetByIdAsync(16);
+            Result<Employee> test = await _writeRepository.EmployeeAggregateRepository.GetByIdAsync(16);
             Assert.True(test.IsFailure);
         }
 

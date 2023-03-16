@@ -11,16 +11,16 @@ using REA.Accounting.SharedKernel.Utilities;
 using CompanyDataModel = REA.Accounting.Infrastructure.Persistence.DataModels.Organizations.Company;
 using CompanyDomainModel = REA.Accounting.Core.Organization.Company;
 
-namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
+namespace REA.Accounting.Infrastructure.Persistence.Repositories.Organization
 {
-    public sealed class CompanyAggregateRepository : ICompanyAggregateRepository
+    public sealed class CompanyWriteRepository : ICompanyWriteRepository
     {
         private const int SUCCESS_MARKER = 0;
         private readonly ILogger<WriteRepositoryManager> _logger;
         private readonly EfCoreContext _context;
         private readonly IUnitOfWork _unitOfWork;
 
-        public CompanyAggregateRepository(EfCoreContext ctx, ILogger<WriteRepositoryManager> logger)
+        public CompanyWriteRepository(EfCoreContext ctx, ILogger<WriteRepositoryManager> logger)
         {
             _context = ctx;
             _unitOfWork = new UnitOfWork(_context);

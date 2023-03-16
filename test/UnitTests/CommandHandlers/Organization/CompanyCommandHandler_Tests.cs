@@ -20,12 +20,12 @@ namespace REA.Accounting.UnitTests.CommandHandlers.Organization
 
             _repositoryMock.Setup
             (
-                repoMgr => repoMgr.CompanyAggregate.GetByIdAsync(It.IsAny<int>(), It.IsAny<bool>())
+                repoMgr => repoMgr.CompanyAggregateRepository.GetByIdAsync(It.IsAny<int>(), It.IsAny<bool>())
             ).ReturnsAsync(OrganizationTestData.GetCompanyResultWithValidData());
 
             _repositoryMock.Setup
             (
-                repoMgr => repoMgr.CompanyAggregate.Update(It.IsAny<Company>())
+                repoMgr => repoMgr.CompanyAggregateRepository.Update(It.IsAny<Company>())
             ).ReturnsAsync(0);
 
             UpdateCompanyCommandHandler handler = new(_repositoryMock.Object);
@@ -37,7 +37,7 @@ namespace REA.Accounting.UnitTests.CommandHandlers.Organization
             Assert.True(result.IsSuccess);
 
             _repositoryMock.Verify(
-                x => x.CompanyAggregate.Update(It.IsAny<Company>()),
+                x => x.CompanyAggregateRepository.Update(It.IsAny<Company>()),
                 Times.Once);
         }
 
@@ -50,12 +50,12 @@ namespace REA.Accounting.UnitTests.CommandHandlers.Organization
 
             _repositoryMock.Setup
             (
-                repoMgr => repoMgr.CompanyAggregate.GetByIdAsync(It.IsAny<int>(), It.IsAny<bool>())
+                repoMgr => repoMgr.CompanyAggregateRepository.GetByIdAsync(It.IsAny<int>(), It.IsAny<bool>())
             ).ReturnsAsync(getCompanyResult);
 
             _repositoryMock.Setup
             (
-                repoMgr => repoMgr.CompanyAggregate.Update(It.IsAny<Company>())
+                repoMgr => repoMgr.CompanyAggregateRepository.Update(It.IsAny<Company>())
             ).ReturnsAsync(0);
 
             UpdateCompanyCommandHandler handler = new(_repositoryMock.Object);
@@ -67,7 +67,7 @@ namespace REA.Accounting.UnitTests.CommandHandlers.Organization
             Assert.True(result.IsFailure);
 
             _repositoryMock.Verify(
-                x => x.CompanyAggregate.Update(It.IsAny<Company>()),
+                x => x.CompanyAggregateRepository.Update(It.IsAny<Company>()),
                 Times.Never);
         }
 
@@ -79,13 +79,13 @@ namespace REA.Accounting.UnitTests.CommandHandlers.Organization
 
             _repositoryMock.Setup
             (
-                repoMgr => repoMgr.CompanyAggregate.GetByIdAsync(It.IsAny<int>(), It.IsAny<bool>())
+                repoMgr => repoMgr.CompanyAggregateRepository.GetByIdAsync(It.IsAny<int>(), It.IsAny<bool>())
             ).ReturnsAsync(OrganizationTestData.GetCompanyResultWithValidData());
 
             Result<int> updateDbResult = Result<int>.Failure<int>(new Error("Repository", "Something when horribly wrong!!"));
             _repositoryMock.Setup
             (
-                repoMgr => repoMgr.CompanyAggregate.Update(It.IsAny<Company>())
+                repoMgr => repoMgr.CompanyAggregateRepository.Update(It.IsAny<Company>())
             ).ReturnsAsync(updateDbResult);
 
             UpdateCompanyCommandHandler handler = new(_repositoryMock.Object);
@@ -97,7 +97,7 @@ namespace REA.Accounting.UnitTests.CommandHandlers.Organization
             Assert.True(result.IsFailure);
 
             _repositoryMock.Verify(
-                x => x.CompanyAggregate.Update(It.IsAny<Company>()),
+                x => x.CompanyAggregateRepository.Update(It.IsAny<Company>()),
                 Times.Once);
         }
 

@@ -1,0 +1,10 @@
+using REA.Accounting.Infrastructure.Persistence.Queries.HumanResources;
+using REA.Accounting.SharedKernel.Utilities;
+
+namespace REA.Accounting.Infrastructure.Persistence.Interfaces.HumanResources
+{
+    public interface IEmployeeReadRepository
+    {
+        Task<Result<GetEmployeeDetailByIdResponse>> GetEmployeeDetailsById(int employeeId);
+    }
+}

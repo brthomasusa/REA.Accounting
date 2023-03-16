@@ -93,7 +93,7 @@ namespace REA.Accounting.Application.HumanResources.CreateEmployee
             if (phoneResult.IsFailure)
                 return Result<int>.Failure<int>(new Error("CreateEmployeeCommandHandler.Handle", phoneResult.Error.Message));
 
-            Result<int> insertDbResult = await _repo.EmployeeAggregate.InsertAsync(getEmployee.Value);
+            Result<int> insertDbResult = await _repo.EmployeeAggregateRepository.InsertAsync(getEmployee.Value);
             if (!insertDbResult.IsSuccess)
                 return Result<int>.Failure<int>(new Error("CreateEmployeeCommandHandler.Handle", insertDbResult.Error.Message));
 

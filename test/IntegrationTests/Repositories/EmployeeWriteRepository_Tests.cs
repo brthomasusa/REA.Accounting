@@ -8,17 +8,17 @@ using REA.Accounting.Infrastructure.Persistence.Repositories;
 
 namespace REA.Accounting.IntegrationTests.Repositories
 {
-    public class EmployeeAggregateRepo_Tests : TestBase
+    public class EmployeeWriteRepository_Tests : TestBase
     {
         private readonly IWriteRepositoryManager _writeRepository;
 
-        public EmployeeAggregateRepo_Tests()
+        public EmployeeWriteRepository_Tests()
             => _writeRepository = new WriteRepositoryManager(_dbContext, new NullLogger<WriteRepositoryManager>());
 
         [Fact]
         public async Task GetById_EmployeeAggregateRepo_ShouldSucceed()
         {
-            Result<Employee> result = await _writeRepository.EmployeeAggregate.GetByIdAsync(2);
+            Result<Employee> result = await _writeRepository.EmployeeAggregateRepository.GetByIdAsync(2);
 
             Assert.True(result.IsSuccess);
 
@@ -31,7 +31,7 @@ namespace REA.Accounting.IntegrationTests.Repositories
         {
             Employee employee = GetEmployeeForCreate();
 
-            Result<int> result = await _writeRepository.EmployeeAggregate.InsertAsync(employee);
+            Result<int> result = await _writeRepository.EmployeeAggregateRepository.InsertAsync(employee);
 
             Assert.True(result.IsSuccess);
         }
@@ -39,7 +39,7 @@ namespace REA.Accounting.IntegrationTests.Repositories
         [Fact]
         public async Task Update_EmployeeAggregateRepo_ShouldSucceed()
         {
-            Result<Employee> getResult = await _writeRepository.EmployeeAggregate.GetByIdAsync(16);
+            Result<Employee> getResult = await _writeRepository.EmployeeAggregateRepository.GetByIdAsync(16);
 
             Assert.True(getResult.IsSuccess);
 
@@ -50,33 +50,33 @@ namespace REA.Accounting.IntegrationTests.Repositories
 
             Assert.True(updateResult.IsSuccess);
 
-            Result<int> saveResult = await _writeRepository.EmployeeAggregate.Update(updateResult.Value);
+            Result<int> saveResult = await _writeRepository.EmployeeAggregateRepository.Update(updateResult.Value);
 
             Assert.True(saveResult.IsSuccess);
 
-            getResult = await _writeRepository.EmployeeAggregate.GetByIdAsync(16);
+            getResult = await _writeRepository.EmployeeAggregateRepository.GetByIdAsync(16);
             Assert.Equal(@"adventure-works\jabi", getResult.Value.LoginID);
         }
 
         [Fact]
         public async Task Delete_Employee_EmployeeAggregateRepo_ShouldSucceed()
         {
-            Result<Employee> getResult = await _writeRepository.EmployeeAggregate.GetByIdAsync(16);
+            Result<Employee> getResult = await _writeRepository.EmployeeAggregateRepository.GetByIdAsync(16);
 
             Assert.True(getResult.IsSuccess);
 
-            Result<int> deleteResult = await _writeRepository.EmployeeAggregate.Delete(getResult.Value);
+            Result<int> deleteResult = await _writeRepository.EmployeeAggregateRepository.Delete(getResult.Value);
 
             Assert.True(deleteResult.IsSuccess);
 
-            Result<Employee> test = await _writeRepository.EmployeeAggregate.GetByIdAsync(16);
+            Result<Employee> test = await _writeRepository.EmployeeAggregateRepository.GetByIdAsync(16);
             Assert.True(test.IsFailure);
         }
 
         [Fact]
         public async Task ValidatePersonNameIsUnique_EmployeeAggregateRepo_NewRecord_ShouldReturnTrue()
         {
-            Result result = await _writeRepository.EmployeeAggregate.ValidatePersonNameIsUnique(0, "Henry", "Jones", "Z");
+            Result result = await _writeRepository.EmployeeAggregateRepository.ValidatePersonNameIsUnique(0, "Henry", "Jones", "Z");
 
             Assert.True(result.IsSuccess);
         }
@@ -84,7 +84,7 @@ namespace REA.Accounting.IntegrationTests.Repositories
         [Fact]
         public async Task ValidatePersonNameIsUnique_EmployeeAggregateRepo_EditingExistingWithoutNameChange_ShouldReturnTrue()
         {
-            Result result = await _writeRepository.EmployeeAggregate.ValidatePersonNameIsUnique(25, "James", "Hamilton", "R");
+            Result result = await _writeRepository.EmployeeAggregateRepository.ValidatePersonNameIsUnique(25, "James", "Hamilton", "R");
 
             Assert.True(result.IsSuccess);
         }
@@ -93,7 +93,7 @@ namespace REA.Accounting.IntegrationTests.Repositories
         public async Task ValidatePersonNameIsUnique_EmployeeAggregateRepo_EditingExistingNameChangeWouldCauseDupe_ShouldReturnFalse()
         {
             // EmployeeID 2 is Terri Lee Duffy, changing name to James R Hamilton would be a duplicate name of EmployeeID 25
-            Result result = await _writeRepository.EmployeeAggregate.ValidatePersonNameIsUnique(2, "James", "Hamilton", "R");
+            Result result = await _writeRepository.EmployeeAggregateRepository.ValidatePersonNameIsUnique(2, "James", "Hamilton", "R");
 
             Assert.False(result.IsSuccess);
         }
@@ -101,7 +101,7 @@ namespace REA.Accounting.IntegrationTests.Repositories
         [Fact]
         public async Task ValidateNationalIdNumberIsUnique_EmployeeAggregateRepo_NewRecord_ShouldReturnTrue()
         {
-            Result result = await _writeRepository.EmployeeAggregate.ValidateNationalIdNumberIsUnique(0, "632145877");
+            Result result = await _writeRepository.EmployeeAggregateRepository.ValidateNationalIdNumberIsUnique(0, "632145877");
 
             Assert.True(result.IsSuccess);
         }
@@ -109,7 +109,7 @@ namespace REA.Accounting.IntegrationTests.Repositories
         [Fact]
         public async Task ValidateNationalIdNumberIsUnique_EmployeeAggregateRepo_EditingExistingWithoutNatlIDChange_ShouldReturnTrue()
         {
-            Result result = await _writeRepository.EmployeeAggregate.ValidateNationalIdNumberIsUnique(2, "245797967");
+            Result result = await _writeRepository.EmployeeAggregateRepository.ValidateNationalIdNumberIsUnique(2, "245797967");
 
             Assert.True(result.IsSuccess);
         }
@@ -117,7 +117,7 @@ namespace REA.Accounting.IntegrationTests.Repositories
         [Fact]
         public async Task ValidateNationalIdNumberIsUnique_EmployeeAggregateRepo_EditingExistingWithNatlIDChange_ShouldReturnFalse()
         {
-            Result result = await _writeRepository.EmployeeAggregate.ValidateNationalIdNumberIsUnique(1, "245797967");
+            Result result = await _writeRepository.EmployeeAggregateRepository.ValidateNationalIdNumberIsUnique(1, "245797967");
 
             Assert.True(result.IsFailure);
         }
@@ -125,7 +125,7 @@ namespace REA.Accounting.IntegrationTests.Repositories
         [Fact]
         public async Task ValidateEmployeeEmailIsUnique_EmployeeAggregateRepo_NewRecord_ShouldReturnTrue()
         {
-            Result result = await _writeRepository.EmployeeAggregate.ValidateEmployeeEmailIsUnique(0, "david4@adventure-works.com");
+            Result result = await _writeRepository.EmployeeAggregateRepository.ValidateEmployeeEmailIsUnique(0, "david4@adventure-works.com");
 
             Assert.True(result.IsSuccess);
         }
@@ -133,7 +133,7 @@ namespace REA.Accounting.IntegrationTests.Repositories
         [Fact]
         public async Task ValidateEmployeeEmailIsUnique_EmployeeAggregateRepo_EditingExistingWithoutEmailChange_ShouldReturnTrue()
         {
-            Result result = await _writeRepository.EmployeeAggregate.ValidateEmployeeEmailIsUnique(16, "david0@adventure-works.com");
+            Result result = await _writeRepository.EmployeeAggregateRepository.ValidateEmployeeEmailIsUnique(16, "david0@adventure-works.com");
 
             Assert.True(result.IsSuccess);
         }
@@ -141,7 +141,7 @@ namespace REA.Accounting.IntegrationTests.Repositories
         [Fact]
         public async Task ValidateEmployeeEmailIsUnique_EmployeeAggregateRepo_EditingExistingWithEmailChange_ShouldReturnFalse()
         {
-            Result result = await _writeRepository.EmployeeAggregate.ValidateEmployeeEmailIsUnique(25, "david0@adventure-works.com");
+            Result result = await _writeRepository.EmployeeAggregateRepository.ValidateEmployeeEmailIsUnique(25, "david0@adventure-works.com");
 
             Assert.True(result.IsFailure);
         }

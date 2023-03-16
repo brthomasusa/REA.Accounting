@@ -19,7 +19,7 @@ namespace REA.Accounting.Application.Organization.UpdateCompany
         {
             try
             {
-                Result<Company> getCompany = await _repo.CompanyAggregate.GetByIdAsync(request.CompanyID);
+                Result<Company> getCompany = await _repo.CompanyAggregateRepository.GetByIdAsync(request.CompanyID);
 
                 if (getCompany.IsFailure)
                     return Result<int>.Failure<int>(new Error("UpdateCompanyCommandHandler.Handle", getCompany.Error.Message));
@@ -47,7 +47,7 @@ namespace REA.Accounting.Application.Organization.UpdateCompany
                 if (updateDomainObj.IsFailure)
                     return Result<int>.Failure<int>(new Error("UpdateCompanyCommandHandler.Handle", updateDomainObj.Error.Message));
 
-                Result<int> updateDbResult = await _repo.CompanyAggregate.Update(updateDomainObj.Value);
+                Result<int> updateDbResult = await _repo.CompanyAggregateRepository.Update(updateDomainObj.Value);
 
                 if (updateDbResult.IsFailure)
                     return Result<int>.Failure<int>(new Error("UpdateCompanyCommandHandler.Handle", updateDbResult.Error.Message));

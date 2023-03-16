@@ -2,8 +2,12 @@
 
 # Script to run integration test classes in series, each one alters the database so can't be run in paralell
 
- dotnet test --no-restore --nologo -v q --filter EmployeeAggregateEndPointTests
- echo "--------------------------> EmployeeAggregateEndPointTests completed <--------------------------"
+ dotnet test --no-restore --nologo -v q --filter EmployeeEndPoint_Tests
+ echo "--------------------------> EmployeeEndPoint_Tests completed <--------------------------"
+echo -en '\n'
+
+ dotnet test --no-restore --nologo -v q --filter CompanyEndPoint_Tests
+ echo "--------------------------> CompanyEndPoint_Tests completed <--------------------------"
 echo -en '\n'
 
  dotnet test --no-restore --nologo -v q --filter HrCommandHandler_Tests

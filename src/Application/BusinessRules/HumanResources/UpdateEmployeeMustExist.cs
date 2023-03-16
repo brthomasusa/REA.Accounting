@@ -17,7 +17,7 @@ namespace REA.Accounting.Application.BusinessRules.HumanResources
             ValidationResult validationResult = new();
 
             Result result =
-                await _repository.EmployeeAggregate.ValidateEmployeeExist(employee.EmployeeID);
+                await _repository.EmployeeAggregateRepository.ValidateEmployeeExist(employee.EmployeeID);
 
             if (result.IsSuccess)
             {

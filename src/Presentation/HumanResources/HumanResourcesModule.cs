@@ -7,19 +7,20 @@ using Microsoft.AspNetCore.Routing;
 
 using REA.Accounting.Application.HumanResources.CreateEmployee;
 using REA.Accounting.Application.HumanResources.DeleteEmployee;
-using REA.Accounting.Application.HumanResources.GetEmployeeById;
+using REA.Accounting.Application.HumanResources.GetEmployeeDetailsById;
 using REA.Accounting.Application.HumanResources.UpdateEmployee;
+using REA.Accounting.Infrastructure.Persistence.Queries.HumanResources;
 using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Presentation.HumanResources
 {
-    public class HumanResourcesModule : ICarterModule
+    public sealed class HumanResourcesModule : ICarterModule
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
             app.MapGet("api/employees/{id}", async (int id, ISender sender) =>
             {
-                Result<GetEmployeeByIdResponse> result = await sender.Send(new GetEmployeeByIdQuery(EmployeeID: id));
+                Result<GetEmployeeDetailByIdResponse> result = await sender.Send(new GetEmployeeDetailByIdRequest(EmployeeID: id));
 
                 if (result.IsSuccess)
                     return Results.Ok(result.Value);
@@ -32,7 +33,9 @@ namespace REA.Accounting.Presentation.HumanResources
                 Result<int> result = await sender.Send(cmd);
 
                 if (result.IsSuccess)
-                    return Results.Created($"api/employees/{result.Value}", cmd);
+                {
+                    return Results.Created($"api/employees/{result.Value}", new GetEmployeeDetailByIdRequest(EmployeeID: result.Value));
+                }
 
                 return Results.Problem(result.Error);
             });

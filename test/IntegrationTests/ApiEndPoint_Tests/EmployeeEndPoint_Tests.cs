@@ -6,14 +6,13 @@ using System.Text.Json;
 using REA.Accounting.Application.HumanResources.CreateEmployee;
 using REA.Accounting.Application.HumanResources.DeleteEmployee;
 using REA.Accounting.Application.HumanResources.UpdateEmployee;
-using REA.Accounting.Application.HumanResources.GetEmployeeById;
-using REA.Accounting.IntegrationTests.Base;
+using REA.Accounting.Infrastructure.Persistence.Queries.HumanResources;
 
 namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
 {
-    public class EmployeeAggregateEndPointTests : IntegrationTest
+    public class EmployeeEndPoint_Tests : IntegrationTest
     {
-        public EmployeeAggregateEndPointTests(ApiWebApplicationFactory fixture) : base(fixture)
+        public EmployeeEndPoint_Tests(ApiWebApplicationFactory fixture) : base(fixture)
         { }
 
         [Fact]
@@ -26,7 +25,7 @@ namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
             response.EnsureSuccessStatusCode();
 
             var jsonResponse = await response.Content.ReadAsStreamAsync();
-            var employee = await JsonSerializer.DeserializeAsync<GetEmployeeByIdResponse>(jsonResponse, _options);
+            var employee = await JsonSerializer.DeserializeAsync<GetEmployeeDetailByIdResponse>(jsonResponse, _options);
 
             Assert.Equal("Ken", employee.FirstName);
             Assert.Equal("Sánchez", employee.LastName);
@@ -63,7 +62,7 @@ namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
             response.EnsureSuccessStatusCode();
 
             var jsonResponse = await response.Content.ReadAsStreamAsync();
-            var employeeResponse = await JsonSerializer.DeserializeAsync<GetEmployeeByIdResponse>(jsonResponse, _options);
+            var employeeResponse = await JsonSerializer.DeserializeAsync<GetEmployeeDetailByIdResponse>(jsonResponse, _options);
         }
 
         [Fact]

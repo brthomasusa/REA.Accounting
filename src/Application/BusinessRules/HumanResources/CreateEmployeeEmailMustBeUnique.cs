@@ -17,7 +17,7 @@ namespace REA.Accounting.Application.BusinessRules.HumanResources
             ValidationResult validationResult = new();
 
             Result result =
-                await _repository.EmployeeAggregate.ValidateEmployeeEmailIsUnique(employee.EmployeeID, employee.EmailAddress);
+                await _repository.EmployeeAggregateRepository.ValidateEmployeeEmailIsUnique(employee.EmployeeID, employee.EmailAddress);
 
             if (result.IsSuccess)
             {

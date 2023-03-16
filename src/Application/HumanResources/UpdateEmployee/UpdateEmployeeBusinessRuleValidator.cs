@@ -6,7 +6,7 @@ using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Application.HumanResources.UpdateEmployee
 {
-    public class UpdateEmployeeBusinessRuleValidator : CommandValidator<UpdateEmployeeCommand>
+    public sealed class UpdateEmployeeBusinessRuleValidator : CommandValidator<UpdateEmployeeCommand>
     {
         private readonly IWriteRepositoryManager _repo;
 

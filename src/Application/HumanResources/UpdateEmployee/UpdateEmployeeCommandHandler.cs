@@ -19,7 +19,7 @@ namespace REA.Accounting.Application.HumanResources.UpdateEmployee
         {
             try
             {
-                Result<Employee> getEmployee = await _repo.EmployeeAggregate.GetByIdAsync(request.EmployeeID);
+                Result<Employee> getEmployee = await _repo.EmployeeAggregateRepository.GetByIdAsync(request.EmployeeID);
 
                 if (getEmployee.IsSuccess)
                 {
@@ -49,7 +49,7 @@ namespace REA.Accounting.Application.HumanResources.UpdateEmployee
                     if (updateDomainObjResult.IsSuccess)
                     {
                         // Employee domain obj update succeeded
-                        Result<int> updateDbResult = await _repo.EmployeeAggregate.Update(updateDomainObjResult.Value);
+                        Result<int> updateDbResult = await _repo.EmployeeAggregateRepository.Update(updateDomainObjResult.Value);
 
                         if (updateDbResult.IsSuccess)
                         {
