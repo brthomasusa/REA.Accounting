@@ -1,0 +1,26 @@
+@* @inherits LayoutComponentBase *@
+@inherits Fluxor.Blazor.Web.Components.FluxorLayout
+
+<Layout Sider>
+    <LayoutSider>
+        <LayoutSiderContent>
+            <div class="sidebar">
+                <BlazoriseMenu />
+            </div>
+        </LayoutSiderContent>
+    </LayoutSider>
+    <Layout>
+        <LayoutContent>
+            @Body
+        </LayoutContent>
+        <LayoutFooter>
+            <Bar Padding="Padding.Is1" Background="Background.Dark">
+                <small>
+                    <Text TextColor="TextColor.White50" TextAlignment="TextAlignment.End">
+                        AdventureWorks Cycles - BTechnical Consulting,Inc.
+                    </Text>
+                </small>
+            </Bar>
+        </LayoutFooter>
+    </Layout>
+</Layout>

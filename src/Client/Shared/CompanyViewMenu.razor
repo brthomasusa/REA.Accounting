@@ -1,0 +1,23 @@
+@inject NavigationManager NavManager
+
+<Bar Breakpoint="Breakpoint.Desktop" Background="Background.Dark" ThemeContrast="ThemeContrast.Dark">
+    <BarToggler />
+    <BarMenu>
+        <BarStart>
+            <BarItem>
+                <BarLink To="Company/Pages/CompanyStartPage">Company</BarLink>
+            </BarItem>
+            <BarItem>
+                <BarLink To="Company/Pages/CompanyStartPage">Shifts</BarLink>
+            </BarItem>
+            <BarItem>
+                <BarLink To="Company/Pages/CompanyStartPage">Shifts</BarLink>
+            </BarItem>
+        </BarStart>
+        <BarEnd>
+            <BarItem class="mr-4">
+                <Button Margin="Margin.Is3.FromEnd" Color="Color.Secondary" Size="Size.Small">Log in</Button>
+            </BarItem>
+        </BarEnd>
+    </BarMenu>
+</Bar>
