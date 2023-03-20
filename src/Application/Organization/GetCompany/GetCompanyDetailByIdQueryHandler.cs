@@ -3,18 +3,18 @@ using REA.Accounting.Infrastructure.Persistence.Interfaces;
 using REA.Accounting.Infrastructure.Persistence.Queries.Organization;
 using REA.Accounting.SharedKernel.Utilities;
 
-namespace REA.Accounting.Application.Organization.GetCompanyById
+namespace REA.Accounting.Application.Organization.GetCompany
 {
-    public sealed class GetCompanyByIdQueryHandler : IQueryHandler<GetCompanyByIdRequest, GetCompanyDetailByIdResponse>
+    public sealed class GetCompanyDetailByIdQueryHandler : IQueryHandler<GetCompanyDetailByIdRequest, GetCompanyDetailByIdResponse>
     {
         private readonly IReadRepositoryManager _repo;
 
-        public GetCompanyByIdQueryHandler(IReadRepositoryManager repo)
+        public GetCompanyDetailByIdQueryHandler(IReadRepositoryManager repo)
             => _repo = repo;
 
         public async Task<Result<GetCompanyDetailByIdResponse>> Handle
         (
-            GetCompanyByIdRequest request,
+            GetCompanyDetailByIdRequest request,
             CancellationToken cancellationToken
         )
         {

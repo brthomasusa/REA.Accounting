@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
-using REA.Accounting.Application.Organization.GetCompanyById;
+using REA.Accounting.Application.Organization.GetCompany;
 using REA.Accounting.Application.Organization.UpdateCompany;
 using REA.Accounting.Infrastructure.Persistence.Queries.Organization;
 using REA.Accounting.SharedKernel.Utilities;
@@ -17,7 +17,7 @@ namespace REA.Accounting.Presentation.Organization
         {
             app.MapGet("api/companies/{id}", async (int id, ISender sender) =>
             {
-                Result<GetCompanyDetailByIdResponse> result = await sender.Send(new GetCompanyByIdRequest(CompanyID: id));
+                Result<GetCompanyDetailByIdResponse> result = await sender.Send(new GetCompanyDetailByIdRequest(CompanyID: id));
 
                 if (result.IsSuccess)
                     return Results.Ok(result.Value);

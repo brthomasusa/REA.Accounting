@@ -40,6 +40,7 @@ try
     builder.Services.ConfigureDapper(builder.Configuration);
     builder.Services.AddRepositoryServices();
     builder.Services.AddTransient<GlobalExceptionHandlingMiddleware>();
+    builder.Services.AddGrpc();
 
     var app = builder.Build();
 
@@ -61,6 +62,7 @@ try
     app.UseStaticFiles();
 
     app.UseRouting();
+    app.UseGrpcWeb();
 
     app.MapRazorPages();
     app.MapControllers();

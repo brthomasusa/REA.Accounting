@@ -356,3 +356,26 @@
 2023-03-18 11:50:16.8057 Info Logger has been closed down.
 2023-03-18 11:50:16.8057 Info Shutdown() called. Logger closing...
 2023-03-18 11:50:16.8057 Info Logger has been closed down.
+2023-03-18 21:04:20.3368 Info Configuration file change detected! Reloading in 1000ms...
+2023-03-18 21:04:20.3368 Info Configuration file change detected! Reloading in 1000ms...
+2023-03-18 21:04:21.3639 Info Reloading configuration...
+2023-03-18 21:04:21.3639 Info Loading NLog config from XML file: /home/bthomas/Projects/NetCore/REA.Accounting/src/Server/bin/Debug/net6.0/nlog.config
+2023-03-18 21:04:21.3639 Info Message Template Auto Format enabled
+2023-03-18 21:04:21.3639 Info Loading assembly: NLog.Web.AspNetCore
+2023-03-18 21:04:21.3639 Info Adding target AsyncTargetWrapper(Name=allfile)
+2023-03-18 21:04:21.3639 Info Adding target AsyncTargetWrapper(Name=ownFile-web)
+2023-03-18 21:04:21.3639 Info Adding target AsyncTargetWrapper(Name=lifetimeConsole)
+2023-03-18 21:04:21.3639 Info Closing old configuration.
+2023-03-18 21:04:21.3687 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=59, FilePath=/home/bthomas/Projects/NetCore/REA.Accounting/src/Server/bin/Debug/net6.0/nlog.config
+2023-03-19 18:37:39.3385 Info Message Template Auto Format enabled
+2023-03-19 18:37:39.3470 Info Loading assembly: NLog.Web.AspNetCore
+2023-03-19 18:37:39.3741 Info Adding target AsyncTargetWrapper(Name=allfile)
+2023-03-19 18:37:39.3741 Info Adding target AsyncTargetWrapper(Name=ownFile-web)
+2023-03-19 18:37:39.3741 Info Adding target AsyncTargetWrapper(Name=lifetimeConsole)
+2023-03-19 18:37:39.3892 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=59, FilePath=/home/bthomas/Projects/NetCore/REA.Accounting/src/Server/bin/Debug/net6.0/nlog.config
+2023-03-19 18:37:39.5677 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=59, FilePath=/home/bthomas/Projects/NetCore/REA.Accounting/src/Server/bin/Debug/net6.0/nlog.config
+2023-03-19 18:38:02.6748 Info Shutdown() called. Logger closing...
+2023-03-19 18:38:02.6748 Info Closing old configuration.
+2023-03-19 18:38:02.6858 Info Logger has been closed down.
+2023-03-19 18:38:02.6858 Info Shutdown() called. Logger closing...
+2023-03-19 18:38:02.6858 Info Logger has been closed down.

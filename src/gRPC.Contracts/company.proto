@@ -1,0 +1,51 @@
+syntax = "proto3";
+package contracts;
+option csharp_namespace = "gRPC.Contracts";
+import "google/protobuf/timestamp.proto";
+import "shared.proto";
+
+service CompanyContract {
+	rpc Update(CompanyCommand) returns (contracts.shared.GenericResponse);
+	rpc GetCompanyCommandById(contracts.shared.ItemRequest) returns (CompanyCommand);
+    rpc GetCompanyDetailById(contracts.shared.ItemRequest) returns (CompanyDetail);
+}
+
+message CompanyCommand {
+    int32 id = 1;
+    string companyName = 2;
+    string legalName = 3;
+    string ein = 4;
+    string companyWebSite = 5;
+    string mailAddressLine1 = 6;
+    string mailAddressLine2 = 7;
+    string mailCity = 8;
+    int32 mailStateProvinceID = 9;
+    string mailPostalCode = 10;
+    string deliveryAddressLine1 = 11;
+    string deliveryAddressLine2 = 12;
+    string deliveryCity = 13;
+    int32 deliveryStateProvinceID = 14;
+    string deliveryPostalCode = 15;
+    string telephone = 16;
+    string fax = 17;   
+}
+
+message CompanyDetail {
+    int32 id = 1;
+    string companyName = 2;
+    string legalName = 3;
+    string ein = 4;
+    string companyWebSite = 5;
+    string mailAddressLine1 = 6;
+    string mailAddressLine2 = 7;
+    string mailCity = 8;
+    string mailStateProvinceCode = 9;
+    string mailPostalCode = 10;
+    string deliveryAddressLine1 = 11;
+    string deliveryAddressLine2 = 12;
+    string deliveryCity = 13;
+    string deliveryStateProvinceCode = 14;
+    string deliveryPostalCode = 15;
+    string telephone = 16;
+    string fax = 17;   
+}

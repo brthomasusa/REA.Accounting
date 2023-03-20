@@ -3,7 +3,7 @@
 using System.Net.Http.Headers;
 using System.Text.Json;
 
-using REA.Accounting.Application.Organization.GetCompanyById;
+using REA.Accounting.Application.Organization.GetCompany;
 using REA.Accounting.Application.Organization.UpdateCompany;
 using REA.Accounting.Infrastructure.Persistence.Queries.Organization;
 
