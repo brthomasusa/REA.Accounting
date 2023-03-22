@@ -1,3 +1,4 @@
+using System.Text;
 using Grpc.Core;
 using gRPC.Contracts;
 using MediatR;
@@ -18,7 +19,7 @@ namespace REA.Accounting.Server.Contracts
         {
             Result<GetCompanyDetailByIdResponse> result = await _sender.Send(new GetCompanyDetailByIdRequest(CompanyID: request.Id));
 
-            CompanyDetail retVal = new()
+            return new CompanyDetail()
             {
                 Id = result.Value.CompanyID,
                 CompanyName = result.Value.CompanyName,
@@ -26,19 +27,25 @@ namespace REA.Accounting.Server.Contracts
                 Ein = result.Value.EIN,
                 CompanyWebSite = result.Value.WebsiteUrl,
                 MailAddressLine1 = result.Value.MailAddressLine1,
-                MailAddressLine2 = result.Value.MailAddressLine2,
+                MailAddressLine2 = result.Value.MailAddressLine2 ?? string.Empty,
                 MailCity = result.Value.MailCity,
-                // MailStateProvinceID = result.Value.M
+                MailStateProvinceCode = result.Value.MailStateProvinceCode,
+                MailPostalCode = result.Value.MailPostalCode,
+                DeliveryAddressLine1 = result.Value.DeliveryAddressLine1,
+                DeliveryAddressLine2 = result.Value.DeliveryAddressLine2 ?? string.Empty,
+                DeliveryCity = result.Value.DeliveryCity,
+                DeliveryStateProvinceCode = result.Value.DeliveryStateProvinceCode,
+                DeliveryPostalCode = result.Value.DeliveryPostalCode,
+                Telephone = result.Value.Telephone,
+                Fax = result.Value.Fax
             };
-
-            return retVal;
         }
 
         public override async Task<CompanyCommand> GetCompanyCommandById(ItemRequest request, ServerCallContext context)
         {
-            Result<GetCompanyDetailByIdResponse> result = await _sender.Send(new GetCompanyDetailByIdRequest(CompanyID: request.Id));
+            Result<GetCompanyCommandByIdResponse> result = await _sender.Send(new GetCompanyCommandByIdRequest(CompanyID: request.Id));
 
-            CompanyCommand retVal = new()
+            return new CompanyCommand()
             {
                 Id = result.Value.CompanyID,
                 CompanyName = result.Value.CompanyName,
@@ -46,31 +53,49 @@ namespace REA.Accounting.Server.Contracts
                 Ein = result.Value.EIN,
                 CompanyWebSite = result.Value.WebsiteUrl,
                 MailAddressLine1 = result.Value.MailAddressLine1,
-                MailAddressLine2 = result.Value.MailAddressLine2,
+                MailAddressLine2 = result.Value.MailAddressLine2 ?? string.Empty,
                 MailCity = result.Value.MailCity,
-                // MailStateProvinceID = result.Value.M
+                MailStateProvinceID = result.Value.MailStateProvinceID,
+                MailPostalCode = result.Value.MailPostalCode,
+                DeliveryAddressLine1 = result.Value.DeliveryAddressLine1,
+                DeliveryAddressLine2 = result.Value.DeliveryAddressLine2 ?? string.Empty,
+                DeliveryCity = result.Value.DeliveryCity,
+                DeliveryStateProvinceID = result.Value.DeliveryStateProvinceID,
+                DeliveryPostalCode = result.Value.DeliveryPostalCode,
+                Telephone = result.Value.Telephone,
+                Fax = result.Value.Fax
             };
+        }
 
-            return retVal;
+        public override async Task<GenericResponse> Update(CompanyCommand request, ServerCallContext context)
+        {
+            UpdateCompanyCommand cmd = new
+            (
+                request.Id,
+                request.CompanyName,
+                request.LegalName,
+                request.Ein,
+                request.CompanyWebSite,
+                request.MailAddressLine1,
+                request.MailAddressLine2,
+                request.MailCity,
+                request.MailStateProvinceID,
+                request.MailPostalCode,
+                request.DeliveryAddressLine1,
+                request.DeliveryAddressLine2,
+                request.DeliveryCity,
+                request.DeliveryStateProvinceID,
+                request.DeliveryPostalCode,
+                request.Telephone,
+                request.Fax
+            );
+
+            Result<int> result = await _sender.Send(cmd);
+
+            if (result.IsFailure)
+                return new GenericResponse { Success = false };
+
+            return new GenericResponse { Success = true };
         }
     }
 }
-/*
-    int32 id = 1;
-    string companyName = 2;
-    string legalName = 3;
-    string ein = 4;
-    string companyWebSite = 5;
-    string mailAddressLine1 = 6;
-    string mailAddressLine = 7;
-    string mailCity = 8;
-    int32 mailStateProvinceID = 9;
-    string mailPostalCode = 10;
-    string deliveryAddressLine1 = 11;
-    string deliveryAddressLine2 = 12;
-    string deliveryCity = 13;
-    int32 deliveryStateProvinceID = 14;
-    string deliveryPostalCode = 15;
-    string telephone = 16;
-    string fax = 17;
-*/

@@ -24,5 +24,24 @@ namespace REA.Accounting.IntegrationTests.DapperQueries.Organization
 
             Assert.True(result.IsFailure);
         }
+
+        [Fact]
+        public async Task Query_GetCompanyCommandByIdQuery_ShouldSucceed()
+        {
+            Result<GetCompanyCommandByIdResponse> result = await GetCompanyCommandByIdQuery.Query(1, _dapperCtx, new NullLogger<ReadRepositoryManager>());
+
+            Assert.True(result.IsSuccess);
+        }
+
+        [Fact]
+        public async Task Query_Query_GetCompanyCommandByIdQuery_ShouldFail_WhenPassedInvalidID()
+        {
+            using var loggerFactory = LoggerFactory.Create(c => c.AddConsole());
+            var logger = loggerFactory.CreateLogger<ReadRepositoryManager>();
+
+            Result<GetCompanyCommandByIdResponse> result = await GetCompanyCommandByIdQuery.Query(100, _dapperCtx, logger);
+
+            Assert.True(result.IsFailure);
+        }
     }
 }

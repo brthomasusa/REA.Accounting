@@ -8,6 +8,7 @@ using REA.Accounting.Application;
 using REA.Accounting.Application.Behaviors;
 using REA.Accounting.Server.Extensions;
 using REA.Accounting.Server.Middleware;
+using REA.Accounting.Server.Contracts;
 using REA.Accounting.Application.HumanResources.CreateEmployee;
 
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
@@ -41,6 +42,7 @@ try
     builder.Services.AddRepositoryServices();
     builder.Services.AddTransient<GlobalExceptionHandlingMiddleware>();
     builder.Services.AddGrpc();
+    builder.Services.AddGrpcReflection();
 
     var app = builder.Build();
 
@@ -62,7 +64,10 @@ try
     app.UseStaticFiles();
 
     app.UseRouting();
-    app.UseGrpcWeb();
+    app.UseCors("CorsPolicy");
+    app.UseGrpcWeb(new GrpcWebOptions { DefaultEnabled = true });
+    app.MapGrpcReflectionService();
+    app.MapGrpcService<CompanyContractService>().RequireCors("AllowAll");
 
     app.MapRazorPages();
     app.MapControllers();

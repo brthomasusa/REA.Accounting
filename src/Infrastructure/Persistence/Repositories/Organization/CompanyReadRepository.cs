@@ -16,7 +16,10 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.Organization
             _context = ctx;
         }
 
-        public Task<Result<GetCompanyDetailByIdResponse>> GetCompanyDetailsById(int companyId)
-            => GetCompanyDetailsByIdQuery.Query(companyId, _context, _logger);
+        public async Task<Result<GetCompanyDetailByIdResponse>> GetCompanyDetailsById(int companyId)
+            => await GetCompanyDetailsByIdQuery.Query(companyId, _context, _logger);
+
+        public async Task<Result<GetCompanyCommandByIdResponse>> GetCompanyCommandById(int companyId)
+            => await GetCompanyCommandByIdQuery.Query(companyId, _context, _logger);
     }
 }

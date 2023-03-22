@@ -25,7 +25,7 @@ namespace REA.Accounting.Application.Organization.GetCompany
                 if (result.IsFailure)
                 {
                     return Result<GetCompanyDetailByIdResponse>.Failure<GetCompanyDetailByIdResponse>(
-                        new Error("GetCompanyByIdQueryHandler.Handle.Handle", result.Error.Message)
+                        new Error("GetCompanyDetailByIdQueryHandler.Handle.Handle", result.Error.Message)
                     );
                 }
 
@@ -35,7 +35,7 @@ namespace REA.Accounting.Application.Organization.GetCompany
             catch (Exception ex)
             {
                 return Result<GetCompanyDetailByIdResponse>.Failure<GetCompanyDetailByIdResponse>(
-                    new Error("GetCompanyByIdQueryHandler.Handle", Helpers.GetExceptionMessage(ex))
+                    new Error("GetCompanyDetailByIdQueryHandler.Handle", Helpers.GetExceptionMessage(ex))
                 );
             }
         }

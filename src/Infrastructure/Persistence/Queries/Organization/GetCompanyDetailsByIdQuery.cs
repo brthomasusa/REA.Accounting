@@ -32,7 +32,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Queries.Organization
                     logger.LogWarning($"Code Path: GetCompanyDetailsByIdQuery.Query - Message: {errMsg}");
 
                     return Result<GetCompanyDetailByIdResponse>.Failure<GetCompanyDetailByIdResponse>(
-                        new Error("GetEmployeeDetailsByIdQuery.Query", errMsg)
+                        new Error("GetCompanyDetailsByIdQuery.Query", errMsg)
                     );
                 }
 
@@ -42,7 +42,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Queries.Organization
             {
                 logger.LogError(ex, $"Code Path: GetCompanyDetailsByIdQuery.Query - Message: {Helpers.GetExceptionMessage(ex)}");
                 return Result<GetCompanyDetailByIdResponse>.Failure<GetCompanyDetailByIdResponse>(
-                    new Error("GetEmployeeDetailsByIdQuery.Query", Helpers.GetExceptionMessage(ex))
+                    new Error("GetCompanyDetailsByIdQuery.Query", Helpers.GetExceptionMessage(ex))
                 );
             }
         }

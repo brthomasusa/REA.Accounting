@@ -15,9 +15,19 @@ namespace REA.Accounting.Presentation.Organization
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
-            app.MapGet("api/companies/{id}", async (int id, ISender sender) =>
+            app.MapGet("api/companies/details/{id}", async (int id, ISender sender) =>
             {
                 Result<GetCompanyDetailByIdResponse> result = await sender.Send(new GetCompanyDetailByIdRequest(CompanyID: id));
+
+                if (result.IsSuccess)
+                    return Results.Ok(result.Value);
+
+                return Results.Problem(result.Error);
+            });
+
+            app.MapGet("api/companies/command/{id}", async (int id, ISender sender) =>
+            {
+                Result<GetCompanyCommandByIdResponse> result = await sender.Send(new GetCompanyCommandByIdRequest(CompanyID: id));
 
                 if (result.IsSuccess)
                     return Results.Ok(result.Value);

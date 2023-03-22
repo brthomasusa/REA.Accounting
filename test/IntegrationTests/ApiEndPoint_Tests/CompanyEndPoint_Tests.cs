@@ -15,10 +15,10 @@ namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
         { }
 
         [Fact]
-        public async Task Company_GetEmployeeByIdQuery_ShouldSucceed()
+        public async Task Company_GetCompanyDetailsByIdQuery_ShouldSucceed()
         {
             const int companyId = 1;
-            using var response = await _client.GetAsync($"{_urlRoot}companies/{companyId}",
+            using var response = await _client.GetAsync($"{_urlRoot}companies/details/{companyId}",
                                                         HttpCompletionOption.ResponseHeadersRead);
 
             response.EnsureSuccessStatusCode();
@@ -28,6 +28,22 @@ namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
 
             Assert.Equal("Adventure-Works Cycles", company.CompanyName);
             Assert.Equal("Adventure-Works Cycles, Inc.", company.LegalName);
+        }
+
+        [Fact]
+        public async Task Company_GetCompanyCommandByIdQuery_ShouldSucceed()
+        {
+            const int companyId = 1;
+            using var response = await _client.GetAsync($"{_urlRoot}companies/command/{companyId}",
+                                                        HttpCompletionOption.ResponseHeadersRead);
+
+            response.EnsureSuccessStatusCode();
+
+            var jsonResponse = await response.Content.ReadAsStreamAsync();
+            var company = await JsonSerializer.DeserializeAsync<GetCompanyCommandByIdResponse>(jsonResponse, _options);
+
+            Assert.Equal(73, company.MailStateProvinceID);
+            Assert.Equal(73, company.DeliveryStateProvinceID);
         }
 
         [Fact]
