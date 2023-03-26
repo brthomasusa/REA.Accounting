@@ -1,7 +1,5 @@
 using Grpc.Core;
 using gRPC.Contracts;
-using gRPC.Contracts.Clients;
-using gRPC.Contracts.Clients.Organization;
 
 namespace REA.Accounting.Server.Contracts
 {

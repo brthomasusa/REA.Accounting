@@ -1,8 +1,6 @@
-using System.Text;
 using Grpc.Core;
 using gRPC.Contracts;
 using MediatR;
-using REA.Accounting.Shared.Models.Organization;
 using REA.Accounting.Application.Organization.GetCompany;
 using REA.Accounting.Application.Organization.UpdateCompany;
 using REA.Accounting.Infrastructure.Persistence.Queries.Organization;

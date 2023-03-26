@@ -1,0 +1,27 @@
+@page "/UseCases/Organization/GetCompanyDetails/Pages/CompanyStartPage"
+@inherits FluxorComponent
+
+<PageTitle>Company</PageTitle>
+
+<Row TextAlignment=TextAlignment.Center Margin="Margin.Is3.FromTop">
+    <Heading Size="HeadingSize.Is5">
+        AdventureWorks Cycles, Company
+    </Heading>
+</Row>
+
+<p style="text-align:center;">
+    <img src="/assets/accountant 2.svg" class="homelogo" alt="background image for the Home component" />
+</p>
+
+<ErrorBoundary>
+    @if (Loading)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+
+        <br />
+        @* <button class="btn btn-outline-info" @onclick="LoadForecasts">Refresh Forecasts</button> *@
+    }
+    </ErrorBoundary>

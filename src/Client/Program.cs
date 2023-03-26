@@ -1,6 +1,10 @@
+using Grpc.Net.Client;
+using Grpc.Net.Client.Web;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using REA.Accounting.Client;
+using gRPC.Contracts;
 
 using Blazorise;
 using Blazorise.Bootstrap5;
@@ -28,6 +32,17 @@ builder.Services.AddFluxor(options =>
 #endif        
 });
 
-builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+builder.Services.AddSingleton(services =>
+{
+    var navigationManager = services.GetRequiredService<NavigationManager>();
+    var backendUrl = navigationManager.BaseUri;
+
+    // Create a channel with a GrpcWebHandler that is addressed to the backend server.
+    var httpHandler = new GrpcWebHandler(GrpcWebMode.GrpcWeb, new HttpClientHandler());
+
+    return GrpcChannel.ForAddress(backendUrl, new GrpcChannelOptions { HttpHandler = httpHandler });
+});
+
+// builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
 await builder.Build().RunAsync();
