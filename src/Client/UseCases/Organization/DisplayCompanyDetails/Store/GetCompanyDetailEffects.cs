@@ -5,7 +5,7 @@ using REA.Accounting.Client.Utilities;
 using REA.Accounting.Shared.Models.Organization;
 using gRPC.Contracts;
 
-namespace REA.Accounting.Client.UseCases.Organization.GetCompanyDetails.Store
+namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Store
 {
     public class GetCompanyDetailEffects : Effect<SetGetCompanyDetailsAction>
     {

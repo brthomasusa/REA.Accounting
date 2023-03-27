@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Components;
 using Fluxor;
-using REA.Accounting.Client.UseCases.Organization.GetCompanyDetails.Store;
+using REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Store;
 using REA.Accounting.Shared.Models.Organization;
 
-namespace REA.Accounting.Client.UseCases.Organization.GetCompanyDetails.Pages
+namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Pages
 {
     public partial class CompanyStartPage
     {

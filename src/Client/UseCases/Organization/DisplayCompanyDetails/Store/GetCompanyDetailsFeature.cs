@@ -1,6 +1,6 @@
 using Fluxor;
 
-namespace REA.Accounting.Client.UseCases.Organization.GetCompanyDetails.Store
+namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Store
 {
     public class GetCompanyDetailsFeature : Feature<CompanyDetailState>
     {
