@@ -6,7 +6,7 @@
 
 <Row TextAlignment=TextAlignment.Center Margin="Margin.Is3.FromTop">
     <Heading Size="HeadingSize.Is5">
-        AdventureWorks Cycles, Company
+        AdventureWorks Cycles, Company Details
     </Heading>
 </Row>
 
@@ -21,8 +21,126 @@
     }
     else
     {
-        <ReadOnlyDetailsForm FormTitle=@DetailsModel!.CompanyName ViewModel=@DetailsModel>
-
+        <ReadOnlyDetailsForm ViewModel=@DetailsModel>
+            <FormFields>
+                <Tabs SelectedTab="@selectedTab" SelectedTabChanged="@OnSelectedTabChanged" Justified Pills=true>
+                <Items>
+                    <Tab Name="generalInfo">General Info</Tab>
+                    <Tab Name="addressInfo">Address</Tab>
+                    <Tab Name="contactInfo">Contact Info</Tab>
+                </Items>
+                <Content>
+                    <TabPanel Name="generalInfo">
+                        <Field>
+                            <FieldLabel TextWeight="TextWeight.Bold">Company Name</FieldLabel>
+                            <FieldBody>
+                                <TextEdit Text=@DetailsModel!.CompanyName ReadOnly />
+                                </FieldBody>
+                            </Field>
+                            <Field>
+                                <FieldLabel TextWeight="TextWeight.Bold">Legal Name</FieldLabel>
+                                <FieldBody>
+                                    <TextEdit Text=@DetailsModel!.LegalName ReadOnly />
+                                </FieldBody>
+                            </Field>
+                            <Field>
+                                <FieldLabel TextWeight="TextWeight.Bold">Employer Identification Number</FieldLabel>
+                                <FieldBody>
+                                    <TextEdit Text=@DetailsModel!.EIN ReadOnly />
+                                </FieldBody>
+                            </Field>
+                        </TabPanel>
+                        <TabPanel Name="addressInfo">
+                            <fieldset>
+                                <legend>Postal Address:</legend>
+                                <Field>
+                                    <FieldLabel TextWeight="TextWeight.Bold">Address Line1</FieldLabel>
+                                    <FieldBody>
+                                        <TextEdit Text=@DetailsModel!.MailAddressLine1 ReadOnly />
+                                    </FieldBody>
+                                </Field>
+                                <Field>
+                                    <FieldLabel TextWeight="TextWeight.Bold">Address Line2</FieldLabel>
+                                    <FieldBody>
+                                        <TextEdit Text=@DetailsModel!.MailAddressLine2 ReadOnly />
+                                    </FieldBody>
+                                </Field>
+                                <Field>
+                                    <FieldLabel TextWeight="TextWeight.Bold">City</FieldLabel>
+                                    <FieldBody>
+                                        <TextEdit Text=@DetailsModel!.MailCity ReadOnly />
+                                    </FieldBody>
+                                </Field>
+                                <Field>
+                                    <FieldLabel TextWeight="TextWeight.Bold">State</FieldLabel>
+                                    <FieldBody>
+                                        <TextEdit Text=@DetailsModel!.MailStateProvinceCode ReadOnly />
+                                    </FieldBody>
+                                </Field>
+                                <Field>
+                                    <FieldLabel TextWeight="TextWeight.Bold">Zipcode</FieldLabel>
+                                    <FieldBody>
+                                        <TextEdit Text=@DetailsModel!.MailPostalCode ReadOnly />
+                                    </FieldBody>
+                                </Field>
+                            </fieldset>
+                            <fieldset>
+                                <legend>Delivery Address:</legend>
+                                <Field>
+                                    <FieldLabel TextWeight="TextWeight.Bold">Address Line1</FieldLabel>
+                                    <FieldBody>
+                                        <TextEdit Text=@DetailsModel!.DeliveryAddressLine1 ReadOnly />
+                                    </FieldBody>
+                                </Field>
+                                <Field>
+                                    <FieldLabel TextWeight="TextWeight.Bold">Address Line2</FieldLabel>
+                                    <FieldBody>
+                                        <TextEdit Text=@DetailsModel!.DeliveryAddressLine2 ReadOnly />
+                                    </FieldBody>
+                                </Field>
+                                <Field>
+                                    <FieldLabel TextWeight="TextWeight.Bold">City</FieldLabel>
+                                    <FieldBody>
+                                        <TextEdit Text=@DetailsModel!.DeliveryCity ReadOnly />
+                                    </FieldBody>
+                                </Field>
+                                <Field>
+                                    <FieldLabel TextWeight="TextWeight.Bold">State</FieldLabel>
+                                    <FieldBody>
+                                        <TextEdit Text=@DetailsModel!.DeliveryStateProvinceCode ReadOnly />
+                                    </FieldBody>
+                                </Field>
+                                <Field>
+                                    <FieldLabel TextWeight="TextWeight.Bold">Zipcode</FieldLabel>
+                                    <FieldBody>
+                                        <TextEdit Text=@DetailsModel!.DeliveryPostalCode ReadOnly />
+                                    </FieldBody>
+                                </Field>
+                            </fieldset>
+                        </TabPanel>
+                        <TabPanel Name="contactInfo">
+                            <Field>
+                                <FieldLabel TextWeight="TextWeight.Bold">Telephone</FieldLabel>
+                                <FieldBody>
+                                    <TextEdit Text=@DetailsModel!.Telephone ReadOnly />
+                                </FieldBody>
+                            </Field>
+                            <Field>
+                                <FieldLabel TextWeight="TextWeight.Bold">Fax</FieldLabel>
+                                <FieldBody>
+                                    <TextEdit Text=@DetailsModel!.Fax ReadOnly />
+                                </FieldBody>
+                            </Field>
+                            <Field>
+                                <FieldLabel TextWeight="TextWeight.Bold">Company Website</FieldLabel>
+                                <FieldBody>
+                                    <TextEdit Text=@DetailsModel!.CompanyWebSite ReadOnly />
+                                </FieldBody>
+                            </Field>
+                        </TabPanel>
+                    </Content>
+                </Tabs>
+            </FormFields>
         </ReadOnlyDetailsForm>
 
         <br />

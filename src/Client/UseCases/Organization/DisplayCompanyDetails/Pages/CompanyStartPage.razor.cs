@@ -13,8 +13,8 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Page
         private IDispatcher? Dispatcher { get; set; }
 
         private CompanyDetailModel? DetailsModel => GetCompanyDetailState!.Value.DetailsModel;
-        private bool Loading => GetCompanyDetailState!.Value.Loading
-        ;
+        private bool Loading => GetCompanyDetailState!.Value.Loading;
+        private string selectedTab = "generalInfo";
 
         protected override void OnInitialized()
         {
@@ -23,6 +23,13 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Page
                 Dispatcher!.Dispatch(new SetDisplayCompanyDetailsAction(GetCompanyDetailState!.Value.CompanyID));
             }
             base.OnInitialized();
+        }
+
+        private Task OnSelectedTabChanged(string name)
+        {
+            selectedTab = name;
+
+            return Task.CompletedTask;
         }
     }
 }
