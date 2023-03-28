@@ -1,5 +1,6 @@
 @page "/UseCases/Organization/DisplayCompanyDetails/Pages/CompanyStartPage"
 @inherits FluxorComponent
+@using REA.Accounting.Client.Components.Common
 
 <PageTitle>Company</PageTitle>
 
@@ -9,19 +10,22 @@
     </Heading>
 </Row>
 
-<p style="text-align:center;">
-    <img src="/assets/accountant 2.svg" class="homelogo" alt="background image for the Home component" />
-</p>
-
 <ErrorBoundary>
     @if (Loading)
     {
-        <p><em>Loading...</em></p>
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
     }
     else
     {
+        <ReadOnlyDetailsForm FormTitle=@DetailsModel!.CompanyName ViewModel=@DetailsModel>
+
+        </ReadOnlyDetailsForm>
 
         <br />
         @* <button class="btn btn-outline-info" @onclick="LoadForecasts">Refresh Forecasts</button> *@
     }
-</ErrorBoundary>
+    </ErrorBoundary>

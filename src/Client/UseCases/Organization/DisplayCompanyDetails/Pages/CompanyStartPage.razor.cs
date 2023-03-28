@@ -12,7 +12,7 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Page
         [Inject]
         private IDispatcher? Dispatcher { get; set; }
 
-        private CompanyDetailModel? DetailsModel;
+        private CompanyDetailModel? DetailsModel => GetCompanyDetailState!.Value.DetailsModel;
         private bool Loading => GetCompanyDetailState!.Value.Loading
         ;
 
@@ -20,9 +20,7 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Page
         {
             if (!GetCompanyDetailState!.Value.Initialized)
             {
-                Dispatcher!.Dispatch(new SetGetCompanyDetailsAction(GetCompanyDetailState!.Value.CompanyID));
-                DetailsModel = GetCompanyDetailState!.Value.DetailsModel;
-                Dispatcher!.Dispatch(new SetInitializeAction());
+                Dispatcher!.Dispatch(new SetDisplayCompanyDetailsAction(GetCompanyDetailState!.Value.CompanyID));
             }
             base.OnInitialized();
         }

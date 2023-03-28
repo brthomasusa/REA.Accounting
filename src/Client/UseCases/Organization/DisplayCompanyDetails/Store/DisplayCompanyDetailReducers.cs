@@ -1,31 +1,19 @@
+using System.Collections.Generic;
 using Fluxor;
 
 namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Store
 {
-    public static class GetCompanyDetailReducers
+    public static class DisplayCompanyDetailReducers
     {
-        [ReducerMethod(typeof(SetInitializeAction))]
-        public static CompanyDetailState OnSetInitializeAction
+        [ReducerMethod(typeof(SetLoadingFlagAction))]
+        public static CompanyDetailState OnLoadingCompanyDetailsAction
         (
             CompanyDetailState state
         )
         {
             return state with
             {
-                Initialized = true
-            };
-        }
-
-        [ReducerMethod]
-        public static CompanyDetailState OnLoadingCompanyDetailsAction
-        (
-            CompanyDetailState state,
-            SetLoadingFlagAction action
-        )
-        {
-            return state with
-            {
-                Loading = action.Loading
+                Loading = true
             };
         }
 
@@ -33,13 +21,14 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Stor
         public static CompanyDetailState OnGetCompanyDetailsSuccessAction
         (
             CompanyDetailState state,
-            GetCompanyDetailsSuccessAction action
+            DisplayCompanyDetailsSuccessAction action
         )
         {
             return state with
             {
                 DetailsModel = action.DetailModel,
-                Loading = false
+                Loading = false,
+                Initialized = true
             };
         }
 
@@ -47,13 +36,14 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Stor
         public static CompanyDetailState OnGetCompanyDetailsFailureMessageAction
         (
             CompanyDetailState state,
-            GetCompanyDetailsFailureMessageAction action
+            DisplayCompanyDetailsFailureMessageAction action
         )
         {
             return state with
             {
                 ErrorMessage = action.ErrorMessage,
-                Loading = false
+                Loading = false,
+                Initialized = false
             };
         }
     }

@@ -5,5 +5,5 @@ using System.Threading.Tasks;
 
 namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Store
 {
-    public record GetCompanyDetailsFailureMessageAction(string ErrorMessage);
+    public record DisplayCompanyDetailsFailureMessageAction(string ErrorMessage);
 }
