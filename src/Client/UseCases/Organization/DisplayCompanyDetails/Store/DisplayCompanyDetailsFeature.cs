@@ -2,11 +2,11 @@ using Fluxor;
 
 namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Store
 {
-    public class DisplayCompanyDetailsFeature : Feature<CompanyDetailState>
+    public class DisplayCompanyDetailsFeature : Feature<DisplayCompanyDetailState>
     {
         public override string GetName() => "GetCompanyDetail";
 
-        protected override CompanyDetailState GetInitialState() =>
+        protected override DisplayCompanyDetailState GetInitialState() =>
             new()
             {
                 Initialized = false,

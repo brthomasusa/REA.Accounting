@@ -6,9 +6,9 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Stor
     public static class DisplayCompanyDetailReducers
     {
         [ReducerMethod(typeof(SetLoadingFlagAction))]
-        public static CompanyDetailState OnLoadingCompanyDetailsAction
+        public static DisplayCompanyDetailState OnLoadingCompanyDetailsAction
         (
-            CompanyDetailState state
+            DisplayCompanyDetailState state
         )
         {
             return state with
@@ -18,9 +18,9 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Stor
         }
 
         [ReducerMethod]
-        public static CompanyDetailState OnGetCompanyDetailsSuccessAction
+        public static DisplayCompanyDetailState OnGetCompanyDetailsSuccessAction
         (
-            CompanyDetailState state,
+            DisplayCompanyDetailState state,
             DisplayCompanyDetailsSuccessAction action
         )
         {
@@ -33,9 +33,9 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Stor
         }
 
         [ReducerMethod]
-        public static CompanyDetailState OnGetCompanyDetailsFailureMessageAction
+        public static DisplayCompanyDetailState OnGetCompanyDetailsFailureMessageAction
         (
-            CompanyDetailState state,
+            DisplayCompanyDetailState state,
             DisplayCompanyDetailsFailureMessageAction action
         )
         {

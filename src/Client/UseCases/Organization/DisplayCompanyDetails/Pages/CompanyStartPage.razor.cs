@@ -8,19 +8,19 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Page
     public partial class CompanyStartPage
     {
         [Inject]
-        private IState<CompanyDetailState>? GetCompanyDetailState { get; set; }
+        private IState<DisplayCompanyDetailState>? DisplayCompanyDetailState { get; set; }
         [Inject]
         private IDispatcher? Dispatcher { get; set; }
 
-        private CompanyDetailModel? DetailsModel => GetCompanyDetailState!.Value.DetailsModel;
-        private bool Loading => GetCompanyDetailState!.Value.Loading;
+        private CompanyDetailModel? DetailsModel => DisplayCompanyDetailState!.Value.DetailsModel;
+        private bool Loading => DisplayCompanyDetailState!.Value.Loading;
         private string selectedTab = "generalInfo";
 
         protected override void OnInitialized()
         {
-            if (!GetCompanyDetailState!.Value.Initialized)
+            if (!DisplayCompanyDetailState!.Value.Initialized)
             {
-                Dispatcher!.Dispatch(new SetDisplayCompanyDetailsAction(GetCompanyDetailState!.Value.CompanyID));
+                Dispatcher!.Dispatch(new SetDisplayCompanyDetailsAction(DisplayCompanyDetailState!.Value.CompanyID));
             }
             base.OnInitialized();
         }
