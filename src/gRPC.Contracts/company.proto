@@ -1,7 +1,6 @@
 syntax = "proto3";
 package contracts;
 option csharp_namespace = "gRPC.Contracts";
-import "google/protobuf/timestamp.proto";
 import "shared.proto";
 
 service CompanyContract {

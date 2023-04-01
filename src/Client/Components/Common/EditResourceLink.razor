@@ -1,0 +1,16 @@
+@inherits FluxorComponent
+
+<div class="col-md-2">
+    <button @onclick=OnButtonClick class="btn btn-labeled btn-lg btn-outline-primary rounded-pill" role="button">
+        <span class="btn-label"><i class="fas fa-edit"></i></span>
+    </button>
+</div>
+
+@code {
+    [Parameter] public EventCallback DoPreNavigationProcessing { get; set; }
+
+    private async Task OnButtonClick()
+    {
+        await DoPreNavigationProcessing.InvokeAsync();
+    }
+}

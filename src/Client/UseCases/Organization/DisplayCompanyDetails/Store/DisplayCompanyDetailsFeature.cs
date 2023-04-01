@@ -4,14 +4,14 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Stor
 {
     public class DisplayCompanyDetailsFeature : Feature<DisplayCompanyDetailState>
     {
-        public override string GetName() => "GetCompanyDetail";
+        public override string GetName() => "DisplayCompanyDetail";
 
         protected override DisplayCompanyDetailState GetInitialState() =>
             new()
             {
                 Initialized = false,
                 Loading = false,
-                ErrorMessage = null,
+                ErrorMessage = string.Empty,
                 DetailsModel = null,
                 CompanyID = 1
             };

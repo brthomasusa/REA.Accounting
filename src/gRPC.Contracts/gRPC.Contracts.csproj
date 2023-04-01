@@ -19,6 +19,7 @@
 	<ItemGroup>
 		<Protobuf Include="shared.proto" />
 		<Protobuf Include="company.proto" />
+        <Protobuf Include="Protos/Lookups/lookups.proto" />
 	</ItemGroup>
 
 </Project>

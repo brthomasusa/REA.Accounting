@@ -15,7 +15,7 @@ namespace REA.Accounting.IntegrationTests.DapperQueries.Organization
         }
 
         [Fact]
-        public async Task Query_Query_GetCompanyDetailsByIdQuery_ShouldFail_WhenPassedInvalidID()
+        public async Task Query_GetCompanyDetailsByIdQuery_ShouldFail_WhenPassedInvalidID()
         {
             using var loggerFactory = LoggerFactory.Create(c => c.AddConsole());
             var logger = loggerFactory.CreateLogger<ReadRepositoryManager>();

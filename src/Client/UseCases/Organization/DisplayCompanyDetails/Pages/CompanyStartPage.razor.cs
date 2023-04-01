@@ -9,8 +9,8 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Page
     {
         [Inject]
         private IState<DisplayCompanyDetailState>? DisplayCompanyDetailState { get; set; }
-        [Inject]
-        private IDispatcher? Dispatcher { get; set; }
+        [Inject] private IDispatcher? Dispatcher { get; set; }
+        [Inject] private NavigationManager? _navManager { get; set; }
 
         private CompanyDetailModel? DetailsModel => DisplayCompanyDetailState!.Value.DetailsModel;
         private bool Loading => DisplayCompanyDetailState!.Value.Loading;
@@ -30,6 +30,18 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Page
             selectedTab = name;
 
             return Task.CompletedTask;
+        }
+
+        private async Task LoadEmployeeLookups()
+        {
+            // if (_employeeState!.Value.EmployeeManagers is null ||
+            //     _employeeState!.Value.EmployeeTypes is null)
+            // {
+            //     await _facade!.LoadEmployeeLookups();
+            // }
+
+            _navManager!.NavigateTo("/UseCases/Organization/UpdateCompanyDetails/Pages/UpdateCompanyDetailsPage");
+            await Task.CompletedTask;
         }
     }
 }

@@ -6,6 +6,8 @@ namespace REA.Accounting.Client.UseCases.Organization.UpdateCompanyDetails.Store
     {
         public bool Initialized { get; init; }
         public bool Loading { get; init; }
+        public bool Submitting { get; init; }
+        public bool Submitted { get; init; }
         public string? ErrorMessage { get; init; }
         public int CompanyID { get; init; }
         public CompanyCommandModel? CommandModel { get; init; }

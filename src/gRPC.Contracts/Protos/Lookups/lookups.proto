@@ -1,0 +1,15 @@
+syntax = "proto3";
+package contracts;
+option csharp_namespace = "gRPC.Contracts";
+import "google/protobuf/empty.proto";
+
+service LookupsContract {
+	rpc GetUsStateCodes(google.protobuf.Empty) returns (stream StateProvinceCode);
+    rpc GetAllStateCodes(google.protobuf.Empty) returns (stream StateProvinceCode);
+}
+
+message StateProvinceCode {
+    int32 id = 1;
+    string stateCode = 2;   
+}
+

@@ -68,6 +68,7 @@ try
     app.UseGrpcWeb(new GrpcWebOptions { DefaultEnabled = true });
     app.MapGrpcReflectionService();
     app.MapGrpcService<CompanyContractService>().RequireCors("AllowAll");
+    app.MapGrpcService<LookupsContractService>().RequireCors("AllowAll");
 
     app.MapRazorPages();
     app.MapControllers();
