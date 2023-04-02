@@ -2,7 +2,7 @@ namespace REA.Accounting.Shared.Models.Lookups
 {
     public class StateCode
     {
-        public int Id { get; set; }
-        public string? Code { get; set; }
+        public int StateProvinceID { get; set; }
+        public string? StateProvinceCode { get; set; }
     }
 }

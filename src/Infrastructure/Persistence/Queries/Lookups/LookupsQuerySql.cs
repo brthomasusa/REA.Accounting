@@ -4,14 +4,14 @@ namespace REA.Accounting.Infrastructure.Persistence.Queries.Lookups
     {
         public const string GetStateCodeIdForUSA =
         @"SELECT 
-            StateProvinceID, StateProvinceCode 
+            StateProvinceID, LTRIM(RTRIM(StateProvinceCode)) AS StateProvinceCode
         FROM Person.StateProvince 
         WHERE CountryRegionCode = 'US' 
         ORDER BY StateProvinceCode";
 
         public const string GetStateCodeIdForAll =
         @"SELECT 
-            StateProvinceID, StateProvinceCode 
+            StateProvinceID, LTRIM(RTRIM(StateProvinceCode)) AS StateProvinceCode 
         FROM Person.StateProvince 
         ORDER BY StateProvinceCode";
     }
