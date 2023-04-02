@@ -25,7 +25,7 @@ namespace REA.Accounting.Application.Organization.GetCompany
                 if (result.IsFailure)
                 {
                     return Result<GetCompanyCommandByIdResponse>.Failure<GetCompanyCommandByIdResponse>(
-                        new Error("GetCompanyCommandByIdQueryHandler.Handle.Handle", result.Error.Message)
+                        new Error("GetCompanyCommandByIdQueryHandler.Handle", result.Error.Message)
                     );
                 }
 
