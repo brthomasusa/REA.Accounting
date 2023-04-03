@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using REA.Accounting.Client;
+using REA.Accounting.Client.Utilities;
 using gRPC.Contracts;
 
 using Blazorise;
@@ -32,6 +33,7 @@ builder.Services.AddFluxor(options =>
 #endif        
 });
 
+builder.Services.RegisterMapsterConfiguration();
 builder.Services.AddSingleton(services =>
 {
     var navigationManager = services.GetRequiredService<NavigationManager>();

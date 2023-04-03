@@ -22,7 +22,8 @@
     <PackageReference Include="Fluxor.Blazor.Web" Version="5.4.0" />
     <PackageReference Include="Fluxor.Blazor.Web.ReduxDevTools" Version="5.4.0" />
     <PackageReference Include="Grpc.Net.Client" Version="2.49.0" />
-    <PackageReference Include="Grpc.Net.Client.Web" Version="2.49.0" />                 
+    <PackageReference Include="Grpc.Net.Client.Web" Version="2.49.0" />
+    <PackageReference Include="Mapster" Version="7.3.0" />                 
   </ItemGroup>
 
   <ItemGroup>

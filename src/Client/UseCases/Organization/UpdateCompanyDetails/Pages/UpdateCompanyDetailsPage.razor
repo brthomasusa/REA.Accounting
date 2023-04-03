@@ -1,5 +1,6 @@
 @page "/UseCases/Organization/UpdateCompanyDetails/Pages/UpdateCompanyDetailsPage"
 @inherits FluxorComponent
+@inject NavigationManager NavMgr
 
 <Row TextAlignment=TextAlignment.Center Margin="Margin.Is3.FromTop">
     <Heading Size="HeadingSize.Is5">
@@ -18,6 +19,127 @@
     }
     else
     {
+        @if (UpdateCompanyDetailsState!.Value.Submitting)
+        {
+            <div class="d-flex justify-content-center">
+                <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="visually-hidden">Submitting... Please wait.</span>
+                </div>
+            </div>
+        }
+        else if (UpdateCompanyDetailsState!.Value.Submitted &&
+        string.IsNullOrWhiteSpace(UpdateCompanyDetailsState!.Value.ErrorMessage))
+        {
+            <div class="alert alert-success">
+                Thank you for sharing!
+            </div>
+        }
+        else
+        {
+            <Card Margin="Margin.Is4.OnY">
+                <CardBody>
+                    <Validations @ref="_validations" Mode="ValidationMode.Auto" ValidateOnLoad=false Model=@CommandModel>
+                        <Container Margin="Margin.Is1.FromStart" style="background-color:#F0F0F0;">
+                            <Row>
+                                <Column>
+                                    <Validation HandlerType="HandlerTypes.FluentValidation">
+                                        <Field>
+                                            <FieldLabel TextWeight="TextWeight.Bold">Company Name</FieldLabel>
+                                            <TextEdit Placeholder="Required" @bind-Text=@CommandModel!.CompanyName>
+                                                <Feedback>
+                                                    <ValidationError />
+                                                </Feedback>
+                                            </TextEdit>
+                                        </Field>
+                                    </Validation>
+                                </Column>
+                                <Column>
+                                    <Validation HandlerType="HandlerTypes.FluentValidation">
+                                        <Field>
+                                            <FieldLabel TextWeight="TextWeight.Bold">Legal Name</FieldLabel>
+                                            <TextEdit Placeholder="Required" @bind-Text=@CommandModel!.LegalName>
+                                                <Feedback>
+                                                    <ValidationError />
+                                                </Feedback>
+                                            </TextEdit>
+                                        </Field>
+                                    </Validation>
+                                </Column>
+                                <Column>
+                                    <Validation HandlerType="HandlerTypes.FluentValidation">
+                                        <Field>
+                                            <FieldLabel TextWeight="TextWeight.Bold">Employer Identification Number</FieldLabel>
+                                            <TextEdit Placeholder="Required" @bind-Text=@CommandModel!.EIN>
+                                                <Feedback>
+                                                    <ValidationError />
+                                                </Feedback>
+                                            </TextEdit>
+                                        </Field>
+                                    </Validation>
+                                </Column>
+                            </Row>
+                            <Row>
+                                <Column>
+                                    <Validation HandlerType="HandlerTypes.FluentValidation">
+                                        <Field>
+                                            <FieldLabel TextWeight="TextWeight.Bold">Company Website</FieldLabel>
+                                            <TextEdit Placeholder="Required" @bind-Text=@CommandModel!.CompanyWebSite>
+                                                <Feedback>
+                                                    <ValidationError />
+                                                </Feedback>
+                                            </TextEdit>
+                                        </Field>
+                                    </Validation>
+                                </Column>
+                                <Column>
+                                    <Validation HandlerType="HandlerTypes.FluentValidation">
+                                        <Field>
+                                            <FieldLabel TextWeight="TextWeight.Bold">Telephone</FieldLabel>
+                                            <TextEdit Placeholder="Required" @bind-Text=@CommandModel!.Telephone>
+                                                <Feedback>
+                                                    <ValidationError />
+                                                </Feedback>
+                                            </TextEdit>
+                                        </Field>
+                                    </Validation>
+                                </Column>
+                                <Column>
+                                    <Validation HandlerType="HandlerTypes.FluentValidation">
+                                        <Field>
+                                            <FieldLabel TextWeight="TextWeight.Bold">Fax</FieldLabel>
+                                            <TextEdit Placeholder="Required" @bind-Text=@CommandModel!.Fax>
+                                                <Feedback>
+                                                    <ValidationError />
+                                                </Feedback>
+                                            </TextEdit>
+                                        </Field>
+                                    </Validation>
+                                </Column>
+                            </Row>
+                        </Container>
+                    </Validations>
+                    <Field Margin="Margin.Is4.FromTop">
+                        <Button Color="Color.Secondary" Type="ButtonType.Button" Clicked="@OnCancel">Cancel editing</Button>
+                        <Button Color="Color.Success" Type="ButtonType.Submit" Clicked="@HandleValidSubmit"
+                    Loading="@Saving">Save
+                            changes</Button>
+                    </Field>
+                </CardBody>
+                <CardFooter>
+                    <Snackbar @ref="_snackbar" DefaultInterval=1000 Closed=@( () => NavMgr.NavigateTo(@ReturnUri!) )>
+                        <SnackbarBody>
+                            @_snackBarMessage
+                        </SnackbarBody>
+                    </Snackbar>
+                </CardFooter>
+            </Card>
+        }
 
+        @if (!string.IsNullOrWhiteSpace(UpdateCompanyDetailsState!.Value.ErrorMessage))
+        {
+            <div class="alert alert-danger">
+                Error: @UpdateCompanyDetailsState!.Value.ErrorMessage
+            </div>
+        }
     }
     </ErrorBoundary>

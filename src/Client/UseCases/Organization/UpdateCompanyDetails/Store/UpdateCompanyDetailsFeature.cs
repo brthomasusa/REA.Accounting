@@ -16,7 +16,8 @@ namespace REA.Accounting.Client.UseCases.Organization.UpdateCompanyDetails.Store
                 Submitted = false,
                 ErrorMessage = string.Empty,
                 CommandModel = new CompanyCommandModel(),
-                CompanyID = 1
+                CompanyID = 1,
+                StateCodes = new()
             };
     }
 }

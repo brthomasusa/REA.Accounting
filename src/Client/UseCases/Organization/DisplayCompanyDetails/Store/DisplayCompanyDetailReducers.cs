@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Fluxor;
 
 namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Store

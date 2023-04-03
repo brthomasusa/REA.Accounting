@@ -3,5 +3,5 @@ using REA.Accounting.Shared.Models.Lookups;
 
 namespace REA.Accounting.Client.UseCases.Organization.UpdateCompanyDetails.Store
 {
-    public record UpdateCompanyDetailsSubmitSuccessAction();
+    public record UpdateCompanyDetailsInitializeSuccessAction(List<StateCode> StateCodes, CompanyCommandModel CommandModel);
 }

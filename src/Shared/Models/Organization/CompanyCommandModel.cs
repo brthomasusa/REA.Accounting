@@ -2,12 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace REA.Accounting.Shared.Models.Organization
 {
-    public class CompanyCommandModel : IModel
+    public class CompanyCommandModel
     {
         public int Id { get; set; }
-
-        [Required]
-        public string Name { get; set; } = string.Empty;
         public string CompanyName { get; set; } = string.Empty;
         public string LegalName { get; set; } = string.Empty;
         public string EIN { get; set; } = string.Empty;

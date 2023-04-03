@@ -1,4 +1,5 @@
 using REA.Accounting.Shared.Models.Organization;
+using REA.Accounting.Shared.Models.Lookups;
 
 namespace REA.Accounting.Client.UseCases.Organization.UpdateCompanyDetails.Store
 {
@@ -11,5 +12,6 @@ namespace REA.Accounting.Client.UseCases.Organization.UpdateCompanyDetails.Store
         public string? ErrorMessage { get; init; }
         public int CompanyID { get; init; }
         public CompanyCommandModel? CommandModel { get; init; }
+        public List<StateCode>? StateCodes { get; init; }
     }
 }

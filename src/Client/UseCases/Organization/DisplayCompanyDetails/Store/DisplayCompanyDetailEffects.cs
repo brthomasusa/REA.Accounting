@@ -1,9 +1,11 @@
 using Blazorise;
 using Fluxor;
 using Grpc.Net.Client;
+using Mapster;
+
+using gRPC.Contracts;
 using REA.Accounting.Client.Utilities;
 using REA.Accounting.Shared.Models.Organization;
-using gRPC.Contracts;
 
 namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Store
 {
@@ -29,26 +31,7 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Stor
                 var client = new CompanyContract.CompanyContractClient(_channel);
                 CompanyDetail grpcResponse = await client.GetCompanyDetailByIdAsync(request);
 
-                CompanyDetailModel model = new()
-                {
-                    Id = grpcResponse.Id,
-                    CompanyName = grpcResponse.CompanyName,
-                    LegalName = grpcResponse.LegalName,
-                    EIN = grpcResponse.Ein,
-                    CompanyWebSite = grpcResponse.CompanyWebSite,
-                    MailAddressLine1 = grpcResponse.MailAddressLine1,
-                    MailAddressLine2 = grpcResponse.MailAddressLine2,
-                    MailCity = grpcResponse.MailCity,
-                    MailStateProvinceCode = grpcResponse.MailStateProvinceCode,
-                    MailPostalCode = grpcResponse.MailPostalCode,
-                    DeliveryAddressLine1 = grpcResponse.DeliveryAddressLine1,
-                    DeliveryAddressLine2 = grpcResponse.DeliveryAddressLine2,
-                    DeliveryCity = grpcResponse.DeliveryCity,
-                    DeliveryStateProvinceCode = grpcResponse.DeliveryStateProvinceCode,
-                    DeliveryPostalCode = grpcResponse.DeliveryPostalCode,
-                    Telephone = grpcResponse.Telephone,
-                    Fax = grpcResponse.Fax
-                };
+                CompanyDetailModel model = grpcResponse.Adapt<CompanyDetailModel>();
 
                 dispatcher.Dispatch(new DisplayCompanyDetailsSuccessAction(model));
             }
@@ -57,8 +40,6 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Stor
                 await _messageService!.Error($"{ex}", "System Error");
                 dispatcher.Dispatch(new DisplayCompanyDetailsFailureMessageAction(Helpers.GetExceptionMessage(ex)));
             }
-
-
         }
     }
 }
