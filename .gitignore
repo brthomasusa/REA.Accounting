@@ -4,6 +4,9 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # User-specific files
+**/logs
+**/internal_logs/
+.gitignore
 *.rsuser
 *.suo
 *.user
