@@ -2,6 +2,8 @@
 @inherits FluxorComponent
 @inject NavigationManager NavMgr
 
+<PageTitle>Company</PageTitle>
+
 <Row TextAlignment=TextAlignment.Center Margin="Margin.Is3.FromTop">
     <Heading Size="HeadingSize.Is5">
         AdventureWorks Cycles, Updating Company Details
@@ -116,6 +118,174 @@
                                     </Validation>
                                 </Column>
                             </Row>
+                            <fieldset>
+                                <legend>
+                                    <Heading TextColor="TextColor.Primary" Size="HeadingSize.Is6">
+                                        Postal Address
+                                    </Heading>
+                                </legend>
+                                <Row>
+                                    <Column>
+                                        <Validation HandlerType="HandlerTypes.FluentValidation">
+                                            <Field>
+                                                <FieldLabel TextWeight="TextWeight.Bold">Line1</FieldLabel>
+                                                <TextEdit Placeholder="Required" @bind-Text=@CommandModel!.MailAddressLine1>
+                                                    <Feedback>
+                                                        <ValidationError />
+                                                    </Feedback>
+                                                </TextEdit>
+                                            </Field>
+                                        </Validation>
+                                    </Column>
+                                    <Column>
+                                        <Validation HandlerType="HandlerTypes.FluentValidation">
+                                            <Field>
+                                                <FieldLabel TextWeight="TextWeight.Bold">Line2</FieldLabel>
+                                                <TextEdit @bind-Text=@CommandModel!.MailAddressLine2>
+                                                    <Feedback>
+                                                        <ValidationError />
+                                                    </Feedback>
+                                                </TextEdit>
+                                            </Field>
+                                        </Validation>
+                                    </Column>
+                                </Row>
+                                <Row>
+                                    <Column>
+                                        <Validation HandlerType="HandlerTypes.FluentValidation">
+                                            <Field>
+                                                <FieldLabel TextWeight="TextWeight.Bold">City</FieldLabel>
+                                                <TextEdit Placeholder="Required" @bind-Text=@CommandModel!.MailCity>
+                                                    <Feedback>
+                                                        <ValidationError />
+                                                    </Feedback>
+                                                </TextEdit>
+                                            </Field>
+                                        </Validation>
+                                    </Column>
+                                    <Column>
+                                        <Validation HandlerType="HandlerTypes.FluentValidation">
+                                            <Field>
+                                                <FieldLabel TextWeight="TextWeight.Bold">State</FieldLabel>
+                                                <Select TValue="int" SelectedValue=@CommandModel!.MailStateProvinceID>
+                                                    <ChildContent>
+                                                        <SelectItem Value="0">-- Select state code --</SelectItem>
+                                                        @if (UpdateCompanyDetailsState!.Value.StateCodes is not null)
+                                                        {
+                                                            foreach (var state in UpdateCompanyDetailsState!.Value.StateCodes)
+                                                            {
+                                                                <SelectItem Value=@state.StateProvinceID>@state.StateProvinceCode
+                                                                </SelectItem>
+                                                            }
+                                                        }
+                                                    </ChildContent>
+                                                    <Feedback>
+                                                        <ValidationError>Invalid state code selected (probably a system
+                                                            problem).
+                                                        </ValidationError>
+                                                    </Feedback>
+                                                </Select>
+                                            </Field>
+                                        </Validation>
+                                    </Column>
+                                    <Column>
+                                        <Validation HandlerType="HandlerTypes.FluentValidation">
+                                            <Field>
+                                                <FieldLabel TextWeight="TextWeight.Bold">Postal Code</FieldLabel>
+                                                <TextEdit Placeholder="Required" @bind-Text=@CommandModel!.MailPostalCode>
+                                                    <Feedback>
+                                                        <ValidationError />
+                                                    </Feedback>
+                                                </TextEdit>
+                                            </Field>
+                                        </Validation>
+                                    </Column>
+                                </Row>
+                            </fieldset>
+                            <fieldset>
+                                <legend>
+                                    <Heading TextColor="TextColor.Primary" Size="HeadingSize.Is6">
+                                        Delivery Address
+                                    </Heading>
+                                </legend>
+                                <Row>
+                                    <Column>
+                                        <Validation HandlerType="HandlerTypes.FluentValidation">
+                                            <Field>
+                                                <FieldLabel TextWeight="TextWeight.Bold">Line1</FieldLabel>
+                                                <TextEdit Placeholder="Required" @bind-Text=@CommandModel!.DeliveryAddressLine1>
+                                                    <Feedback>
+                                                        <ValidationError />
+                                                    </Feedback>
+                                                </TextEdit>
+                                            </Field>
+                                        </Validation>
+                                    </Column>
+                                    <Column>
+                                        <Validation HandlerType="HandlerTypes.FluentValidation">
+                                            <Field>
+                                                <FieldLabel TextWeight="TextWeight.Bold">Line2</FieldLabel>
+                                                <TextEdit @bind-Text=@CommandModel!.DeliveryAddressLine2>
+                                                    <Feedback>
+                                                        <ValidationError />
+                                                    </Feedback>
+                                                </TextEdit>
+                                            </Field>
+                                        </Validation>
+                                    </Column>
+                                </Row>
+                                <Row>
+                                    <Column>
+                                        <Validation HandlerType="HandlerTypes.FluentValidation">
+                                            <Field>
+                                                <FieldLabel TextWeight="TextWeight.Bold">City</FieldLabel>
+                                                <TextEdit Placeholder="Required" @bind-Text=@CommandModel!.DeliveryCity>
+                                                    <Feedback>
+                                                        <ValidationError />
+                                                    </Feedback>
+                                                </TextEdit>
+                                            </Field>
+                                        </Validation>
+                                    </Column>
+                                    <Column>
+                                        <Validation HandlerType="HandlerTypes.FluentValidation">
+                                            <Field>
+                                                <FieldLabel TextWeight="TextWeight.Bold">State</FieldLabel>
+                                                <Select TValue="int" SelectedValue=@CommandModel!.DeliveryStateProvinceID>
+                                                    <ChildContent>
+                                                        <SelectItem Value="0">-- Select state code --</SelectItem>
+                                                        @if (UpdateCompanyDetailsState!.Value.StateCodes is not null)
+                                                        {
+                                                            foreach (var state in UpdateCompanyDetailsState!.Value.StateCodes)
+                                                            {
+                                                                <SelectItem Value=@state.StateProvinceID>@state.StateProvinceCode
+                                                                </SelectItem>
+                                                            }
+                                                        }
+                                                    </ChildContent>
+                                                    <Feedback>
+                                                        <ValidationError>Invalid state code selected (probably a system
+                                                            problem).
+                                                        </ValidationError>
+                                                    </Feedback>
+                                                </Select>
+                                            </Field>
+                                        </Validation>
+                                    </Column>
+                                    <Column>
+                                        <Validation HandlerType="HandlerTypes.FluentValidation">
+                                            <Field>
+                                                <FieldLabel TextWeight="TextWeight.Bold">Postal Code</FieldLabel>
+                                                <TextEdit Placeholder="Required" @bind-Text=@CommandModel!.DeliveryPostalCode>
+                                                    <Feedback>
+                                                        <ValidationError />
+                                                    </Feedback>
+                                                </TextEdit>
+                                            </Field>
+                                        </Validation>
+                                    </Column>
+                                </Row>
+                            </fieldset>
                         </Container>
                     </Validations>
                     <Field Margin="Margin.Is4.FromTop">

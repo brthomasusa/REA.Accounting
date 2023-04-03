@@ -41,7 +41,7 @@ namespace REA.Accounting.Client.UseCases.Organization.UpdateCompanyDetails.Pages
 
         private void OnCancel()
         {
-
+            NavManager!.NavigateTo(ReturnUri);
         }
     }
 }
