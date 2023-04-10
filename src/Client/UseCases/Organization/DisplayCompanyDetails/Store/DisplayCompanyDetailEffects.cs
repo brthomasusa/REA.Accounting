@@ -14,7 +14,11 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Stor
         private readonly GrpcChannel? _channel;
         private readonly IMessageService? _messageService;
 
-        public DisplayCompanyDetailEffects(GrpcChannel channel, IMessageService messageSvc)
+        public DisplayCompanyDetailEffects
+        (
+            GrpcChannel channel,
+            IMessageService messageSvc
+        )
             => (_channel, _messageService) = (channel, messageSvc);
 
         public override async Task HandleAsync

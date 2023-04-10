@@ -1,14 +1,15 @@
 using Microsoft.AspNetCore.Components;
 using Fluxor;
 using REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Store;
+using REA.Accounting.Client.Utilities;
 using REA.Accounting.Shared.Models.Organization;
 
 namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Pages
 {
     public partial class CompanyStartPage
     {
-        [Inject]
-        private IState<DisplayCompanyDetailState>? DisplayCompanyDetailState { get; set; }
+        [Inject] private IActionSubscriber? ActionSubscriber { get; set; }
+        [Inject] private IState<DisplayCompanyDetailState>? DisplayCompanyDetailState { get; set; }
         [Inject] private IDispatcher? Dispatcher { get; set; }
         [Inject] private NavigationManager? NavManager { get; set; }
 
@@ -22,20 +23,31 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Page
             {
                 Dispatcher!.Dispatch(new SetDisplayCompanyDetailsAction(DisplayCompanyDetailState!.Value.CompanyID));
             }
+
+            // ActionSubscriber!.SubscribeToAction<UpdateCompanyDetailsSubmitSuccessAction>(this, ResetUpdateCompanyDetailsStoreToInitialState);
+            Console.WriteLine($"DetailModel: {DisplayCompanyDetailState!.Value.DetailsModel}");
             base.OnInitialized();
         }
 
-        private Task OnSelectedTabChanged(string name)
+        private void OnSelectedTabChanged(string name)
         {
             selectedTab = name;
-
-            return Task.CompletedTask;
         }
 
-        private async Task GoToUpdateCompanyDetailsPage()
+        private void GoToUpdateCompanyDetailsPage()
         {
             NavManager!.NavigateTo("/UseCases/Organization/UpdateCompanyDetails/Pages/UpdateCompanyDetailsPage");
-            await Task.CompletedTask;
+        }
+
+        // private void ResetUpdateCompanyDetailsStoreToInitialState(UpdateCompanyDetailsSubmitSuccessAction _)
+        // {
+        //     Dispatcher!.Dispatch(new ResetStateToUnInitializedAction());
+        // }
+
+        protected override void Dispose(bool disposing)
+        {
+            ActionSubscriber!.UnsubscribeFromAllActions(this);
+            base.Dispose(disposing);
         }
     }
 }

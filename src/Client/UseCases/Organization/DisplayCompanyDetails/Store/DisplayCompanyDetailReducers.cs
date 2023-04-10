@@ -17,6 +17,19 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Stor
         }
 
         [ReducerMethod]
+        public static DisplayCompanyDetailState OnSetInitializeFlagAction
+        (
+            DisplayCompanyDetailState state,
+            SetDisplayInitializeFlagAction action
+        )
+        {
+            return state with
+            {
+                Initialized = action.IsInitialized
+            };
+        }
+
+        [ReducerMethod]
         public static DisplayCompanyDetailState OnGetCompanyDetailsSuccessAction
         (
             DisplayCompanyDetailState state,

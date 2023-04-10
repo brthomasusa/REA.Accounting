@@ -1,4 +1,5 @@
 @page "/UseCases/Organization/UpdateCompanyDetails/Pages/UpdateCompanyDetailsPage"
+
 @inherits FluxorComponent
 @inject NavigationManager NavMgr
 
@@ -32,9 +33,7 @@
         else if (UpdateCompanyDetailsState!.Value.Submitted &&
         string.IsNullOrWhiteSpace(UpdateCompanyDetailsState!.Value.ErrorMessage))
         {
-            <div class="alert alert-success">
-                Thank you for sharing!
-            </div>
+            <WrappedSnackBar ReturnUri="@ReturnUri" SnackBarMessage="@SnackBarMessage" />
         }
         else
         {
@@ -164,7 +163,7 @@
                                         </Validation>
                                     </Column>
                                     <Column>
-                                        <Validation HandlerType="HandlerTypes.FluentValidation">
+                                        <Validation Validator=@ValidateStateCode>
                                             <Field>
                                                 <FieldLabel TextWeight="TextWeight.Bold">State</FieldLabel>
                                                 <Select TValue="int" SelectedValue=@CommandModel!.MailStateProvinceID>
@@ -248,7 +247,7 @@
                                         </Validation>
                                     </Column>
                                     <Column>
-                                        <Validation HandlerType="HandlerTypes.FluentValidation">
+                                        <Validation Validator=@ValidateStateCode>
                                             <Field>
                                                 <FieldLabel TextWeight="TextWeight.Bold">State</FieldLabel>
                                                 <Select TValue="int" SelectedValue=@CommandModel!.DeliveryStateProvinceID>
@@ -290,17 +289,11 @@
                     </Validations>
                     <Field Margin="Margin.Is4.FromTop">
                         <Button Color="Color.Secondary" Type="ButtonType.Button" Clicked="@OnCancel">Cancel editing</Button>
-                        <Button Color="Color.Success" Type="ButtonType.Submit" Clicked="@HandleValidSubmit"
-                    Loading="@Saving">Save
-                            changes</Button>
+                        <Button Color="Color.Success" Type="ButtonType.Submit" Clicked="@HandleSubmit">Save changes</Button>
                     </Field>
                 </CardBody>
                 <CardFooter>
-                    <Snackbar @ref="_snackbar" DefaultInterval=1000 Closed=@( () => NavMgr.NavigateTo(@ReturnUri!) )>
-                        <SnackbarBody>
-                            @_snackBarMessage
-                        </SnackbarBody>
-                    </Snackbar>
+
                 </CardFooter>
             </Card>
         }

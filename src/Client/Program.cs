@@ -3,15 +3,15 @@ using Grpc.Net.Client.Web;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using REA.Accounting.Client;
-using REA.Accounting.Client.Utilities;
-using gRPC.Contracts;
 
 using Blazorise;
 using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
 using FluentValidation;
 using Fluxor;
+
+using REA.Accounting.Client;
+using REA.Accounting.Client.Utilities;
 
 var currentAssembly = typeof(Program).Assembly;
 
@@ -24,6 +24,7 @@ builder.Services
   .AddBootstrap5Providers()
   .AddFontAwesomeIcons()
   .AddFluentValidationHandler();
+builder.Services.AddValidatorsFromAssembly(typeof(App).Assembly);
 
 builder.Services.AddFluxor(options =>
 {
@@ -39,12 +40,9 @@ builder.Services.AddSingleton(services =>
     var navigationManager = services.GetRequiredService<NavigationManager>();
     var backendUrl = navigationManager.BaseUri;
 
-    // Create a channel with a GrpcWebHandler that is addressed to the backend server.
     var httpHandler = new GrpcWebHandler(GrpcWebMode.GrpcWeb, new HttpClientHandler());
 
     return GrpcChannel.ForAddress(backendUrl, new GrpcChannelOptions { HttpHandler = httpHandler });
 });
-
-// builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
 await builder.Build().RunAsync();

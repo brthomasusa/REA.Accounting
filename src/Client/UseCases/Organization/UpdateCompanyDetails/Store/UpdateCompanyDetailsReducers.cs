@@ -1,9 +1,36 @@
+using System.Collections.Generic;
 using Fluxor;
 
 namespace REA.Accounting.Client.UseCases.Organization.UpdateCompanyDetails.Store
 {
     public static class UpdateCompanyDetailsReducers
     {
+        [ReducerMethod]
+        public static UpdateCompanyDetailsState OnLoadingStateCodesSuccessAction
+        (
+            UpdateCompanyDetailsState state,
+            LoadStateCodesSuccessAction action
+        )
+        {
+            return state with
+            {
+                StateCodes = action.StateCodes
+            };
+        }
+
+        [ReducerMethod]
+        public static UpdateCompanyDetailsState OnLoadingStateCodesFailureAction
+        (
+            UpdateCompanyDetailsState state,
+            LoadStateCodesFailureAction action
+        )
+        {
+            return state with
+            {
+                ErrorMessage = action.ErrorMessage
+            };
+        }
+
         [ReducerMethod(typeof(SetLoadingFlagAction))]
         public static UpdateCompanyDetailsState OnLoadingCompanyDetailsAction
         (
@@ -17,6 +44,19 @@ namespace REA.Accounting.Client.UseCases.Organization.UpdateCompanyDetails.Store
         }
 
         [ReducerMethod]
+        public static UpdateCompanyDetailsState OnSetInitializationFlag
+        (
+            UpdateCompanyDetailsState state,
+            SetUpdateInitializeFlagAction action
+        )
+        {
+            return state with
+            {
+                Initialized = action.IsInitialized
+            };
+        }
+
+        [ReducerMethod]
         public static UpdateCompanyDetailsState OnUpdateCompanyDetailsInitializeSuccessAction
         (
             UpdateCompanyDetailsState state,
@@ -25,15 +65,17 @@ namespace REA.Accounting.Client.UseCases.Organization.UpdateCompanyDetails.Store
         {
             return state with
             {
-                CommandModel = action.CommandModel,
-                StateCodes = action.StateCodes,
+                Initialized = true,
                 Loading = false,
-                Initialized = true
+                Submitting = false,
+                Submitted = false,
+                ErrorMessage = string.Empty,
+                CommandModel = action.CommandModel,
             };
         }
 
         [ReducerMethod]
-        public static UpdateCompanyDetailsState OnGetCompanyDetailsFailureMessageAction
+        public static UpdateCompanyDetailsState OnGetCompanyDetailsInitializeFailureMessageAction
         (
             UpdateCompanyDetailsState state,
             UpdateCompanyDetailsInitializeFailureAction action
@@ -44,6 +86,45 @@ namespace REA.Accounting.Client.UseCases.Organization.UpdateCompanyDetails.Store
                 ErrorMessage = action.ErrorMessage,
                 Loading = false,
                 Initialized = false
+            };
+        }
+
+        [ReducerMethod(typeof(UpdateCompanyDetailsSubmitAction))]
+        public static UpdateCompanyDetailsState OnSubmit(UpdateCompanyDetailsState state)
+        {
+            return state with
+            {
+                Submitting = true
+            };
+        }
+
+        [ReducerMethod]
+        public static UpdateCompanyDetailsState OnSubmitSuccess
+        (
+            UpdateCompanyDetailsState state,
+            UpdateCompanyDetailsSubmitSuccessAction _
+        )
+        {
+            return state with
+            {
+                Initialized = false,
+                Submitting = false,
+                Submitted = true,
+            };
+        }
+
+        [ReducerMethod]
+        public static UpdateCompanyDetailsState OnSubmitFailure
+        (
+            UpdateCompanyDetailsState state,
+            UpdateCompanyDetailsSubmitFailureAction action
+        )
+        {
+            return state with
+            {
+                Submitting = false,
+                Submitted = false,
+                ErrorMessage = action.ErrorMessage
             };
         }
     }

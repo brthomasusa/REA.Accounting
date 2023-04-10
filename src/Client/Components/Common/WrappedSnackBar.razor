@@ -1,0 +1,20 @@
+@inherits FluxorComponent
+@using Blazorise.Snackbar
+@inject NavigationManager NavManager
+
+<Snackbar @ref="_snackbar" DefaultInterval=500 Closed=@( () => NavManager.NavigateTo(@ReturnUri!) )>
+    <SnackbarBody>
+        @SnackBarMessage
+    </SnackbarBody>
+</Snackbar>
+
+@code {
+    private Snackbar? _snackbar;
+    [Parameter] public string? SnackBarMessage { get; set; }
+    [Parameter] public string? ReturnUri { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await _snackbar!.Show();
+    }
+}

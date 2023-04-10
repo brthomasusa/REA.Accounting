@@ -1,4 +1,4 @@
 namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Store
 {
-    public record SetInitializeFlagAction();
+    public record SetDisplayInitializeFlagAction(bool IsInitialized);
 }
