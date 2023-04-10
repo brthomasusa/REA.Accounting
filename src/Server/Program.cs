@@ -7,6 +7,7 @@ using NLog.Web;
 using REA.Accounting.Application;
 using REA.Accounting.Application.Behaviors;
 using REA.Accounting.Server.Extensions;
+using REA.Accounting.Server.Interceptors;
 using REA.Accounting.Server.Middleware;
 using REA.Accounting.Server.Contracts;
 using REA.Accounting.Application.HumanResources.CreateEmployee;
@@ -41,7 +42,13 @@ try
     builder.Services.ConfigureDapper(builder.Configuration);
     builder.Services.AddRepositoryServices();
     builder.Services.AddTransient<GlobalExceptionHandlingMiddleware>();
-    builder.Services.AddGrpc();
+
+    builder.Services.AddGrpc(options =>
+    {
+        options.EnableDetailedErrors = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
+        options.Interceptors.Add<TracingInterceptor>();
+    });
+
     builder.Services.AddGrpcReflection();
 
     var app = builder.Build();
@@ -90,5 +97,8 @@ finally
 
 namespace REA.Accounting.Server
 {
-    public partial class Program { }
+    public partial class Program
+    {
+
+    }
 }
