@@ -2,8 +2,6 @@ using Blazorise;
 using Fluxor;
 using Grpc.Net.Client;
 using Mapster;
-
-using gRPC.Contracts;
 using gRPC.Contracts.Organization;
 using REA.Accounting.Client.Utilities;
 using REA.Accounting.Shared.Models.Organization;
@@ -32,7 +30,7 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Stor
             {
                 dispatcher.Dispatch(new SetLoadingFlagAction());
 
-                gRPC.Contracts.ItemRequest request = new() { Id = action.CompanyID };
+                gRPC.Contracts.Shared.ItemRequest request = new() { Id = action.CompanyID };
                 var client = new CompanyContract.CompanyContractClient(_channel);
                 CompanyDetail grpcResponse = await client.GetCompanyDetailByIdAsync(request);
 

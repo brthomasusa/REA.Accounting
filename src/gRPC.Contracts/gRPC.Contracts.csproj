@@ -22,5 +22,5 @@
         <Protobuf Include="Protos/Organization/company.proto" />
         <Protobuf Include="Protos/Organization/grpc_department.proto" />
 	</ItemGroup>
-
+    
 </Project>

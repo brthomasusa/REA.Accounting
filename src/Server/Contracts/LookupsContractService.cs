@@ -1,6 +1,6 @@
 using Empty = Google.Protobuf.WellKnownTypes.Empty;
 using Grpc.Core;
-using gRPC.Contracts;
+using gRPC.Contracts.Lookups;
 using MediatR;
 using REA.Accounting.Application.Lookups.GetStateCodesForAll;
 using REA.Accounting.Application.Lookups.GetStateCodesForUSA;

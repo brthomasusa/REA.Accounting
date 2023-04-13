@@ -4,7 +4,8 @@ using Grpc.Net.Client;
 using Empty = Google.Protobuf.WellKnownTypes.Empty;
 using Mapster;
 
-using gRPC.Contracts;
+using gRPC.Contracts.Lookups;
+using gRPC.Contracts.Shared;
 using gRPC.Contracts.Organization;
 using REA.Accounting.Client.Utilities;
 using REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Store;
@@ -64,7 +65,7 @@ namespace REA.Accounting.Client.UseCases.Organization.UpdateCompanyDetails.Store
                 dispatcher.Dispatch(new SetLoadingFlagAction());
 
                 var client = new CompanyContract.CompanyContractClient(_channel);
-                gRPC.Contracts.ItemRequest request = new() { Id = action.CompanyID };
+                ItemRequest request = new() { Id = action.CompanyID };
                 CompanyCommand grpcResponse = await client.GetCompanyCommandByIdAsync(request);
 
                 CompanyCommandModel model = grpcResponse.Adapt<CompanyCommandModel>();
@@ -111,7 +112,7 @@ namespace REA.Accounting.Client.UseCases.Organization.UpdateCompanyDetails.Store
                 };
 
                 var client = new CompanyContract.CompanyContractClient(_channel);
-                gRPC.Contracts.GenericResponse response = await client.UpdateAsync(cmd);
+                GenericResponse response = await client.UpdateAsync(cmd);
 
                 if (response.Success)
                 {

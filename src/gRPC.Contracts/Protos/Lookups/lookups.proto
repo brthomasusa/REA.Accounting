@@ -1,6 +1,6 @@
 syntax = "proto3";
-package contracts;
-option csharp_namespace = "gRPC.Contracts";
+package contracts.lookups;
+option csharp_namespace = "gRPC.Contracts.Lookups";
 import "google/protobuf/empty.proto";
 
 service LookupsContract {
