@@ -1,0 +1,23 @@
+﻿syntax = "proto3";
+package contracts.shared;
+option csharp_namespace = "gRPC.Contracts.Shared";
+
+message ItemRequest {
+	int32 id = 1;
+}
+
+message CreateResponse {
+	int32 id = 1;
+	string path = 2;
+}
+
+message grpc_PagingParameters {
+	int32 page_number = 1;
+	int32 page_size = 2;
+}
+
+message GenericResponse {
+	bool success = 1;
+}
+
+message Empty {}

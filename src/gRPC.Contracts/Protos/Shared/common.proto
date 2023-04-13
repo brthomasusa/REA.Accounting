@@ -1,5 +1,5 @@
-﻿syntax = "proto3";
-package contracts.shared;
+syntax = "proto3";
+package contracts.common;
 option csharp_namespace = "gRPC.Contracts";
 
 message ItemRequest {
@@ -11,13 +11,11 @@ message CreateResponse {
 	string path = 2;
 }
 
-message PagingParameters {
-	int32 pageNumber = 1;
-	int32 pageSize = 2;
+message grpc_PagingParameters {
+	int32 page_number = 1;
+	int32 page_size = 2;
 }
 
 message GenericResponse {
 	bool success = 1;
 }
-
-message Empty {}

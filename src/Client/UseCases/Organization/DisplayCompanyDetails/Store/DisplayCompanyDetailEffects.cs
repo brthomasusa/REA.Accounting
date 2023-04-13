@@ -4,6 +4,7 @@ using Grpc.Net.Client;
 using Mapster;
 
 using gRPC.Contracts;
+using gRPC.Contracts.Organization;
 using REA.Accounting.Client.Utilities;
 using REA.Accounting.Shared.Models.Organization;
 

@@ -5,6 +5,7 @@ using Empty = Google.Protobuf.WellKnownTypes.Empty;
 using Mapster;
 
 using gRPC.Contracts;
+using gRPC.Contracts.Organization;
 using REA.Accounting.Client.Utilities;
 using REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Store;
 using REA.Accounting.Shared.Models.Organization;

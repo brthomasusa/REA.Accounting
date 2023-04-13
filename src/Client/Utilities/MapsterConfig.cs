@@ -7,6 +7,7 @@ using System.Reflection;
 using REA.Accounting.Shared.Models.Organization;
 using REA.Accounting.Shared.Models.Lookups;
 using gRPC.Contracts;
+using gRPC.Contracts.Organization;
 
 namespace REA.Accounting.Client.Utilities
 {
