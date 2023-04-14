@@ -1,0 +1,5 @@
+protoc --proto_path=Protos/Shared/ --csharp_out=obj/Debug/net6.0/Protos/Shared/ shared.proto
+protoc --proto_path=Protos/Organization/ --csharp_out=obj/Debug/net6.0/Protos/Organization/ company.proto
+protoc --proto_path=Protos/Organization/ --csharp_out=obj/Debug/net6.0/Protos/Organization/ grpc_department.proto
+protoc --proto_path=Protos/Organization/ --csharp_out=obj/Debug/net6.0/Protos/Organization/ grpc_shift.proto
+protoc --proto_path=Protos/Lookups/ --csharp_out=obj/Debug/net6.0/Protos/Lookups/ lookups.proto

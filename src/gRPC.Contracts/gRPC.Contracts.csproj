@@ -21,6 +21,7 @@
         <Protobuf Include="Protos/Lookups/lookups.proto" />
         <Protobuf Include="Protos/Organization/company.proto" />
         <Protobuf Include="Protos/Organization/grpc_department.proto" />
+        <Protobuf Include="Protos/Organization/grpc_shift.proto" />
 	</ItemGroup>
     
 </Project>

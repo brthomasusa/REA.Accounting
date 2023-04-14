@@ -1,0 +1,15 @@
+syntax = "proto3";
+package contracts.organization;
+option csharp_namespace = "gRPC.Contracts.Organization";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "Protos/Shared/shared.proto";
+
+message grpc_shift{
+    int32 id = 1;
+    string name = 2;
+    string group_name = 3;
+    google.protobuf.Timestamp start_time = 4;
+    google.protobuf.Timestamp end_time = 5;
+    google.protobuf.Timestamp modification_date = 6;    
+}
