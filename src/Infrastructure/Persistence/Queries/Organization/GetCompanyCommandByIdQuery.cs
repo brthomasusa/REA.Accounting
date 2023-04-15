@@ -8,8 +8,6 @@ namespace REA.Accounting.Infrastructure.Persistence.Queries.Organization
 {
     public static class GetCompanyCommandByIdQuery
     {
-        private static int Offset(int page, int pageSize) => (page - 1) * pageSize;
-
         public async static Task<Result<GetCompanyCommandByIdResponse>> Query
         (
             int companyId,
