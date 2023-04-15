@@ -1,4 +1,6 @@
 using REA.Accounting.Application.Organization.GetCompany;
+using REA.Accounting.Application.Organization.GetCompanyDepartments;
+using REA.Accounting.Application.Organization.GetCompanyShifts;
 using REA.Accounting.Infrastructure.Persistence.Interfaces;
 using REA.Accounting.Infrastructure.Persistence.Repositories;
 using REA.Accounting.Infrastructure.Persistence.Queries.Organization;
@@ -55,6 +57,36 @@ namespace REA.Accounting.IntegrationTests.QueryHandlers
             Result<GetCompanyCommandByIdResponse> response = await handler.Handle(request, new CancellationToken());
 
             Assert.True(response.IsFailure);
+        }
+
+        [Fact]
+        public async Task Handle_GetCompanyDepartmentsQueryHandler_ShouldSucceed()
+        {
+            PagingParameters pagingParameters = new(1, 10);
+            GetCompanyDepartmentsRequest request = new(PagingParameters: pagingParameters);
+            GetCompanyDepartmentsQueryHandler handler = new(_repository);
+
+            Result<PagedList<GetCompanyDepartmentsResponse>> response = await handler.Handle(request, new CancellationToken());
+
+            Assert.True(response.IsSuccess);
+
+            int departments = response.Value.Count;
+            Assert.Equal(16, departments);
+        }
+
+        [Fact]
+        public async Task Handle_GetCompanyShiftsQueryHandler_ShouldSucceed()
+        {
+            PagingParameters pagingParameters = new(1, 10);
+            GetCompanyShiftsRequest request = new(PagingParameters: pagingParameters);
+            GetCompanyShiftsQueryHandler handler = new(_repository);
+
+            Result<PagedList<GetCompanyShiftsResponse>> response = await handler.Handle(request, new CancellationToken());
+
+            Assert.True(response.IsSuccess);
+
+            int shifts = response.Value.Count;
+            Assert.Equal(3, shifts);
         }
     }
 }

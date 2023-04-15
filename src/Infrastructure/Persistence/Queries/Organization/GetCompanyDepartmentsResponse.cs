@@ -1,6 +1,6 @@
 namespace REA.Accounting.Infrastructure.Persistence.Queries.Organization
 {
-    public class GetCompanyDepartmentsResponse
+    public sealed class GetCompanyDepartmentsResponse
     {
         public int DepartmentID { get; set; }
         public string? Name { get; set; }
