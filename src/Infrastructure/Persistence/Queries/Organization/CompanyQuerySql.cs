@@ -19,5 +19,17 @@ namespace REA.Accounting.Infrastructure.Persistence.Queries.Organization
             DeliveryAddressLine1, DeliveryAddressLine2, DeliveryCity, DeliveryStateProvinceID, 
             DeliveryPostalCode, Telephone, Fax   
         FROM Person.Company company";
+
+        public const string GetCompanyDepartments =
+        @"SELECT 
+            DepartmentID, [Name], GroupName, ModifiedDate 
+        FROM HumanResources.Department   
+        ORDER BY [Name]";
+
+        public const string GetCompanyShifts =
+        @"SELECT 
+            ShiftID, Name, StartTime, EndTime, ModifiedDate 
+        FROM HumanResources.Shift   
+        ORDER BY StartTime";
     }
 }

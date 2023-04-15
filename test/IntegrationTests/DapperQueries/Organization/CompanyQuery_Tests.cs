@@ -43,5 +43,29 @@ namespace REA.Accounting.IntegrationTests.DapperQueries.Organization
 
             Assert.True(result.IsFailure);
         }
+
+        [Fact]
+        public async Task Query_GetCompanyDepartmentsQuery_ShouldSucceed()
+        {
+            PagingParameters pagingParameters = new(1, 10);
+            Result<PagedList<GetCompanyDepartmentsResponse>> result =
+                await GetCompanyDepartmentsQuery.Query(pagingParameters, _dapperCtx, new NullLogger<ReadRepositoryManager>());
+
+            Assert.True(result.IsSuccess);
+            int departments = result.Value.Count;
+            Assert.Equal(16, departments);
+        }
+
+        [Fact]
+        public async Task Query_GetCompanyShiftsQuery_ShouldSucceed()
+        {
+            PagingParameters pagingParameters = new(1, 10);
+            Result<PagedList<GetCompanyShiftsResponse>> result =
+                await GetCompanyShiftsQuery.Query(pagingParameters, _dapperCtx, new NullLogger<ReadRepositoryManager>());
+
+            Assert.True(result.IsSuccess);
+            int shifts = result.Value.Count;
+            Assert.Equal(3, shifts);
+        }
     }
 }

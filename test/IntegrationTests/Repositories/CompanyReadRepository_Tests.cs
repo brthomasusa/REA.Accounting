@@ -51,5 +51,33 @@ namespace REA.Accounting.IntegrationTests.Repositories
 
             Assert.True(result.IsFailure);
         }
+
+        [Fact]
+        public async Task GetCompanyDepartments_CompanyReadRepository_ShouldSucceed()
+        {
+            ReadRepositoryManager readRepository = new(_dapperCtx, new NullLogger<ReadRepositoryManager>());
+            PagingParameters pagingParameters = new(1, 10);
+
+            Result<PagedList<GetCompanyDepartmentsResponse>> result =
+                await readRepository.CompanyReadRepository.GetCompanyDepartments(pagingParameters);
+
+            Assert.True(result.IsSuccess);
+            int departments = result.Value.Count;
+            Assert.Equal(16, departments);
+        }
+
+        [Fact]
+        public async Task GetCompanyShifts_CompanyReadRepository_ShouldSucceed()
+        {
+            ReadRepositoryManager readRepository = new(_dapperCtx, new NullLogger<ReadRepositoryManager>());
+            PagingParameters pagingParameters = new(1, 10);
+
+            Result<PagedList<GetCompanyShiftsResponse>> result =
+                await readRepository.CompanyReadRepository.GetCompanyShifts(pagingParameters);
+
+            Assert.True(result.IsSuccess);
+            int shifts = result.Value.Count;
+            Assert.Equal(3, shifts);
+        }
     }
 }

@@ -21,5 +21,11 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.Organization
 
         public async Task<Result<GetCompanyCommandByIdResponse>> GetCompanyCommandById(int companyId)
             => await GetCompanyCommandByIdQuery.Query(companyId, _context, _logger);
+
+        public async Task<Result<PagedList<GetCompanyDepartmentsResponse>>> GetCompanyDepartments(PagingParameters pagingParameters)
+            => await GetCompanyDepartmentsQuery.Query(pagingParameters, _context, _logger);
+
+        public async Task<Result<PagedList<GetCompanyShiftsResponse>>> GetCompanyShifts(PagingParameters pagingParameters)
+            => await GetCompanyShiftsQuery.Query(pagingParameters, _context, _logger);
     }
 }
