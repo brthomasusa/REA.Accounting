@@ -3,11 +3,14 @@ package contracts.organization;
 option csharp_namespace = "gRPC.Contracts.Organization";
 import "Protos/Shared/shared.proto";
 import "Protos/Organization/grpc_department.proto";
+import "Protos/Organization/grpc_shift.proto";
 
 service CompanyContract {
 	rpc Update(CompanyCommand) returns (contracts.shared.GenericResponse);
 	rpc GetCompanyCommandById(contracts.shared.ItemRequest) returns (CompanyCommand);
     rpc GetCompanyDetailById(contracts.shared.ItemRequest) returns (CompanyDetail);
+    rpc GetCompanyDepartments(contracts.shared.grpc_PagingParameters) returns (grpc_GetCompanyDepartmentsResponse);
+    rpc GetCompanyShifts(contracts.shared.grpc_PagingParameters) returns (grpc_GetCompanyShiftsResponse);
 }
 
 message CompanyCommand {

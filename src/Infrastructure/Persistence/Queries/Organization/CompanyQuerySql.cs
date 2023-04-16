@@ -28,8 +28,11 @@ namespace REA.Accounting.Infrastructure.Persistence.Queries.Organization
 
         public const string GetCompanyShifts =
         @"SELECT 
-            ShiftID, Name, StartTime, EndTime, ModifiedDate 
-        FROM HumanResources.Shift   
-        ORDER BY StartTime";
+            ShiftID, 
+            Name, 
+            CONVERT(nvarchar(8), StartTime) AS StartTime, 
+            CONVERT(nvarchar(8), EndTime) AS EndTime, 
+            ModifiedDate  
+        FROM HumanResources.Shift";
     }
 }

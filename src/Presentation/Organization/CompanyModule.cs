@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Routing;
 using System.Reflection;
 
 using REA.Accounting.Application.Organization.GetCompany;
-using REA.Accounting.Application.Organization.UpdateCompany;
 using REA.Accounting.Application.Organization.GetCompanyDepartments;
 using REA.Accounting.Application.Organization.GetCompanyShifts;
+using REA.Accounting.Application.Organization.UpdateCompany;
 using REA.Accounting.Infrastructure.Persistence.Queries.Organization;
 using REA.Accounting.SharedKernel.Utilities;
 
