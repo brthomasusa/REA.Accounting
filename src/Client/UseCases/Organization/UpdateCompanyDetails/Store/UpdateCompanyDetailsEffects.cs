@@ -2,8 +2,8 @@ using Blazorise;
 using Fluxor;
 using Grpc.Net.Client;
 using Empty = Google.Protobuf.WellKnownTypes.Empty;
-using Mapster;
-
+// using Mapster;
+using MapsterMapper;
 using gRPC.Contracts.Lookups;
 using gRPC.Contracts.Shared;
 using gRPC.Contracts.Organization;
@@ -18,13 +18,15 @@ namespace REA.Accounting.Client.UseCases.Organization.UpdateCompanyDetails.Store
     {
         private readonly GrpcChannel? _channel;
         private readonly IMessageService? _messageService;
+        private readonly IMapper _mapper;
 
         public UpdateCompanyDetailsEffects
         (
             GrpcChannel channel,
-            IMessageService messageSvc
+            IMessageService messageSvc,
+            IMapper mapper
         )
-            => (_channel, _messageService) = (channel, messageSvc);
+            => (_channel, _messageService, _mapper) = (channel, messageSvc, mapper);
 
 
         [EffectMethod(typeof(LoadStateCodesAction))]
@@ -40,9 +42,7 @@ namespace REA.Accounting.Client.UseCases.Organization.UpdateCompanyDetails.Store
                 while (await stream.MoveNext(default))
                 {
                     StateProvinceCode code = (StateProvinceCode)stream.Current;
-                    stateCodes.Add(
-                        new StateCode { StateProvinceID = code.Id, StateProvinceCode = code.StateCode }
-                    );
+                    stateCodes.Add(_mapper.Map<StateCode>(code));
                 }
 
                 dispatcher.Dispatch(new LoadStateCodesSuccessAction(stateCodes));
@@ -68,7 +68,7 @@ namespace REA.Accounting.Client.UseCases.Organization.UpdateCompanyDetails.Store
                 ItemRequest request = new() { Id = action.CompanyID };
                 CompanyCommand grpcResponse = await client.GetCompanyCommandByIdAsync(request);
 
-                CompanyCommandModel model = grpcResponse.Adapt<CompanyCommandModel>();
+                CompanyCommandModel model = _mapper.Map<CompanyCommandModel>(grpcResponse);
 
                 dispatcher.Dispatch(new UpdateCompanyDetailsInitializeSuccessAction(model));
             }
@@ -88,30 +88,9 @@ namespace REA.Accounting.Client.UseCases.Organization.UpdateCompanyDetails.Store
         {
             try
             {
-                // CompanyCommand cmd = action.CommandModel.Adapt<CompanyCommand>();
-
-                CompanyCommand cmd = new()
-                {
-                    Id = action.CommandModel.Id,
-                    CompanyName = action.CommandModel.CompanyName,
-                    LegalName = action.CommandModel.LegalName,
-                    Ein = action.CommandModel.EIN,
-                    CompanyWebSite = action.CommandModel.CompanyWebSite,
-                    MailAddressLine1 = action.CommandModel.MailAddressLine1,
-                    MailAddressLine2 = action.CommandModel.MailAddressLine2,
-                    MailCity = action.CommandModel.MailCity,
-                    MailStateProvinceID = action.CommandModel.MailStateProvinceID,
-                    MailPostalCode = action.CommandModel.MailPostalCode,
-                    DeliveryAddressLine1 = action.CommandModel.DeliveryAddressLine1,
-                    DeliveryAddressLine2 = action.CommandModel.DeliveryAddressLine2,
-                    DeliveryCity = action.CommandModel.DeliveryCity,
-                    DeliveryStateProvinceID = action.CommandModel.DeliveryStateProvinceID,
-                    DeliveryPostalCode = action.CommandModel.DeliveryPostalCode,
-                    Telephone = action.CommandModel.Telephone,
-                    Fax = action.CommandModel.Fax
-                };
-
                 var client = new CompanyContract.CompanyContractClient(_channel);
+
+                CompanyCommand cmd = _mapper.Map<CompanyCommand>(action.CommandModel);
                 GenericResponse response = await client.UpdateAsync(cmd);
 
                 if (response.Success)

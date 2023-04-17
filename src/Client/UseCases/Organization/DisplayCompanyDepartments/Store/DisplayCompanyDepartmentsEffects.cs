@@ -1,7 +1,7 @@
 using Blazorise;
 using Fluxor;
 using Grpc.Net.Client;
-using Mapster;
+using MapsterMapper;
 using gRPC.Contracts.Organization;
 using REA.Accounting.Client.Utilities;
 using REA.Accounting.Shared.Models.Organization;
@@ -12,13 +12,15 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDepartments.
     {
         private readonly GrpcChannel? _channel;
         private readonly IMessageService? _messageService;
+        private readonly IMapper _mapper;
 
         public DisplayCompanyDepartmentsEffects
         (
             GrpcChannel channel,
-            IMessageService messageSvc
+            IMessageService messageSvc,
+            IMapper mapper
         )
-            => (_channel, _messageService) = (channel, messageSvc);
+            => (_channel, _messageService, _mapper) = (channel, messageSvc, mapper);
 
         public override async Task HandleAsync
         (
@@ -41,7 +43,7 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDepartments.
 
                 List<DepartmentReadModel> departments = new();
                 grpcResponse.GrpcDepartments.ToList()
-                                            .ForEach(grpcDept => departments.Add(grpcDept.Adapt<DepartmentReadModel>()));
+                                            .ForEach(grpcDept => departments.Add(_mapper.Map<DepartmentReadModel>(grpcDept)));  //grpcDept.Adapt<DepartmentReadModel>()
 
                 dispatcher.Dispatch(new GetDepartmentsSuccessAction(departments));
             }

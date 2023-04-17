@@ -36,8 +36,8 @@ namespace REA.Accounting.Client.Utilities.Mapping
         public static IServiceCollection AddFluentValidation(this IServiceCollection services)
         {
             services
-              .AddValidatorsFromAssembly(typeof(App)
-              .Assembly).AddFluentValidationHandler();
+              .AddValidatorsFromAssembly(typeof(App).Assembly)
+              .AddFluentValidationHandler();
 
             return services;
         }

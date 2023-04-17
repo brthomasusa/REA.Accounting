@@ -1,7 +1,7 @@
 using Blazorise;
 using Fluxor;
 using Grpc.Net.Client;
-using Mapster;
+using MapsterMapper;
 using gRPC.Contracts.Organization;
 using REA.Accounting.Client.Utilities;
 using REA.Accounting.Shared.Models.Organization;
@@ -12,13 +12,15 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Stor
     {
         private readonly GrpcChannel? _channel;
         private readonly IMessageService? _messageService;
+        private readonly IMapper _mapper;
 
         public DisplayCompanyDetailEffects
         (
             GrpcChannel channel,
-            IMessageService messageSvc
+            IMessageService messageSvc,
+            IMapper mapper
         )
-            => (_channel, _messageService) = (channel, messageSvc);
+            => (_channel, _messageService, _mapper) = (channel, messageSvc, mapper);
 
         public override async Task HandleAsync
         (
@@ -34,7 +36,7 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Stor
                 var client = new CompanyContract.CompanyContractClient(_channel);
                 CompanyDetail grpcResponse = await client.GetCompanyDetailByIdAsync(request);
 
-                CompanyReadModel model = grpcResponse.Adapt<CompanyReadModel>();
+                CompanyReadModel model = _mapper.Map<CompanyReadModel>(grpcResponse);
 
                 dispatcher.Dispatch(new DisplayCompanyDetailsSuccessAction(model));
             }
