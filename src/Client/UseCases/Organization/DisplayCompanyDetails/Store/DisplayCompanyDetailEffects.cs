@@ -34,7 +34,7 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Stor
                 var client = new CompanyContract.CompanyContractClient(_channel);
                 CompanyDetail grpcResponse = await client.GetCompanyDetailByIdAsync(request);
 
-                CompanyDetailModel model = grpcResponse.Adapt<CompanyDetailModel>();
+                CompanyReadModel model = grpcResponse.Adapt<CompanyReadModel>();
 
                 dispatcher.Dispatch(new DisplayCompanyDetailsSuccessAction(model));
             }

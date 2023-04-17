@@ -8,6 +8,6 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Stor
         public bool Loading { get; init; }
         public string? ErrorMessage { get; init; }
         public int CompanyID { get; init; }
-        public CompanyDetailModel? DetailsModel { get; init; }
+        public CompanyReadModel? DetailsModel { get; init; }
     }
 }

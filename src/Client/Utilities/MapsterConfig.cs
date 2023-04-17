@@ -16,11 +16,10 @@ namespace REA.Accounting.Client.Utilities
         public static void RegisterMapsterConfiguration(this IServiceCollection _)
         {
             TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetExecutingAssembly());
+            TypeAdapterConfig.GlobalSettings.Default.NameMatchingStrategy(NameMatchingStrategy.IgnoreCase);
 
-            TypeAdapterConfig<CompanyCommand, CompanyCommandModel>.NewConfig().NameMatchingStrategy(NameMatchingStrategy.IgnoreCase);
-            TypeAdapterConfig<CompanyDetail, CompanyDetailModel>.NewConfig().NameMatchingStrategy(NameMatchingStrategy.IgnoreCase);
-
-            // TypeAdapterConfig.GlobalSettings.Default.NameMatchingStrategy(NameMatchingStrategy.IgnoreCase);
+            // TypeAdapterConfig<CompanyCommand, CompanyCommandModel>.NewConfig().NameMatchingStrategy(NameMatchingStrategy.IgnoreCase);
+            // TypeAdapterConfig<CompanyDetail, CompanyReadModel>.NewConfig().NameMatchingStrategy(NameMatchingStrategy.IgnoreCase);        
             // TypeAdapterConfig.GlobalSettings.Default.NameMatchingStrategy(NameMatchingStrategy.Flexible);            
         }
     }

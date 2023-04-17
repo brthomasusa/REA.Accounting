@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Fluxor;
 using REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Store;
-using REA.Accounting.Client.Utilities;
 using REA.Accounting.Shared.Models.Organization;
 
 namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Pages
@@ -13,7 +12,7 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Page
         [Inject] private IDispatcher? Dispatcher { get; set; }
         [Inject] private NavigationManager? NavManager { get; set; }
 
-        private CompanyDetailModel? DetailsModel => DisplayCompanyDetailState!.Value.DetailsModel;
+        private CompanyReadModel? DetailsModel => DisplayCompanyDetailState!.Value.DetailsModel;
         private bool Loading => DisplayCompanyDetailState!.Value.Loading;
         private string selectedTab = "generalInfo";
 

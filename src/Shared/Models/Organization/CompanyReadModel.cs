@@ -1,6 +1,6 @@
 namespace REA.Accounting.Shared.Models.Organization
 {
-    public class CompanyDetailModel
+    public class CompanyReadModel
     {
         public int Id { get; set; }
         public string CompanyName { get; set; } = string.Empty;
