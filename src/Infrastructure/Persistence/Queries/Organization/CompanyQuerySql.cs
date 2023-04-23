@@ -33,6 +33,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Queries.Organization
             CONVERT(nvarchar(8), StartTime) AS StartTime, 
             CONVERT(nvarchar(8), EndTime) AS EndTime, 
             ModifiedDate  
-        FROM HumanResources.Shift";
+        FROM HumanResources.Shift 
+        ORDER BY ShiftID";
     }
 }

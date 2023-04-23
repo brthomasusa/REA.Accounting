@@ -24,7 +24,7 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDetails.Page
             }
 
             // ActionSubscriber!.SubscribeToAction<UpdateCompanyDetailsSubmitSuccessAction>(this, ResetUpdateCompanyDetailsStoreToInitialState);
-            Console.WriteLine($"DetailModel: {DisplayCompanyDetailState!.Value.DetailsModel}");
+
             base.OnInitialized();
         }
 

@@ -13,6 +13,7 @@
     <PackageReference Include="FluentValidation" Version="11.1.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.1.0" />
     <PackageReference Include="Blazorise.FluentValidation" Version="1.0.4" />
+    
     <PackageReference Include="Blazorise" Version="1.0.6" />
     <PackageReference Include="Blazorise.Bootstrap5" Version="1.0.6" />
     <PackageReference Include="Blazorise.DataGrid" Version="1.0.6" />

@@ -19,7 +19,8 @@ namespace REA.Accounting.Infrastructure.Persistence.Queries.Organization
         {
             try
             {
-                const string sql = CompanyQuerySql.GetCompanyShifts;
+                const string sql = CompanyQuerySql.GetCompanyShifts +
+                    " OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY";
 
                 var parameters = new DynamicParameters();
                 parameters.Add("Offset", Offset(pagingParameters.PageNumber, pagingParameters.PageSize), DbType.Int32);
@@ -28,7 +29,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Queries.Organization
                 using var connection = ctx.CreateConnection();
 
                 var items = await connection.QueryAsync<GetCompanyShiftsResponse>(sql, parameters);
-                int count = items.Count();
+                int count = connection.ExecuteScalar<int>("SELECT COUNT(*) FROM HumanResources.Shift");
 
                 var pagedList = PagedList<GetCompanyShiftsResponse>.CreatePagedList(
                         items.ToList(), count, pagingParameters.PageNumber, pagingParameters.PageSize

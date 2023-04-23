@@ -19,7 +19,8 @@ namespace REA.Accounting.Infrastructure.Persistence.Queries.Organization
         {
             try
             {
-                const string sql = CompanyQuerySql.GetCompanyDepartments;
+                const string sql = CompanyQuerySql.GetCompanyDepartments +
+                    " OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY";
 
                 var parameters = new DynamicParameters();
                 parameters.Add("Offset", Offset(pagingParameters.PageNumber, pagingParameters.PageSize), DbType.Int32);
@@ -28,7 +29,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Queries.Organization
                 using var connection = ctx.CreateConnection();
 
                 var items = await connection.QueryAsync<GetCompanyDepartmentsResponse>(sql, parameters);
-                int count = items.Count();
+                int count = connection.ExecuteScalar<int>("SELECT COUNT(*) FROM HumanResources.Department");
 
                 var pagedList = PagedList<GetCompanyDepartmentsResponse>.CreatePagedList(
                         items.ToList(), count, pagingParameters.PageNumber, pagingParameters.PageSize

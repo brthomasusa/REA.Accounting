@@ -86,13 +86,13 @@ namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
             List<GetCompanyDepartmentsResponse> response = await _client
                 .GetFromJsonAsync<List<GetCompanyDepartmentsResponse>>(QueryHelpers.AddQueryString($"{_urlRoot}companies/departments", queryParams));
 
-            Assert.Equal(16, response.Count);
+            Assert.Equal(10, response.Count);
         }
 
         [Fact]
         public async Task Company_GetCompanyShifts_ShouldSucceed()
         {
-            var pagingParams = new { PageNumber = 1, PageSize = 10 };
+            var pagingParams = new { PageNumber = 1, PageSize = 2 };
 
             var queryParams = new Dictionary<string, string?>
             {
@@ -103,7 +103,7 @@ namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
             List<GetCompanyShiftsResponse> response = await _client
                 .GetFromJsonAsync<List<GetCompanyShiftsResponse>>(QueryHelpers.AddQueryString($"{_urlRoot}companies/shifts", queryParams));
 
-            Assert.Equal(3, response.Count);
+            Assert.Equal(2, response.Count);
         }
     }
 }

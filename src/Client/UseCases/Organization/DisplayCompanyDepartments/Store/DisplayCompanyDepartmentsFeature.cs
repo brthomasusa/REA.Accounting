@@ -14,8 +14,7 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDepartments.
                 Loading = false,
                 ErrorMessage = string.Empty,
                 DepartmentList = new(),
-                PageNumber = 1,
-                PageSize = 10
+                MetaData = new() { CurrentPage = 1, PageSize = 15 }
             };
     }
 }
