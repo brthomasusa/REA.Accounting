@@ -10,6 +10,7 @@ service CompanyContract {
 	rpc GetCompanyCommandById(contracts.shared.ItemRequest) returns (CompanyCommand);
     rpc GetCompanyDetailById(contracts.shared.ItemRequest) returns (CompanyDetail);
     rpc GetCompanyDepartments(contracts.shared.grpc_PagingParameters) returns (grpc_GetCompanyDepartmentsResponse);
+    rpc GetCompanyDepartmentsBySearchTerm(contracts.shared.grpc_StringSearchTerm) returns (grpc_GetCompanyDepartmentsResponse);
     rpc GetCompanyShifts(contracts.shared.grpc_PagingParameters) returns (grpc_GetCompanyShiftsResponse);
 }
 

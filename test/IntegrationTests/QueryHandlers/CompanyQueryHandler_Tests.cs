@@ -75,6 +75,21 @@ namespace REA.Accounting.IntegrationTests.QueryHandlers
         }
 
         [Fact]
+        public async Task Handle_GetCompanyDepartmentsSearchByNameQueryHandler_ShouldSucceed()
+        {
+            PagingParameters pagingParameters = new(1, 10);
+            GetCompanyDepartmentsSearchByNameRequest request = new(DepartmentName: "Pro", PagingParameters: pagingParameters);
+            GetCompanyDepartmentsSearchByNameQueryHandler handler = new(_repository);
+
+            Result<PagedList<GetCompanyDepartmentsResponse>> response = await handler.Handle(request, new CancellationToken());
+
+            Assert.True(response.IsSuccess);
+
+            int departments = response.Value.Count;
+            Assert.Equal(2, departments);
+        }
+
+        [Fact]
         public async Task Handle_GetCompanyShiftsQueryHandler_ShouldSucceed()
         {
             PagingParameters pagingParameters = new(1, 10);

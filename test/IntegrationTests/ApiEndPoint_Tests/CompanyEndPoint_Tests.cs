@@ -73,6 +73,25 @@ namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
         }
 
         [Fact]
+        public async Task Company_GetCompanyDepartmentsSearchByName_ShouldSucceed()
+        {
+            var pagingParams = new { PageNumber = 1, PageSize = 10 };
+            const string deptName = "Pro";
+
+            var queryParams = new Dictionary<string, string?>
+            {
+                ["pageNumber"] = pagingParams.PageNumber.ToString(),
+                ["pageSize"] = pagingParams.PageSize.ToString(),
+                ["departmentName"] = deptName
+            };
+
+            List<GetCompanyDepartmentsResponse> response = await _client
+                .GetFromJsonAsync<List<GetCompanyDepartmentsResponse>>(QueryHelpers.AddQueryString($"{_urlRoot}companies/departments/filterbyname", queryParams));
+
+            Assert.Equal(2, response.Count);
+        }
+
+        [Fact]
         public async Task Company_GetCompanyDepartments_ShouldSucceed()
         {
             var pagingParams = new { PageNumber = 1, PageSize = 10 };

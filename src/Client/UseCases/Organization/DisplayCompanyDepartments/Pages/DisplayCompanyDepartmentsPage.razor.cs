@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Components;
-using Blazorise.DataGrid;
 using Fluxor;
 using REA.Accounting.Client.UseCases.Organization.DisplayCompanyDepartments.Store;
 using REA.Accounting.Client.Utilities;
@@ -13,8 +12,6 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDepartments.
         [Inject] private IDispatcher? Dispatcher { get; set; }
         private List<DepartmentReadModel>? DepartmentList => DisplayCompanyDepartmentsState!.Value.DepartmentList;
         private bool Loading => DisplayCompanyDepartmentsState!.Value.Loading;
-        private int TotalCount;
-        private int PageSize => DisplayCompanyDepartmentsState!.Value.MetaData!.PageSize;
 
         protected override void OnInitialized()
         {
@@ -30,22 +27,19 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDepartments.
             base.OnInitialized();
         }
 
-        private void OnReadData(DataGridReadDataEventArgs<DepartmentReadModel> e)
+        private async Task OnSearchChanged(string searchTerm)
         {
-            if (e.ReadDataMode is DataGridReadDataMode.Paging)
-            {
-                if (!DisplayCompanyDepartmentsState!.Value.Initialized)
-                    return;
+            // await SearchEmployeesByName
+            //     (
+            //         searchTerm,
+            //         _employeeState!.Value.EmployeeListFilter,
+            //         _employeeState!.Value.PageNumber,
+            //         _employeeState!.Value.PageSize
+            //     );
 
-                Dispatcher!.Dispatch(new GetNextPageOfDataAction(e.Page, e.PageSize));
-                TotalCount = DisplayCompanyDepartmentsState!.Value.MetaData!.TotalCount;
-                StateHasChanged();
-            }
+            await Task.CompletedTask;
         }
 
-        private void OnSortChanged(DataGridSortChangedEventArgs e)
-        {
-            Console.WriteLine($"DataGridSortChangedEventArgs: {e.ToJson()}");
-        }
+
     }
 }

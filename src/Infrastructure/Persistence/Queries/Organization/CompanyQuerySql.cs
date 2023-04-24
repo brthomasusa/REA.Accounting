@@ -26,14 +26,19 @@ namespace REA.Accounting.Infrastructure.Persistence.Queries.Organization
         FROM HumanResources.Department   
         ORDER BY [Name]";
 
-        public const string GetCompanyShifts =
+        public const string GetCompanyDepartmentsByName =
         @"SELECT 
-            ShiftID, 
-            Name, 
-            CONVERT(nvarchar(8), StartTime) AS StartTime, 
-            CONVERT(nvarchar(8), EndTime) AS EndTime, 
-            ModifiedDate  
-        FROM HumanResources.Shift 
+            DepartmentID, [Name], GroupName, ModifiedDate 
+        FROM HumanResources.Department";
+
+        public const string GetCompanyShifts =
+        @"SELECT
+            ShiftID,
+            Name,
+            CONVERT(nvarchar(8), StartTime) AS StartTime,
+            CONVERT(nvarchar(8), EndTime) AS EndTime,
+            ModifiedDate
+        FROM HumanResources.Shift
         ORDER BY ShiftID";
     }
 }

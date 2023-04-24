@@ -39,7 +39,7 @@ namespace REA.Accounting.Presentation.Organization
                 return Results.Problem(result.Error);
             });
 
-            app.MapGet("api/companies/departments", async (QueryParameters parameters, ISender sender) =>
+            app.MapGet("api/companies/departments", async (QueryParameters.PaginationParameters parameters, ISender sender) =>
             {
                 PagingParameters pagingParameters = new(parameters.PageNumber, parameters.PageSize);
                 GetCompanyDepartmentsRequest request = new(PagingParameters: pagingParameters);
@@ -51,7 +51,20 @@ namespace REA.Accounting.Presentation.Organization
                 return Results.Problem(result.Error);
             });
 
-            app.MapGet("api/companies/shifts", async (QueryParameters parameters, ISender sender) =>
+            app.MapGet("api/companies/departments/filterbyname", async (QueryParameters.FilterDepartmentByNameParameters parameters, ISender sender) =>
+            {
+                PagingParameters pagingParameters = new(parameters.PageNumber, parameters.PageSize);
+                GetCompanyDepartmentsSearchByNameRequest request = new(DepartmentName: parameters.DepartmentName!, PagingParameters: pagingParameters);
+
+                Result<PagedList<GetCompanyDepartmentsResponse>> result = await sender.Send(request);
+
+                if (result.IsSuccess)
+                    return Results.Ok(result.Value);
+
+                return Results.Problem(result.Error);
+            });
+
+            app.MapGet("api/companies/shifts", async (QueryParameters.PaginationParameters parameters, ISender sender) =>
             {
                 PagingParameters pagingParameters = new(parameters.PageNumber, parameters.PageSize);
                 GetCompanyShiftsRequest request = new(PagingParameters: pagingParameters);

@@ -1,5 +1,6 @@
 @page "/UseCases/Organization/DisplayCompanyDepartments/Pages/DisplayCompanyDepartmentsPage"
 @inherits FluxorComponent
+@using REA.Accounting.Client.Components.Common;
 @using REA.Accounting.Shared.Models.Organization;
 
 <PageTitle>Company Departments</PageTitle>
@@ -20,45 +21,19 @@
     }
     else
     {
-        <DataGrid TItem="DepartmentReadModel" Data="@DepartmentList" Striped="true" Hoverable="true" Responsive
-        PageSize="@PageSize" TotalItems="@TotalCount" PagerOptions="new(){ ButtonSize=Size.Small }" ShowPager
-        ReadData="@OnReadData" Narrow Sortable SortChanged="@OnSortChanged">
+        <Row>
+            <Column>
+                <div class="col-1 align-self-center justify-content-start">
+                    @* <CreateResourceLink DoPreNavigationProcessing=@LoadEmployeeLookups /> *@
+                </div>
+                <div class="col-5 align-self-center justify-content-start">
+                    <SingleFieldGridSearch PlaceHolderText="Department Name"
+                    OnSearchTermChangedEventHandler=@OnSearchChanged />
+                </div>
+            </Column>
+        </Row>
+        <Row>
 
-
-        <DataGridColumns>
-            <DataGridCommandColumn />
-            <DataGridColumn Field="@nameof(DepartmentReadModel.DepartmentID)" Caption="Id" Sortable="false" />
-            <DataGridColumn Field="@nameof(DepartmentReadModel.Name)" Caption="Name" />
-            <DataGridColumn Field="@nameof(DepartmentReadModel.GroupName)" Caption="Group Name" />
-            <DataGridColumn Field="@nameof(DepartmentReadModel.ModifiedDate)" Caption="Date Modified"
-                Sortable="false" />
-        </DataGridColumns>
-        <NextPageButtonTemplate>
-            <Blazorise.Icon Name="IconName.StepForward" TextColor="TextColor.Primary" />
-        </NextPageButtonTemplate>
-        <PreviousPageButtonTemplate>
-            <Blazorise.Icon Name="IconName.StepBackward" TextColor="TextColor.Primary" />
-        </PreviousPageButtonTemplate>
-        <LastPageButtonTemplate>
-            <Blazorise.Icon Name="IconName.Forward" TextColor="TextColor.Primary" />
-        </LastPageButtonTemplate>
-        <FirstPageButtonTemplate>
-            <Blazorise.Icon Name="IconName.Backward" TextColor="TextColor.Primary" />
-        </FirstPageButtonTemplate>
-        <ItemsPerPageTemplate></ItemsPerPageTemplate>
-        <EmptyTemplate>
-            <div class="box">
-                No records were found.
-            </div>
-        </EmptyTemplate>
-        <LoadingTemplate>
-            <div class="box">
-                <progress class="progress is-small is-primary" max="100" />
-            </div>
-        </LoadingTemplate>
-        </DataGrid>
-
-        <br />
-        @* <button class="btn btn-outline-info" @onclick="LoadForecasts">Refresh Forecasts</button> *@
+        </Row>
     }
     </ErrorBoundary>

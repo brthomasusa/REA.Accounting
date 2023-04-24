@@ -6,6 +6,12 @@ message ItemRequest {
 	int32 id = 1;
 }
 
+message grpc_StringSearchTerm {
+	string criteria = 1;
+	int32 page_number = 2;
+	int32 page_size = 3;    
+}
+
 message CreateResponse {
 	int32 id = 1;
 	string path = 2;

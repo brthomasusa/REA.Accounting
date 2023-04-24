@@ -57,6 +57,19 @@ namespace REA.Accounting.IntegrationTests.DapperQueries.Organization
         }
 
         [Fact]
+        public async Task Query_GetCompanyDepartmentsByNameQuery_ShouldSucceed()
+        {
+            const string deptName = "Pr";
+            PagingParameters pagingParameters = new(1, 10);
+            Result<PagedList<GetCompanyDepartmentsResponse>> result =
+                await GetCompanyDepartmentsByNameQuery.Query(deptName, pagingParameters, _dapperCtx, new NullLogger<ReadRepositoryManager>());
+
+            Assert.True(result.IsSuccess);
+            int departments = result.Value.Count;
+            Assert.Equal(2, departments);
+        }
+
+        [Fact]
         public async Task Query_GetCompanyShiftsQuery_ShouldSucceed()
         {
             PagingParameters pagingParameters = new(1, 10);

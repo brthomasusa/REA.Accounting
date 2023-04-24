@@ -67,6 +67,21 @@ namespace REA.Accounting.IntegrationTests.Repositories
         }
 
         [Fact]
+        public async Task GetCompanyDepartmentsSearchByName_CompanyReadRepository_ShouldSucceed()
+        {
+            ReadRepositoryManager readRepository = new(_dapperCtx, new NullLogger<ReadRepositoryManager>());
+            const string deptName = "Pr";
+            PagingParameters pagingParameters = new(1, 10);
+
+            Result<PagedList<GetCompanyDepartmentsResponse>> result =
+                await readRepository.CompanyReadRepository.GetCompanyDepartmentsSearchByName(deptName, pagingParameters);
+
+            Assert.True(result.IsSuccess);
+            int departments = result.Value.Count;
+            Assert.Equal(2, departments);
+        }
+
+        [Fact]
         public async Task GetCompanyShifts_CompanyReadRepository_ShouldSucceed()
         {
             ReadRepositoryManager readRepository = new(_dapperCtx, new NullLogger<ReadRepositoryManager>());

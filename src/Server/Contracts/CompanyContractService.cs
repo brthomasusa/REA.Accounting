@@ -93,6 +93,29 @@ namespace REA.Accounting.Server.Contracts
             return grpcResponse;
         }
 
+        public override async Task<grpc_GetCompanyDepartmentsResponse> GetCompanyDepartmentsBySearchTerm(grpc_StringSearchTerm request, ServerCallContext context)
+        {
+            PagingParameters pagingParameters = new(request.PageNumber, request.PageSize);
+            GetCompanyDepartmentsSearchByNameRequest requestParameter = new(DepartmentName: request.Criteria, PagingParameters: pagingParameters);
+            Result<PagedList<GetCompanyDepartmentsResponse>> getDepartmentsResult = await _sender.Send(requestParameter);
+
+            grpc_GetCompanyDepartmentsResponse grpcResponse = new();
+            List<grpc_Department> grpcDepartmentList = new();
+
+            getDepartmentsResult.Value.ForEach(dept => grpcDepartmentList.Add(new grpc_Department()
+            {
+                DepartmentId = dept.DepartmentID,
+                Name = dept.Name,
+                GroupName = dept.GroupName,
+                ModifiedDate = GoogleDateTime.FromDateTime(dept.ModifiedDate.ToUniversalTime())
+            }));
+
+            grpcResponse.GrpcDepartments.AddRange(grpcDepartmentList);
+            grpcResponse.GrpcMetaData.Add(LoadMetaData(getDepartmentsResult.Value.MetaData));
+
+            return grpcResponse;
+        }
+
         public async override Task<grpc_GetCompanyShiftsResponse> GetCompanyShifts(grpc_PagingParameters request, ServerCallContext context)
         {
             PagingParameters pagingParameters = new(request.PageNumber, request.PageSize);
