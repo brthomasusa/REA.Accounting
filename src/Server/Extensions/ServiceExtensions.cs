@@ -1,7 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using Mapster;
+using MapsterMapper;
+using System.Reflection;
 using REA.Accounting.Infrastructure.Persistence;
 using REA.Accounting.Infrastructure.Persistence.Interfaces;
 using REA.Accounting.Infrastructure.Persistence.Repositories;
+using REA.Accounting.Server.Mapping;
 using REA.Accounting.SharedKernel.Interfaces;
 
 namespace REA.Accounting.Server.Extensions
@@ -46,6 +50,18 @@ namespace REA.Accounting.Server.Extensions
             return services
                 .AddScoped<IWriteRepositoryManager, WriteRepositoryManager>()
                 .AddScoped<IReadRepositoryManager, ReadRepositoryManager>();
+        }
+
+        public static IServiceCollection AddMappings(this IServiceCollection services)
+        {
+            var config = TypeAdapterConfig.GlobalSettings;
+            config.Scan(Assembly.GetExecutingAssembly());
+            // config.Apply(new CompanyMapsterConfig());
+            config.Default.NameMatchingStrategy(NameMatchingStrategy.IgnoreCase);
+            services.AddSingleton(config);
+            services.AddScoped<IMapper, ServiceMapper>();
+
+            return services;
         }
     }
 }

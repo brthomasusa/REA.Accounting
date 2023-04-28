@@ -10,5 +10,6 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDepartments.
         public string? ErrorMessage { get; init; }
         public List<DepartmentReadModel>? DepartmentList { get; init; }
         public MetaData? MetaData { get; set; }
+        public string? SearchTerm { get; set; }
     }
 }

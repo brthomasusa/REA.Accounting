@@ -1,8 +1,11 @@
 using Carter;
 using FluentValidation;
+using Mapster;
+using MapsterMapper;
 using MediatR;
 using NLog;
 using NLog.Web;
+using System.Reflection;
 
 using REA.Accounting.Application;
 using REA.Accounting.Application.Behaviors;
@@ -40,6 +43,8 @@ try
     builder.Services.AddInfrastructureServices();
     builder.Services.ConfigureEfCoreDbContext(builder.Configuration);
     builder.Services.ConfigureDapper(builder.Configuration);
+    builder.Services.AddMappings();
+
     builder.Services.AddRepositoryServices();
     builder.Services.AddTransient<GlobalExceptionHandlingMiddleware>();
 

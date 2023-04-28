@@ -28,21 +28,8 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDepartments.
                 DepartmentList = action.Departments,
                 MetaData = action.MetaData,
                 Loading = false,
-                Initialized = true
-            };
-        }
-
-        [ReducerMethod]
-        public static DisplayCompanyDepartmentsState OnGetNextPageOfDataSuccessAction
-        (
-            DisplayCompanyDepartmentsState state,
-            GetNextPageOfDataSuccessAction action
-        )
-        {
-            return state with
-            {
-                DepartmentList = action.Departments,
-                MetaData = action.MetaData
+                Initialized = true,
+                SearchTerm = action.SearchTerm
             };
         }
 

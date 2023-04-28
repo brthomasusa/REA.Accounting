@@ -1,6 +1,5 @@
 @page "/UseCases/Organization/DisplayCompanyDepartments/Pages/DisplayCompanyDepartmentsPage"
 @inherits FluxorComponent
-@using REA.Accounting.Client.Components.Common;
 @using REA.Accounting.Shared.Models.Organization;
 
 <PageTitle>Company Departments</PageTitle>
@@ -13,27 +12,63 @@
 <ErrorBoundary>
     @if (Loading)
     {
-        <div class="d-flex justify-content-center">
-            <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-                <span class="visually-hidden">Loading...</span>
+        <Row>
+            <div class="d-flex justify-content-center">
+                <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
             </div>
-        </div>
+        </Row>
     }
     else
     {
-        <Row>
-            <Column>
-                <div class="col-1 align-self-center justify-content-start">
-                    @* <CreateResourceLink DoPreNavigationProcessing=@LoadEmployeeLookups /> *@
-                </div>
-                <div class="col-5 align-self-center justify-content-start">
-                    <SingleFieldGridSearch PlaceHolderText="Department Name"
-                    OnSearchTermChangedEventHandler=@OnSearchChanged />
-                </div>
-            </Column>
+        <Row Margin="Margin.Is3.OnAll">
+            <div class="col-6 align-self-center justify-content-start">
+                <CreateResourceLink Disabled=true />
+            </div>
+            <div class="col-6 align-self-center justify-content-start">
+                <SingleFieldGridSearch PlaceHolderText="Department Name" OnSearchTermChangedEventHandler=@OnSearchChanged
+                CachedSearchTerm=@CachedSearchTerm />
+            </div>
         </Row>
-        <Row>
-
+        <Row Margin="Margin.Is4.FromStart">
+            <BasicGrid Items=DisplayCompanyDepartmentsState!.Value.DepartmentList>
+                <TableHeader>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Group Name</th>
+                    <th>Modified Date</th>
+                    <th>Actions</th>
+                </TableHeader>
+                <RowTemplate Context="department">
+                    <td>@department.DepartmentID</td>
+                    <td>@department.Name</td>
+                    <td>@department.GroupName</td>
+                    <td>@department.ModifiedDate</td>
+                    <td>
+                        <Dropdown Direction="Direction.Up">
+                            <DropdownToggle Outline Size="Size.ExtraSmall" Color="Color.Primary" ToggleIconVisible="false">
+                            <span class="btn-label"><i class="fas fa-ellipsis-v" aria-hidden="true"></i></span>
+                            </DropdownToggle>
+                            <DropdownMenu class="border border-dark rounded-3 shadow-lg">
+                            <DropdownItem Clicked="@( () => OnActionItemClicked("View", @department.DepartmentID) )">
+                                Details
+                            </DropdownItem>
+                            <DropdownItem Clicked="@( () => OnActionItemClicked("Edit", @department.DepartmentID) )">
+                                Edit
+                            </DropdownItem>
+                            <DropdownItem Clicked="@( () => OnActionItemClicked("Delete", @department.DepartmentID) )">
+                                Delete
+                            </DropdownItem>
+                            </DropdownMenu>
+                            </Dropdown>
+                        </td>
+                    </RowTemplate>
+                    </BasicGrid>
+                    </Row>
+        <Row Margin="Margin.Is4.FromStart">
+            <BasicGridPager MetaData=@DisplayCompanyDepartmentsState!.Value.MetaData
+            PagerChangedEventHandler=@PagerChangedEventHandler />
         </Row>
     }
     </ErrorBoundary>

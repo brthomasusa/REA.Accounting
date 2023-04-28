@@ -1,16 +1,18 @@
 @inherits FluxorComponent
 
 <div class="col-md-2">
-    <button @onclick=OnButtonClick class="btn btn-labeled btn-lg btn-outline-primary rounded-pill" role="button">
+    <button class="btn btn-labeled btn-lg btn-outline-primary round d-pill" @onclick=OnButtonClick disabled=@Disabled
+        role="button">
         <span class="btn-label"><i class="fas fa-plus"></i></span>
     </button>
 </div>
 
 @code {
-    [Parameter] public EventCallback DoPreNavigationProcessing { get; set; }
+    [Parameter] public EventCallback DoNavigation { get; set; }
+    [Parameter] public bool Disabled { get; set; }
 
     private async Task OnButtonClick()
     {
-        await DoPreNavigationProcessing.InvokeAsync();        
+        await DoNavigation.InvokeAsync();
     }
 }

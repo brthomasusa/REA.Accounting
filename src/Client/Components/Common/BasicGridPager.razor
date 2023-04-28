@@ -1,0 +1,47 @@
+@inherits FluxorComponent
+
+<ErrorBoundary>
+    <Row>
+        <Column ColumnSize="ColumnSize.IsAuto">
+            <Pagination Size="Size.Small">
+                <PaginationItem Disabled="@IsPageNavigationDisabled(PREVIOUS)" @onclick="Previous">
+                    <PaginationLink>
+                        <span aria-hidden="true">«</span>
+                    </PaginationLink>
+                </PaginationItem>
+                @{
+                    for (var i = 1; i <= totalPages; i++)
+                    {
+                        var pageNumberAsString = i.ToString();
+                        <PaginationItem @key="pageNumberAsString" Active="@IsActive(pageNumberAsString)">
+                            <PaginationLink Page="@pageNumberAsString" Clicked="SetActive">
+                                @pageNumberAsString
+                            </PaginationLink>
+                        </PaginationItem>
+                    }
+                }
+                <PaginationItem Disabled="@IsPageNavigationDisabled(NEXT)" @onclick="Next">
+                    <PaginationLink>
+                        <span aria-hidden="true">»</span>
+                    </PaginationLink>
+                </PaginationItem>
+            </Pagination>
+        </Column>
+        <Column ColumnSize="ColumnSize.Is5">
+            <Field Horizontal>
+                <FieldBody ColumnSize="ColumnSize.Is3" Padding="Padding.Is1.FromEnd" Margin="Margin.Is0.FromEnd">
+                    <Select TValue="int" SelectedValue="@pageSize" SelectedValueChanged="@OnPageSizeChanged">
+                        <SelectItem Value="5">5</SelectItem>
+                        <SelectItem Value="10">10</SelectItem>
+                        <SelectItem Value="15">15</SelectItem>
+                        <SelectItem Value="20">20</SelectItem>
+                    </Select>
+                </FieldBody>
+                <FieldLabel Padding="Padding.Is1.FromStart" Margin="Margin.Is0.FromStart" ColumnSize="ColumnSize.Is4">
+                    Items per page</FieldLabel>
+            </Field>
+        </Column>
+        <Column>
+        </Column>
+    </Row>
+</ErrorBoundary>

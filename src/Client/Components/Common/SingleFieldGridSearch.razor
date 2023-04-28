@@ -1,10 +1,16 @@
 <ErrorBoundary>
-    <Field Horizontal>
-        <FieldLabel ColumnSize="ColumnSize.Is1">
-            <span class="btn-label"><i class="fas fa-search"></i></span>
-        </FieldLabel>
-        <FieldBody ColumnSize="ColumnSize.Is11">
-            <TextEdit Placeholder=@PlaceHolderText @bind-Text=@SearchTerm KeyPress="@OnSearchTermChanged" />
-        </FieldBody>
-    </Field>
+    <div class="input-group col-md-5 text-md-right">
+        <input name="searchInput" type="text" class="form-control" placeholder="Department Name" @bind=SearchTerm
+            @onkeyup="OnSearchTermChanged" />
+        <div class="input-broup-btn">
+            <button name="searchButton" class="btn btn-sm btn-default" @onclick="OnSearchButtonClick">
+                <i class="oi oi-magnifying-glass" title="search" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div class="input-broup-btn">
+            <button name="searchClearButton" class=@( () => ClearSearchButtonClass() ) @onclick="OnClearSearch">
+                <i class="oi oi-x" title="clear" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
 </ErrorBoundary>

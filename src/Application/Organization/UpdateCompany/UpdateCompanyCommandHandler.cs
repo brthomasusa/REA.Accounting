@@ -26,22 +26,22 @@ namespace REA.Accounting.Application.Organization.UpdateCompany
 
                 Result<Company> updateDomainObj = getCompany.Value.Update
                 (
-                    request.CompanyName,
-                    request.LegalName,
-                    request.EIN,
-                    request.CompanyWebSite,
-                    request.MailAddressLine1,
+                    request.CompanyName!,
+                    request.LegalName!,
+                    request.EIN!,
+                    request.CompanyWebSite!,
+                    request.MailAddressLine1!,
                     request.MailAddressLine2,
-                    request.MailCity,
+                    request.MailCity!,
                     request.MailStateProvinceID,
-                    request.MailPostalCode,
-                    request.DeliveryAddressLine1,
+                    request.MailPostalCode!,
+                    request.DeliveryAddressLine1!,
                     request.DeliveryAddressLine2,
-                    request.DeliveryCity,
+                    request.DeliveryCity!,
                     request.DeliveryStateProvinceID,
-                    request.DeliveryPostalCode,
-                    request.Telephone,
-                    request.Fax
+                    request.DeliveryPostalCode!,
+                    request.Telephone!,
+                    request.Fax!
                 );
 
                 if (updateDomainObj.IsFailure)

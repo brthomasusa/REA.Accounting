@@ -2,24 +2,24 @@ using REA.Accounting.Application.Interfaces.Messaging;
 
 namespace REA.Accounting.Application.Organization.UpdateCompany
 {
-    public sealed record UpdateCompanyCommand
-    (
-            int CompanyID,
-            string CompanyName,
-            string LegalName,
-            string EIN,
-            string CompanyWebSite,
-            string MailAddressLine1,
-            string? MailAddressLine2,
-            string MailCity,
-            int MailStateProvinceID,
-            string MailPostalCode,
-            string DeliveryAddressLine1,
-            string? DeliveryAddressLine2,
-            string DeliveryCity,
-            int DeliveryStateProvinceID,
-            string DeliveryPostalCode,
-            string Telephone,
-            string Fax
-    ) : ICommand<int>;
+    public sealed class UpdateCompanyCommand : ICommand<int>
+    {
+        public int CompanyID { get; set; }
+        public string? CompanyName { get; set; }
+        public string? LegalName { get; set; }
+        public string? EIN { get; set; }
+        public string? CompanyWebSite { get; set; }
+        public string? MailAddressLine1 { get; set; }
+        public string? MailAddressLine2 { get; set; }
+        public string? MailCity { get; set; }
+        public int MailStateProvinceID { get; set; }
+        public string? MailPostalCode { get; set; }
+        public string? DeliveryAddressLine1 { get; set; }
+        public string? DeliveryAddressLine2 { get; set; }
+        public string? DeliveryCity { get; set; }
+        public int DeliveryStateProvinceID { get; set; }
+        public string? DeliveryPostalCode { get; set; }
+        public string? Telephone { get; set; }
+        public string? Fax { get; set; }
+    }
 }
