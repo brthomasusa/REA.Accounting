@@ -8,7 +8,7 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDepartments.
 {
     public partial class DisplayCompanyDepartmentsPage
     {
-        [Inject] private NavigationManager? _navManager { get; set; }
+        [Inject] private NavigationManager? NavManager { get; set; }
         [Inject] private IState<DisplayCompanyDepartmentsState>? DisplayCompanyDepartmentsState { get; set; }
         [Inject] private IDispatcher? Dispatcher { get; set; }
         private string CachedSearchTerm => DisplayCompanyDepartmentsState!.Value.SearchTerm!;
@@ -52,7 +52,7 @@ namespace REA.Accounting.Client.UseCases.Organization.DisplayCompanyDepartments.
 
         private void OnActionItemClicked(string action, int deptId)
         {
-            _navManager!.NavigateTo
+            NavManager!.NavigateTo
             (
                 action switch
                 {

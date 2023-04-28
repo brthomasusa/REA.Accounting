@@ -91,7 +91,7 @@ namespace REA.Accounting.Client.Components.Common
             }
             else
             {
-                Console.WriteLine($"BasicGridPager.SetActive(string page) called with null parameter!");
+                Console.WriteLine("BasicGridPager.SetActive(string page) called with null parameter!");
             }
         }
 

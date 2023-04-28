@@ -33,7 +33,6 @@
                 <Items>
                     <Tab Name="generalInfo">General Info</Tab>
                     <Tab Name="addressInfo">Addresses</Tab>
-                    <Tab Name="contactInfo">Contact Info</Tab>
                 </Items>
                 <Content>
                     <TabPanel Name="generalInfo">
@@ -53,6 +52,24 @@
                                 <FieldLabel TextWeight="TextWeight.Bold">Employer Identification Number</FieldLabel>
                                 <FieldBody>
                                     <TextEdit Text=@DetailsModel!.EIN ReadOnly />
+                                </FieldBody>
+                            </Field>
+                            <Field>
+                                <FieldLabel TextWeight="TextWeight.Bold">Telephone</FieldLabel>
+                                <FieldBody>
+                                    <TextEdit Text=@DetailsModel!.Telephone ReadOnly />
+                                </FieldBody>
+                            </Field>
+                            <Field>
+                                <FieldLabel TextWeight="TextWeight.Bold">Fax</FieldLabel>
+                                <FieldBody>
+                                    <TextEdit Text=@DetailsModel!.Fax ReadOnly />
+                                </FieldBody>
+                            </Field>
+                            <Field>
+                                <FieldLabel TextWeight="TextWeight.Bold">Company Website</FieldLabel>
+                                <FieldBody>
+                                    <TextEdit Text=@DetailsModel!.CompanyWebSite ReadOnly />
                                 </FieldBody>
                             </Field>
                         </TabPanel>
@@ -123,26 +140,6 @@
                                     </FieldBody>
                                 </Field>
                             </fieldset>
-                        </TabPanel>
-                        <TabPanel Name="contactInfo">
-                            <Field>
-                                <FieldLabel TextWeight="TextWeight.Bold">Telephone</FieldLabel>
-                                <FieldBody>
-                                    <TextEdit Text=@DetailsModel!.Telephone ReadOnly />
-                                </FieldBody>
-                            </Field>
-                            <Field>
-                                <FieldLabel TextWeight="TextWeight.Bold">Fax</FieldLabel>
-                                <FieldBody>
-                                    <TextEdit Text=@DetailsModel!.Fax ReadOnly />
-                                </FieldBody>
-                            </Field>
-                            <Field>
-                                <FieldLabel TextWeight="TextWeight.Bold">Company Website</FieldLabel>
-                                <FieldBody>
-                                    <TextEdit Text=@DetailsModel!.CompanyWebSite ReadOnly />
-                                </FieldBody>
-                            </Field>
                         </TabPanel>
                     </Content>
                 </Tabs>
