@@ -20,5 +20,54 @@ namespace REA.Accounting.Infrastructure.Persistence.Queries.HumanResources
         FROM Person.BusinessEntity entity
         INNER JOIN Person.Person person ON entity.BusinessEntityID = person.BusinessEntityID
         INNER JOIN HumanResources.Employee ee ON entity.BusinessEntityID = ee.BusinessEntityID ";
+
+        public const string GetEmployeeDetailsByIdWithAllInfo =
+        @"SELECT 
+            e.[BusinessEntityID],
+            CASE
+                WHEN p.NameStyle = 0 THEN 'Western'
+                WHEN p.NameStyle = 1 THEN 'Eastern'     
+            END AS NameStyle    
+            ,p.[Title]
+            ,p.[FirstName]
+            ,p.[MiddleName]
+            ,p.[LastName]
+            ,p.[Suffix]
+            ,e.[JobTitle]  
+            ,pp.[PhoneNumber]
+            ,pnt.[Name] AS [PhoneNumberType]
+            ,ea.[EmailAddress],
+            CASE
+                WHEN p.EmailPromotion = 0 THEN 'Does not wish to receive email promotions.'
+                WHEN p.EmailPromotion = 1 THEN 'Wishes to receive email promotions from AdventureWorks only.'     
+                WHEN p.EmailPromotion = 2 THEN 'Wishes to receive email promotions from AdventureWorks and selected partners.'
+            END AS EmailPromotion
+            ,e.NationalIDNumber
+            ,e.LoginID
+            ,a.[AddressLine1]
+            ,a.[AddressLine2]
+            ,a.[City]
+            ,sp.[Name] AS [StateProvinceName] 
+            ,a.[PostalCode]
+            ,cr.[Name] AS [CountryRegionName]
+            ,e.BirthDate
+            ,e.MaritalStatus
+            ,e.Gender
+            ,e.HireDate
+            ,e.SalariedFlag AS Salaried
+            ,e.VacationHours
+            ,e.SickLeaveHours
+            ,e.CurrentFlag AS Active 
+        FROM [HumanResources].[Employee] e
+        INNER JOIN [Person].[Person] p ON p.[BusinessEntityID] = e.[BusinessEntityID]        
+        INNER JOIN [Person].[BusinessEntityAddress] bea ON bea.[BusinessEntityID] = e.[BusinessEntityID]         
+        INNER JOIN [Person].[Address] a ON a.[AddressID] = bea.[AddressID]        
+        INNER JOIN [Person].[StateProvince] sp ON sp.[StateProvinceID] = a.[StateProvinceID]        
+        INNER JOIN [Person].[CountryRegion] cr ON cr.[CountryRegionCode] = sp.[CountryRegionCode]        
+        LEFT OUTER JOIN [Person].[PersonPhone] pp ON pp.BusinessEntityID = p.[BusinessEntityID]        
+        LEFT OUTER JOIN [Person].[PhoneNumberType] pnt ON pp.[PhoneNumberTypeID] = pnt.[PhoneNumberTypeID]        
+        LEFT OUTER JOIN [Person].[EmailAddress] ea ON p.[BusinessEntityID] = ea.[BusinessEntityID]";
+
+
     }
 }

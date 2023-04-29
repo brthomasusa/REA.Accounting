@@ -28,6 +28,17 @@ namespace REA.Accounting.Presentation.HumanResources
                 return Results.Problem(result.Error);
             });
 
+            app.MapGet("api/employees/allinfo/{id}", async (int id, ISender sender) =>
+            {
+                Result<GetEmployeeDetailsByIdWithAllInfoResponse> result =
+                    await sender.Send(new GetEmployeeDetailsByIdWithAllInfoRequest(EmployeeID: id));
+
+                if (result.IsSuccess)
+                    return Results.Ok(result.Value);
+
+                return Results.Problem(result.Error);
+            });
+
             app.MapPost("api/employees/create", async (CreateEmployeeCommand cmd, ISender sender) =>
             {
                 Result<int> result = await sender.Send(cmd);

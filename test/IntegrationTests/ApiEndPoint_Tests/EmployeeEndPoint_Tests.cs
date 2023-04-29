@@ -42,6 +42,22 @@ namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
         }
 
         [Fact]
+        public async Task Employee_GetEmployeeDetailsByIdWithAllInfoQuery_ShouldSucceed()
+        {
+            const int employeeId = 1;
+            using var response = await _client.GetAsync($"{_urlRoot}employees/allinfo/{employeeId}",
+                                                        HttpCompletionOption.ResponseHeadersRead);
+
+            response.EnsureSuccessStatusCode();
+
+            var jsonResponse = await response.Content.ReadAsStreamAsync();
+            var employee = await JsonSerializer.DeserializeAsync<GetEmployeeDetailsByIdWithAllInfoResponse>(jsonResponse, _options);
+
+            Assert.Equal("Ken", employee.FirstName);
+            Assert.Equal("Sánchez", employee.LastName);
+        }
+
+        [Fact]
         public async Task Employee_CreateEmployeeInfo_ValidData_ShouldSucceed()
         {
             string uri = $"{_urlRoot}employees/create";

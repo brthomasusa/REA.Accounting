@@ -6,5 +6,6 @@ namespace REA.Accounting.Infrastructure.Persistence.Interfaces.HumanResources
     public interface IEmployeeReadRepository
     {
         Task<Result<GetEmployeeDetailByIdResponse>> GetEmployeeDetailsById(int employeeId);
+        Task<Result<GetEmployeeDetailsByIdWithAllInfoResponse>> GetEmployeeDetailsByIdWithAllInfo(int employeeId);
     }
 }

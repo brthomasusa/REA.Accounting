@@ -29,5 +29,28 @@ namespace REA.Accounting.IntegrationTests.Repositories
 
             Assert.True(result.IsFailure);
         }
+
+        [Fact]
+        public async Task GetEmployeeDetailsByIdWithAllInfo_EmployeeReadRepository_ShouldSucceed()
+        {
+            ReadRepositoryManager readRepository = new(_dapperCtx, new NullLogger<ReadRepositoryManager>());
+
+            Result<GetEmployeeDetailsByIdWithAllInfoResponse> result =
+                await readRepository.EmployeeReadRepository.GetEmployeeDetailsByIdWithAllInfo(1);
+
+            Assert.True(result.IsSuccess);
+            Assert.Equal("Sánchez", result.Value.LastName);
+        }
+
+        [Fact]
+        public async Task GetEmployeeDetailsByIdWithAllInfo_EmployeeReadRepository_ShouldFail()
+        {
+            ReadRepositoryManager readRepository = new(_dapperCtx, new NullLogger<ReadRepositoryManager>());
+
+            Result<GetEmployeeDetailsByIdWithAllInfoResponse> result =
+                await readRepository.EmployeeReadRepository.GetEmployeeDetailsByIdWithAllInfo(3);
+
+            Assert.True(result.IsFailure);
+        }
     }
 }

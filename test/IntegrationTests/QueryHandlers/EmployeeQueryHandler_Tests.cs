@@ -34,5 +34,27 @@ namespace REA.Accounting.IntegrationTests.QueryHandlers
 
             Assert.True(response.IsFailure);
         }
+
+        [Fact]
+        public async Task Handle_GetEmployeeDetailsByIdWithAllInfoQueryHandler_ShouldSucceed()
+        {
+            GetEmployeeDetailsByIdWithAllInfoRequest request = new(EmployeeID: 2);
+            GetEmployeeDetailsByIdWithAllInfoQueryHandler handler = new(_repository);
+
+            Result<GetEmployeeDetailsByIdWithAllInfoResponse> response = await handler.Handle(request, new CancellationToken());
+
+            Assert.True(response.IsSuccess);
+        }
+
+        [Fact]
+        public async Task Handle_GetEmployeeDetailsByIdWithAllInfoQueryHandler_ShouldFail_WithInvalidID()
+        {
+            GetEmployeeDetailsByIdWithAllInfoRequest request = new(EmployeeID: 3);
+            GetEmployeeDetailsByIdWithAllInfoQueryHandler handler = new(_repository);
+
+            Result<GetEmployeeDetailsByIdWithAllInfoResponse> response = await handler.Handle(request, new CancellationToken());
+
+            Assert.True(response.IsFailure);
+        }
     }
 }

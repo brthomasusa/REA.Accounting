@@ -17,5 +17,8 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
 
         public async Task<Result<GetEmployeeDetailByIdResponse>> GetEmployeeDetailsById(int employeeId)
             => await GetEmployeeDetailsByIdQuery.Query(employeeId, _context, _logger);
+
+        public async Task<Result<GetEmployeeDetailsByIdWithAllInfoResponse>> GetEmployeeDetailsByIdWithAllInfo(int employeeId)
+            => await GetEmployeeDetailsByIdWithAllInfoQuery.Query(employeeId, _context, _logger);
     }
 }

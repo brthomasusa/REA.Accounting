@@ -23,5 +23,24 @@ namespace REA.Accounting.IntegrationTests.DapperQueries.HumanResources
 
             Assert.True(result.IsFailure);
         }
+
+        [Fact]
+        public async Task Query_GetEmployeeDetailsByIdWithAllInfoQuery_ShouldSucceed()
+        {
+            Result<GetEmployeeDetailsByIdWithAllInfoResponse> result =
+                await GetEmployeeDetailsByIdWithAllInfoQuery.Query(1, _dapperCtx, new NullLogger<ReadRepositoryManager>());
+
+            Assert.True(result.IsSuccess);
+        }
+
+        [Fact]
+        public async Task Query_GetEmployeeDetailsByIdWithAllInfoQuery_ShouldFail_WhenPassedInvalidID()
+        {
+            using var loggerFactory = LoggerFactory.Create(c => c.AddConsole());
+            var logger = loggerFactory.CreateLogger<ReadRepositoryManager>();
+            Result<GetEmployeeDetailByIdResponse> result = await GetEmployeeDetailsByIdQuery.Query(3, _dapperCtx, logger);
+
+            Assert.True(result.IsFailure);
+        }
     }
 }
