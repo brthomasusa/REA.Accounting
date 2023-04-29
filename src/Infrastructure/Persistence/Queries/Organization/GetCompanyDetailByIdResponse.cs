@@ -6,7 +6,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Queries.Organization
         public string? CompanyName { get; set; }
         public string? LegalName { get; set; }
         public string? EIN { get; set; }
-        public string? WebsiteUrl { get; set; }
+        public string? CompanyWebSite { get; set; }
         public string? MailAddressLine1 { get; set; }
         public string? MailAddressLine2 { get; set; }
         public string? MailCity { get; set; }

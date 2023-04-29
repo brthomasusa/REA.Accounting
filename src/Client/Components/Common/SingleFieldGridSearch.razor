@@ -8,8 +8,10 @@
             </button>
         </div>
         <div class="input-broup-btn">
-            <button name="searchClearButton" class=@( () => ClearSearchButtonClass() ) @onclick="OnClearSearch">
-                <i class="oi oi-x" title="clear" aria-hidden="true"></i>
+            <button name="searchClearButton"
+                class="btn btn-sm @(string.IsNullOrEmpty(CachedSearchTerm) ? "" : "btn-warning")"
+                @onclick="OnClearSearch">
+                <i class="oi oi-x" title="clear filter" aria-hidden="true"></i>
             </button>
         </div>
     </div>

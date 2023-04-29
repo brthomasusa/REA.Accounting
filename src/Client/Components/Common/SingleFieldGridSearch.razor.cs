@@ -30,7 +30,6 @@ namespace REA.Accounting.Client.Components.Common
             await OnSearchButtonClick();
         }
 
-        private string ClearSearchButtonClass()
-            => string.IsNullOrEmpty(CachedSearchTerm) ? "btn btn-sm btn-success" : "btn btn-sm btn-secondary";
+        private bool IsSearchFilterSet() => string.IsNullOrEmpty(CachedSearchTerm);
     }
 }

@@ -4,7 +4,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Queries.Organization
     {
         public const string GetCompanyDetailsById =
         @"SELECT 
-            CompanyID, CompanyName, LegalName, EIN, WebsiteUrl, 
+            CompanyID, CompanyName, LegalName, EIN, WebsiteUrl AS 'CompanyWebSite', 
             MailAddressLine1, MailAddressLine2, MailCity, mail.StateProvinceCode  AS MailStateProvinceCode, MailPostalCode,
             DeliveryAddressLine1, DeliveryAddressLine2, DeliveryCity, delivery.StateProvinceCode AS DeliveryStateProvinceCode, 
             DeliveryPostalCode, Telephone, Fax    
@@ -14,7 +14,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Queries.Organization
 
         public const string GetCompanyCommandById =
         @"SELECT 
-            CompanyID, CompanyName, LegalName, EIN, WebsiteUrl, 
+            CompanyID, CompanyName, LegalName, EIN, WebsiteUrl AS 'CompanyWebSite', 
             MailAddressLine1, MailAddressLine2, MailCity, MailStateProvinceID, MailPostalCode,
             DeliveryAddressLine1, DeliveryAddressLine2, DeliveryCity, DeliveryStateProvinceID, 
             DeliveryPostalCode, Telephone, Fax   

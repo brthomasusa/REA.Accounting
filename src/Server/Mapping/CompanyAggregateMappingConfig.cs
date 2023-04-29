@@ -22,10 +22,14 @@ namespace REA.Accounting.Server.Mapping
                 .Map(dest => dest.CompanyID, src => src.Id);
 
             config.NewConfig<GetCompanyDetailByIdResponse, CompanyDetail>()
-                .Map(dest => dest.Id, src => src.CompanyID);
+                .Map(dest => dest.Id, src => src.CompanyID)
+                .Map(dest => dest.MailAddressLine2, src => string.IsNullOrEmpty(src.MailAddressLine2) ? string.Empty : src.MailAddressLine2)
+                .Map(dest => dest.DeliveryAddressLine2, src => string.IsNullOrEmpty(src.DeliveryAddressLine2) ? string.Empty : src.DeliveryAddressLine2);
 
             config.NewConfig<GetCompanyCommandByIdResponse, CompanyCommand>()
-                .Map(dest => dest.Id, src => src.CompanyID);
+                .Map(dest => dest.Id, src => src.CompanyID)
+                .Map(dest => dest.MailAddressLine2, src => string.IsNullOrEmpty(src.MailAddressLine2) ? string.Empty : src.MailAddressLine2)
+                .Map(dest => dest.DeliveryAddressLine2, src => string.IsNullOrEmpty(src.DeliveryAddressLine2) ? string.Empty : src.DeliveryAddressLine2);
 
             config.NewConfig<GetCompanyDepartmentsResponse, grpc_Department>()
                 .Map(dest => dest.ModifiedDate, src => GoogleDateTime.FromDateTime(src.ModifiedDate.ToUniversalTime()));
