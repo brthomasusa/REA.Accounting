@@ -52,5 +52,20 @@ namespace REA.Accounting.IntegrationTests.Repositories
 
             Assert.True(result.IsFailure);
         }
+
+        [Fact]
+        public async Task GetEmployeeListItemsSearchByLastName_EmployeeReadRepository_ShouldSucceed()
+        {
+            ReadRepositoryManager readRepository = new(_dapperCtx, new NullLogger<ReadRepositoryManager>());
+            const string lastName = "A";
+            PagingParameters pagingParameters = new(1, 10);
+
+            Result<PagedList<GetEmployeeListItemsResponse>> result =
+                await readRepository.EmployeeReadRepository.GetEmployeeListItemsSearchByLastName(lastName, pagingParameters);
+
+            Assert.True(result.IsSuccess);
+            int employees = result.Value.Count;
+            Assert.Equal(4, employees);
+        }
     }
 }

@@ -42,5 +42,20 @@ namespace REA.Accounting.IntegrationTests.DapperQueries.HumanResources
 
             Assert.True(result.IsFailure);
         }
+
+        [Fact]
+        public async Task Query_GetEmployeeListItemsQuery_ShouldSucceed()
+        {
+            const string lastName = "A";
+            PagingParameters pagingParameters = new(1, 10);
+
+            Result<PagedList<GetEmployeeListItemsResponse>> result =
+                await GetEmployeeListItemsQuery.Query(lastName, pagingParameters, _dapperCtx, new NullLogger<ReadRepositoryManager>());
+
+            Assert.True(result.IsSuccess);
+            int employees = result.Value.Count;
+            Assert.Equal(4, employees);
+        }
+
     }
 }

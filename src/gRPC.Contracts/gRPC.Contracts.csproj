@@ -22,6 +22,7 @@
         <Protobuf Include="Protos/Organization/company.proto" />
         <Protobuf Include="Protos/Organization/grpc_department.proto" />
         <Protobuf Include="Protos/Organization/grpc_shift.proto" />
+        <Protobuf Include="Protos/HumanResources/grpc_employee.proto" />
 	</ItemGroup>
     
 </Project>

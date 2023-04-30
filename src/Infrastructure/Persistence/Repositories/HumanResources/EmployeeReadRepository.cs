@@ -20,5 +20,8 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
 
         public async Task<Result<GetEmployeeDetailsByIdWithAllInfoResponse>> GetEmployeeDetailsByIdWithAllInfo(int employeeId)
             => await GetEmployeeDetailsByIdWithAllInfoQuery.Query(employeeId, _context, _logger);
+
+        public async Task<Result<PagedList<GetEmployeeListItemsResponse>>> GetEmployeeListItemsSearchByLastName(string lastName, PagingParameters pagingParameters)
+            => await GetEmployeeListItemsQuery.Query(lastName, pagingParameters, _context, _logger);
     }
 }

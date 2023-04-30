@@ -1,7 +1,9 @@
 #pragma warning disable CS8600, CS8602
 
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Text.Json;
+using Microsoft.AspNetCore.WebUtilities;
 
 using REA.Accounting.Application.HumanResources.CreateEmployee;
 using REA.Accounting.Application.HumanResources.DeleteEmployee;
@@ -55,6 +57,25 @@ namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
 
             Assert.Equal("Ken", employee.FirstName);
             Assert.Equal("Sánchez", employee.LastName);
+        }
+
+        [Fact]
+        public async Task Employee_GetEmployeeListItemsFilterByLastName_ShouldSucceed()
+        {
+            var pagingParams = new { PageNumber = 1, PageSize = 10 };
+            const string lastName = "A";
+
+            var queryParams = new Dictionary<string, string?>
+            {
+                ["pageNumber"] = pagingParams.PageNumber.ToString(),
+                ["pageSize"] = pagingParams.PageSize.ToString(),
+                ["lastName"] = lastName
+            };
+
+            List<GetEmployeeListItemsResponse> response = await _client
+                .GetFromJsonAsync<List<GetEmployeeListItemsResponse>>(QueryHelpers.AddQueryString($"{_urlRoot}employees/filterbylastname", queryParams));
+
+            Assert.Equal(4, response.Count);
         }
 
         [Fact]

@@ -39,6 +39,19 @@ namespace REA.Accounting.Presentation.HumanResources
                 return Results.Problem(result.Error);
             });
 
+            app.MapGet("api/employees/filterbylastname", async (QueryParameters.FilterEmployeesByNameParameters parameters, ISender sender) =>
+            {
+                PagingParameters pagingParameters = new(parameters.PageNumber, parameters.PageSize);
+                GetEmployeeListItemsRequest request = new(LastName: parameters.LastName!, PagingParameters: pagingParameters);
+
+                Result<PagedList<GetEmployeeListItemsResponse>> result = await sender.Send(request);
+
+                if (result.IsSuccess)
+                    return Results.Ok(result.Value);
+
+                return Results.Problem(result.Error);
+            });
+
             app.MapPost("api/employees/create", async (CreateEmployeeCommand cmd, ISender sender) =>
             {
                 Result<int> result = await sender.Send(cmd);

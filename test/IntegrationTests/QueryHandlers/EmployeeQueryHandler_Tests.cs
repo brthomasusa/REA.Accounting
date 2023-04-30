@@ -56,5 +56,21 @@ namespace REA.Accounting.IntegrationTests.QueryHandlers
 
             Assert.True(response.IsFailure);
         }
+
+        [Fact]
+        public async Task Handle_GetEmployeeListItemsQueryHandler_ShouldSucceed()
+        {
+            PagingParameters pagingParameters = new(1, 10);
+            GetEmployeeListItemsRequest request = new(LastName: "A", PagingParameters: pagingParameters);
+            GetEmployeeListItemsQueryHandler handler = new(_repository);
+
+            Result<PagedList<GetEmployeeListItemsResponse>> response = await handler.Handle(request, new CancellationToken());
+
+            Assert.True(response.IsSuccess);
+
+            int employees = response.Value.Count;
+            Assert.Equal(4, employees);
+        }
+
     }
 }

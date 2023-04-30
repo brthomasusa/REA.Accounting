@@ -7,5 +7,6 @@ namespace REA.Accounting.Infrastructure.Persistence.Interfaces.HumanResources
     {
         Task<Result<GetEmployeeDetailByIdResponse>> GetEmployeeDetailsById(int employeeId);
         Task<Result<GetEmployeeDetailsByIdWithAllInfoResponse>> GetEmployeeDetailsByIdWithAllInfo(int employeeId);
+        Task<Result<PagedList<GetEmployeeListItemsResponse>>> GetEmployeeListItemsSearchByLastName(string lastName, PagingParameters pagingParameters);
     }
 }
