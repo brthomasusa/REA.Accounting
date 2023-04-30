@@ -1,5 +1,4 @@
 using Grpc.Core;
-using GoogleDateTime = Google.Protobuf.WellKnownTypes.Timestamp;
 using gRPC.Contracts.Shared;
 using gRPC.Contracts.Organization;
 using MapsterMapper;

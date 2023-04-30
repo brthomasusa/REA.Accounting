@@ -4,8 +4,9 @@ option csharp_namespace = "gRPC.Contracts.HumanResources";
 import "Protos/Shared/shared.proto";
 import "google/protobuf/timestamp.proto";
 
-service CompanyContract {
+service EmployeeContract {
 	rpc GetEmployeeDetailsByIdWithAllInfo(contracts.shared.ItemRequest) returns (grpc_EmployeeDetailResponse);
+    rpc GetEmployeeListItemsByLastName(contracts.shared.grpc_StringSearchTerm) returns (grpc_EmployeeListItemsResponse);
 }
 
 message grpc_EmployeeDetailResponse {
@@ -35,4 +36,21 @@ message grpc_EmployeeDetailResponse {
     int32 vacationHours = 24;
     int32 sickLeaveHours = 25;
     bool active = 26;   
+}
+
+message grpc_EmployeeListItem {
+    int32 businessEntityId = 1;
+    string lastName = 2;
+    string firstName = 3;
+    string middleName = 4;    
+    string jobTitle = 5;
+    string department = 6;
+    string phoneNumber = 7;
+    string emailAddress = 8;
+    bool active = 9;       
+}
+
+message grpc_EmployeeListItemsResponse {
+    repeated grpc_EmployeeListItem grpc_employees = 1; 
+    map<string, int32> grpc_meta_data = 2;
 }

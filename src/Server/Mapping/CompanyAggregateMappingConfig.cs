@@ -16,7 +16,7 @@ namespace REA.Accounting.Server.Mapping
             */
 
             config.NewConfig<grpc_Department, DepartmentReadModel>()
-                .Map(dest => dest.ModifiedDate, src => src.ModifiedDate.ToDateTime());
+                .Map(dest => dest.ModifiedDate, src => src.ModifiedDate.ToDateTime().ToLocalTime());
 
             config.NewConfig<CompanyCommand, UpdateCompanyCommand>()
                 .Map(dest => dest.CompanyID, src => src.Id);
@@ -32,10 +32,10 @@ namespace REA.Accounting.Server.Mapping
                 .Map(dest => dest.DeliveryAddressLine2, src => string.IsNullOrEmpty(src.DeliveryAddressLine2) ? string.Empty : src.DeliveryAddressLine2);
 
             config.NewConfig<GetCompanyDepartmentsResponse, grpc_Department>()
-                .Map(dest => dest.ModifiedDate, src => GoogleDateTime.FromDateTime(src.ModifiedDate.ToUniversalTime()));
+                .Map(dest => dest.ModifiedDate, src => GoogleDateTime.FromDateTimeOffset(src.ModifiedDate));
 
             config.NewConfig<GetCompanyShiftsResponse, grpc_Shift>()
-                .Map(dest => dest.ModifiedDate, src => GoogleDateTime.FromDateTime(src.ModifiedDate.ToUniversalTime()));
+                .Map(dest => dest.ModifiedDate, src => GoogleDateTime.FromDateTimeOffset(src.ModifiedDate));
         }
     }
 }
