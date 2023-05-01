@@ -1,5 +1,5 @@
-using Microsoft.AspNetCore.Components;
 using Fluxor;
+using Microsoft.AspNetCore.Components;
 using REA.Accounting.Client.UseCases.HumanResources.DisplayEmployeesList.Store;
 
 namespace REA.Accounting.Client.UseCases.HumanResources.DisplayEmployeesList.Pages
@@ -54,8 +54,8 @@ namespace REA.Accounting.Client.UseCases.HumanResources.DisplayEmployeesList.Pag
             (
                 action switch
                 {
-                    "View" => $"UseCases/HumanResources/DisplayEmployeesList/Pages/DisplayEmployeeDetailsPage/{employeeId}",
-                    "Edit" => "UseCases/HumanResources/DisplayEmployeesList/Pages/DisplayEmployeesListPage",
+                    "View" => $"UseCases/HumanResources/DisplayEmployeeDetails/Pages/DisplayEmployeeDetailsPage/{employeeId}",
+                    "Edit" => $"UseCases/HumanResources/UpdateEmployeeDetails/Pages/UpdateEmployeeDetailsPage/{employeeId}",
                     "Delete" => "UseCases/HumanResources/DisplayEmployeesList/Pages/DisplayEmployeesListPage",
                     _ => throw new ArgumentOutOfRangeException(nameof(action), $"Unexpected menu item: {action}"),
                 }

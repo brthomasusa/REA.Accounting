@@ -1,0 +1,245 @@
+@page "/UseCases/HumanResources/DisplayEmployeeDetails/Pages/DisplayEmployeeDetailsPage/{EmployeeId:int}"
+@inherits FluxorComponent
+
+<PageTitle>Workers</PageTitle>
+<Row TextAlignment=TextAlignment.Center Margin="Margin.Is3.FromTop">
+    <Heading Size="HeadingSize.Is5">
+        AdventureWorks Cycles, Viewing Worker Details
+    </Heading>
+</Row>
+
+<ErrorBoundary>
+    <div class="container">
+        <div class="row align-items-left">
+            <div class="col-1 align-self-center justify-content-start">
+                <EditResourceLink DoPreNavigationProcessing=@GoToUpdateEmployeeDetailsPage />
+            </div>
+        </div>
+    </div>
+    @if (Loading)
+    {
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    }
+    else
+    {
+        <ReadOnlyDetailsForm ViewModel=@DetailsModel>
+            <FormFields>
+                <div class="row">
+                    <div class="col">
+                        <Field>
+                            <FieldLabel TextWeight="TextWeight.Bold">Name Style</FieldLabel>
+                            <FieldBody>
+                                <TextEdit Text=@DetailsModel!.NameStyle ReadOnly />
+                            </FieldBody>
+                        </Field>
+                    </div>
+                    <div class="col">
+                        <Field>
+                            <FieldLabel TextWeight="TextWeight.Bold">Title</FieldLabel>
+                            <FieldBody>
+                                <TextEdit Text=@DetailsModel!.Title ReadOnly />
+                            </FieldBody>
+                        </Field>
+                    </div>
+                    <div class="col">
+                        <Field>
+                            <FieldLabel TextWeight="TextWeight.Bold">First Name</FieldLabel>
+                            <FieldBody>
+                                <TextEdit Text=@DetailsModel!.FirstName ReadOnly />
+                            </FieldBody>
+                        </Field>
+                    </div>
+                    <div class="col">
+                        <Field>
+                            <FieldLabel TextWeight="TextWeight.Bold">Middle Name</FieldLabel>
+                            <FieldBody>
+                                <TextEdit Text=@DetailsModel!.MiddleName ReadOnly />
+                            </FieldBody>
+                        </Field>
+                    </div>
+                    <div class="col">
+                        <Field>
+                            <FieldLabel TextWeight="TextWeight.Bold">Last Name</FieldLabel>
+                            <FieldBody>
+                                <TextEdit Text=@DetailsModel!.LastName ReadOnly />
+                            </FieldBody>
+                        </Field>
+                    </div>
+                    <div class="col">
+                        <Field>
+                            <FieldLabel TextWeight="TextWeight.Bold">Suffix</FieldLabel>
+                            <FieldBody>
+                                <TextEdit Text=@DetailsModel!.Suffix ReadOnly />
+                            </FieldBody>
+                        </Field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <Field>
+                            <FieldLabel TextWeight="TextWeight.Bold">Job Title</FieldLabel>
+                            <FieldBody>
+                                <TextEdit Text=@DetailsModel!.JobTitle ReadOnly />
+                            </FieldBody>
+                        </Field>
+                    </div>
+                    <div class="col">
+                        <Field>
+                            <FieldLabel TextWeight="TextWeight.Bold">Telephone</FieldLabel>
+                            <FieldBody>
+                                <TextEdit Text=@DetailsModel!.PhoneNumber ReadOnly />
+                            </FieldBody>
+                        </Field>
+                    </div>
+                    <div class="col">
+                        <Field>
+                            <FieldLabel TextWeight="TextWeight.Bold">Telephone Type</FieldLabel>
+                            <FieldBody>
+                                <TextEdit Text=@DetailsModel!.PhoneNumberType ReadOnly />
+                            </FieldBody>
+                        </Field>
+                    </div>
+                    <div class="col">
+                        <Field>
+                            <FieldLabel TextWeight="TextWeight.Bold">Email Address</FieldLabel>
+                            <FieldBody>
+                                <TextEdit Text=@DetailsModel!.EmailAddress ReadOnly />
+                            </FieldBody>
+                        </Field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <Field>
+                            <FieldLabel TextWeight="TextWeight.Bold">Address Line1</FieldLabel>
+                            <FieldBody>
+                                <TextEdit Text=@DetailsModel!.AddressLine1 ReadOnly />
+                            </FieldBody>
+                        </Field>
+                    </div>
+                    <div class="col">
+                        <Field>
+                            <FieldLabel TextWeight="TextWeight.Bold">Address Line2</FieldLabel>
+                            <FieldBody>
+                                <TextEdit Text=@DetailsModel!.AddressLine2 ReadOnly />
+                            </FieldBody>
+                        </Field>
+                    </div>
+                    <div class="col">
+                        <Field>
+                            <FieldLabel TextWeight="TextWeight.Bold">City</FieldLabel>
+                            <FieldBody>
+                                <TextEdit Text=@DetailsModel!.City ReadOnly />
+                            </FieldBody>
+                        </Field>
+                    </div>
+                    <div class="col">
+                        <Field>
+                            <FieldLabel TextWeight="TextWeight.Bold">State</FieldLabel>
+                            <FieldBody>
+                                <TextEdit Text=@DetailsModel!.StateProvinceName ReadOnly />
+                            </FieldBody>
+                        </Field>
+                    </div>
+                    <div class="col">
+                        <Field>
+                            <FieldLabel TextWeight="TextWeight.Bold">Postal Code</FieldLabel>
+                            <FieldBody>
+                                <TextEdit Text=@DetailsModel!.PostalCode ReadOnly />
+                            </FieldBody>
+                        </Field>
+                    </div>
+                    <div class="col">
+                        <Field>
+                            <FieldLabel TextWeight="TextWeight.Bold">Country</FieldLabel>
+                            <FieldBody>
+                                <TextEdit Text=@DetailsModel!.CountryRegionName ReadOnly />
+                            </FieldBody>
+                        </Field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <Field>
+                            <FieldLabel TextWeight="TextWeight.Bold">Birthday</FieldLabel>
+                            <FieldBody>
+                                <TextEdit Text=@DetailsModel!.BirthDate.ToShortDateString() ReadOnly />
+                            </FieldBody>
+                        </Field>
+                    </div>
+                    <div class="col">
+                        <Field>
+                            <FieldLabel TextWeight="TextWeight.Bold">Marital Status</FieldLabel>
+                            <FieldBody>
+                                <TextEdit Text=@DetailsModel!.MaritalStatus ReadOnly />
+                            </FieldBody>
+                        </Field>
+                    </div>
+                    <div class="col">
+                        <Field>
+                            <FieldLabel TextWeight="TextWeight.Bold">Gender</FieldLabel>
+                            <FieldBody>
+                                <TextEdit Text=@DetailsModel!.Gender ReadOnly />
+                            </FieldBody>
+                        </Field>
+                    </div>
+                    <div class="col">
+                        <Field>
+                            <FieldLabel TextWeight="TextWeight.Bold">Hire Date</FieldLabel>
+                            <FieldBody>
+                                <TextEdit Text=@DetailsModel!.HireDate.ToShortDateString() ReadOnly />
+                            </FieldBody>
+                        </Field>
+                    </div>
+                    <div class="col">
+                        <Field>
+                            <FieldLabel TextWeight="TextWeight.Bold">Salaried</FieldLabel>
+                            <FieldBody>
+                                <TextEdit Text=@(@DetailsModel!.Salaried ? "Yes" : "No") ReadOnly />
+                            </FieldBody>
+                        </Field>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <Field>
+                                <FieldLabel TextWeight="TextWeight.Bold">Vacation</FieldLabel>
+                                <FieldBody>
+                                    <TextEdit Text=@DetailsModel!.VacationHours.ToString() ReadOnly />
+                                </FieldBody>
+                            </Field>
+                        </div>
+                        <div class="col">
+                            <Field>
+                                <FieldLabel TextWeight="TextWeight.Bold">Sick Leave</FieldLabel>
+                                <FieldBody>
+                                    <TextEdit Text=@DetailsModel!.SickLeaveHours.ToString() ReadOnly />
+                                </FieldBody>
+                            </Field>
+                        </div>
+                        <div class="col">
+                            <Field>
+                                <FieldLabel TextWeight="TextWeight.Bold">Status</FieldLabel>
+                                <FieldBody>
+                                    <TextEdit Text=@(DetailsModel!.Active ? "Active" : "Inactive") ReadOnly />
+                                </FieldBody>
+                            </Field>
+                        </div>
+                        <div class="col">
+                            <Field>
+                                <FieldLabel TextWeight="TextWeight.Bold">Email Promo Preference</FieldLabel>
+                                <FieldBody>
+                                    <TextEdit Text=@DetailsModel!.EmailPromotion ReadOnly />
+                                </FieldBody>
+                            </Field>
+                        </div>
+                    </div>
+                </div>
+            </FormFields>
+        </ReadOnlyDetailsForm>
+    }
+    </ErrorBoundary>
