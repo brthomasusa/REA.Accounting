@@ -28,7 +28,7 @@
     {
         <ReadOnlyDetailsForm ViewModel=@DetailsModel>
             <FormFields>
-                <div class="row">
+                <div class="row mb-2">
                     <div class="col">
                         <Field>
                             <FieldLabel TextWeight="TextWeight.Bold">Name Style</FieldLabel>
@@ -78,7 +78,7 @@
                         </Field>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mb-2">
                     <div class="col">
                         <Field>
                             <FieldLabel TextWeight="TextWeight.Bold">Job Title</FieldLabel>
@@ -112,7 +112,7 @@
                         </Field>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mb-2">
                     <div class="col">
                         <Field>
                             <FieldLabel TextWeight="TextWeight.Bold">Address Line1</FieldLabel>
@@ -162,7 +162,7 @@
                         </Field>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mb-2">
                     <div class="col">
                         <Field>
                             <FieldLabel TextWeight="TextWeight.Bold">Birthday</FieldLabel>
@@ -203,40 +203,39 @@
                             </FieldBody>
                         </Field>
                     </div>
-
-                    <div class="row">
-                        <div class="col">
-                            <Field>
-                                <FieldLabel TextWeight="TextWeight.Bold">Vacation</FieldLabel>
-                                <FieldBody>
-                                    <TextEdit Text=@DetailsModel!.VacationHours.ToString() ReadOnly />
-                                </FieldBody>
-                            </Field>
-                        </div>
-                        <div class="col">
-                            <Field>
-                                <FieldLabel TextWeight="TextWeight.Bold">Sick Leave</FieldLabel>
-                                <FieldBody>
-                                    <TextEdit Text=@DetailsModel!.SickLeaveHours.ToString() ReadOnly />
-                                </FieldBody>
-                            </Field>
-                        </div>
-                        <div class="col">
-                            <Field>
-                                <FieldLabel TextWeight="TextWeight.Bold">Status</FieldLabel>
-                                <FieldBody>
-                                    <TextEdit Text=@(DetailsModel!.Active ? "Active" : "Inactive") ReadOnly />
-                                </FieldBody>
-                            </Field>
-                        </div>
-                        <div class="col">
-                            <Field>
-                                <FieldLabel TextWeight="TextWeight.Bold">Email Promo Preference</FieldLabel>
-                                <FieldBody>
-                                    <TextEdit Text=@DetailsModel!.EmailPromotion ReadOnly />
-                                </FieldBody>
-                            </Field>
-                        </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <Field>
+                            <FieldLabel TextWeight="TextWeight.Bold">Vacation</FieldLabel>
+                            <FieldBody>
+                                <TextEdit Text=@DetailsModel!.VacationHours.ToString() ReadOnly />
+                            </FieldBody>
+                        </Field>
+                    </div>
+                    <div class="col">
+                        <Field>
+                            <FieldLabel TextWeight="TextWeight.Bold">Sick Leave</FieldLabel>
+                            <FieldBody>
+                                <TextEdit Text=@DetailsModel!.SickLeaveHours.ToString() ReadOnly />
+                            </FieldBody>
+                        </Field>
+                    </div>
+                    <div class="col">
+                        <Field>
+                            <FieldLabel TextWeight="TextWeight.Bold">Status</FieldLabel>
+                            <FieldBody>
+                                <TextEdit Text=@(DetailsModel!.Active ? "Active" : "Inactive") ReadOnly />
+                            </FieldBody>
+                        </Field>
+                    </div>
+                    <div class="col">
+                        <Field>
+                            <FieldLabel TextWeight="TextWeight.Bold">Email Promo Preference</FieldLabel>
+                            <FieldBody>
+                                <TextEdit Text=@DetailsModel!.EmailPromotion ReadOnly />
+                            </FieldBody>
+                        </Field>
                     </div>
                 </div>
             </FormFields>
