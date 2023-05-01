@@ -47,7 +47,8 @@ message grpc_EmployeeListItem {
     string department = 6;
     string phoneNumber = 7;
     string emailAddress = 8;
-    bool active = 9;       
+    bool active = 9;
+    string fullName = 10;       
 }
 
 message grpc_EmployeeListItemsResponse {

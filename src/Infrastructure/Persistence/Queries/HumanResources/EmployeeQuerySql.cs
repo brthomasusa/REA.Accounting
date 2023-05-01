@@ -78,7 +78,8 @@ namespace REA.Accounting.Infrastructure.Persistence.Queries.HumanResources
             ,d.[Name] AS [Department]
             ,pp.[PhoneNumber] 
             ,ea.[EmailAddress]
-            ,e.CurrentFlag AS Active 
+            ,e.CurrentFlag AS Active
+            ,CONCAT(p.FirstName,' ',COALESCE(p.MiddleName,''),' ',p.LastName) as FullName 
         FROM [HumanResources].[Employee] e
         INNER JOIN [Person].[Person] p ON p.[BusinessEntityID] = e.[BusinessEntityID]
         LEFT OUTER JOIN [Person].[PersonPhone] pp ON pp.BusinessEntityID = p.[BusinessEntityID]	

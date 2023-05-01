@@ -1,18 +1,18 @@
 using REA.Accounting.Application.Interfaces.Messaging;
 using REA.Accounting.Infrastructure.Persistence.Interfaces;
-using REA.Accounting.Infrastructure.Persistence.Queries.HumanResources;
+using REA.Accounting.Shared.Models.HumanResources;
 using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Application.HumanResources.GetEmployeeDetailsById
 {
-    public sealed class GetEmployeeDetailsByIdWithAllInfoQueryHandler : IQueryHandler<GetEmployeeDetailsByIdWithAllInfoRequest, GetEmployeeDetailsByIdWithAllInfoResponse>
+    public sealed class GetEmployeeDetailsByIdWithAllInfoQueryHandler : IQueryHandler<GetEmployeeDetailsByIdWithAllInfoRequest, EmployeeDetailReadModel>
     {
         private readonly IReadRepositoryManager _repo;
 
         public GetEmployeeDetailsByIdWithAllInfoQueryHandler(IReadRepositoryManager repo)
             => _repo = repo;
 
-        public async Task<Result<GetEmployeeDetailsByIdWithAllInfoResponse>> Handle
+        public async Task<Result<EmployeeDetailReadModel>> Handle
         (
             GetEmployeeDetailsByIdWithAllInfoRequest request,
             CancellationToken cancellationToken
@@ -20,12 +20,12 @@ namespace REA.Accounting.Application.HumanResources.GetEmployeeDetailsById
         {
             try
             {
-                Result<GetEmployeeDetailsByIdWithAllInfoResponse> result =
+                Result<EmployeeDetailReadModel> result =
                     await _repo.EmployeeReadRepository.GetEmployeeDetailsByIdWithAllInfo(request.EmployeeID);
 
                 if (result.IsFailure)
                 {
-                    return Result<GetEmployeeDetailsByIdWithAllInfoResponse>.Failure<GetEmployeeDetailsByIdWithAllInfoResponse>(
+                    return Result<EmployeeDetailReadModel>.Failure<EmployeeDetailReadModel>(
                         new Error("GetEmployeeDetailsByIdWithAllInfoQueryHandler.Handle", result.Error.Message)
                     );
                 }
@@ -35,7 +35,7 @@ namespace REA.Accounting.Application.HumanResources.GetEmployeeDetailsById
             }
             catch (Exception ex)
             {
-                return Result<GetEmployeeDetailsByIdWithAllInfoResponse>.Failure<GetEmployeeDetailsByIdWithAllInfoResponse>(
+                return Result<EmployeeDetailReadModel>.Failure<EmployeeDetailReadModel>(
                     new Error("GetEmployeeDetailsByIdWithAllInfoQueryHandler.Handle", Helpers.GetExceptionMessage(ex))
                 );
             }

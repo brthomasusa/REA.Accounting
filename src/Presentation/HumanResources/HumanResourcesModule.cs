@@ -11,6 +11,7 @@ using REA.Accounting.Application.HumanResources.GetEmployeeDetailsById;
 using REA.Accounting.Application.HumanResources.UpdateEmployee;
 using REA.Accounting.Infrastructure.Persistence.Queries.HumanResources;
 using REA.Accounting.SharedKernel.Utilities;
+using REA.Accounting.Shared.Models.HumanResources;
 
 namespace REA.Accounting.Presentation.HumanResources
 {
@@ -30,7 +31,7 @@ namespace REA.Accounting.Presentation.HumanResources
 
             app.MapGet("api/employees/allinfo/{id}", async (int id, ISender sender) =>
             {
-                Result<GetEmployeeDetailsByIdWithAllInfoResponse> result =
+                Result<EmployeeDetailReadModel> result =
                     await sender.Send(new GetEmployeeDetailsByIdWithAllInfoRequest(EmployeeID: id));
 
                 if (result.IsSuccess)
@@ -44,7 +45,7 @@ namespace REA.Accounting.Presentation.HumanResources
                 PagingParameters pagingParameters = new(parameters.PageNumber, parameters.PageSize);
                 GetEmployeeListItemsRequest request = new(LastName: parameters.LastName!, PagingParameters: pagingParameters);
 
-                Result<PagedList<GetEmployeeListItemsResponse>> result = await sender.Send(request);
+                Result<PagedList<EmployeeListItemReadModel>> result = await sender.Send(request);
 
                 if (result.IsSuccess)
                     return Results.Ok(result.Value);

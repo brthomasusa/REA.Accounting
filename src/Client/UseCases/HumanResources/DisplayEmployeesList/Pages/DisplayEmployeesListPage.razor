@@ -1,10 +1,10 @@
-@page "/UseCases/Organization/DisplayCompanyDepartments/Pages/DisplayCompanyDepartmentsPage"
+@page "/UseCases/HumanResources/DisplayEmployeesList/Pages/DisplayEmployeesListPage"
 @inherits FluxorComponent
 
-<PageTitle>Company Departments</PageTitle>
+<PageTitle>Workers</PageTitle>
 <Row TextAlignment=TextAlignment.Center Margin="Margin.Is3.FromTop">
     <Heading Size="HeadingSize.Is5">
-        AdventureWorks Cycles, Viewing Company Departments
+        AdventureWorks Cycles, Viewing List of Workers
     </Heading>
 </Row>
 
@@ -23,40 +23,49 @@
     {
         <Row Margin="Margin.Is3.OnAll">
             <div class="col-6 align-self-center justify-content-start">
-                <CreateResourceLink Disabled=true />
+                <CreateResourceLink Disabled=false DoNavigation="@GoToCreatePage" />
             </div>
             <div class="col-6 align-self-center justify-content-start">
-                <SingleFieldGridSearch PlaceHolderText="Department Name" OnSearchTermChangedEventHandler=@OnSearchChanged
+                <SingleFieldGridSearch PlaceHolderText="Employee Last Name" OnSearchTermChangedEventHandler=@OnSearchChanged
                 CachedSearchTerm=@CachedSearchTerm />
             </div>
         </Row>
         <Row Margin="Margin.Is4.FromStart">
-            <BasicGrid Items=DisplayCompanyDepartmentsState!.Value.DepartmentList>
+            <BasicGrid Items=DisplayEmployeeListState!.Value.EmployeeList>
                 <TableHeader>
                     <th>Id</th>
                     <th>Name</th>
-                    <th>Group Name</th>
-                    <th>Modified Date</th>
+                    <th>Job Title</th>
+                    <th>Department</th>
+                    <th>Telephone</th>
+                    <th>Email Address</th>
+                    <th>Status</th>
                     <th>Actions</th>
                 </TableHeader>
-                <RowTemplate Context="department">
-                    <td>@department.DepartmentID</td>
-                    <td>@department.Name</td>
-                    <td>@department.GroupName</td>
-                    <td>@department.ModifiedDate</td>
+                <RowTemplate Context="EmployeeListItem">
+                    <td>@EmployeeListItem.BusinessEntityID</td>
+                    <td>@EmployeeListItem.FullName</td>
+                    <td>@EmployeeListItem.JobTitle</td>
+                    <td>@EmployeeListItem.Department</td>
+                    <td>@EmployeeListItem.PhoneNumber</td>
+                    <td>@EmployeeListItem.EmailAddress</td>
+                    <td>@(EmployeeListItem.Active ? "Active" : "Inactive")</td>
                     <td>
                         <Dropdown Direction="Direction.Up">
                             <DropdownToggle Outline Size="Size.ExtraSmall" Color="Color.Primary" ToggleIconVisible="false">
                             <span class="btn-label"><i class="fas fa-ellipsis-v" aria-hidden="true"></i></span>
                             </DropdownToggle>
                             <DropdownMenu class="border border-dark rounded-3 shadow-lg">
-                            <DropdownItem Clicked="@( () => OnActionItemClicked("View", @department.DepartmentID) )">
+                            <DropdownItem
+                                Clicked="@( () => OnActionItemClicked("View", @EmployeeListItem.BusinessEntityID) )">
                                 Details
                             </DropdownItem>
-                            <DropdownItem Clicked="@( () => OnActionItemClicked("Edit", @department.DepartmentID) )">
+                            <DropdownItem
+                                Clicked="@( () => OnActionItemClicked("Edit", @EmployeeListItem.BusinessEntityID) )">
                                 Edit
                             </DropdownItem>
-                            <DropdownItem Clicked="@( () => OnActionItemClicked("Delete", @department.DepartmentID) )">
+                            <DropdownItem
+                                Clicked="@( () => OnActionItemClicked("Delete", @EmployeeListItem.BusinessEntityID) )">
                                 Delete
                             </DropdownItem>
                             </DropdownMenu>
@@ -66,7 +75,7 @@
                     </BasicGrid>
                     </Row>
         <Row Margin="Margin.Is4.FromStart">
-            <BasicGridPager MetaData=@DisplayCompanyDepartmentsState!.Value.MetaData
+            <BasicGridPager MetaData=@DisplayEmployeeListState!.Value.MetaData
             PagerChangedEventHandler=@PagerChangedEventHandler />
         </Row>
     }

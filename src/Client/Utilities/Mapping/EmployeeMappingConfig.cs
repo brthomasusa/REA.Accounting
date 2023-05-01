@@ -3,9 +3,9 @@ using GoogleDateTime = Google.Protobuf.WellKnownTypes.Timestamp;
 using gRPC.Contracts.HumanResources;
 using REA.Accounting.Shared.Models.HumanResources;
 
-namespace REA.Accounting.Server.Mapping
+namespace EA.Accounting.Client.Utilities.Mapping
 {
-    public sealed class EmployeeAggregateMappingConfig : IRegister
+    public sealed class EmployeeMappingConfig : IRegister
     {
         void IRegister.Register(TypeAdapterConfig config)
         {

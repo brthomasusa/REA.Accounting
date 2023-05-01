@@ -7,6 +7,7 @@ using MediatR;
 using REA.Accounting.Application.HumanResources.GetEmployeeDetailsById;
 using REA.Accounting.Infrastructure.Persistence.Queries.HumanResources;
 using REA.Accounting.SharedKernel.Utilities;
+using REA.Accounting.Shared.Models.HumanResources;
 
 namespace REA.Accounting.Server.Contracts
 {
@@ -20,7 +21,7 @@ namespace REA.Accounting.Server.Contracts
 
         public override async Task<grpc_EmployeeDetailResponse> GetEmployeeDetailsByIdWithAllInfo(ItemRequest request, ServerCallContext context)
         {
-            Result<GetEmployeeDetailsByIdWithAllInfoResponse> result =
+            Result<EmployeeDetailReadModel> result =
                 await _sender.Send(new GetEmployeeDetailsByIdWithAllInfoRequest(EmployeeID: request.Id));
 
             return _mapper.Map<grpc_EmployeeDetailResponse>(result.Value);
@@ -30,7 +31,7 @@ namespace REA.Accounting.Server.Contracts
         {
             PagingParameters pagingParameters = new(request.PageNumber, request.PageSize);
             GetEmployeeListItemsRequest requestParameter = new(LastName: request.Criteria, PagingParameters: pagingParameters);
-            Result<PagedList<GetEmployeeListItemsResponse>> result = await _sender.Send(requestParameter);
+            Result<PagedList<EmployeeListItemReadModel>> result = await _sender.Send(requestParameter);
 
             grpc_EmployeeListItemsResponse grpcResponse = new();
             List<grpc_EmployeeListItem> grpcEmployeeListItems = new();

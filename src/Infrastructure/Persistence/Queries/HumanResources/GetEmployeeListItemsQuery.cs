@@ -3,6 +3,7 @@ using System.Data;
 using Dapper;
 using REA.Accounting.SharedKernel.Utilities;
 using REA.Accounting.Infrastructure.Persistence.Repositories;
+using REA.Accounting.Shared.Models.HumanResources;
 
 namespace REA.Accounting.Infrastructure.Persistence.Queries.HumanResources
 {
@@ -10,7 +11,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Queries.HumanResources
     {
         private static int Offset(int page, int pageSize) => (page - 1) * pageSize;
 
-        public async static Task<Result<PagedList<GetEmployeeListItemsResponse>>> Query
+        public async static Task<Result<PagedList<EmployeeListItemReadModel>>> Query
         (
             string lastName,
             PagingParameters pagingParameters,
@@ -34,10 +35,10 @@ namespace REA.Accounting.Infrastructure.Persistence.Queries.HumanResources
 
                 using var connection = ctx.CreateConnection();
 
-                var items = await connection.QueryAsync<GetEmployeeListItemsResponse>(sql, parameters);
+                var items = await connection.QueryAsync<EmployeeListItemReadModel>(sql, parameters);
                 int count = connection.ExecuteScalar<int>(countSql, parameters);
 
-                var pagedList = PagedList<GetEmployeeListItemsResponse>.CreatePagedList(
+                var pagedList = PagedList<EmployeeListItemReadModel>.CreatePagedList(
                         items.ToList(), count, pagingParameters.PageNumber, pagingParameters.PageSize
                     );
 
@@ -47,7 +48,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Queries.HumanResources
             {
                 logger.LogError(ex, $"Code Path: GetEmployeeListItemsQuery.Query - Message: {Helpers.GetExceptionMessage(ex)}");
 
-                return Result<PagedList<GetEmployeeListItemsResponse>>.Failure<PagedList<GetEmployeeListItemsResponse>>(
+                return Result<PagedList<EmployeeListItemReadModel>>.Failure<PagedList<EmployeeListItemReadModel>>(
                     new Error("GetEmployeeListItemsQuery.Query", Helpers.GetExceptionMessage(ex))
                 );
             }

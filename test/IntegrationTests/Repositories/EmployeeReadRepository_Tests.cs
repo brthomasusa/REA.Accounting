@@ -2,6 +2,7 @@ using REA.Accounting.Core.HumanResources;
 using REA.Accounting.SharedKernel.Utilities;
 using REA.Accounting.Infrastructure.Persistence.Repositories;
 using REA.Accounting.Infrastructure.Persistence.Queries.HumanResources;
+using REA.Accounting.Shared.Models.HumanResources;
 
 namespace REA.Accounting.IntegrationTests.Repositories
 {
@@ -35,7 +36,7 @@ namespace REA.Accounting.IntegrationTests.Repositories
         {
             ReadRepositoryManager readRepository = new(_dapperCtx, new NullLogger<ReadRepositoryManager>());
 
-            Result<GetEmployeeDetailsByIdWithAllInfoResponse> result =
+            Result<EmployeeDetailReadModel> result =
                 await readRepository.EmployeeReadRepository.GetEmployeeDetailsByIdWithAllInfo(1);
 
             Assert.True(result.IsSuccess);
@@ -47,7 +48,7 @@ namespace REA.Accounting.IntegrationTests.Repositories
         {
             ReadRepositoryManager readRepository = new(_dapperCtx, new NullLogger<ReadRepositoryManager>());
 
-            Result<GetEmployeeDetailsByIdWithAllInfoResponse> result =
+            Result<EmployeeDetailReadModel> result =
                 await readRepository.EmployeeReadRepository.GetEmployeeDetailsByIdWithAllInfo(3);
 
             Assert.True(result.IsFailure);
@@ -60,7 +61,7 @@ namespace REA.Accounting.IntegrationTests.Repositories
             const string lastName = "A";
             PagingParameters pagingParameters = new(1, 10);
 
-            Result<PagedList<GetEmployeeListItemsResponse>> result =
+            Result<PagedList<EmployeeListItemReadModel>> result =
                 await readRepository.EmployeeReadRepository.GetEmployeeListItemsSearchByLastName(lastName, pagingParameters);
 
             Assert.True(result.IsSuccess);

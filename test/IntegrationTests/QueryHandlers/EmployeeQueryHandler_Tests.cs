@@ -3,6 +3,7 @@ using REA.Accounting.Infrastructure.Persistence.Interfaces;
 using REA.Accounting.Infrastructure.Persistence.Repositories;
 using REA.Accounting.Infrastructure.Persistence.Queries.HumanResources;
 using REA.Accounting.SharedKernel.Utilities;
+using REA.Accounting.Shared.Models.HumanResources;
 
 namespace REA.Accounting.IntegrationTests.QueryHandlers
 {
@@ -41,7 +42,7 @@ namespace REA.Accounting.IntegrationTests.QueryHandlers
             GetEmployeeDetailsByIdWithAllInfoRequest request = new(EmployeeID: 2);
             GetEmployeeDetailsByIdWithAllInfoQueryHandler handler = new(_repository);
 
-            Result<GetEmployeeDetailsByIdWithAllInfoResponse> response = await handler.Handle(request, new CancellationToken());
+            Result<EmployeeDetailReadModel> response = await handler.Handle(request, new CancellationToken());
 
             Assert.True(response.IsSuccess);
         }
@@ -52,7 +53,7 @@ namespace REA.Accounting.IntegrationTests.QueryHandlers
             GetEmployeeDetailsByIdWithAllInfoRequest request = new(EmployeeID: 3);
             GetEmployeeDetailsByIdWithAllInfoQueryHandler handler = new(_repository);
 
-            Result<GetEmployeeDetailsByIdWithAllInfoResponse> response = await handler.Handle(request, new CancellationToken());
+            Result<EmployeeDetailReadModel> response = await handler.Handle(request, new CancellationToken());
 
             Assert.True(response.IsFailure);
         }
@@ -64,7 +65,7 @@ namespace REA.Accounting.IntegrationTests.QueryHandlers
             GetEmployeeListItemsRequest request = new(LastName: "A", PagingParameters: pagingParameters);
             GetEmployeeListItemsQueryHandler handler = new(_repository);
 
-            Result<PagedList<GetEmployeeListItemsResponse>> response = await handler.Handle(request, new CancellationToken());
+            Result<PagedList<EmployeeListItemReadModel>> response = await handler.Handle(request, new CancellationToken());
 
             Assert.True(response.IsSuccess);
 

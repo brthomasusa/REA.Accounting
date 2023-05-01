@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace REA.Accounting.Infrastructure.Persistence.Queries.HumanResources
+namespace REA.Accounting.Shared.Models.HumanResources
 {
-    public sealed class GetEmployeeDetailsByIdWithAllInfoResponse
+    public sealed class EmployeeDetailReadModel
     {
         public int BusinessEntityID { get; set; }
         public string? NameStyle { get; set; }

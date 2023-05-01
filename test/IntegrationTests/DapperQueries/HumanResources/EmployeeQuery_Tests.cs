@@ -1,6 +1,7 @@
 using REA.Accounting.Infrastructure.Persistence.Queries.HumanResources;
 using REA.Accounting.Infrastructure.Persistence.Repositories;
 using REA.Accounting.SharedKernel.Utilities;
+using REA.Accounting.Shared.Models.HumanResources;
 
 namespace REA.Accounting.IntegrationTests.DapperQueries.HumanResources
 {
@@ -27,7 +28,7 @@ namespace REA.Accounting.IntegrationTests.DapperQueries.HumanResources
         [Fact]
         public async Task Query_GetEmployeeDetailsByIdWithAllInfoQuery_ShouldSucceed()
         {
-            Result<GetEmployeeDetailsByIdWithAllInfoResponse> result =
+            Result<EmployeeDetailReadModel> result =
                 await GetEmployeeDetailsByIdWithAllInfoQuery.Query(1, _dapperCtx, new NullLogger<ReadRepositoryManager>());
 
             Assert.True(result.IsSuccess);
@@ -49,12 +50,26 @@ namespace REA.Accounting.IntegrationTests.DapperQueries.HumanResources
             const string lastName = "A";
             PagingParameters pagingParameters = new(1, 10);
 
-            Result<PagedList<GetEmployeeListItemsResponse>> result =
+            Result<PagedList<EmployeeListItemReadModel>> result =
                 await GetEmployeeListItemsQuery.Query(lastName, pagingParameters, _dapperCtx, new NullLogger<ReadRepositoryManager>());
 
             Assert.True(result.IsSuccess);
             int employees = result.Value.Count;
             Assert.Equal(4, employees);
+        }
+
+        [Fact]
+        public async Task Query_GetEmployeeListItemsQuery_EmptySearchString_ShouldSucceed()
+        {
+            string lastName = string.Empty;
+            PagingParameters pagingParameters = new(1, 5);
+
+            Result<PagedList<EmployeeListItemReadModel>> result =
+                await GetEmployeeListItemsQuery.Query(lastName, pagingParameters, _dapperCtx, new NullLogger<ReadRepositoryManager>());
+
+            Assert.True(result.IsSuccess);
+            int employees = result.Value.Count;
+            Assert.Equal(5, employees);
         }
 
     }

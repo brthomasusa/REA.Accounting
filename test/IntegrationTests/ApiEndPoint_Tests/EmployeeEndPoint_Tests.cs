@@ -9,6 +9,7 @@ using REA.Accounting.Application.HumanResources.CreateEmployee;
 using REA.Accounting.Application.HumanResources.DeleteEmployee;
 using REA.Accounting.Application.HumanResources.UpdateEmployee;
 using REA.Accounting.Infrastructure.Persistence.Queries.HumanResources;
+using REA.Accounting.Shared.Models.HumanResources;
 
 namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
 {
@@ -53,7 +54,7 @@ namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
             response.EnsureSuccessStatusCode();
 
             var jsonResponse = await response.Content.ReadAsStreamAsync();
-            var employee = await JsonSerializer.DeserializeAsync<GetEmployeeDetailsByIdWithAllInfoResponse>(jsonResponse, _options);
+            var employee = await JsonSerializer.DeserializeAsync<EmployeeDetailReadModel>(jsonResponse, _options);
 
             Assert.Equal("Ken", employee.FirstName);
             Assert.Equal("Sánchez", employee.LastName);
@@ -72,8 +73,8 @@ namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
                 ["lastName"] = lastName
             };
 
-            List<GetEmployeeListItemsResponse> response = await _client
-                .GetFromJsonAsync<List<GetEmployeeListItemsResponse>>(QueryHelpers.AddQueryString($"{_urlRoot}employees/filterbylastname", queryParams));
+            List<EmployeeListItemReadModel> response = await _client
+                .GetFromJsonAsync<List<EmployeeListItemReadModel>>(QueryHelpers.AddQueryString($"{_urlRoot}employees/filterbylastname", queryParams));
 
             Assert.Equal(4, response.Count);
         }

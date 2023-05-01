@@ -1,8 +1,8 @@
 using REA.Accounting.Application.Interfaces.Messaging;
-using REA.Accounting.Infrastructure.Persistence.Queries.HumanResources;
 using REA.Accounting.SharedKernel.Utilities;
+using REA.Accounting.Shared.Models.HumanResources;
 
 namespace REA.Accounting.Application.HumanResources.GetEmployeeDetailsById
 {
-    public sealed record GetEmployeeListItemsRequest(string LastName, PagingParameters PagingParameters) : IQuery<PagedList<GetEmployeeListItemsResponse>>;
+    public sealed record GetEmployeeListItemsRequest(string LastName, PagingParameters PagingParameters) : IQuery<PagedList<EmployeeListItemReadModel>>;
 }

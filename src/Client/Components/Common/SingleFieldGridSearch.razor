@@ -1,6 +1,6 @@
 <ErrorBoundary>
     <div class="input-group col-md-5 text-md-right">
-        <input name="searchInput" type="text" class="form-control" placeholder="Department Name" @bind=SearchTerm
+        <input name="searchInput" type="text" class="form-control" placeholder="@PlaceHolderText" @bind=SearchTerm
             @onkeyup="OnSearchTermChanged" />
         <div class="input-broup-btn">
             <button name="searchButton" class="btn btn-sm btn-default" @onclick="OnSearchButtonClick">
