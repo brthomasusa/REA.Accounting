@@ -1,8 +1,3 @@
-using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
-using REA.Accounting.Infrastructure.Persistence.Extensions;
-using REA.Accounting.Infrastructure.Persistence.Interfaces;
-using REA.Accounting.IntegrationTests.Base;
-
 namespace REA.Accounting.IntegrationTests.DbContext
 {
     public class DbContextRetrieve_Tests : TestBase

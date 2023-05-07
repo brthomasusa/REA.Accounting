@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using REA.Accounting.Infrastructure.Persistence;
 using REA.Accounting.Infrastructure.Persistence.DataModels.HumanResources;
 using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
 
@@ -12,7 +13,6 @@ namespace REA.Accounting.Infrastructure.Persistence.Configurations.HumanResource
             entity.ToTable("Employee", schema: "HumanResources");
             entity.HasKey(e => e.BusinessEntityID);
             entity.Ignore(e => e.OrganizationNode);
-            entity.Ignore(e => e.OrganizationLevel);
             entity.HasMany(employee => employee.DepartmentHistories)
                   .WithOne()
                   .HasForeignKey(employee => employee.BusinessEntityID)

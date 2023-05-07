@@ -25,6 +25,7 @@ namespace REA.Accounting.Application.HumanResources.CreateEmployee
                 request.LastName,
                 request.MiddleName!,
                 request.Suffix,
+                request.ManagerID,
                 request.NationalID,
                 request.Login,
                 request.JobTitle,

@@ -1,10 +1,9 @@
 using Microsoft.Extensions.Logging.Abstractions;
-
 using REA.Accounting.Core.HumanResources;
 using REA.Accounting.Core.Shared;
-using REA.Accounting.SharedKernel.Utilities;
 using REA.Accounting.Infrastructure.Persistence.Interfaces;
 using REA.Accounting.Infrastructure.Persistence.Repositories;
+using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.IntegrationTests.Repositories
 {
@@ -29,7 +28,7 @@ namespace REA.Accounting.IntegrationTests.Repositories
         [Fact]
         public async Task InsertAsync_EmployeeAggregateRepo_ShouldSucceed()
         {
-            Employee employee = GetEmployeeForCreate();
+            Employee employee = GetEmployeeForCreate_ValidData();
 
             Result<int> result = await _writeRepository.EmployeeAggregateRepository.InsertAsync(employee);
 
@@ -146,7 +145,7 @@ namespace REA.Accounting.IntegrationTests.Repositories
             Assert.True(result.IsFailure);
         }
 
-        private static Employee GetEmployeeForCreate()
+        private static Employee GetEmployeeForCreate_ValidData()
         {
             Result<Employee> result = Employee.Create
                 (
@@ -158,6 +157,7 @@ namespace REA.Accounting.IntegrationTests.Repositories
                     "Doe",
                     "D",
                     "Senior",
+                    0,
                     "358987145",
                     "adventure-works\\john10",
                     "Tool Designer",

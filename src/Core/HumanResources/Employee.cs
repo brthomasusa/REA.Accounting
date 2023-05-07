@@ -3,11 +3,10 @@
 using REA.Accounting.Core.HumanResources.ValueObjects;
 using REA.Accounting.Core.Shared;
 using REA.Accounting.Core.Shared.ValueObjects;
-using REA.Accounting.SharedKernel.Utilities;
 using REA.Accounting.SharedKernel.CommonValueObjects;
-
-using ValueObject = REA.Accounting.Core.HumanResources.ValueObjects;
+using REA.Accounting.SharedKernel.Utilities;
 using SharedValueObject = REA.Accounting.Core.Shared.ValueObjects;
+using ValueObject = REA.Accounting.Core.HumanResources.ValueObjects;
 
 namespace REA.Accounting.Core.HumanResources
 {
@@ -25,6 +24,7 @@ namespace REA.Accounting.Core.HumanResources
             PersonName name,
             Suffix? suffix,
             EmailPromotionEnum emailPromotionEnum,
+            int managerID,
             NationalID nationalID,
             Login login,
             JobTitle jobTitle,
@@ -39,6 +39,7 @@ namespace REA.Accounting.Core.HumanResources
 
         ) : base(employeeID, personType, nameStyle, title!, name, suffix!, emailPromotionEnum)
         {
+            ManagerID = managerID;
             NationalIDNumber = nationalID.Value!;
             LoginID = login.Value;
             JobTitle = jobTitle.Value;
@@ -64,6 +65,7 @@ namespace REA.Accounting.Core.HumanResources
             string lastName,
             string middleName,
             string? suffix,
+            int managerID,
             string nationalID,
             string login,
             string jobTitle,
@@ -81,12 +83,14 @@ namespace REA.Accounting.Core.HumanResources
             {
                 Employee employee = new(
                     employeeID,
+
                     SharedValueObject.PersonType.Create(personType),
                     nameStyle,
                     SharedValueObject.Title.Create(title!),
                     PersonName.Create(lastName, firstName, middleName),
                     SharedValueObject.Suffix.Create(suffix!),
                     EmailPromotionEnum.None,
+                    managerID,
                     NationalID.Create(nationalID),
                     Login.Create(login),
                     ValueObject.JobTitle.Create(jobTitle),
@@ -160,6 +164,7 @@ namespace REA.Accounting.Core.HumanResources
             }
         }
 
+        public int ManagerID { get; }
         public string NationalIDNumber { get; private set; }
 
         public string LoginID { get; private set; }

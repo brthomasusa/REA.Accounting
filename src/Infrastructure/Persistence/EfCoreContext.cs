@@ -1,3 +1,5 @@
+#pragma warning disable CS8604
+
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 
@@ -39,7 +41,12 @@ namespace REA.Accounting.Infrastructure.Persistence
         {
             base.OnModelCreating(modelBuilder);
 
+            _ = modelBuilder.HasDbFunction(typeof(EfCoreContext).GetMethod(nameof(Get_Manager_ID), new[] { typeof(int) }));
+
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
+
+        public int Get_Manager_ID(int employeeID)
+            => throw new NotSupportedException();
     }
 }

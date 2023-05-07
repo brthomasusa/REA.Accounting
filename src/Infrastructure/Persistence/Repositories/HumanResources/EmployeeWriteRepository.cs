@@ -1,7 +1,7 @@
 using Ardalis.Specification.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-
 using REA.Accounting.Core.Interfaces;
 using REA.Accounting.Core.Shared;
 using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
@@ -10,7 +10,6 @@ using REA.Accounting.Infrastructure.Persistence.Specifications.HumanResources;
 using REA.Accounting.Infrastructure.Persistence.Specifications.Person;
 using REA.Accounting.SharedKernel.Interfaces;
 using REA.Accounting.SharedKernel.Utilities;
-
 using EmployeeDataModel = REA.Accounting.Infrastructure.Persistence.DataModels.HumanResources.EmployeeDataModel;
 using EmployeeDomainModel = REA.Accounting.Core.HumanResources.Employee;
 
@@ -261,6 +260,8 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
         {
             try
             {
+                using var transaction = _context.Database.BeginTransaction();
+
                 BusinessEntity entity = new()
                 {
                     BusinessEntityID = 0,
@@ -268,7 +269,22 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
                 };
 
                 await _context.AddAsync(entity);
+
                 await _unitOfWork.CommitAsync();
+
+                object[] parameters = new object[]
+                {
+                    new SqlParameter("@paramEmployeeID", entity.BusinessEntityID),
+                    new SqlParameter("@paramManagerID", 285)
+                };
+
+                int items =
+                    await _context.Database.ExecuteSqlRawAsync(
+                        "EXEC HumanResources.uspUpdateEmployeeOrgNode @paramManagerID, @paramEmployeeID",
+                        parameters
+                    );
+
+                await transaction.CommitAsync();
 
                 return Result<int>.Success<int>(entity.BusinessEntityID);
             }

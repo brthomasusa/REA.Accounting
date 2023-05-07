@@ -55,3 +55,32 @@ message grpc_EmployeeListItemsResponse {
     repeated grpc_EmployeeListItem grpc_employees = 1; 
     map<string, int32> grpc_meta_data = 2;
 }
+
+message grpc_EmployeeCommandModel {
+    int32 businessEntityId = 1;
+    string nameStyle = 2;
+    string title = 3;
+    string firstName = 4;
+    string middleName = 5;
+    string lastName = 6;
+    string suffix = 7;
+    string jobTitle = 8;
+    string phoneNumber = 9;
+    string phoneNumberType = 10;
+    string emailAddress = 11;
+    string emailPromotion = 12; 
+    string addressLine1 = 13;
+    string addressLine2 = 14;
+    string city = 15;
+    string stateProvinceName = 16;
+    string PostalCode = 17;
+    string countryRegionName = 18;
+    google.protobuf.Timestamp birthDate = 19;
+    string maritalStatus = 20;
+    string gender = 21;
+    google.protobuf.Timestamp hireDate = 22;
+    bool salaried = 23;
+    int32 vacationHours = 24;
+    int32 sickLeaveHours = 25;
+    bool active = 26;   
+}

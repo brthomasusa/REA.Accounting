@@ -13,6 +13,7 @@ namespace REA.Accounting.Application.HumanResources.CreateEmployee
             string? MiddleName,
             string? Suffix,
             int EmailPromotion,
+            int ManagerID,
             string NationalID,
             string Login,
             string JobTitle,

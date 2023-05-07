@@ -1,6 +1,6 @@
-using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
 using REA.Accounting.Core.HumanResources;
 using REA.Accounting.Core.Shared;
+using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
 using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Infrastructure.Persistence.Mappings.HumanResources
@@ -19,6 +19,7 @@ namespace REA.Accounting.Infrastructure.Persistence.Mappings.HumanResources
                 person!.LastName!,
                 person!.MiddleName!,
                 person!.Suffix,
+                person!.Employee!.ManagerID,
                 person!.Employee!.NationalIDNumber!,
                 person!.Employee!.LoginID!,
                 person!.Employee!.JobTitle!,

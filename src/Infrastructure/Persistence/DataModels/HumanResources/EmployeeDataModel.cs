@@ -7,12 +7,12 @@ namespace REA.Accounting.Infrastructure.Persistence.DataModels.HumanResources
     public class EmployeeDataModel
     {
         public int BusinessEntityID { get; set; }
+        public int ManagerID { get; set; }
         public string? NationalIDNumber { get; set; }
         public string? LoginID { get; set; }
 
         [JsonIgnore]
         public HierarchyId? OrganizationNode { get; set; }
-        public int? OrganizationLevel { get; set; }
         public string? JobTitle { get; set; }
         public DateTime BirthDate { get; set; }
         public string? MaritalStatus { get; set; }

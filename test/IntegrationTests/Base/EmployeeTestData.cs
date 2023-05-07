@@ -1,5 +1,7 @@
 using REA.Accounting.Application.HumanResources.CreateEmployee;
 using REA.Accounting.Application.HumanResources.UpdateEmployee;
+using REA.Accounting.Infrastructure.Persistence.DataModels.HumanResources;
+using REA.Accounting.Infrastructure.Persistence.DataModels.Person;
 
 namespace REA.Accounting.IntegrationTests.Base
 {
@@ -16,6 +18,7 @@ namespace REA.Accounting.IntegrationTests.Base
                 MiddleName: "J",
                 Suffix: null,
                 EmailPromotion: 2,
+                0,
                 NationalID: "13232145",
                 Login: @"adventure-works\johnny0",
                 JobTitle: "The Man",
@@ -53,6 +56,7 @@ namespace REA.Accounting.IntegrationTests.Base
                 MiddleName: "J",
                 Suffix: null,
                 EmailPromotion: 2,
+                0,
                 NationalID: "13232145",
                 Login: @"adventure-works\johnny0",
                 JobTitle: "The Man",
@@ -90,6 +94,7 @@ namespace REA.Accounting.IntegrationTests.Base
                 MiddleName: "F",
                 Suffix: null,
                 EmailPromotion: 2,
+                0,
                 NationalID: "13232145",
                 Login: @"adventure-works\johnny0",
                 JobTitle: "The Man",
@@ -127,6 +132,7 @@ namespace REA.Accounting.IntegrationTests.Base
                 MiddleName: "F",
                 Suffix: null,
                 EmailPromotion: 2,
+                0,
                 NationalID: "295847284",
                 Login: @"adventure-works\johnny0",
                 JobTitle: "The Man",
@@ -164,6 +170,7 @@ namespace REA.Accounting.IntegrationTests.Base
                 MiddleName: "F",
                 Suffix: null,
                 EmailPromotion: 2,
+                0,
                 NationalID: "295847284",
                 Login: @"adventure-works\johnny0",
                 JobTitle: "The Man",
@@ -213,5 +220,49 @@ namespace REA.Accounting.IntegrationTests.Base
                 SickLeave: 1,
                 Active: true
             );
+
+        public static BusinessEntity GetBusinessEntity()
+            => new()
+            {
+                BusinessEntityID = 0,
+                PersonModel = new()
+                {
+                    PersonType = "EM",
+                    NameStyle = false,
+                    Title = "Mr.",
+                    FirstName = "Johnny",
+                    MiddleName = "D",
+                    LastName = "Doe",
+                    Suffix = "Jr.",
+                    EmailPromotion = 2,
+                    Employee = new EmployeeDataModel()
+                    {
+                        NationalIDNumber = "123797967",
+                        LoginID = @"adventure-works\johnny01",
+                        JobTitle = "Vice President At Large",
+                        BirthDate = new DateTime(1971, 8, 1),
+                        MaritalStatus = "M",
+                        Gender = "M",
+                        HireDate = new DateTime(2008, 1, 31),
+                        SalariedFlag = true,
+                        VacationHours = 1,
+                        SickLeaveHours = 20,
+                        CurrentFlag = true
+                    },
+                    EmailAddresses = new List<EmailAddress>()
+                    {
+                        new EmailAddress
+                        {
+                            MailAddress = "johnnydoe@adventureworks.com"
+                        }
+                    },
+                    Telephones = new List<PersonPhone>()
+                    {
+                        new PersonPhone { PhoneNumber = "214-555-4567", PhoneNumberTypeID = 1},
+                        new PersonPhone { PhoneNumber = "972-555-1234", PhoneNumberTypeID = 2},
+                        new PersonPhone { PhoneNumber = "469-555-4567", PhoneNumberTypeID = 3}
+                    }
+                }
+            };
     }
 }

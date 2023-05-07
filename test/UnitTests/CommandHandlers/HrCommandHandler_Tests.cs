@@ -1,6 +1,4 @@
-using TestSupport.EfHelpers;
 using Microsoft.Extensions.Logging.Abstractions;
-
 using REA.Accounting.Application.HumanResources.CreateEmployee;
 using REA.Accounting.Application.HumanResources.DeleteEmployee;
 using REA.Accounting.Application.HumanResources.UpdateEmployee;
@@ -9,6 +7,7 @@ using REA.Accounting.Infrastructure.Persistence.Interfaces;
 using REA.Accounting.Infrastructure.Persistence.Repositories;
 using REA.Accounting.SharedKernel.Utilities;
 using REA.Accounting.UnitTests.TestHelpers;
+using TestSupport.EfHelpers;
 
 namespace REA.Accounting.UnitTests.CommandHandlers
 {
@@ -74,6 +73,7 @@ namespace REA.Accounting.UnitTests.CommandHandlers
                 MiddleName: "J",
                 Suffix: null,
                 EmailPromotion: 2,
+                0,
                 NationalID: "13232145",
                 Login: @"adventure-works\johnny0",
                 JobTitle: "The Man",

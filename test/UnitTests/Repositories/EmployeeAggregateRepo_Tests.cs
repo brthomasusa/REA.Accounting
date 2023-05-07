@@ -1,14 +1,12 @@
-using TestSupport.EfHelpers;
-
 using Microsoft.Extensions.Logging.Abstractions;
 using REA.Accounting.Core.HumanResources;
 using REA.Accounting.Core.Shared;
 using REA.Accounting.Infrastructure.Persistence;
-using REA.Accounting.SharedKernel.Utilities;
-using REA.Accounting.UnitTests.TestHelpers;
-
 using REA.Accounting.Infrastructure.Persistence.Interfaces;
 using REA.Accounting.Infrastructure.Persistence.Repositories;
+using REA.Accounting.SharedKernel.Utilities;
+using REA.Accounting.UnitTests.TestHelpers;
+using TestSupport.EfHelpers;
 
 namespace REA.Accounting.UnitTests.Repositories
 {
@@ -96,6 +94,7 @@ namespace REA.Accounting.UnitTests.Repositories
                     "Doe",
                     "D",
                     "Senior",
+                    0,
                     "358987145",
                     "adventure-works\\john10",
                     "Tool Designer",

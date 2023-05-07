@@ -1,7 +1,7 @@
 #pragma warning disable CS8625
 
-using REA.Accounting.Core.Shared;
 using REA.Accounting.Core.HumanResources;
+using REA.Accounting.Core.Shared;
 using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.UnitTests.Shared
@@ -290,6 +290,7 @@ namespace REA.Accounting.UnitTests.Shared
                     "Doe",
                     "D",
                     "Senior",
+                    0,
                     "358987145",
                     "adventure-works\\john10",
                     "Tool Designer",
