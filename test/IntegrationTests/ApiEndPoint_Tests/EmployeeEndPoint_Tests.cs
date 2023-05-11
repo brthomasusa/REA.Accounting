@@ -19,32 +19,6 @@ namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
         { }
 
         [Fact]
-        public async Task Employee_GetEmployeeByIdQuery_ShouldSucceed()
-        {
-            const int employeeId = 1;
-            using var response = await _client.GetAsync($"{_urlRoot}employees/{employeeId}",
-                                                        HttpCompletionOption.ResponseHeadersRead);
-
-            response.EnsureSuccessStatusCode();
-
-            var jsonResponse = await response.Content.ReadAsStreamAsync();
-            var employee = await JsonSerializer.DeserializeAsync<GetEmployeeDetailByIdResponse>(jsonResponse, _options);
-
-            Assert.Equal("Ken", employee.FirstName);
-            Assert.Equal("Sánchez", employee.LastName);
-        }
-
-        [Fact]
-        public async Task Employee_GetEmployeeByIdQuery_InvalidEmployeeID_ShouldFail()
-        {
-            const int employeeId = 100000;
-            using var response = await _client.GetAsync($"{_urlRoot}employees/{employeeId}",
-                                                        HttpCompletionOption.ResponseHeadersRead);
-
-            Assert.False(response.IsSuccessStatusCode);
-        }
-
-        [Fact]
         public async Task Employee_GetEmployeeDetailsByIdWithAllInfoQuery_ShouldSucceed()
         {
             const int employeeId = 1;
@@ -76,7 +50,7 @@ namespace REA.Accounting.IntegrationTests.ApiEndPoint_Tests
             List<EmployeeListItemReadModel> response = await _client
                 .GetFromJsonAsync<List<EmployeeListItemReadModel>>(QueryHelpers.AddQueryString($"{_urlRoot}employees/filterbylastname", queryParams));
 
-            Assert.Equal(4, response.Count);
+            Assert.Equal(10, response.Count);
         }
 
         [Fact]

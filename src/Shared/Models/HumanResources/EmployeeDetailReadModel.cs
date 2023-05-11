@@ -30,5 +30,8 @@ namespace REA.Accounting.Shared.Models.HumanResources
         public int VacationHours { get; set; }
         public int SickLeaveHours { get; set; }
         public bool Active { get; set; }
+        public string? ManagerName { get; set; }
+        public string? Department { get; set; }
+        public string? Address { get; set; }
     }
 }

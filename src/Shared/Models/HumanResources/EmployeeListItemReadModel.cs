@@ -12,5 +12,8 @@ namespace REA.Accounting.Shared.Models.HumanResources
         public string? EmailAddress { get; set; }
         public bool Active { get; set; }
         public string? FullName { get; set; }
+        public int ManagerID { get; set; }
+        public int EmployeesManaged { get; set; }
+        public string? ManagerName { get; set; }
     }
 }

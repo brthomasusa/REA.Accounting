@@ -17,25 +17,30 @@ message grpc_EmployeeDetailResponse {
     string middleName = 5;
     string lastName = 6;
     string suffix = 7;
-    string jobTitle = 8;
+    string jobTitle = 8;    
     string phoneNumber = 9;
     string phoneNumberType = 10;
     string emailAddress = 11;
-    string emailPromotion = 12; 
-    string addressLine1 = 13;
-    string addressLine2 = 14;
-    string city = 15;
-    string stateProvinceName = 16;
-    string PostalCode = 17;
-    string countryRegionName = 18;
-    google.protobuf.Timestamp birthDate = 19;
-    string maritalStatus = 20;
-    string gender = 21;
-    google.protobuf.Timestamp hireDate = 22;
-    bool salaried = 23;
-    int32 vacationHours = 24;
-    int32 sickLeaveHours = 25;
-    bool active = 26;   
+    string emailPromotion = 12;
+    string nationalIdNumber = 13;
+    string loginId = 14;         
+    string addressLine1 = 15;
+    string addressLine2 = 16;
+    string city = 17;
+    string stateProvinceName = 18;
+    string PostalCode = 19;
+    string countryRegionName = 20;
+    google.protobuf.Timestamp birthDate = 21;
+    string maritalStatus = 22;
+    string gender = 23;
+    google.protobuf.Timestamp hireDate = 24;
+    bool salaried = 25;
+    int32 vacationHours = 26;
+    int32 sickLeaveHours = 27;
+    bool active = 28;
+    string managerName = 29;
+    string department = 30;   
+    string address = 31;
 }
 
 message grpc_EmployeeListItem {
@@ -48,7 +53,10 @@ message grpc_EmployeeListItem {
     string phoneNumber = 7;
     string emailAddress = 8;
     bool active = 9;
-    string fullName = 10;       
+    string fullName = 10;
+    int32 managerId = 11;
+    int32 employeesManaged = 12;
+    string managerName = 13;       
 }
 
 message grpc_EmployeeListItemsResponse {

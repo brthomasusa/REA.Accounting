@@ -1,17 +1,16 @@
-using MediatR;
 using Carter;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-
 using REA.Accounting.Application.HumanResources.CreateEmployee;
 using REA.Accounting.Application.HumanResources.DeleteEmployee;
 using REA.Accounting.Application.HumanResources.GetEmployeeDetailsById;
 using REA.Accounting.Application.HumanResources.UpdateEmployee;
 using REA.Accounting.Infrastructure.Persistence.Queries.HumanResources;
-using REA.Accounting.SharedKernel.Utilities;
 using REA.Accounting.Shared.Models.HumanResources;
+using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Presentation.HumanResources
 {
@@ -19,16 +18,6 @@ namespace REA.Accounting.Presentation.HumanResources
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
-            app.MapGet("api/employees/{id}", async (int id, ISender sender) =>
-            {
-                Result<GetEmployeeDetailByIdResponse> result = await sender.Send(new GetEmployeeDetailByIdRequest(EmployeeID: id));
-
-                if (result.IsSuccess)
-                    return Results.Ok(result.Value);
-
-                return Results.Problem(result.Error);
-            });
-
             app.MapGet("api/employees/allinfo/{id}", async (int id, ISender sender) =>
             {
                 Result<EmployeeDetailReadModel> result =
@@ -59,7 +48,7 @@ namespace REA.Accounting.Presentation.HumanResources
 
                 if (result.IsSuccess)
                 {
-                    return Results.Created($"api/employees/{result.Value}", new GetEmployeeDetailByIdRequest(EmployeeID: result.Value));
+                    return Results.Created($"api/employees/allinfo/{result.Value}", new GetEmployeeDetailsByIdWithAllInfoRequest(EmployeeID: result.Value));
                 }
 
                 return Results.Problem(result.Error);

@@ -1,7 +1,7 @@
-using Mapster;
-using GoogleDateTime = Google.Protobuf.WellKnownTypes.Timestamp;
 using gRPC.Contracts.HumanResources;
+using Mapster;
 using REA.Accounting.Shared.Models.HumanResources;
+using GoogleDateTime = Google.Protobuf.WellKnownTypes.Timestamp;
 
 namespace REA.Accounting.Server.Mapping
 {
@@ -34,7 +34,8 @@ namespace REA.Accounting.Server.Mapping
                 .Map(dest => dest.MiddleName, src => string.IsNullOrEmpty(src.MiddleName) ? null : src.MiddleName);
 
             config.NewConfig<EmployeeListItemReadModel, grpc_EmployeeListItem>()
-                .Map(dest => dest.MiddleName, src => string.IsNullOrEmpty(src.MiddleName) ? string.Empty : src.MiddleName);
+                .Map(dest => dest.MiddleName, src => string.IsNullOrEmpty(src.MiddleName) ? string.Empty : src.MiddleName)
+                .Map(dest => dest.ManagerName, src => string.IsNullOrEmpty(src.ManagerName) ? string.Empty : src.ManagerName);
 
         }
     }

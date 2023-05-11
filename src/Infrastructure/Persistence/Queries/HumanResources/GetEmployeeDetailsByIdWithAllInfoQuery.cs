@@ -1,9 +1,9 @@
-using Microsoft.Extensions.Logging;
 using System.Data;
 using Dapper;
-using REA.Accounting.SharedKernel.Utilities;
-using REA.Accounting.Shared.Models.HumanResources;
+using Microsoft.Extensions.Logging;
 using REA.Accounting.Infrastructure.Persistence.Repositories;
+using REA.Accounting.Shared.Models.HumanResources;
+using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.Infrastructure.Persistence.Queries.HumanResources
 {
@@ -18,15 +18,12 @@ namespace REA.Accounting.Infrastructure.Persistence.Queries.HumanResources
         {
             try
             {
-                const string sql = EmployeeQuerySql.GetEmployeeDetailsByIdWithAllInfo +
-                " WHERE e.BusinessEntityID = @ID";
-
+                const string sql = "SELECT * FROM HumanResources.udfGetEmployeeDetails(@ID)";
                 var parameters = new DynamicParameters();
                 parameters.Add("ID", employeeId, DbType.Int32);
 
                 using var connection = ctx.CreateConnection();
-                EmployeeDetailReadModel detail =
-                    await connection.QueryFirstOrDefaultAsync<EmployeeDetailReadModel>(sql, parameters);
+                EmployeeDetailReadModel detail = await connection.QueryFirstOrDefaultAsync<EmployeeDetailReadModel>(sql, parameters);
 
                 if (detail is null)
                 {

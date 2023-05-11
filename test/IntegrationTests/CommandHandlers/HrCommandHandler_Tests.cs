@@ -1,11 +1,8 @@
-using Microsoft.Extensions.Logging.Abstractions;
-
 using REA.Accounting.Application.HumanResources.CreateEmployee;
 using REA.Accounting.Application.HumanResources.DeleteEmployee;
 using REA.Accounting.Application.HumanResources.UpdateEmployee;
 using REA.Accounting.Infrastructure.Persistence.Interfaces;
 using REA.Accounting.Infrastructure.Persistence.Repositories;
-using REA.Accounting.IntegrationTests.Base;
 using REA.Accounting.SharedKernel.Utilities;
 
 namespace REA.Accounting.IntegrationTests.CommandHandlers

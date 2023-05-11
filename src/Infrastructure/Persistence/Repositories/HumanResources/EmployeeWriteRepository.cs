@@ -200,6 +200,17 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
 
                 if (person is not null)
                 {
+                    // Call a db udf that converts organization node of 
+                    // employee's manager to an int BusinessEntityID
+                    var query = from emp in _context.Employee
+                                where emp.BusinessEntityID == employeeID
+                                select new
+                                {
+                                    ManagerID = _context.Get_Manager_ID(emp.BusinessEntityID)
+                                };
+                    var queryResult = query.FirstOrDefault();
+                    person.Employee!.ManagerID = queryResult!.ManagerID;
+
                     Result<EmployeeDomainModel> result = person!.MapToEmployeeDomainObject();
 
                     if (result.IsSuccess)
@@ -278,11 +289,10 @@ namespace REA.Accounting.Infrastructure.Persistence.Repositories.HumanResources
                     new SqlParameter("@paramManagerID", 285)
                 };
 
-                int items =
-                    await _context.Database.ExecuteSqlRawAsync(
-                        "EXEC HumanResources.uspUpdateEmployeeOrgNode @paramManagerID, @paramEmployeeID",
-                        parameters
-                    );
+                await _context.Database.ExecuteSqlRawAsync(
+                    "EXEC HumanResources.uspUpdateEmployeeOrgNode @paramManagerID, @paramEmployeeID",
+                    parameters
+                );
 
                 await transaction.CommitAsync();
 

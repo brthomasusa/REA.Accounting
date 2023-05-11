@@ -1,4 +1,3 @@
-using Microsoft.Extensions.Logging.Abstractions;
 using REA.Accounting.Core.HumanResources;
 using REA.Accounting.Core.Shared;
 using REA.Accounting.Infrastructure.Persistence.Interfaces;
@@ -126,7 +125,7 @@ namespace REA.Accounting.IntegrationTests.Repositories
         {
             Result result = await _writeRepository.EmployeeAggregateRepository.ValidateEmployeeEmailIsUnique(0, "david4@adventure-works.com");
 
-            Assert.True(result.IsSuccess);
+            Assert.True(result.IsFailure);
         }
 
         [Fact]
