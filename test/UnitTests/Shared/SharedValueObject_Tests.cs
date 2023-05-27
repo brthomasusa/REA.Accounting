@@ -1,6 +1,5 @@
 #pragma warning disable CS8600
 
-using Xunit;
 using REA.Accounting.Core.Shared.ValueObjects;
 using REA.Accounting.SharedKernel.CommonValueObjects;
 
